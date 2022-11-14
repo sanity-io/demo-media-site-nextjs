@@ -16,9 +16,7 @@ export default defineConfig({
   basePath,
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
-  title:
-    process.env.NEXT_PUBLIC_SANITY_PROJECT_TITLE ||
-    'Media Site',
+  title: process.env.NEXT_PUBLIC_SANITY_PROJECT_TITLE || 'Media Site',
   schema: {
     types: schemaTypes,
     // types: []
@@ -27,9 +25,7 @@ export default defineConfig({
     deskTool({
       structure: (S) => {
         // @TODO: define index page singleton as a settings document
-        return S.list()
-          .title('Content')
-          .items(S.documentTypeListItems())
+        return S.list().title('Content').items(S.documentTypeListItems())
       },
 
       // `defaultDocumentNode is responsible for adding a “Preview” tab to the document pane
