@@ -3,10 +3,11 @@
  */
 
 import { visionTool } from '@sanity/vision'
-import { defineConfig, Slug } from 'sanity'
-import { ComponentBuilder, deskTool } from 'sanity/desk'
+import { defineConfig } from 'sanity'
+import { deskTool } from 'sanity/desk'
 import { unsplashImageAsset } from 'sanity-plugin-asset-source-unsplash'
 import DocumentsPane from 'sanity-plugin-documents-pane'
+import { scheduledPublishing } from "@sanity/scheduled-publishing";
 
 import { schemaTypes } from './schemas'
 
@@ -20,7 +21,6 @@ export default defineConfig({
   title: process.env.NEXT_PUBLIC_SANITY_PROJECT_TITLE || 'Media Site',
   schema: {
     types: schemaTypes,
-    // types: []
   },
   plugins: [
     deskTool({
@@ -58,5 +58,6 @@ export default defineConfig({
     visionTool({
       defaultApiVersion: '2022-11-11',
     }),
+    scheduledPublishing(),
   ],
 })

@@ -17,6 +17,7 @@
     "@portabletext/react": "^2.0.0",
     "@sanity/demo": "^1.0.0",
     "@sanity/image-url": "^1.0.1",
+    "@sanity/scheduled-publishing": "0.3.0-v3-studio.11",
     "@sanity/vision": "3.0.0-rc.2",
     "@sanity/webhook": "^2.0.0",
     "classnames": "^2.3.2",
