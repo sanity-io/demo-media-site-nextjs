@@ -1,24 +1,26 @@
-import { PostProps } from '../types'
-import PostPreview from './post-preview'
+import { ArticleProps } from '../types'
+import ArticlePreview from './article-preview'
 
-export default function MoreStories({ posts }: { posts: PostProps[] }) {
+export default function MoreStories({ articles }: { articles: ArticleProps[] }) {
   return (
-    <section>
-      <h2 className="mb-8 text-6xl font-bold leading-tight tracking-tighter md:text-7xl">
-        More Stories
+    <section className="max-w-5xl md:mx-3 lg:mx-auto">
+      <h2 className="sr-only">
+        Articles
       </h2>
-      <div className="mb-32 grid grid-cols-1 gap-y-20 md:grid-cols-2 md:gap-x-16 md:gap-y-32 lg:gap-x-32">
-        {posts.map((post) => (
-          <PostPreview
-            key={post.slug}
-            title={post.title}
-            coverImage={post.coverImage}
-            date={post.date}
-            author={post.author}
-            slug={post.slug}
-            excerpt={post.excerpt}
+      <div className="font-merriweather container mx-auto">
+        <div className="divide-y divide-gray-200 rounded border-t border-b border-gray-200 dark:divide-gray-900 dark:border-gray-900 md:border">
+        {articles.map((article) => (
+          <ArticlePreview
+            key={article.slug}
+            title={article.title}
+            mainImage={article.mainImage}
+            date={article.date}
+            people={article.people}
+            slug={article.slug}
+            intro={article.intro}
           />
         ))}
+        </div>
       </div>
     </section>
   )

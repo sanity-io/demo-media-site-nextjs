@@ -3,12 +3,18 @@ export interface AuthorProps {
   picture: any
 }
 
-export interface PostProps {
+export interface SectionProps {
+  name: string
+  slug?: string
+}
+
+export interface ArticleProps {
   title: string
-  coverImage: any
+  mainImage: any
   date: string
-  excerpt?: string
-  author: AuthorProps
+  intro?: any
+  people: AuthorProps[]
+  sections?: SectionProps[]
   slug?: string
   content?: any
 }

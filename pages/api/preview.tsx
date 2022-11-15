@@ -1,4 +1,4 @@
-import { postBySlugQuery } from '../../lib/queries'
+import { articleBySlugQuery } from '../../lib/queries'
 import { getClient } from '../../lib/sanity.server'
 
 function redirectToPreview(res, Location) {
@@ -21,7 +21,7 @@ export default async function preview(req, res) {
   }
 
   // Check if the post with the given `slug` exists
-  const post = await getClient(true).fetch(postBySlugQuery, {
+  const post = await getClient(true).fetch(articleBySlugQuery, {
     slug: req.query.slug,
   })
 
