@@ -4,8 +4,9 @@
 
 import { visionTool } from '@sanity/vision'
 import { defineConfig, Slug } from 'sanity'
-import { deskTool } from 'sanity/desk'
+import { ComponentBuilder, deskTool } from 'sanity/desk'
 import { unsplashImageAsset } from 'sanity-plugin-asset-source-unsplash'
+import DocumentsPane from 'sanity-plugin-documents-pane'
 
 import { schemaTypes } from './schemas'
 
@@ -26,6 +27,22 @@ export default defineConfig({
       structure: (S) => {
         // @TODO: define index page singleton as a settings document
         return S.list().title('Content').items(S.documentTypeListItems())
+      },
+      defaultDocumentNode: (S, { schemaType }) => {
+        const articleReferenceTypes = ['person', 'section']
+        const views = []
+        if (articleReferenceTypes.includes(schemaType)) {
+          views.push(
+            S.view
+              .component(DocumentsPane)
+              .options({
+                query: `*[!(_id in path("drafts.**")) && references($id)]`,
+                params: { id: `_id` },
+              })
+              .title('Incoming References')
+          )
+        }
+        return S.document().views([S.view.form(), ...views])
       },
 
       // `defaultDocumentNode is responsible for adding a “Preview” tab to the document pane
