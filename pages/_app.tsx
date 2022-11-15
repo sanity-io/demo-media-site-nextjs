@@ -1,9 +1,9 @@
 import '../styles/index.css'
 import Layout from '../components/layout'
-import { DefaultSeo } from 'next-seo';
-import seoConfig from '../lib/next-seo.config';
-import type {ReactElement, ReactNode} from 'react'
-import type {NextPage} from 'next'
+import { DefaultSeo } from 'next-seo'
+import seoConfig from '../lib/next-seo.config'
+import type { ReactElement, ReactNode } from 'react'
+import type { NextPage } from 'next'
 import type { AppProps } from 'next/app'
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {

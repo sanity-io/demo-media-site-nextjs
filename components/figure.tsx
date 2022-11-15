@@ -1,7 +1,11 @@
-import {ReactNode} from 'react'
+import { ReactNode } from 'react'
 
-export function Figure(props: {caption?: ReactNode; className?: string; img?: ReactNode}) {
-  const {caption, className, img} = props
+export function Figure(props: {
+  caption?: ReactNode
+  className?: string
+  img?: ReactNode
+}) {
+  const { caption, className, img } = props
 
   return (
     <figure className={className}>

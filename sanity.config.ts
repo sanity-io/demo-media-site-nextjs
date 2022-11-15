@@ -7,7 +7,7 @@ import { defineConfig } from 'sanity'
 import { deskTool } from 'sanity/desk'
 import { unsplashImageAsset } from 'sanity-plugin-asset-source-unsplash'
 import DocumentsPane from 'sanity-plugin-documents-pane'
-import { scheduledPublishing } from "@sanity/scheduled-publishing";
+import { scheduledPublishing } from '@sanity/scheduled-publishing'
 
 import { schemaTypes } from './schemas'
 

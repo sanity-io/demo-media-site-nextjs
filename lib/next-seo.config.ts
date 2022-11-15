@@ -1,4 +1,4 @@
-import { DefaultSeoProps } from 'next-seo';
+import { DefaultSeoProps } from 'next-seo'
 
 const config: DefaultSeoProps = {
   titleTemplate: '%s - Media Site',

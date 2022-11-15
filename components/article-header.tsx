@@ -34,8 +34,8 @@ export default function ArticleHeader(props: ArticleProps) {
         </h1>
 
         <p className="mt-3 font-serif text-2xl leading-snug">
-          The humble newsletter has been around for decades, but it has only recently emerged as a
-          powerful media in its own right.
+          The humble newsletter has been around for decades, but it has only
+          recently emerged as a powerful media in its own right.
         </p>
       </div>
       {mainImage && <MainCoverImage title={title} mainImage={mainImage} />}
@@ -43,14 +43,20 @@ export default function ArticleHeader(props: ArticleProps) {
   )
 }
 
-function MainCoverImage({ title, mainImage }: {title: string; mainImage: any}) {
+function MainCoverImage({
+  title,
+  mainImage,
+}: {
+  title: string
+  mainImage: any
+}) {
   return (
     <>
       <Figure
         caption={
-          mainImage?.caption && <>
-            {mainImage.caption} ● Photo by Hardcoded, pull from People
-          </>
+          mainImage?.caption && (
+            <>{mainImage.caption} ● Photo by Hardcoded, pull from People</>
+          )
         }
         className="m-auto max-w-5xl p-2"
         img={
@@ -59,7 +65,7 @@ function MainCoverImage({ title, mainImage }: {title: string; mainImage: any}) {
             alt={mainImage?.alt || title}
             src={urlForImage(mainImage?.image).height(1000).width(2000).url()}
             sizes="100vw"
-            style={{display: 'block', objectFit: 'cover'}}
+            style={{ display: 'block', objectFit: 'cover' }}
           />
         }
       />
@@ -75,7 +81,7 @@ function SectionLinks({ sections }) {
           key={section._id}
           href={`${section.slug}`}
           data-after=" ● "
-          className="hover:text-blue-500 after:content-[attr(data-after)] after:inline last:after:hidden"
+          className="after:inline after:content-[attr(data-after)] last:after:hidden hover:text-blue-500"
         >
           {section.name}
         </Link>

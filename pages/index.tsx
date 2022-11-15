@@ -11,13 +11,13 @@ import { getClient, overlayDrafts } from '../lib/sanity.server'
 import { NextSeo } from 'next-seo'
 
 export default function Index({
-                                allArticles: initialAllArticles,
-                                preview,
-                                blogSettings
-                              }) {
+  allArticles: initialAllArticles,
+  preview,
+  blogSettings,
+}) {
   const { data: allArticles } = usePreviewSubscription(indexQuery, {
     initialData: initialAllArticles,
-    enabled: preview
+    enabled: preview,
   })
   const articles = allArticles || []
   const { title = 'Media.' } = blogSettings || {}
@@ -47,19 +47,21 @@ export default function Index({
 export async function getStaticProps({ preview = false }) {
   /* check if the project id has been defined by fetching the vercel envs */
   if (process.env.NEXT_PUBLIC_SANITY_PROJECT_ID) {
-    const allArticles = overlayDrafts(await getClient(preview).fetch(indexQuery))
+    const allArticles = overlayDrafts(
+      await getClient(preview).fetch(indexQuery)
+    )
     const blogSettings = await getClient(preview).fetch(settingsQuery)
 
     return {
       props: { allArticles, preview, blogSettings },
       // If webhooks isn't setup then attempt to re-generate in 1 minute intervals
-      revalidate: process.env.SANITY_REVALIDATE_SECRET ? undefined : 60
+      revalidate: process.env.SANITY_REVALIDATE_SECRET ? undefined : 60,
     }
   }
 
   /* when the client isn't set up */
   return {
     props: {},
-    revalidate: undefined
+    revalidate: undefined,
   }
 }
