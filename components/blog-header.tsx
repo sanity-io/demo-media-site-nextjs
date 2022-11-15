@@ -10,14 +10,14 @@ export default function BlogHeader({ title }) {
         A statically generated blog example using{' '}
         <a
           href="https://nextjs.org/"
-          className="underline transition-colors duration-200 hover:text-success"
+          className="hover:text-success underline transition-colors duration-200"
         >
           Next.js
         </a>{' '}
         and{' '}
         <a
           href={CMS_URL}
-          className="underline transition-colors duration-200 hover:text-success"
+          className="hover:text-success underline transition-colors duration-200"
         >
           {CMS_NAME}
         </a>
