@@ -5,7 +5,7 @@ import Footer from './footer'
 export default function Layout({ preview, children }) {
   return (
     <>
-      <Navbar/>
+      <Navbar />
       <div className="min-h-screen">
         {preview && <Alert preview={preview} />}
         <main>{children}</main>
