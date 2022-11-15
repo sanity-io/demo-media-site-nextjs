@@ -50,7 +50,7 @@ The Studio connects to Sanity Content Lake, which gives you hosted content APIs 
 | `/pages/api/revalidate.tsx`                 |  Serverless route for triggering ISR             |
 | `/pages/api/preview.tsx`                    |  Serverless route for triggering Preview mode    |
 | `/schemas`                                  |  Where Sanity Studio gets its content types from |
-| `/lib/sanity.server.tsx`, `/lib/config.tsx` | Configuration for the Sanity Content Lake client |
+| `/lib/sanity.server.tsx`, `/lib/config.ts` | Configuration for the Sanity Content Lake client |
 
 ## Configuration
 

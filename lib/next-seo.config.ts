@@ -1,8 +1,8 @@
 import { DefaultSeoProps } from 'next-seo';
 
 const config: DefaultSeoProps = {
-  titleTemplate: '%s - Editorial Demo',
-  defaultTitle: 'Editorial Demo',
+  titleTemplate: '%s - Media Site',
+  defaultTitle: 'Media Site',
   description: 'A demo of the Sanity.io editorial workflow',
   openGraph: {
     type: 'website',

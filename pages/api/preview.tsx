@@ -1,4 +1,4 @@
-import { postBySlugQuery } from '../../lib/queries'
+import { postBySlugQuery } from '../../lib/queries/queries'
 import { getClient } from '../../lib/sanity.server'
 
 function redirectToPreview(res, Location) {
