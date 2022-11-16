@@ -2,6 +2,7 @@ import { PortableText } from '@portabletext/react'
 import Link from 'next/link'
 import React from 'react'
 
+import { getUrlForDocumentType } from '../lib/routing'
 import { ArticleProps } from '../types'
 import Avatar from './avatar'
 import CoverImage from './cover-image'
@@ -53,7 +54,9 @@ export default function ArticlePreview({
                 data-after=" ● "
                 className="after:inline after:content-[attr(data-after)] last:after:hidden"
               >
-                {person.name}
+                <Link href={getUrlForDocumentType('person', person?.slug)}>
+                  {person.name}
+                </Link>
               </span>
             ))}
         </div>
