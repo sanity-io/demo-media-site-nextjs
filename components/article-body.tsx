@@ -35,7 +35,13 @@ const components = {
   },
 }
 
-export default function ArticleBody({ content, people }) {
+export default function ArticleBody({
+  content,
+  people,
+}: {
+  content: any
+  people?: any
+}) {
   return (
     <div className="m-auto max-w-2xl p-4 md:p-5 lg:p-6">
       {people && <Credits people={people} />}

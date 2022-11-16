@@ -2,6 +2,7 @@ import ErrorPage from 'next/error'
 import { useRouter } from 'next/router'
 import { NextSeo } from 'next-seo'
 
+import ArticleBody from '../../components/article-body'
 import ArticleTitle from '../../components/article-title'
 import Container from '../../components/container'
 import MoreStories from '../../components/more-stories'
@@ -47,7 +48,7 @@ export default function Author(props: Props) {
     initialData: initialData,
     enabled: preview && !!slug,
   })
-  const { articles, name } = data || {}
+  const { articles, name, bio } = data || {}
 
   if (!router.isFallback && !slug) {
     return <ErrorPage statusCode={404} />
@@ -65,6 +66,11 @@ export default function Author(props: Props) {
         <div className="">
           <div className="m-auto max-w-5xl p-4 md:p-5 lg:p-6">
             <ArticleTitle>{name}</ArticleTitle>
+            {bio && (
+              <div className="">
+                <ArticleBody content={bio} />
+              </div>
+            )}
           </div>
           {articles?.length > 0 && <MoreStories articles={articles} />}
         </div>
