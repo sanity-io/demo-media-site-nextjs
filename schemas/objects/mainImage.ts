@@ -12,7 +12,7 @@ export default defineType({
       title: 'Text',
       options: {
         collapsible: true,
-        collapsed: true,
+        collapsed: false,
       },
     },
   ],
@@ -35,8 +35,15 @@ export default defineType({
   ],
   preview: {
     select: {
-      image: 'image',
+      media: 'image',
       alt: 'alt',
+      caption: 'caption',
     },
+    prepare({ media, alt, caption }) {
+      return {
+        title: alt || caption || 'No alt text or caption',
+        media,
+      }
+    }
   },
 })
