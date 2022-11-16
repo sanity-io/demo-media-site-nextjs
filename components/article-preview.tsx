@@ -29,7 +29,7 @@ export default function ArticlePreview({
       </div>
       <div className="flex flex-1 flex-col p-4 md:w-1/2">
         <h1 className="mb-2 text-4xl font-extrabold leading-none tracking-tight md:text-5xl">
-          <Link href={`/articles/${slug}`} className="hover:underline">
+          <Link href={getUrlForDocumentType('article', slug)} className="hover:underline">
             {title}
           </Link>
         </h1>

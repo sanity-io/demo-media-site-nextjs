@@ -1,8 +1,8 @@
-import Link from 'next/link'
-
-import { urlForImage } from '../lib/sanity'
 import { ArticleProps } from '../types'
+import Link from 'next/link'
 import { Figure } from './figure'
+import { urlForImage } from '../lib/sanity'
+import { getUrlForDocumentType } from '../lib/routing'
 
 export default function ArticleHeader(props: ArticleProps) {
   const { title, mainImage, date, people, sections, slug } = props
@@ -61,7 +61,7 @@ function SectionLinks({ sections }) {
       {sections.map((section) => (
         <Link
           key={section._id}
-          href={`/section/${section.slug}`}
+          href={getUrlForDocumentType('section', section.slug)}
           data-after=" ● "
           className="after:inline after:content-[attr(data-after)] last:after:hidden hover:text-blue-500"
         >

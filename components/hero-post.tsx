@@ -4,6 +4,7 @@ import { ArticleProps } from '../types'
 import Avatar from './avatar'
 import CoverImage from './cover-image'
 import Date from './date'
+import { getUrlForDocumentType } from '../lib/routing'
 
 export default function HeroPost(props: ArticleProps) {
   const { title, mainImage, date, intro, people, slug } = props
@@ -15,7 +16,7 @@ export default function HeroPost(props: ArticleProps) {
       <div className="mb-20 md:mb-28 md:grid md:grid-cols-2 md:gap-x-16 lg:gap-x-8">
         <div>
           <h3 className="mb-4 text-4xl leading-tight lg:text-6xl">
-            <Link href={`/articles/${slug}`} className="hover:underline">
+            <Link href={getUrlForDocumentType('article', slug)} className="hover:underline">
               {title}
             </Link>
           </h3>

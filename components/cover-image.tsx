@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 import { urlForImage } from '../lib/sanity'
+import { getUrlForDocumentType } from '../lib/routing'
 
 interface CoverImageProps {
   title: string
@@ -41,7 +42,7 @@ export default function CoverImage(props: CoverImageProps) {
   return (
     <div className="sm:mx-0">
       {slug ? (
-        <Link href={`/articles/${slug}`} aria-label={title}>
+        <Link href={getUrlForDocumentType('article', slug)} aria-label={title}>
           {image}
         </Link>
       ) : (

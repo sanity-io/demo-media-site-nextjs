@@ -5,11 +5,11 @@ export const getUrlForDocumentType = (type: string, slug?: string) => {
 
   switch (type) {
     case 'article':
-      return `/article/${slug}`
+      return `/articles/${slug}`
     case 'section':
-      return `/section/${slug}`
+      return `/sections/${slug}`
     case 'person':
-      return `/author/${slug}`
+      return `/authors/${slug}`
     default:
       return '/'
   }
