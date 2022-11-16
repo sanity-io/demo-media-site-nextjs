@@ -8,7 +8,7 @@ const config: DefaultSeoProps = {
     type: 'website',
     locale: 'en',
     url: 'https://www.url.ie/',
-    siteName: 'SiteName',
+    siteName: 'Media Site',
   },
   additionalLinkTags: [
     {
