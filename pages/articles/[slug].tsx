@@ -1,14 +1,15 @@
 import ErrorPage from 'next/error'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
+import { NextSeo } from 'next-seo'
 
+import ArticleBody from '../../components/article-body'
+import ArticleHeader from '../../components/article-header'
+import ArticleTitle from '../../components/article-title'
 import Container from '../../components/container'
 import Header from '../../components/header'
 import Layout from '../../components/layout'
 import MoreStories from '../../components/more-stories'
-import ArticleBody from '../../components/article-body'
-import ArticleHeader from '../../components/article-header'
-import ArticleTitle from '../../components/article-title'
 import SectionSeparator from '../../components/section-separator'
 import {
   articleQuery,
@@ -18,7 +19,6 @@ import {
 import { urlForImage, usePreviewSubscription } from '../../lib/sanity'
 import { getClient, overlayDrafts } from '../../lib/sanity.server'
 import { ArticleProps } from '../../types'
-import { NextSeo } from 'next-seo'
 
 function openGraphObjectFromDocument(document: any) {
   // article.mainImage?.image?.asset?._ref

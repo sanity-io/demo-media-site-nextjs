@@ -8,7 +8,32 @@
  *
  */
 import { PortableText } from '@portabletext/react'
+import Link from 'next/link'
+
+import { getUrlForDocumentType } from '../lib/routing'
 import { ArticleProps } from '../types'
+
+const components = {
+  types: {
+    mainImage: ({ value }) => {
+      return <div className="text-black">Image: {JSON.stringify(value)}</div>
+    },
+    article: ({ value }) => {
+      const { title, slug } = value
+      const url = getUrlForDocumentType('article', slug)
+      return (
+        <div className="text-black">
+          <p className="dark border border-gray-200 border-gray-900 p-4">
+            <span className="font-bold">Read more:</span>{' '}
+            <Link href={url} className="no-underline hover:underline">
+              {title}
+            </Link>
+          </p>
+        </div>
+      )
+    },
+  },
+}
 
 export default function ArticleBody({ content, people }) {
   return (
@@ -18,7 +43,19 @@ export default function ArticleBody({ content, people }) {
       <div
         className={`prose mx-auto max-w-2xl prose-headings:font-extrabold prose-headings:tracking-tight prose-p:leading-relaxed dark:prose-invert md:prose-lg lg:prose-xl `}
       >
-        <PortableText value={content} />
+        <PortableText
+          value={content}
+          components={components}
+          onMissingComponent={(message, options) => {
+            console.error(message, {
+              // eg `someUnknownType`
+              type: options.type,
+
+              // 'block' | 'mark' | 'blockStyle' | 'listStyle' | 'listItemStyle'
+              nodeType: options.nodeType,
+            })
+          }}
+        />
       </div>
     </div>
   )

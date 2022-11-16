@@ -1,11 +1,11 @@
+import { PortableText } from '@portabletext/react'
 import Link from 'next/link'
+import React from 'react'
 
 import { ArticleProps } from '../types'
 import Avatar from './avatar'
 import CoverImage from './cover-image'
 import Date from './date'
-import { PortableText } from '@portabletext/react'
-import React from 'react'
 
 export default function ArticlePreview({
   title,

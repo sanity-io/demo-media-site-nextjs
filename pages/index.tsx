@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import { NextSeo } from 'next-seo'
 
 import BlogHeader from '../components/blog-header'
 import Container from '../components/container'
@@ -8,7 +9,6 @@ import MoreStories from '../components/more-stories'
 import { indexQuery, settingsQuery } from '../lib/queries'
 import { usePreviewSubscription } from '../lib/sanity'
 import { getClient, overlayDrafts } from '../lib/sanity.server'
-import { NextSeo } from 'next-seo'
 
 export default function Index({
   allArticles: initialAllArticles,

@@ -1,6 +1,6 @@
 import Alert from './alert'
-import Navbar from './navbar'
 import Footer from './footer'
+import Navbar from './navbar'
 
 export default function Layout({ preview, children }) {
   return (
