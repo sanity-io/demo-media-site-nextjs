@@ -1,8 +1,9 @@
-import { ArticleProps } from '../types'
 import Link from 'next/link'
-import { Figure } from './figure'
-import { urlForImage } from '../lib/sanity'
+
 import { getUrlForDocumentType } from '../lib/routing'
+import { urlForImage } from '../lib/sanity'
+import { ArticleProps } from '../types'
+import { Figure } from './figure'
 
 export default function ArticleHeader(props: ArticleProps) {
   const { title, mainImage, date, people, sections, slug } = props
