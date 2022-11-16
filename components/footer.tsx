@@ -3,12 +3,12 @@ import { useRouter } from 'next/router'
 
 export default function Footer() {
   const router = useRouter()
-  const isHomepage = router.pathname === '/'
+  const isLandingPage = router.pathname === '/'
 
   return (
     <div
       className={`${
-        !isHomepage && `border-t border-gray-200 dark:border-gray-900`
+        !isLandingPage && `border-t border-gray-200 dark:border-gray-900`
       }`}
     >
       <div

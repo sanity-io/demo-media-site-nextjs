@@ -1,11 +1,15 @@
 import groq from 'groq'
 
-const articleFields = groq`
+export const articleFields = groq`
   _id,
   title,
   date,
   intro,
   mainImage,
+  "content": content[]{
+    _type == 'articleReference' => @->{_type, _id, title, "slug": slug.current },
+    _type != 'articleReference' => @,
+  },          
   "date": _updatedAt,
   "slug": slug.current,
   "people": people[]{ role, ...person->{name, image, bio, 'slug': slug.current} },

@@ -1,8 +1,4 @@
 import { ArticleProps } from '../types'
-import Avatar from './avatar'
-import CoverImage from './cover-image'
-import Date from './date'
-import ArticleTitle from './article-title'
 import Link from 'next/link'
 import { Figure } from './figure'
 import { urlForImage } from '../lib/sanity'
@@ -11,21 +7,6 @@ export default function ArticleHeader(props: ArticleProps) {
   const { title, mainImage, date, people, sections, slug } = props
   return (
     <>
-      {/*<ArticleTitle>{title}</ArticleTitle>
-      <div className="hidden md:mb-12 md:block">
-        <p>author</p>
-      </div>
-      <div className="mb-8 sm:mx-0 md:mb-16">
-        <CoverImage title={title} image={mainImage} priority slug={slug} />
-      </div>
-      <div className="mx-auto max-w-2xl">
-        <div className="mb-6 block md:hidden">
-          {people?.length && people.map((person, index) => <span key={index} className="s">{person.name}</span>)}
-        </div>
-        <div className="mb-6 text-lg">
-          <Date dateString={date} />
-        </div>
-      </div>*/}
       <div className="m-auto max-w-5xl p-4 md:p-5 lg:p-6">
         {sections?.length > 0 && <SectionLinks sections={sections} />}
 
@@ -79,7 +60,7 @@ function SectionLinks({ sections }) {
       {sections.map((section) => (
         <Link
           key={section._id}
-          href={`${section.slug}`}
+          href={`/section/${section.slug}`}
           data-after=" ● "
           className="after:inline after:content-[attr(data-after)] last:after:hidden hover:text-blue-500"
         >
