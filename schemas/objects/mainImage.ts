@@ -44,6 +44,6 @@ export default defineType({
         title: alt || caption || 'No alt text or caption',
         media,
       }
-    }
+    },
   },
 })
