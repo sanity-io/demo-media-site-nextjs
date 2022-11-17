@@ -10,6 +10,7 @@ import DocumentsPane from 'sanity-plugin-documents-pane'
 import { scheduledPublishing } from '@sanity/scheduled-publishing'
 
 import { schemaTypes } from './schemas'
+import { mediaConfigPlugin } from './plugins/config'
 
 // @TODO: update next-sanity/studio to automatically set this when needed
 const basePath = '/studio'
@@ -23,6 +24,7 @@ export default defineConfig({
     types: schemaTypes,
   },
   plugins: [
+    mediaConfigPlugin(),
     deskTool({
       structure: (S) => {
         // @TODO: define index page singleton as a settings document
