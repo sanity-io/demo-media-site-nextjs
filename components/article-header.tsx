@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-import { getUrlForDocumentType } from '../lib/routing'
+import { getUrlForDocumentType } from '../utils/routing'
 import { urlForImage } from '../lib/sanity'
 import { ArticleProps } from '../types'
 import { Figure } from './figure'

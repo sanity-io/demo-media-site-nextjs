@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-import { getUrlForDocumentType } from '../lib/routing'
+import { getUrlForDocumentType } from '../utils/routing'
 import { ArticleProps } from '../types'
 import Avatar from './avatar'
 import CoverImage from './cover-image'

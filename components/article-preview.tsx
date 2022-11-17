@@ -2,7 +2,7 @@ import { PortableText } from '@portabletext/react'
 import Link from 'next/link'
 import React from 'react'
 
-import { getUrlForDocumentType } from '../lib/routing'
+import { getUrlForDocumentType } from '../utils/routing'
 import { ArticleProps } from '../types'
 import Avatar from './avatar'
 import CoverImage from './cover-image'

@@ -2,7 +2,7 @@ import cn from 'classnames'
 import Image from 'next/image'
 import Link from 'next/link'
 
-import { getUrlForDocumentType } from '../lib/routing'
+import { getUrlForDocumentType } from '../utils/routing'
 import { urlForImage } from '../lib/sanity'
 
 interface CoverImageProps {
