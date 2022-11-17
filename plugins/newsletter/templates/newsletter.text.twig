@@ -1,0 +1,53 @@
+<mjml>
+    <mj-head>
+        <mj-font name="Inter" href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800display=swap" />
+        <mj-font name="PT Serif" href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap" />
+        <mj-preview>{{ subject ?? 'No subject' }}</mj-preview>
+    </mj-head>
+    <mj-body>
+        <mj-section padding-bottom="0">
+            <mj-column>
+                <mj-text font-family="Inter, Arial" font-size="48px" font-weight="800">
+                    Media
+                </mj-text>
+            </mj-column>
+        </mj-section>
+        <mj-section full-width="full-width" padding="0px">
+            <mj-column>
+                <mj-divider border-width="1px" border-color="#CED2D9" />
+            </mj-column>
+        </mj-section>
+
+        <mj-section padding="10px 0">
+            <mj-column>
+                <mj-text font-family="PT Serif, Arial" font-size="16px" line-height="21px" font-weight="500">
+                    {{intro}}
+                </mj-text>
+
+                <mj-section padding="0 0">
+                    <mj-column>
+                        <mj-text font-family="Inter, Arial" font-size="13px" line-height="17px" font-weight="600">
+                            {{publishDate}}
+                        </mj-text>
+                    </mj-column>
+                </mj-section>
+            </mj-column>
+        </mj-section>
+
+        {% set lastBlockType = null %}
+        {% for contentBlock in contentBlocks %}
+            {% case contentBlock.type %}
+                {% when 'text' %}
+                    {% if lastBlockType and lastBlockType %}
+                    <mj-section padding="10px 0">
+                        <mj-column>
+                            <mj-text font-family="PT Serif, Arial" font-size="16px" line-height="21px" font-weight="500">
+                                {{value}}
+                            </mj-text>
+                        </mj-column>
+                    </mj-section>
+            {% endcase %}
+        {% endfor %}
+
+    </mj-body>
+</mjml>
