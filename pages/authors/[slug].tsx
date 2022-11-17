@@ -33,7 +33,7 @@ function openGraphObjectFromDocument(document: any) {
 }
 
 interface Props {
-  data: { articles: ArticleProps[]; name?: string; slug?: string }
+  data: { articles: ArticleProps[]; name?: string; slug?: string; bio?: any }
   preview: any
   globalSettings: any
 }
