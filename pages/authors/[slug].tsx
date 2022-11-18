@@ -48,6 +48,7 @@ export default function Author(props: Props) {
     initialData: initialData,
     enabled: preview && !!slug,
   })
+  //@ts-ignore but let's add Zod here for the dereferencing
   const { articles, name, bio } = data || {}
 
   if (!router.isFallback && !slug) {

@@ -35,8 +35,7 @@ export default defineType({
             />
           </div>
         )
-      }
-      else {
+      } else {
         return <div>Video missing URL</div>
       }
     },
