@@ -2,7 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 import { urlForImage } from '../lib/sanity'
-import { ArticleProps } from '../types'
+import { ArticleProps, MainImage } from '../types'
 import { getUrlForDocumentType } from '../utils/routing'
 import { Figure } from './figure'
 
@@ -32,7 +32,7 @@ function MainCoverImage({
   mainImage,
 }: {
   title: string
-  mainImage: any
+  mainImage: MainImage
 }) {
   return (
     <>
@@ -50,7 +50,7 @@ function MainCoverImage({
             src={urlForImage(mainImage?.image).height(1000).width(2000).url()}
             width={2000}
             height={1000}
-            style={{ display: 'block', objectFit: 'cover' }}
+            style={{ objectFit: 'cover' }}
           />
         }
       />
