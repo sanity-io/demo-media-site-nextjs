@@ -72,18 +72,16 @@ export default function Article(props: Props) {
       {router.isFallback ? (
         <ArticleTitle>Loading…</ArticleTitle>
       ) : (
-        <>
-          <article>
-            <ArticleHeader
-              title={article.title}
-              mainImage={article.mainImage}
-              date={article.date}
-              people={article.people}
-              sections={article.sections}
-            />
-            <ArticleBody content={article.content} people={article.people} />
-          </article>
-        </>
+        <article className="pb-4 md:pb-6">
+          <ArticleHeader
+            title={article.title}
+            mainImage={article.mainImage}
+            date={article.date}
+            people={article.people}
+            sections={article.sections}
+          />
+          <ArticleBody content={article.content} people={article.people} />
+        </article>
       )}
     </Container>
   )
