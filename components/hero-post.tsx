@@ -1,7 +1,7 @@
 import Link from 'next/link'
 
-import { getUrlForDocumentType } from '../utils/routing'
 import { ArticleProps } from '../types'
+import { getUrlForDocumentType } from '../utils/routing'
 import Avatar from './avatar'
 import CoverImage from './cover-image'
 import Date from './date'

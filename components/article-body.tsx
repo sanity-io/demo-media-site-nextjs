@@ -10,9 +10,10 @@
 import { PortableText } from '@portabletext/react'
 import Link from 'next/link'
 import React from 'react'
+import ReactPlayer from 'react-player'
 
-import { getUrlForDocumentType } from '../utils/routing'
 import { ArticleProps } from '../types'
+import { getUrlForDocumentType } from '../utils/routing'
 
 const components = {
   types: {
@@ -33,6 +34,10 @@ const components = {
         </div>
       )
     },
+    video: ({ value }) => {
+      const { url } = value
+      return <ReactPlayer url={url} />
+    },
   },
 }
 
@@ -44,12 +49,16 @@ export default function ArticleBody({
   people?: any
 }) {
   return (
-    <div className="m-auto max-w-2xl p-4 md:p-5 lg:p-6">
+    <div className="m-auto max-w-5xl p-4 md:p-5 lg:p-6">
       {people && <Credits people={people} />}
 
       <div
-        className={`prose mx-auto max-w-2xl prose-headings:font-extrabold prose-headings:tracking-tight prose-p:leading-relaxed dark:prose-invert md:prose-lg lg:prose-xl `}
+        className={
+          'my-4 max-w-2xl font-serif text-lg leading-relaxed md:text-xl md:leading-relaxed'
+        }
       >
+        {/* @TODO: override wrappers for p tags so we get decent spacing
+        @TODO: ensure h1s, h2s, h3s, etc. are styled correctly */}
         <PortableText
           value={content}
           components={components}

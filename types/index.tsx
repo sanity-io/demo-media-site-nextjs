@@ -2,6 +2,7 @@ export interface AuthorProps {
   name: string
   slug?: string
   picture: any
+  bio: any
 }
 
 export interface SectionProps {

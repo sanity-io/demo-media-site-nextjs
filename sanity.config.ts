@@ -24,7 +24,6 @@ export default defineConfig({
     types: schemaTypes,
   },
   plugins: [
-    mediaConfigPlugin(),
     deskTool({
       structure: (S) => {
         // @TODO: define index page singleton as a settings document
@@ -46,20 +45,13 @@ export default defineConfig({
         }
         return S.document().views([S.view.form(), ...views])
       },
-
-      // `defaultDocumentNode is responsible for adding a “Preview” tab to the document pane
-      // You can add any React component to `S.view.component` and it will be rendered in the pane
-      // and have access to content in the form in real-time.
-      // It's part of the Studio's “Structure Builder API” and is documented here:
-      // https://www.sanity.io/docs/structure-builder-reference
     }),
     // Add an image asset source for Unsplash
     unsplashImageAsset(),
-    // Vision lets you query your content with GROQ in the studio
-    // https://www.sanity.io/docs/the-vision-plugin
     visionTool({
       defaultApiVersion: '2022-11-11',
     }),
+    mediaConfigPlugin(),
     scheduledPublishing(),
   ],
 })
