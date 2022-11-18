@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 
 import { urlForImage } from '../lib/sanity'
@@ -43,11 +44,12 @@ function MainCoverImage({
         }
         className="m-auto max-w-5xl p-2"
         img={
-          <img
+          <Image
             className="block aspect-[4/2]"
             alt={mainImage?.alt || title}
             src={urlForImage(mainImage?.image).height(1000).width(2000).url()}
-            sizes="100vw"
+            width={2000}
+            height={1000}
             style={{ display: 'block', objectFit: 'cover' }}
           />
         }
