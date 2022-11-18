@@ -20,3 +20,9 @@ export interface ArticleProps {
   slug?: string
   content?: any
 }
+
+export interface MainImage {
+  image: any
+  alt: string
+  caption: string
+}

@@ -8,18 +8,18 @@
  *
  */
 import { PortableText } from '@portabletext/react'
+import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import ReactPlayer from 'react-player'
 
-import { ArticleProps } from '../types'
+import { urlForImage } from '../lib/sanity'
+import { ArticleProps, MainImage } from '../types'
 import { getUrlForDocumentType } from '../utils/routing'
+import { Figure } from './figure'
 
 const components = {
   types: {
-    mainImage: ({ value }) => {
-      return <div className="text-black">Image: {JSON.stringify(value)}</div>
-    },
     article: ({ value }) => {
       const { title, slug } = value
       const url = getUrlForDocumentType('article', slug)
@@ -32,6 +32,24 @@ const components = {
             </Link>
           </p>
         </div>
+      )
+    },
+    mainImage: ({ value }: { value: MainImage }) => {
+      const { image, caption, alt } = value
+      return (
+        <Figure
+          caption={caption}
+          img={
+            <Image
+              className="block aspect-[4/2]"
+              alt={alt}
+              src={urlForImage(image).height(1000).width(2000).url()}
+              width={2000}
+              height={1000}
+              style={{ objectFit: 'cover' }}
+            />
+          }
+        />
       )
     },
     video: ({ value }) => {
