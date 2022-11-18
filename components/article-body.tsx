@@ -56,6 +56,8 @@ export default function ArticleBody({
       <div
         className={"my-4 max-w-2xl font-serif text-lg leading-relaxed md:text-xl md:leading-relaxed"}
       >
+        {/* @TODO: override wrappers for p tags so we get decent spacing
+        @TODO: ensure h1s, h2s, h3s, etc. are styled correctly */}
         <PortableText
           value={content}
           components={components}
