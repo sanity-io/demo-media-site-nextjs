@@ -1,6 +1,9 @@
+export const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || 'production'
+export const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || ''
+
 export const sanityConfig = {
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
+  dataset,
+  projectId,
   useCdn:
     typeof document !== 'undefined' && process.env.NODE_ENV === 'production',
   // useCdn == true gives fast, cheap responses using a globally distributed cache.

@@ -1,24 +1,20 @@
 import ErrorPage from 'next/error'
-import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { NextSeo } from 'next-seo'
 
-import ArticleBody from '../../components/article-body'
-import ArticleHeader from '../../components/article-header'
 import ArticleTitle from '../../components/article-title'
 import Container from '../../components/container'
-import Header from '../../components/header'
-import Layout from '../../components/layout'
-import MoreStories from '../../components/more-stories'
-import SectionSeparator from '../../components/section-separator'
 import {
   articleQuery,
   articleSlugsQuery,
   settingsQuery,
 } from '../../lib/queries'
-import { urlForImage, usePreviewSubscription } from '../../lib/sanity'
+import { urlForImage } from '../../lib/sanity'
 import { getClient, overlayDrafts } from '../../lib/sanity.server'
 import { ArticleProps } from '../../types'
+import Article from '../../components/Article'
+import { PreviewSuspense } from 'next-sanity/preview'
+import PreviewArticle from '../../components/PreviewArticle'
 
 function openGraphObjectFromDocument(document: any) {
   // article.mainImage?.image?.asset?._ref
@@ -47,17 +43,11 @@ interface Props {
   globalSettings: any
 }
 
-export default function Article(props: Props) {
-  const { data: initialData, preview, globalSettings } = props
+export default function ArticlePage(props: Props) {
+  const { data: {article}, preview, globalSettings } = props
   const router = useRouter()
 
-  const slug = initialData?.article?.slug
-  const { data } = usePreviewSubscription(articleQuery, {
-    params: { slug },
-    initialData: initialData,
-    enabled: preview && !!slug,
-  })
-  const { article, moreArticles } = data || {}
+  const slug = article?.slug
 
   if (!router.isFallback && !slug) {
     return <ErrorPage statusCode={404} />
@@ -71,18 +61,13 @@ export default function Article(props: Props) {
       />
       {router.isFallback ? (
         <ArticleTitle>Loading…</ArticleTitle>
-      ) : (
-        <article className="pb-4 md:pb-6">
-          <ArticleHeader
-            title={article.title}
-            mainImage={article.mainImage}
-            date={article.date}
-            people={article.people}
-            sections={article.sections}
-          />
-          <ArticleBody content={article.content} people={article.people} />
-        </article>
-      )}
+      ) : ( preview ? (
+        <PreviewSuspense fallback="Loading...">
+          <PreviewArticle />
+        </PreviewSuspense>
+        ): (<Article article={article} />)
+      )
+      }
     </Container>
   )
 }

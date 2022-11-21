@@ -11,6 +11,7 @@ import { scheduledPublishing } from '@sanity/scheduled-publishing'
 
 import { schemaTypes } from './schemas'
 import { mediaConfigPlugin } from './plugins/config'
+import { DocumentPreview } from './components/DocumentPreview'
 
 // @TODO: update next-sanity/studio to automatically set this when needed
 const basePath = '/studio'
@@ -31,7 +32,11 @@ export default defineConfig({
       },
       defaultDocumentNode: (S, { schemaType }) => {
         const articleReferenceTypes = ['person', 'section']
+        const previewTypes = ['article', 'person', 'section']
         const views = []
+        if (previewTypes.includes(schemaType)) {
+          views.push(S.view.component(DocumentPreview).title('Preview'))
+        }
         if (articleReferenceTypes.includes(schemaType)) {
           views.push(
             S.view
@@ -46,7 +51,6 @@ export default defineConfig({
         return S.document().views([S.view.form(), ...views])
       },
     }),
-    // Add an image asset source for Unsplash
     unsplashImageAsset(),
     visionTool({
       defaultApiVersion: '2022-11-11',
