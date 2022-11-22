@@ -3,7 +3,7 @@ module.exports = {
   // @TODO figure out why the swc minifier breaks preview mode
   swcMinify: false,
 
-  experimental: { urlImports: ['https://themer.sanity.build/'] },
+  experimental: { urlImports: ['https://themer.sanity.build/api/hues?preset=tw-cyan&primary=b595f9'] },
 
   images: {
     remotePatterns: [
