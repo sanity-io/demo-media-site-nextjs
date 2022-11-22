@@ -13,7 +13,10 @@ export function InputWrappers(props: InputProps) {
     return <MailchimpStatusWrapper {...props} />
   }
 
-  if (props.schemaType.name === 'portableText' && props.schemaType.title === 'Content') {
+  if (
+    props.schemaType.name === 'portableText' &&
+    props.schemaType.title === 'Content'
+  ) {
     return <SyncNewArticlesWrapper {...props} />
   }
 
