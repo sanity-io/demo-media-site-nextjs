@@ -1,35 +1,18 @@
 import ErrorPage from 'next/error'
 import { useRouter } from 'next/router'
+import { PreviewSuspense } from 'next-sanity/preview'
 import { NextSeo } from 'next-seo'
+import { lazy } from 'react'
 
 import ArticleTitle from '../../components/article-title'
-import Container from '../../components/container'
-import MoreStories from '../../components/more-stories'
+import SectionPage from '../../components/SectionPage'
 import { sectionBySlugQuery, sectionSlugsQuery } from '../../lib/queries'
-import { urlForImage, usePreviewSubscription } from '../../lib/sanity'
 import { getClient, overlayDrafts } from '../../lib/sanity.server'
 import { ArticleProps } from '../../types'
 
-function openGraphObjectFromDocument(document: any) {
-  // section.mainImage?.image?.asset?._ref
-  return {
-    title: document.name,
-    //description: document.description,
-    // url: document.url,
-    // type: 'article',
-    images: document.mainImage?.image?.asset?._ref
-      ? [
-          {
-            url: urlForImage(document.mainImage.image)
-              .width(1200)
-              .height(627)
-              .fit('crop')
-              .url(),
-          },
-        ]
-      : undefined,
-  }
-}
+const PreviewSectionPage = lazy(
+  () => import('../../components/PreviewSectionPage')
+)
 
 interface Props {
   data: { articles: ArticleProps[]; name?: string; slug?: string }
@@ -38,39 +21,28 @@ interface Props {
 }
 
 export default function Section(props: Props) {
-  const { data: initialData, preview } = props
+  const { data, preview } = props
   const router = useRouter()
 
-  const slug = initialData?.slug
-  const { data } = usePreviewSubscription(sectionBySlugQuery, {
-    params: { slug },
-    initialData: initialData,
-    enabled: preview && !!slug,
-  })
-  const { articles, name } = data || {}
+  const slug = data?.slug
 
   if (!router.isFallback && !slug) {
     return <ErrorPage statusCode={404} />
   }
 
-  return (
-    <Container>
-      <NextSeo
-        title={name}
-        openGraph={name ? openGraphObjectFromDocument({ name }) : undefined}
-      />
-      {router.isFallback ? (
-        <ArticleTitle>Loading…</ArticleTitle>
-      ) : (
-        <div className="">
-          <div className="m-auto max-w-5xl p-4 md:p-5 lg:p-6">
-            <ArticleTitle>{name}</ArticleTitle>
-          </div>
-          {articles?.length > 0 && <MoreStories articles={articles} />}
-        </div>
-      )}
-    </Container>
-  )
+  if (router.isFallback) {
+    return <ArticleTitle>Loading…</ArticleTitle>
+  }
+
+  if (preview) {
+    return (
+      <PreviewSuspense fallback={<SectionPage section={data} />}>
+        <PreviewSectionPage slug={slug} />
+      </PreviewSuspense>
+    )
+  }
+
+  return <SectionPage section={data} />
 }
 
 export async function getStaticProps({ params, preview = false }) {

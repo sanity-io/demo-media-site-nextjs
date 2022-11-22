@@ -1,13 +1,17 @@
 import ErrorPage from 'next/error'
 import { useRouter } from 'next/router'
 import { PreviewSuspense } from 'next-sanity/preview'
+import { lazy } from 'react'
 
 import ArticleTitle from '../../components/article-title'
 import AuthorPage from '../../components/AuthorPage'
-import PreviewAuthorPage from '../../components/PreviewAuthorPage'
 import { personBySlugQuery, personSlugsQuery } from '../../lib/queries'
 import { getClient, overlayDrafts } from '../../lib/sanity.server'
 import { ArticleProps } from '../../types'
+
+const PreviewAuthorPage = lazy(
+  () => import('../../components/PreviewAuthorPage')
+)
 
 interface Props {
   data: { articles: ArticleProps[]; name?: string; slug?: string; bio?: any }
