@@ -16,8 +16,8 @@ import newsletterPlugin from './plugins/newsletter'
 import defaultDocumentNode from './plugins/config/defaultDocumentNode'
 
 // @TODO: update next-sanity/studio to automatically set this when needed
-const basePath = '/studio/media'
-const basePathBlog = '/studio/blog'
+const basePath = '/studio/tech'
+const basePathLifestyle = '/studio/lifestyle'
 
 const defaultConfig = (type: string) => {
   // const defaultConfig = (type) => {
@@ -46,19 +46,19 @@ const defaultConfig = (type: string) => {
 export default defineConfig([
   {
     basePath,
-    name: 'media',
+    name: 'tech',
     projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
     dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
-    title: process.env.NEXT_PUBLIC_SANITY_PROJECT_TITLE || 'Media',
-    plugins: [defaultConfig('media')],
+    title: process.env.NEXT_PUBLIC_SANITY_PROJECT_TITLE || 'Tech',
+    plugins: [defaultConfig('tech')],
   },
   {
-    name: 'blog',
-    basePath: basePathBlog,
+    name: 'lifestyle',
+    basePath: basePathLifestyle,
     projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
     dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
-    title: process.env.NEXT_PUBLIC_SANITY_PROJECT_TITLE || 'Blog',
+    title: process.env.NEXT_PUBLIC_SANITY_PROJECT_TITLE || 'Lifestyle',
     theme,
-    plugins: [defaultConfig('blog')],
+    plugins: [defaultConfig('lifestyle')],
   },
 ])
