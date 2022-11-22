@@ -1,6 +1,6 @@
 import { NextSeo } from 'next-seo'
-import openGraphObjectFromDocument from '../lib/openGraphObjectFromDocument'
 
+import openGraphObjectFromDocument from '../lib/openGraphObjectFromDocument'
 import { ArticleProps } from '../types'
 import ArticleBody from './article-body'
 import ArticleHeader from './article-header'
@@ -9,7 +9,6 @@ import Container from './container'
 interface ArticleComponentProps {
   article?: ArticleProps
 }
-
 
 export default function ArticlePage({ article }: ArticleComponentProps) {
   return (

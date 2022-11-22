@@ -1,7 +1,7 @@
 /**
  * This component is responsible for rendering a preview of a document inside the Studio.
  */
-import { Card, Flex, Spinner, Text } from '@sanity/ui'
+import { Card, Text } from '@sanity/ui'
 import React, {
   memo,
   startTransition,
@@ -46,26 +46,6 @@ export default function DocumentPreviewPane(props: Props) {
       <Suspense fallback={null}>
         <Iframe slug={slug} _type={props._type} />
       </Suspense>
-      <Flex
-        as={Card}
-        justify="center"
-        align="center"
-        height="fill"
-        direction="column"
-        gap={4}
-        style={{
-          position: 'absolute',
-          top: 0,
-          right: 0,
-          bottom: 0,
-          left: 0,
-          pointerEvents: 'none',
-          zIndex: 0,
-        }}
-      >
-        <Text muted>Loading…</Text>
-        <Spinner muted />
-      </Flex>
     </Card>
   )
 }

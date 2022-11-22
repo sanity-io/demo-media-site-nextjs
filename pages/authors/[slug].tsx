@@ -1,17 +1,13 @@
 import ErrorPage from 'next/error'
 import { useRouter } from 'next/router'
-import { NextSeo } from 'next-seo'
-
-import ArticleBody from '../../components/article-body'
-import ArticleTitle from '../../components/article-title'
-import Container from '../../components/container'
-import MoreStories from '../../components/more-stories'
-import { personBySlugQuery, personSlugsQuery, sectionSlugsQuery } from '../../lib/queries'
-import { getClient, overlayDrafts } from '../../lib/sanity.server'
-import { ArticleProps } from '../../types'
 import { PreviewSuspense } from 'next-sanity/preview'
+
+import ArticleTitle from '../../components/article-title'
 import AuthorPage from '../../components/AuthorPage'
 import PreviewAuthorPage from '../../components/PreviewAuthorPage'
+import { personBySlugQuery, personSlugsQuery } from '../../lib/queries'
+import { getClient, overlayDrafts } from '../../lib/sanity.server'
+import { ArticleProps } from '../../types'
 
 interface Props {
   data: { articles: ArticleProps[]; name?: string; slug?: string; bio?: any }
@@ -43,7 +39,6 @@ export default function Author(props: Props) {
 
   return <AuthorPage author={data} />
 }
-
 
 export async function getStaticProps({ params, preview = false }) {
   const person = await getClient(preview).fetch(personBySlugQuery, {

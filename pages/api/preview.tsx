@@ -1,3 +1,5 @@
+import { CollectionPageJsonLd } from 'next-seo'
+
 import {
   articleBySlugQuery,
   personBySlugQuery,
@@ -40,7 +42,7 @@ export default async function preview(req, res) {
         slug: req.query.slug,
       })
       break
-    case 'author':
+    case 'person':
       subpath = 'authors'
       content = await getClient(true).fetch(personBySlugQuery, {
         slug: req.query.slug,

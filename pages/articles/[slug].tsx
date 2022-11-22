@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import { PreviewSuspense } from 'next-sanity/preview'
 import { lazy } from 'react'
 
+import ArticleTitle from '../../components/article-title'
 import ArticlePage from '../../components/ArticlePage'
 import {
   articleQuery,
@@ -11,7 +12,6 @@ import {
 } from '../../lib/queries'
 import { getClient, overlayDrafts } from '../../lib/sanity.server'
 import { ArticleProps } from '../../types'
-import ArticleTitle from '../../components/article-title'
 
 const PreviewArticlePage = lazy(
   () => import('../../components/PreviewArticlePage')

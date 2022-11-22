@@ -1,4 +1,5 @@
 import { NextSeo } from 'next-seo'
+
 import openGraphObjectFromDocument from '../lib/openGraphObjectFromDocument'
 import { ArticleProps } from '../types'
 import ArticleBody from './article-body'
@@ -16,8 +17,8 @@ interface AuthorPageProps {
   }
 }
 
-export default function AuthorPage({author}: AuthorPageProps) {
-  const { name, bio, articles } = author
+export default function AuthorPage({ author }: AuthorPageProps) {
+  const { name, bio, articles } = author || {}
   return (
     <Container>
       <NextSeo
