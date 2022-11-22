@@ -130,7 +130,8 @@
         </mj-column>
       </mj-section>
     </mj-wrapper>
-    {# Unsupported fallback #} {% else %}
+    {# Unsupported fallback #}
+    {% else %}
     <mj-section padding="10px 0">
       <mj-column>
         <mj-text
