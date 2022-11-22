@@ -16,6 +16,8 @@ import newsletterPlugin, { NewsletterPreview } from './plugins/newsletter'
 // @TODO: update next-sanity/studio to automatically set this when needed
 const basePath = '/studio'
 
+const HIDDEN_TYPES = ['media.tag']
+
 export default defineConfig({
   basePath,
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
@@ -28,7 +30,13 @@ export default defineConfig({
     deskTool({
       structure: (S) => {
         // @TODO: define index page singleton as a settings document
-        return S.list().title('Content').items(S.documentTypeListItems())
+        return S.list()
+          .title('Content')
+          .items([
+            ...S.documentTypeListItems().filter(
+              (listItem) => !HIDDEN_TYPES.includes(listItem.getId())
+            ),
+          ])
       },
       defaultDocumentNode: (S, { schemaType }) => {
         const articleReferenceTypes = ['person', 'section']
