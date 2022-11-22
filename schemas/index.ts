@@ -12,8 +12,11 @@ import person from './person'
 import section from './section'
 import newsletter from './newsletter'
 import articleReferences from './objects/articleReferences'
+import podcast from './podcast'
+import podcastEpisode from './objects/podcastEpisode'
 
 export const schemaTypes = [
+  // Objects
   articleReference,
   articleReferences,
   contentRole,
@@ -21,9 +24,13 @@ export const schemaTypes = [
   minimalPortableText,
   portableText,
   seo,
+  podcastEpisode,
   video,
+
+  // Document types
   article,
   newsletter,
   person,
+  podcast,
   section,
 ]
