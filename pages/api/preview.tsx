@@ -1,4 +1,8 @@
-import { articleBySlugQuery, personBySlugQuery, sectionBySlugQuery } from '../../lib/queries'
+import {
+  articleBySlugQuery,
+  personBySlugQuery,
+  sectionBySlugQuery,
+} from '../../lib/queries'
 import { getClient } from '../../lib/sanity.server'
 
 function redirectToPreview(res, Location) {
@@ -21,20 +25,26 @@ export default async function preview(req, res) {
   }
 
   // Check if content with given slug exists
-  let content = {slug: ""}
+  let content = { slug: '' }
   let subpath = ''
-  switch(req.query.type) {
+  switch (req.query.type) {
     case 'article':
       subpath = 'articles'
-      content = await getClient(true).fetch(articleBySlugQuery, { slug: req.query.slug })
+      content = await getClient(true).fetch(articleBySlugQuery, {
+        slug: req.query.slug,
+      })
       break
     case 'section':
       subpath = 'sections'
-      content = await getClient(true).fetch(sectionBySlugQuery, { slug: req.query.slug })
+      content = await getClient(true).fetch(sectionBySlugQuery, {
+        slug: req.query.slug,
+      })
       break
     case 'author':
       subpath = 'authors'
-      content = await getClient(true).fetch(personBySlugQuery, { slug: req.query.slug })
+      content = await getClient(true).fetch(personBySlugQuery, {
+        slug: req.query.slug,
+      })
       break
     default:
       break
@@ -42,7 +52,9 @@ export default async function preview(req, res) {
 
   // If the slug doesn't exist prevent preview mode from being enabled
   if (!content) {
-    return res.status(401).json({ message: `Invalid slug ${req.query.slug} for type ${req.query.type}` })
+    return res.status(401).json({
+      message: `Invalid slug ${req.query.slug} for type ${req.query.type}`,
+    })
   }
 
   // Redirect to the path from the fetched post

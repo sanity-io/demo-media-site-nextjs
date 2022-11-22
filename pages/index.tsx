@@ -1,18 +1,13 @@
+import { PreviewSuspense } from 'next-sanity/preview'
 import { NextSeo } from 'next-seo'
 
 import Container from '../components/container'
 import MoreStories from '../components/more-stories'
-import { indexQuery, settingsQuery } from '../lib/queries'
-import {PreviewSuspense } from 'next-sanity/preview'
-
-import { getClient, overlayDrafts } from '../lib/sanity.server'
 import PreviewMoreStories from '../components/PreviewMoreStories'
+import { indexQuery, settingsQuery } from '../lib/queries'
+import { getClient, overlayDrafts } from '../lib/sanity.server'
 
-export default function Index({
-  allArticles,
-  preview,
-  blogSettings,
-}) {
+export default function Index({ allArticles, preview, blogSettings }) {
   const { title = 'Media.' } = blogSettings || {}
 
   return (
@@ -30,15 +25,13 @@ export default function Index({
           />
         )}*/}
         <div className="">
-          {allArticles.length > 0 && 
-          (preview)  ? (
+          {allArticles.length > 0 && preview ? (
             <PreviewSuspense fallback="Loading...">
               <PreviewMoreStories />
             </PreviewSuspense>
-            ) : (
-              <MoreStories articles={allArticles} />
-            )
-          }
+          ) : (
+            <MoreStories articles={allArticles} />
+          )}
         </div>
       </Container>
     </>

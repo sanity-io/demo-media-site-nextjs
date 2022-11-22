@@ -11,7 +11,7 @@ import { scheduledPublishing } from '@sanity/scheduled-publishing'
 
 import { schemaTypes } from './schemas'
 import { mediaConfigPlugin } from './plugins/config'
-import { DocumentPreview } from './components/DocumentPreview'
+import DocumentPreview from './components/DocumentPreview'
 
 // @TODO: update next-sanity/studio to automatically set this when needed
 const basePath = '/studio'
@@ -35,7 +35,16 @@ export default defineConfig({
         const previewTypes = ['article', 'person', 'section']
         const views = []
         if (previewTypes.includes(schemaType)) {
-          views.push(S.view.component(DocumentPreview).title('Preview'))
+          views.push(
+            S.view
+              .component(({ document }) => (
+                <DocumentPreview
+                  slug={document.displayed.slug}
+                  _type={document.displayed.type}
+                />
+              ))
+              .title('Preview')
+          )
         }
         if (articleReferenceTypes.includes(schemaType)) {
           views.push(

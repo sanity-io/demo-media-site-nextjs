@@ -1,41 +1,20 @@
 import ErrorPage from 'next/error'
 import { useRouter } from 'next/router'
-import { NextSeo } from 'next-seo'
+import { PreviewSuspense } from 'next-sanity/preview'
+import { lazy } from 'react'
 
-import ArticleTitle from '../../components/article-title'
-import Container from '../../components/container'
+import ArticlePage from '../../components/ArticlePage'
 import {
   articleQuery,
   articleSlugsQuery,
   settingsQuery,
 } from '../../lib/queries'
-import { urlForImage } from '../../lib/sanity'
 import { getClient, overlayDrafts } from '../../lib/sanity.server'
 import { ArticleProps } from '../../types'
-import Article from '../../components/Article'
-import { PreviewSuspense } from 'next-sanity/preview'
-import PreviewArticle from '../../components/PreviewArticle'
 
-function openGraphObjectFromDocument(document: any) {
-  // article.mainImage?.image?.asset?._ref
-  return {
-    title: document.title,
-    //description: document.description,
-    // url: document.url,
-    type: 'article',
-    images: document.mainImage?.image?.asset?._ref
-      ? [
-          {
-            url: urlForImage(document.mainImage.image)
-              .width(1200)
-              .height(627)
-              .fit('crop')
-              .url(),
-          },
-        ]
-      : undefined,
-  }
-}
+const PreviewArticlePage = lazy(
+  () => import('../../components/PreviewArticlePage')
+)
 
 interface Props {
   data: { article: ArticleProps; moreArticles: any }
@@ -43,8 +22,12 @@ interface Props {
   globalSettings: any
 }
 
-export default function ArticlePage(props: Props) {
-  const { data: {article}, preview, globalSettings } = props
+export default function Article(props: Props) {
+  const {
+    data: { article },
+    preview,
+    globalSettings,
+  } = props
   const router = useRouter()
 
   const slug = article?.slug
@@ -52,24 +35,15 @@ export default function ArticlePage(props: Props) {
   if (!router.isFallback && !slug) {
     return <ErrorPage statusCode={404} />
   }
+  if (preview) {
+    return (
+      <PreviewSuspense fallback={<ArticlePage article={article} />}>
+        <PreviewArticlePage slug={slug} />
+      </PreviewSuspense>
+    )
+  }
 
-  return (
-    <Container>
-      <NextSeo
-        title={article?.title}
-        openGraph={article ? openGraphObjectFromDocument(article) : undefined}
-      />
-      {router.isFallback ? (
-        <ArticleTitle>Loading…</ArticleTitle>
-      ) : ( preview ? (
-        <PreviewSuspense fallback="Loading...">
-          <PreviewArticle />
-        </PreviewSuspense>
-        ): (<Article article={article} />)
-      )
-      }
-    </Container>
-  )
+  return <ArticlePage article={article} />
 }
 
 export async function getStaticProps({ params, preview = false }) {

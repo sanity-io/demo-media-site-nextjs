@@ -1,49 +1,93 @@
 /**
- * This component is responsible for rendering a preview of an article inside the Studio.
- * It's imported in `sanity.config.ts´ and used as a component in the defaultDocumentNode function.
+ * This component is responsible for rendering a preview of a document inside the Studio.
  */
-import { Card, Text } from '@sanity/ui'
-import React from 'react'
-import { SanityDocumentLike } from 'sanity'
+import { Card, Flex, Spinner, Text } from '@sanity/ui'
+import React, {
+  memo,
+  startTransition,
+  Suspense,
+  useEffect,
+  useState,
+} from 'react'
 
-interface DocumentPreviewProps {
-  document: {
-    displayed: SanityDocumentLike & {slug: {current: string}}
-  }
+type Props = {
+  slug?: string
+  _type: string
 }
 
-export function DocumentPreview({document: {displayed}}: DocumentPreviewProps) {
+export default function DocumentPreviewPane(props: Props) {
+  // Whenever the slug changes there's it's best to wait a little for elastic search to reach eventual consistency
+  // this helps prevent seeing "Invalid slug" or 404 errors while editing the slug manually
+  const [slug, setSlug] = useState(props.slug)
+  useEffect(() => {
+    const timeout = setTimeout(
+      () => startTransition(() => setSlug(props.slug)),
+      3000
+    )
+    return () => clearTimeout(timeout)
+  }, [props.slug])
+
   // if the document has no slug for the preview iframe
-  const {slug, _type} = displayed
   if (!slug) {
     return (
       <Card tone="primary" margin={5} padding={6}>
         <Text align="center">
-          {`Please add a slug to the ${_type} to see the preview!`}
+          Please add a slug to the post to see the preview!
         </Text>
       </Card>
     )
   }
 
   return (
-    <Card scheme="light" style={{ width: '100%', height: '100%' }}>
-      {/* //@TODO: Use IFrame Pane here? */}
-      <iframe style={{ width: '100%', height: '100%' }} src={getUrl(displayed)} />
+    <Card
+      scheme="light"
+      style={{ width: '100%', height: '100%', position: 'relative' }}
+    >
+      <Suspense fallback={null}>
+        <Iframe slug={slug} _type={props._type} />
+      </Suspense>
+      <Flex
+        as={Card}
+        justify="center"
+        align="center"
+        height="fill"
+        direction="column"
+        gap={4}
+        style={{
+          position: 'absolute',
+          top: 0,
+          right: 0,
+          bottom: 0,
+          left: 0,
+          pointerEvents: 'none',
+          zIndex: 0,
+        }}
+      >
+        <Text muted>Loading…</Text>
+        <Spinner muted />
+      </Flex>
     </Card>
   )
 }
 
-function getUrl(document: DocumentPreviewProps['document']['displayed']) {
-  const {slug, _type} = document
-  const url = new URL('/api/preview', location.origin)
-  //@TODO: update to use new token flow per next-sanity docs
+const Iframe = memo(function Iframe(
+  props: Omit<Props, 'slug'> & Required<Pick<Props, 'slug'>>
+) {
+  const { slug, _type } = props
+
   const secret = process.env.NEXT_PUBLIC_PREVIEW_SECRET
+
+  const url = new URL('/api/preview', location.origin)
+  url.searchParams.set('slug', slug)
+  url.searchParams.set('type', _type)
   if (secret) {
     url.searchParams.set('secret', secret)
   }
 
-  url.searchParams.set('slug', slug?.current!)
-  url.searchParams.set('type', _type!)
-
-  return url.toString()
-}
+  return (
+    <iframe
+      style={{ width: '100%', height: '100%', position: 'relative', zIndex: 1 }}
+      src={url.toString()}
+    />
+  )
+})

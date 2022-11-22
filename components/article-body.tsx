@@ -8,15 +8,17 @@
  *
  */
 import { PortableText } from '@portabletext/react'
+import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
-import ReactPlayer from 'react-player'
 
 import { urlForImage } from '../lib/sanity'
 import { ArticleProps, MainImage } from '../types'
 import { getUrlForDocumentType } from '../utils/routing'
 import { Figure } from './figure'
+
+const ReactPlayer = dynamic(() => import('react-player'), { ssr: false })
 
 const components = {
   types: {
@@ -54,7 +56,11 @@ const components = {
     },
     video: ({ value }) => {
       const { url } = value
-      return <ReactPlayer url={url} />
+      return (
+        <div>
+          <ReactPlayer url={url} />
+        </div>
+      )
     },
   },
 }
