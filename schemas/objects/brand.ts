@@ -5,8 +5,7 @@ import { BRANDS } from '../../lib/constants'
 export default defineField({
   name: 'brand',
   title: 'Brands',
-  description:
-    'Used to colocate documents to only those in the same "Brand"',
+  description: 'Used to colocate documents to only those in the same "Brand"',
   type: 'string',
   // TODO: Hide field completely once initial value templates are configured
   hidden: ({ value }) => Boolean(value),

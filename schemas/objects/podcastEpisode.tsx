@@ -24,28 +24,31 @@ export default defineType({
       type: 'url',
       title: 'Audio URL',
       description: `Accepts: SoundCloud and Mixcloud`,
-      validation: (Rule) => Rule.required()
-    }
+      validation: (Rule) => Rule.required(),
+    },
   ],
   components: {
     input: (props: PreviewProps) => {
       console.log('props', props)
       const audio = props.value as Audio
       const hasAudio = audio && audio.url
-        return (
-          <Stack space={4}>
-            {props.renderDefault(props)}
-            <AudioWrapper>
-              {hasAudio ? (<ReactPlayer
-                  url={audio.url}
-                  width="100%"
-                  height="100%"
-                  style={{ aspectRatio: '16/5.5' }}
-                />
-              ) : (<Text as="p">Audio missing URL</Text>)}
-            </AudioWrapper>
-          </Stack>
-        )
+      return (
+        <Stack space={4}>
+          {props.renderDefault(props)}
+          <AudioWrapper>
+            {hasAudio ? (
+              <ReactPlayer
+                url={audio.url}
+                width="100%"
+                height="100%"
+                style={{ aspectRatio: '16/5.5' }}
+              />
+            ) : (
+              <Text as="p">Audio missing URL</Text>
+            )}
+          </AudioWrapper>
+        </Stack>
+      )
     },
     preview: (props: PreviewProps) => {
       const audio = props.value as Audio
@@ -62,13 +65,17 @@ export default defineType({
           </div>
         )
       } else {
-        return <Box paddingY={2}><Text as="p">Audio missing URL</Text></Box>
+        return (
+          <Box paddingY={2}>
+            <Text as="p">Audio missing URL</Text>
+          </Box>
+        )
       }
-    }
+    },
   },
   preview: {
     select: {
-      url: 'url'
-    }
-  }
+      url: 'url',
+    },
+  },
 })
