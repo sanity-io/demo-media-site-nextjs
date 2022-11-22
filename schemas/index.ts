@@ -14,6 +14,7 @@ import newsletter from './newsletter'
 import articleReferences from './objects/articleReferences'
 import podcast from './podcast'
 import podcastEpisode from './objects/podcastEpisode'
+import brand from './objects/brand'
 
 export const schemaTypes = [
   // Objects
@@ -26,6 +27,7 @@ export const schemaTypes = [
   seo,
   podcastEpisode,
   video,
+  brand,
 
   // Document types
   article,

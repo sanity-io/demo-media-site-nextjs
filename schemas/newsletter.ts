@@ -45,6 +45,7 @@ export default defineType({
       type: 'minimalPortableText',
       hidden: ({ parent }) => !parent?.hasCustomTextContent,
     },
+    { type: 'brand', name: 'brand' },
   ],
   preview: {
     select: {

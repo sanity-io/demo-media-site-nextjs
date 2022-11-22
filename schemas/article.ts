@@ -47,6 +47,7 @@ export default defineType({
       type: 'portableText',
     },
     { type: 'seo', name: 'seo', title: 'SEO' },
+    { type: 'brand', name: 'brand' },
   ],
   preview: {
     select: {

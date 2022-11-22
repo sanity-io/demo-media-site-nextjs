@@ -1,11 +1,11 @@
-import { FiMail } from 'react-icons/fi'
+import { FiHeadphones, FiMail } from 'react-icons/fi'
 import { defineType } from 'sanity'
 import { Rule } from '@sanity/validation'
 
 export default defineType({
   name: 'podcast',
   title: 'Podcast',
-  icon: FiMail,
+  icon: FiHeadphones,
   type: 'document',
   fields: [
     {
@@ -26,6 +26,7 @@ export default defineType({
       type: 'minimalPortableText',
       validation: (Rule) => Rule.required(),
     },
+    { type: 'brand', name: 'brand' },
   ],
   preview: {
     select: {
