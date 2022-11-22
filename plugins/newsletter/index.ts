@@ -6,9 +6,9 @@ export default definePlugin({
   document: {},
   form: {
     components: {
-      input: InputWrappers
-    }
-  }
+      input: InputWrappers,
+    },
+  },
 })
 
 export * from './components/preview'

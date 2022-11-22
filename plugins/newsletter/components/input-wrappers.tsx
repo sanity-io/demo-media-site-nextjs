@@ -6,7 +6,10 @@ import { SyncNewArticlesWrapper } from './sync-new-articles'
 export function InputWrappers(props: InputProps) {
   // console.log(props.schemaType)
 
-  if (props.schemaType.type.name === 'document' && props.schemaType.name === 'newsletter') {
+  if (
+    props.schemaType.type.name === 'document' &&
+    props.schemaType.name === 'newsletter'
+  ) {
     return <MailchimpStatusWrapper {...props} />
   }
 

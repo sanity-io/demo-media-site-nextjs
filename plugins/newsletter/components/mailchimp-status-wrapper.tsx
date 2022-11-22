@@ -19,7 +19,8 @@ interface SyncStatus {
 function randomString(length: number) {
   const chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
   let result = ''
-  for (let i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)]
+  for (let i = length; i > 0; --i)
+    result += chars[Math.floor(Math.random() * chars.length)]
   return result
 }
 
@@ -30,7 +31,11 @@ export function MailchimpStatusWrapper(props: InputProps) {
   const [statusDetails, setStatusDetails] = useState<SyncStatus>()
 
   const handleSync = useCallback(async () => {
-    setStatusDetails(statusDetails ? { ...statusDetails, syncStatus: 'syncing' } : { syncStatus: 'pending' })
+    setStatusDetails(
+      statusDetails
+        ? { ...statusDetails, syncStatus: 'syncing' }
+        : { syncStatus: 'pending' }
+    )
     // setStatus(STATUS_PENDING)
     // const { document } = props
     // const { _id, _type } = document as SanityDocumentLike
@@ -43,31 +48,43 @@ export function MailchimpStatusWrapper(props: InputProps) {
     //   setStatus(STATUS_SYNCED)
     // }
     setTimeout(() => {
-      setStatusDetails({ syncStatus: 'synced', id: randomString(10), dateSynced: new Date().toISOString() })
+      setStatusDetails({
+        syncStatus: 'synced',
+        id: randomString(10),
+        dateSynced: new Date().toISOString(),
+      })
     }, 2500)
   }, [statusDetails])
 
   const syncDate = useMemo(() => {
-    const dateFormatted = statusDetails?.dateSynced ? formatRelative(parseISO(statusDetails.dateSynced), new Date()) : ''
+    const dateFormatted = statusDetails?.dateSynced
+      ? formatRelative(parseISO(statusDetails.dateSynced), new Date())
+      : ''
     return statusDetails?.dateSynced ? `Synced ${dateFormatted}` : 'Not pushed'
   }, [statusDetails])
 
   // const { _id } = props.value as SanityDocumentLike
   return (
     <Stack space={2}>
-      <Card paddingY={3}
-            paddingX={3}
-            radius={1}
-            shadow={1}
-            tone={status === STATUS_SYNCED ? 'primary' : 'default'}>
+      <Card
+        paddingY={3}
+        paddingX={3}
+        radius={1}
+        shadow={1}
+        tone={status === STATUS_SYNCED ? 'primary' : 'default'}
+      >
         <Flex align="center" justify="space-between" gap={1}>
           <Stack space={3}>
             <Label as="p">Mailchimp Status</Label>
             <Text as="p">{syncDate}</Text>
           </Stack>
           <Stack>
-            <Button tone="primary" loading={statusDetails?.syncStatus === 'syncing'} text="Send to Mailchimp"
-                    onClick={handleSync} />
+            <Button
+              tone="primary"
+              loading={statusDetails?.syncStatus === 'syncing'}
+              text="Send to Mailchimp"
+              onClick={handleSync}
+            />
           </Stack>
         </Flex>
       </Card>

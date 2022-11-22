@@ -7,12 +7,12 @@ export default defineType({
     select: {
       references: 'references',
     },
-    prepare({references}) {
+    prepare({ references }) {
       const count = references?.filter((ref) => ref._ref).length
       return {
         title: count > 0 ? `${count} references` : 'No references',
       }
-    }
+    },
   },
   fields: [
     {
@@ -20,6 +20,6 @@ export default defineType({
       name: 'references',
       title: 'References',
       of: [{ type: 'articleReference' }],
-    }
-  ]
+    },
+  ],
 })

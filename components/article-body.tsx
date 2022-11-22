@@ -25,7 +25,7 @@ const components = {
       const url = getUrlForDocumentType('article', slug)
       return (
         <div className="text-black">
-          <p className="p-4 border border-gray-200 border-gray-900 dark">
+          <p className="dark border border-gray-200 border-gray-900 p-4">
             <span className="font-bold">Read more:</span>{' '}
             <Link href={url} className="no-underline hover:underline">
               {title}
@@ -67,7 +67,7 @@ export default function ArticleBody({
   people?: any
 }) {
   return (
-    <div className="max-w-5xl p-4 m-auto md:p-5 lg:p-6">
+    <div className="m-auto max-w-5xl p-4 md:p-5 lg:p-6">
       {people && <Credits people={people} />}
 
       <div
@@ -97,7 +97,7 @@ export default function ArticleBody({
 
 function Credits({ people }: { people: ArticleProps['people'] }) {
   return (
-    <div className="max-w-2xl pb-3 mt-4 mb-4 text-sm border-b border-gray-200 dark:border-gray-900 sm:text-lg md:mt-auto md:pb-4 md:text-xl">
+    <div className="mt-4 mb-4 max-w-2xl border-b border-gray-200 pb-3 text-sm dark:border-gray-900 sm:text-lg md:mt-auto md:pb-4 md:text-xl">
       <span
         data-after=" ● "
         className="after:inline after:content-[attr(data-after)]"
