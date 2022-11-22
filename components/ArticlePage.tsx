@@ -1,6 +1,6 @@
 import { NextSeo } from 'next-seo'
+import openGraphObjectFromDocument from '../lib/openGraphObjectFromDocument'
 
-import { urlForImage } from '../lib/sanity'
 import { ArticleProps } from '../types'
 import ArticleBody from './article-body'
 import ArticleHeader from './article-header'
@@ -10,26 +10,6 @@ interface ArticleComponentProps {
   article?: ArticleProps
 }
 
-function openGraphObjectFromDocument(document: any) {
-  // article.mainImage?.image?.asset?._ref
-  return {
-    title: document.title,
-    //description: document.description,
-    // url: document.url,
-    type: 'article',
-    images: document.mainImage?.image?.asset?._ref
-      ? [
-          {
-            url: urlForImage(document.mainImage.image)
-              .width(1200)
-              .height(627)
-              .fit('crop')
-              .url(),
-          },
-        ]
-      : undefined,
-  }
-}
 
 export default function ArticlePage({ article }: ArticleComponentProps) {
   return (

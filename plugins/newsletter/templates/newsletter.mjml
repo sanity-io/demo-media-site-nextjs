@@ -1,0 +1,148 @@
+<mjml>
+  <mj-head>
+    <mj-font
+      name="Inter"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800display=swap"
+    />
+    <mj-font
+      name="PT Serif"
+      href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+    />
+    <mj-preview>{{ subject ?? 'No subject' }}</mj-preview>
+  </mj-head>
+  <mj-body>
+    <mj-section padding-bottom="0">
+      <mj-column>
+        <mj-text font-family="Inter, Arial" font-size="48px" font-weight="800">
+          Media
+        </mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-section full-width="full-width" padding="0px">
+      <mj-column>
+        <mj-divider border-width="1px" border-color="#CED2D9" />
+      </mj-column>
+    </mj-section>
+
+    <mj-section padding="10px 0">
+      <mj-column>
+        <mj-text
+          font-family="PT Serif, Arial"
+          font-size="16px"
+          line-height="21px"
+          font-weight="500"
+        >
+          {{intro}}
+        </mj-text>
+
+        <mj-section padding="0 0">
+          <mj-column>
+            <mj-text
+              font-family="Inter, Arial"
+              font-size="13px"
+              line-height="17px"
+              font-weight="600"
+            >
+              {{publishDate}}
+            </mj-text>
+          </mj-column>
+        </mj-section>
+      </mj-column>
+    </mj-section>
+
+    {# https://mjml.io/try-it-live/KEXT-aEPS #} {% set textTypes = ['paragraph',
+    'heading'] %} {% set lastBlockType = null %} {% for index,contentBlock in
+    contentBlocks %} {# Text types #} {% if contentBlock.type in textTypes %} {%
+    set isNextBlockTextType = contentBlocks[index + 1] is defined ?
+    contentBlocks[index + 1].type in textTypes : false %} {% if
+    contentBlock.type == 'paragraph' %}
+    <mj-section padding="10px 0">
+      <mj-column>
+        <mj-text
+          font-family="PT Serif, Arial"
+          font-size="16px"
+          line-height="21px"
+          font-weight="500"
+        >
+          {{contentBlock.html}}
+        </mj-text>
+      </mj-column>
+    </mj-section>
+    {% elseif contentBlock.type == 'heading' %}
+    <mj-section padding="10px 0">
+      <mj-column>
+        <mj-text
+          font-family="PT Serif, Arial"
+          font-size="36px"
+          line-height="36px"
+          font-weight="800"
+        >
+          {{contentBlock.html}}
+        </mj-text>
+      </mj-column>
+    </mj-section>
+    {% endif %} {# Other block types #} {% elseif contentBlock.type == 'article'
+    %}
+    <mj-wrapper full-width="full-width" padding="0px">
+      {% if contentBlock.imageUrl %}
+      <mj-section
+        border-top="1px solid #aaaaaa"
+        border-left="1px solid #aaaaaa"
+        border-right="1px solid #aaaaaa"
+        padding="20px"
+      >
+        <mj-column>
+          <mj-image
+            padding="0"
+            src="{{ contentBlock.imageUrl }}"
+            alt="{{ contentBlock.imageAlt }}"
+            width="600"
+            height="600"
+          />
+        </mj-column>
+      </mj-section>
+      {% endif %}
+      <mj-section
+        border-left="1px solid #aaaaaa"
+        border-right="1px solid #aaaaaa"
+        padding="20px"
+        border-bottom="1px solid #aaaaaa"
+      >
+        <mj-column border="1px solid #dddddd">
+          <mj-text
+            font-family="PT Serif, Arial"
+            font-size="36px"
+            line-height="36px"
+            font-weight="500"
+          >
+            {{contentBlock.title}}
+          </mj-text>
+          {% if contentBlock.description %}
+          <mj-text
+            font-family="PT Serif, Arial"
+            font-size="16px"
+            line-height="21px"
+            font-weight="500"
+          >
+            {{ contentBlock.description }}
+          </mj-text>
+          {% endif %}
+        </mj-column>
+      </mj-section>
+    </mj-wrapper>
+    {# Unsupported fallback #} {% else %}
+    <mj-section padding="10px 0">
+      <mj-column>
+        <mj-text
+          font-family="PT Serif, Arial"
+          font-size="36px"
+          line-height="36px"
+          font-weight="800"
+        >
+          <p><strong>{{contentBlock.type}}</strong> not supported</p>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+    {% endif %} {% set lastBlockType = contentBlock.type %} {% endfor %}
+  </mj-body>
+</mjml>

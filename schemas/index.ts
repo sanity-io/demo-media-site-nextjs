@@ -10,16 +10,29 @@ import seo from './objects/seo'
 import video from './objects/video'
 import person from './person'
 import section from './section'
+import newsletter from './newsletter'
+import articleReferences from './objects/articleReferences'
+import podcast from './podcast'
+import podcastEpisode from './objects/podcastEpisode'
+import brand from './objects/brand'
 
 export const schemaTypes = [
-  article,
-  person,
-  section,
+  // Objects
   articleReference,
+  articleReferences,
   contentRole,
   mainImage,
   minimalPortableText,
   portableText,
   seo,
+  podcastEpisode,
   video,
+  brand,
+
+  // Document types
+  article,
+  newsletter,
+  person,
+  podcast,
+  section,
 ]

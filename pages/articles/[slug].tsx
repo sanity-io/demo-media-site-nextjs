@@ -11,6 +11,7 @@ import {
 } from '../../lib/queries'
 import { getClient, overlayDrafts } from '../../lib/sanity.server'
 import { ArticleProps } from '../../types'
+import ArticleTitle from '../../components/article-title'
 
 const PreviewArticlePage = lazy(
   () => import('../../components/PreviewArticlePage')
@@ -35,6 +36,11 @@ export default function Article(props: Props) {
   if (!router.isFallback && !slug) {
     return <ErrorPage statusCode={404} />
   }
+
+  if (router.isFallback) {
+    return <ArticleTitle>Loading…</ArticleTitle>
+  }
+
   if (preview) {
     return (
       <PreviewSuspense fallback={<ArticlePage article={article} />}>

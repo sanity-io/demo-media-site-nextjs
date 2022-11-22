@@ -33,6 +33,7 @@ export default defineType({
       name: 'isStaff',
       type: 'boolean',
     },
+    { type: 'brand', name: 'brand' },
   ],
   preview: {
     select: {

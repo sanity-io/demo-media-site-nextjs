@@ -19,5 +19,6 @@ export default defineType({
       options: { source: 'name' },
       validation: (Rule) => Rule.required(),
     },
+    { type: 'brand', name: 'brand' },
   ],
 })
