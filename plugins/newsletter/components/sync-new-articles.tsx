@@ -31,7 +31,7 @@ groq`*[_type=="newsletter" && references(*[_type=="article"]._id)]{title}`
 
 export function SyncNewArticlesWrapper(props: InputProps) {
   const [status, setStatus] = useState<SyncStatus>({ syncStatus: 'loading' })
-  const client = useClient()
+  const client = useClient({ apiVersion: '2022-03-13' })
   const [statusDetails, setStatusDetails] = useState<SyncStatus>()
   const content = useFormValue(['content']) as PortableTextBlock[]
   const TYPE_REFERENCES = 'articleReferences'
