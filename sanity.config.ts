@@ -11,6 +11,7 @@ import { scheduledPublishing } from '@sanity/scheduled-publishing'
 
 import { schemaTypes } from './schemas'
 import { mediaConfigPlugin } from './plugins/config'
+import newsletterPlugin, { NewsletterPreview } from './plugins/newsletter'
 
 // @TODO: update next-sanity/studio to automatically set this when needed
 const basePath = '/studio'
@@ -43,6 +44,19 @@ export default defineConfig({
               .title('Incoming References')
           )
         }
+
+        if (schemaType === 'newsletter') {
+          views.push(
+            S.view
+              .component(NewsletterPreview)
+              // .options({
+              //   query: `*[!(_id in path("drafts.**")) && references($id)]`,
+              //   params: { id: `_id` },
+              // })
+              .title('Preview')
+          )
+        }
+
         return S.document().views([S.view.form(), ...views])
       },
     }),
@@ -53,5 +67,6 @@ export default defineConfig({
     }),
     mediaConfigPlugin(),
     scheduledPublishing(),
+    newsletterPlugin(),
   ],
 })

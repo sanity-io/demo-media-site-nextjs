@@ -10,7 +10,7 @@ export default function ArticleHeader(props: ArticleProps) {
   const { title, mainImage, date, people, sections, slug } = props
   return (
     <>
-      <div className="m-auto max-w-5xl p-4 md:p-5 lg:p-6">
+      <div className="max-w-5xl p-4 m-auto md:p-5 lg:p-6">
         {sections?.length > 0 && <SectionLinks sections={sections} />}
 
         <h1 className="my-3 text-4xl font-extrabold leading-none tracking-tight sm:text-6xl md:text-8xl">
@@ -42,7 +42,7 @@ function MainCoverImage({
             <>{mainImage.caption} ● Photo by Hardcoded, pull from People</>
           )
         }
-        className="m-auto max-w-5xl p-2"
+        className="max-w-5xl p-2 m-auto"
         img={
           <Image
             className="block aspect-[4/2]"
