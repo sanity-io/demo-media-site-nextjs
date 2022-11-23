@@ -1,5 +1,5 @@
 import { ArticleProps } from '../types'
-import ArticlePreview from './article-preview'
+import ArticlePreview from './ArticlePreview'
 
 export default function MoreStories({
   articles,

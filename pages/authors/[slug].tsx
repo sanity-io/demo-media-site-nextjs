@@ -3,8 +3,8 @@ import { useRouter } from 'next/router'
 import { PreviewSuspense } from 'next-sanity/preview'
 import { lazy } from 'react'
 
-import ArticleTitle from '../../components/article-title'
 import AuthorPage from '../../components/AuthorPage'
+import Title from '../../components/Title'
 import { personBySlugQuery, personSlugsQuery } from '../../lib/queries'
 import { getClient, overlayDrafts } from '../../lib/sanity.server'
 import { ArticleProps } from '../../types'
@@ -30,7 +30,7 @@ export default function Author(props: Props) {
   }
 
   if (router.isFallback) {
-    return <ArticleTitle>Loading…</ArticleTitle>
+    return <Title>Loading…</Title>
   }
 
   if (preview) {

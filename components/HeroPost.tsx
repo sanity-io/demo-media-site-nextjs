@@ -2,9 +2,9 @@ import Link from 'next/link'
 
 import { ArticleProps } from '../types'
 import { getUrlForDocumentType } from '../utils/routing'
-import Avatar from './avatar'
-import CoverImage from './cover-image'
-import Date from './date'
+import Avatar from './Avatar'
+import CoverImage from './CoverImage'
+import Date from './Date'
 
 export default function HeroPost(props: ArticleProps) {
   const { title, mainImage, date, intro, people, slug } = props

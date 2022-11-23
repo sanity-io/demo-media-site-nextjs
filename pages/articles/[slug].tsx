@@ -3,8 +3,8 @@ import { useRouter } from 'next/router'
 import { PreviewSuspense } from 'next-sanity/preview'
 import { lazy } from 'react'
 
-import ArticleTitle from '../../components/article-title'
 import ArticlePage from '../../components/ArticlePage'
+import Title from '../../components/Title'
 import {
   articleQuery,
   articleSlugsQuery,
@@ -35,7 +35,7 @@ export default function Article(props: Props) {
   }
 
   if (router.isFallback) {
-    return <ArticleTitle>Loading…</ArticleTitle>
+    return <Title>Loading…</Title>
   }
 
   if (preview) {

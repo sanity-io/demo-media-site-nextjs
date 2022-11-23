@@ -2,10 +2,10 @@ import { NextSeo } from 'next-seo'
 
 import openGraphObjectFromDocument from '../lib/openGraphObjectFromDocument'
 import { ArticleProps } from '../types'
-import ArticleBody from './article-body'
-import ArticleTitle from './article-title'
-import Container from './container'
-import MoreStories from './more-stories'
+import Body from './Body'
+import Container from './Container'
+import MoreStories from './MoreStories'
+import Title from './Title'
 
 interface AuthorPageProps {
   author: {
@@ -26,10 +26,10 @@ export default function AuthorPage({ author }: AuthorPageProps) {
         openGraph={name ? openGraphObjectFromDocument({ name }) : undefined}
       />
       <div className="m-auto max-w-5xl p-4 md:p-5 lg:p-6">
-        <ArticleTitle>{name}</ArticleTitle>
+        <Title>{name}</Title>
         {bio && (
           <div className="">
-            <ArticleBody content={bio} />
+            <Body content={bio} />
           </div>
         )}
       </div>

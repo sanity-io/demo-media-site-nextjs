@@ -1,8 +1,8 @@
 import { PreviewSuspense } from 'next-sanity/preview'
 import { NextSeo } from 'next-seo'
 
-import Container from '../components/container'
-import MoreStories from '../components/more-stories'
+import Container from '../components/Container'
+import MoreStories from '../components/MoreStories'
 import PreviewMoreStories from '../components/PreviewMoreStories'
 import { indexQuery, settingsQuery } from '../lib/queries'
 import { getClient, overlayDrafts } from '../lib/sanity.server'

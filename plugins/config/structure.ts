@@ -1,9 +1,5 @@
 import { ConfigContext } from 'sanity'
-import {
-  DefaultDocumentNodeResolver,
-  StructureBuilder,
-  StructureResolver,
-} from 'sanity/desk'
+import { StructureBuilder } from 'sanity/desk'
 
 import { Brand, BRANDS, SchemaDivider, SchemaItem } from '../../lib/constants'
 
