@@ -16,7 +16,7 @@ import React from 'react'
 import { urlForImage } from '../lib/sanity'
 import { ArticleProps, MainImage } from '../types'
 import { getUrlForDocumentType } from '../utils/routing'
-import { Figure } from './figure'
+import { Figure } from './Figure'
 
 const ReactPlayer = dynamic(() => import('react-player'), { ssr: false })
 
@@ -65,7 +65,7 @@ const components = {
   },
 }
 
-export default function ArticleBody({
+export default function Body({
   content,
   people,
 }: {

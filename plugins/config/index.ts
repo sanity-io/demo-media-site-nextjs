@@ -1,2 +1,2 @@
-export * from './media-config-plugin'
+export * from './mediaConfigPlugin'
 export * from './structure'

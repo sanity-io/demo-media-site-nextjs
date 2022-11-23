@@ -4,8 +4,8 @@ import { PreviewSuspense } from 'next-sanity/preview'
 import { NextSeo } from 'next-seo'
 import { lazy } from 'react'
 
-import ArticleTitle from '../../components/article-title'
 import SectionPage from '../../components/SectionPage'
+import Title from '../../components/Title'
 import { sectionBySlugQuery, sectionSlugsQuery } from '../../lib/queries'
 import { getClient, overlayDrafts } from '../../lib/sanity.server'
 import { ArticleProps } from '../../types'
@@ -31,7 +31,7 @@ export default function Section(props: Props) {
   }
 
   if (router.isFallback) {
-    return <ArticleTitle>Loading…</ArticleTitle>
+    return <Title>Loading…</Title>
   }
 
   if (preview) {

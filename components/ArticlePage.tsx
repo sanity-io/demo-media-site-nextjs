@@ -2,9 +2,9 @@ import { NextSeo } from 'next-seo'
 
 import openGraphObjectFromDocument from '../lib/openGraphObjectFromDocument'
 import { ArticleProps } from '../types'
-import ArticleBody from './article-body'
-import ArticleHeader from './article-header'
-import Container from './container'
+import Body from './Body'
+import Container from './Container'
+import Header from './Header'
 
 interface ArticleComponentProps {
   article?: ArticleProps
@@ -18,14 +18,14 @@ export default function ArticlePage({ article }: ArticleComponentProps) {
         openGraph={article ? openGraphObjectFromDocument(article) : undefined}
       />
       <article className="pb-4 md:pb-6">
-        <ArticleHeader
+        <Header
           title={article?.title}
           mainImage={article?.mainImage}
           date={article?.date}
           people={article?.people}
           sections={article?.sections}
         />
-        <ArticleBody content={article?.content} people={article?.people} />
+        <Body content={article?.content} people={article?.people} />
       </article>
     </Container>
   )
