@@ -1,11 +1,7 @@
 import type { InputProps, SanityDocumentLike } from 'sanity'
-import { Box, Button, Card, Flex, Label, Stack, Text } from '@sanity/ui'
+import { Button, Card, Flex, Label, Stack, Text } from '@sanity/ui'
 import React, { useCallback, useMemo, useState } from 'react'
-import { format, formatRelative, parseISO } from 'date-fns'
-
-function removePrefix(id?: string) {
-  return id?.replace('drafts.', '')
-}
+import { formatRelative, parseISO } from 'date-fns'
 
 const STATUS_PENDING = 'pending'
 const STATUS_SYNCED = 'synced'
@@ -31,10 +27,8 @@ export function MailchimpStatusWrapper(props: InputProps) {
   const [statusDetails, setStatusDetails] = useState<SyncStatus>()
 
   const handleSync = useCallback(async () => {
-    setStatusDetails(
-      statusDetails
-        ? { ...statusDetails, syncStatus: 'syncing' }
-        : { syncStatus: 'pending' }
+    setStatusDetails((prev) =>
+      prev ? { ...prev, syncStatus: 'syncing' } : { syncStatus: 'syncing' }
     )
     // setStatus(STATUS_PENDING)
     // const { document } = props
@@ -54,7 +48,7 @@ export function MailchimpStatusWrapper(props: InputProps) {
         dateSynced: new Date().toISOString(),
       })
     }, 2500)
-  }, [statusDetails])
+  }, [])
 
   const syncDate = useMemo(() => {
     const dateFormatted = statusDetails?.dateSynced
@@ -82,7 +76,11 @@ export function MailchimpStatusWrapper(props: InputProps) {
             <Button
               tone="primary"
               loading={statusDetails?.syncStatus === 'syncing'}
-              text="Send to Mailchimp"
+              text={
+                statusDetails?.syncStatus === 'synced'
+                  ? 'Update in Mailchimp'
+                  : 'Send to Mailchimp'
+              }
               onClick={handleSync}
             />
           </Stack>
