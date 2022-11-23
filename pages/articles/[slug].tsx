@@ -24,11 +24,8 @@ interface Props {
 }
 
 export default function Article(props: Props) {
-  const {
-    data: { article },
-    preview,
-    globalSettings,
-  } = props
+  const { data, preview } = props
+  const article = data?.article
   const router = useRouter()
 
   const slug = article?.slug
