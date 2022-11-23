@@ -15,6 +15,7 @@ import articleReferences from './objects/articleReferences'
 import podcast from './podcast'
 import podcastEpisode from './objects/podcastEpisode'
 import brand from './objects/brand'
+import { Template, TemplateResolver } from 'sanity'
 
 export const schemaTypes = [
   // Objects
@@ -35,4 +36,18 @@ export const schemaTypes = [
   person,
   podcast,
   section,
+]
+
+export const schemaTemplates = (prev: Template[]) => [
+  ...prev,
+  ...['article', 'newsletter', 'person', 'podcast', 'section'].map(
+    (schemaType) => ({
+      id: `${schemaType}-brand`,
+      title: `${schemaType} with Brand`,
+      type: 'initialValueTemplateItem',
+      schemaType,
+      parameters: [{ name: `brand`, title: `Brand`, type: `string` }],
+      value: ({ brand }) => ({ brand }),
+    })
+  ),
 ]

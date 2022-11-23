@@ -11,7 +11,7 @@ import { scheduledPublishing } from '@sanity/scheduled-publishing'
 import { theme } from 'https://themer.sanity.build/api/hues?preset=tw-cyan&primary=b595f9'
 import { workflow } from 'sanity-plugin-workflow'
 
-import { schemaTypes } from './schemas'
+import { schemaTypes, schemaTemplates } from './schemas'
 import { mediaConfigPlugin, structure } from './plugins/config'
 import newsletterPlugin from './plugins/newsletter'
 import defaultDocumentNode from './plugins/config/defaultDocumentNode'
@@ -26,6 +26,7 @@ const defaultConfig = (type: string) => {
     name: 'default-config',
     schema: {
       types: schemaTypes,
+      templates: schemaTemplates,
     },
     plugins: [
       deskTool({
