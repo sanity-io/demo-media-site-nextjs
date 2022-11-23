@@ -12,7 +12,8 @@ import { theme } from 'https://themer.sanity.build/api/hues?preset=tw-cyan&prima
 
 import { schemaTypes } from './schemas'
 import { mediaConfigPlugin, structure } from './plugins/config'
-import newsletterPlugin, { NewsletterPreview } from './plugins/newsletter'
+import newsletterPlugin from './plugins/newsletter'
+import defaultDocumentNode from './plugins/config/defaultDocumentNode'
 
 // @TODO: update next-sanity/studio to automatically set this when needed
 const basePath = '/studio/tech'
@@ -28,35 +29,7 @@ const defaultConfig = (type: string) => {
     plugins: [
       deskTool({
         structure: (S, context) => structure(S, context, type),
-        defaultDocumentNode: (S, { schemaType }) => {
-          const articleReferenceTypes = ['person', 'section']
-          const views = []
-          if (articleReferenceTypes.includes(schemaType)) {
-            views.push(
-              S.view
-                .component(DocumentsPane)
-                .options({
-                  query: `*[!(_id in path("drafts.**")) && references($id)]`,
-                  params: { id: `_id` },
-                })
-                .title('Incoming References')
-            )
-          }
-
-          if (schemaType === 'newsletter') {
-            views.push(
-              S.view
-                .component(NewsletterPreview)
-                // .options({
-                //   query: `*[!(_id in path("drafts.**")) && references($id)]`,
-                //   params: { id: `_id` },
-                // })
-                .title('Preview')
-            )
-          }
-
-          return S.document().views([S.view.form(), ...views])
-        },
+        defaultDocumentNode,
       }),
       // Add an image asset source for Unsplash
       unsplashImageAsset(),

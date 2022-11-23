@@ -1,4 +1,10 @@
-import { articleBySlugQuery } from '../../lib/queries'
+import { CollectionPageJsonLd } from 'next-seo'
+
+import {
+  articleBySlugQuery,
+  personBySlugQuery,
+  sectionBySlugQuery,
+} from '../../lib/queries'
 import { getClient } from '../../lib/sanity.server'
 
 function redirectToPreview(res, Location) {
@@ -20,17 +26,40 @@ export default async function preview(req, res) {
     return redirectToPreview(res, '/')
   }
 
-  // Check if the post with the given `slug` exists
-  const post = await getClient(true).fetch(articleBySlugQuery, {
-    slug: req.query.slug,
-  })
+  // Check if content with given slug exists
+  let content = { slug: '' }
+  let subpath = ''
+  switch (req.query.type) {
+    case 'article':
+      subpath = 'articles'
+      content = await getClient(true).fetch(articleBySlugQuery, {
+        slug: req.query.slug,
+      })
+      break
+    case 'section':
+      subpath = 'sections'
+      content = await getClient(true).fetch(sectionBySlugQuery, {
+        slug: req.query.slug,
+      })
+      break
+    case 'person':
+      subpath = 'authors'
+      content = await getClient(true).fetch(personBySlugQuery, {
+        slug: req.query.slug,
+      })
+      break
+    default:
+      break
+  }
 
   // If the slug doesn't exist prevent preview mode from being enabled
-  if (!post) {
-    return res.status(401).json({ message: 'Invalid slug' })
+  if (!content) {
+    return res.status(401).json({
+      message: `Invalid slug ${req.query.slug} for type ${req.query.type}`,
+    })
   }
 
   // Redirect to the path from the fetched post
   // We don't redirect to req.query.slug as that might lead to open redirect vulnerabilities
-  redirectToPreview(res, `/articles/${post.slug}`)
+  redirectToPreview(res, `/${subpath}/${content.slug}`)
 }

@@ -1,45 +1,21 @@
 import ErrorPage from 'next/error'
-import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { NextSeo } from 'next-seo'
+import { PreviewSuspense } from 'next-sanity/preview'
+import { lazy } from 'react'
 
-import ArticleBody from '../../components/article-body'
-import ArticleHeader from '../../components/article-header'
 import ArticleTitle from '../../components/article-title'
-import Container from '../../components/container'
-import Header from '../../components/header'
-import Layout from '../../components/layout'
-import MoreStories from '../../components/more-stories'
-import SectionSeparator from '../../components/section-separator'
+import ArticlePage from '../../components/ArticlePage'
 import {
   articleQuery,
   articleSlugsQuery,
   settingsQuery,
 } from '../../lib/queries'
-import { urlForImage, usePreviewSubscription } from '../../lib/sanity'
 import { getClient, overlayDrafts } from '../../lib/sanity.server'
 import { ArticleProps } from '../../types'
 
-function openGraphObjectFromDocument(document: any) {
-  // article.mainImage?.image?.asset?._ref
-  return {
-    title: document.title,
-    //description: document.description,
-    // url: document.url,
-    type: 'article',
-    images: document.mainImage?.image?.asset?._ref
-      ? [
-          {
-            url: urlForImage(document.mainImage.image)
-              .width(1200)
-              .height(627)
-              .fit('crop')
-              .url(),
-          },
-        ]
-      : undefined,
-  }
-}
+const PreviewArticlePage = lazy(
+  () => import('../../components/PreviewArticlePage')
+)
 
 interface Props {
   data: { article: ArticleProps; moreArticles: any }
@@ -48,43 +24,29 @@ interface Props {
 }
 
 export default function Article(props: Props) {
-  const { data: initialData, preview, globalSettings } = props
+  const { data, preview } = props
+  const article = data?.article
   const router = useRouter()
 
-  const slug = initialData?.article?.slug
-  const { data } = usePreviewSubscription(articleQuery, {
-    params: { slug },
-    initialData: initialData,
-    enabled: preview && !!slug,
-  })
-  const { article, moreArticles } = data || {}
+  const slug = article?.slug
 
   if (!router.isFallback && !slug) {
     return <ErrorPage statusCode={404} />
   }
 
-  return (
-    <Container>
-      <NextSeo
-        title={article?.title}
-        openGraph={article ? openGraphObjectFromDocument(article) : undefined}
-      />
-      {router.isFallback ? (
-        <ArticleTitle>Loading…</ArticleTitle>
-      ) : (
-        <article className="pb-4 md:pb-6">
-          <ArticleHeader
-            title={article.title}
-            mainImage={article.mainImage}
-            date={article.date}
-            people={article.people}
-            sections={article.sections}
-          />
-          <ArticleBody content={article.content} people={article.people} />
-        </article>
-      )}
-    </Container>
-  )
+  if (router.isFallback) {
+    return <ArticleTitle>Loading…</ArticleTitle>
+  }
+
+  if (preview) {
+    return (
+      <PreviewSuspense fallback={<ArticlePage article={article} />}>
+        <PreviewArticlePage slug={slug} />
+      </PreviewSuspense>
+    )
+  }
+
+  return <ArticlePage article={article} />
 }
 
 export async function getStaticProps({ params, preview = false }) {
