@@ -1,11 +1,42 @@
+import Link from 'next/link'
+
 import { ArticleProps } from '../types'
+import { isLifestyle } from '../utils/brand'
 import ArticlePreview from './ArticlePreview'
+
+const isLifestyleBrand = isLifestyle()
 
 export default function MoreStories({
   articles,
 }: {
   articles: ArticleProps[]
 }) {
+  if (isLifestyleBrand) {
+    return (
+      <section className="max-w-5xl md:mx-3 lg:mx-auto">
+        <h2 className="mx-auto text-center text-xl font-extrabold leading-none tracking-tight sm:text-2xl md:p-5 md:py-6 lg:px-6">
+          <span className="inline text-green-200">●</span> Latest News
+        </h2>
+
+        <div className="font-merriweather container mx-auto">
+          <div className="grid sm:grid-cols-2 md:grid-cols-4 divide-y divide-x divide-gray-200 rounded border-t border-b border-gray-200 dark:divide-gray-900 dark:border-gray-900 md:border">
+            {articles.map((article) => (
+              <ArticlePreview
+                key={article.slug}
+                title={article.title}
+                mainImage={article.mainImage}
+                date={article.date}
+                people={article.people}
+                slug={article.slug}
+                intro={article.intro}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
   return (
     <section className="max-w-5xl md:mx-3 lg:mx-auto">
       <h2 className="sr-only">Articles</h2>
