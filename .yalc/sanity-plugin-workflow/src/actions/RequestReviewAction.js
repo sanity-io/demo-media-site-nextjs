@@ -1,14 +1,14 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import {EyeOpenIcon} from '@sanity/icons'
+import { EyeOpenIcon } from '@sanity/icons'
 
-import {inferMetadataState, useWorkflowMetadata} from '../../lib/workflow'
+import { inferMetadataState, useWorkflowMetadata } from '../../lib/workflow'
 import RequestReviewWizard from '../../components/RequestReviewWizard'
 
 export function RequestReviewAction(props) {
   const [showWizardDialog, setShowWizardDialog] = React.useState(false)
   const metadata = useWorkflowMetadata(props.id, inferMetadataState(props))
-  const {state} = metadata.data
+  const { state } = metadata.data
 
   if (!props.draft || state === 'inReview' || state === 'approved') {
     return null
@@ -20,7 +20,7 @@ export function RequestReviewAction(props) {
     }
   }
 
-  const onSend = assignees => {
+  const onSend = (assignees) => {
     setShowWizardDialog(false)
 
     if (assignees.length === 0) {
@@ -38,18 +38,24 @@ export function RequestReviewAction(props) {
   return {
     dialog: showWizardDialog && {
       type: 'popover',
-      content: <RequestReviewWizard metadata={metadata.data} onClose={onClose} onSend={onSend} />,
-      onClose: props.onComplete
+      content: (
+        <RequestReviewWizard
+          metadata={metadata.data}
+          onClose={onClose}
+          onSend={onSend}
+        />
+      ),
+      onClose: props.onComplete,
     },
     disabled: showWizardDialog,
     icon: EyeOpenIcon,
     label: 'Request review',
-    onHandle
+    onHandle,
   }
 }
 
 RequestReviewAction.propTypes = {
   draft: PropTypes.object,
   id: PropTypes.string,
-  onComplete: PropTypes.func
+  onComplete: PropTypes.func,
 }

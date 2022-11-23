@@ -1,5 +1,5 @@
-import {Plugin as Plugin_2} from 'sanity'
-import {default as React_2} from 'react'
+import { Plugin as Plugin_2 } from 'sanity'
+import { default as React_2 } from 'react'
 
 declare type State = {
   id: string

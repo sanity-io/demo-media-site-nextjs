@@ -5,7 +5,7 @@ import {
 } from 'sanity'
 
 // import UserSelectInput from '../../components/UserSelectInput'
-import {State} from '../../types'
+import { State } from '../../types'
 
 export default (states: State[]) =>
   defineType({
@@ -18,7 +18,10 @@ export default (states: State[]) =>
         name: 'state',
         type: 'string',
         options: {
-          list: states.map((state) => ({value: state.id, title: state.title})),
+          list: states.map((state) => ({
+            value: state.id,
+            title: state.title,
+          })),
         },
       }),
       defineField({
@@ -30,8 +33,9 @@ export default (states: State[]) =>
       defineField({
         type: 'array',
         name: 'assignees',
-        description: 'The people who are assigned to move this further in the workflow.',
-        of: [{type: 'string'}],
+        description:
+          'The people who are assigned to move this further in the workflow.',
+        of: [{ type: 'string' }],
         // components: {input: UserSelectInput},
       }),
     ],

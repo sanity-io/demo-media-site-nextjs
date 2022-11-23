@@ -41,8 +41,8 @@ const defaultConfig = (type: string) => {
       scheduledPublishing(),
       newsletterPlugin(),
       workflow({
-        schemaTypes: ['article']
-      })
+        schemaTypes: ['article'],
+      }),
     ],
   })()
 }

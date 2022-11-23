@@ -1,8 +1,8 @@
 import React from 'react'
-import {Box, Flex, Text} from '@sanity/ui'
-import {UserAvatar} from 'sanity'
+import { Box, Flex, Text } from '@sanity/ui'
+import { UserAvatar } from 'sanity'
 
-import {User} from '../../types'
+import { User } from '../../types'
 
 type AvatarGroupProps = {
   users: User[]
@@ -10,10 +10,13 @@ type AvatarGroupProps = {
 }
 
 export default function AvatarGroup(props: AvatarGroupProps) {
-  const {users, max = 3} = props
+  const { users, max = 3 } = props
 
   const len = users?.length
-  const visibleUsers = React.useMemo(() => users.slice(0, max), [users]) as User[]
+  const visibleUsers = React.useMemo(
+    () => users.slice(0, max),
+    [users]
+  ) as User[]
 
   if (!users?.length) {
     return null
@@ -22,7 +25,7 @@ export default function AvatarGroup(props: AvatarGroupProps) {
   return (
     <Flex align="center">
       {visibleUsers.map((user) => (
-        <Box key={user.id} style={{marginRight: -5}}>
+        <Box key={user.id} style={{ marginRight: -5 }}>
           <UserAvatar user={user} />
         </Box>
       ))}

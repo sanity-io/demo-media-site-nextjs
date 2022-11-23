@@ -1,11 +1,11 @@
 import React from 'react'
-import {Button, Popover, useToast} from '@sanity/ui'
-import {AddIcon} from '@sanity/icons'
-import {UserSelectMenu} from 'sanity-plugin-utils'
-import {useClient} from 'sanity'
+import { Button, Popover, useToast } from '@sanity/ui'
+import { AddIcon } from '@sanity/icons'
+import { UserSelectMenu } from 'sanity-plugin-utils'
+import { useClient } from 'sanity'
 
 import AvatarGroup from './DocumentCard/AvatarGroup'
-import {User} from '../types'
+import { User } from '../types'
 
 type UserAssignmentProps = {
   userList: User[]
@@ -14,7 +14,7 @@ type UserAssignmentProps = {
 }
 
 export default function UserAssignment(props: UserAssignmentProps) {
-  const {assignees, userList, documentId} = props
+  const { assignees, userList, documentId } = props
   const client = useClient()
   const toast = useToast()
   const [openId, setOpenId] = React.useState<string>(``)
@@ -30,7 +30,7 @@ export default function UserAssignment(props: UserAssignmentProps) {
 
       client
         .patch(`workflow-metadata.${documentId}`)
-        .setIfMissing({assignees: []})
+        .setIfMissing({ assignees: [] })
         .insert(`after`, `assignees[-1]`, [userId])
         .commit()
         .then(() => {
@@ -100,7 +100,7 @@ export default function UserAssignment(props: UserAssignmentProps) {
       // onKeyDown={handleKeyDown}
       content={
         <UserSelectMenu
-          style={{maxHeight: 300}}
+          style={{ maxHeight: 300 }}
           value={assignees || []}
           userList={userList}
           onAdd={addAssignee}
@@ -127,9 +127,11 @@ export default function UserAssignment(props: UserAssignmentProps) {
           onClick={() => setOpenId(documentId)}
           padding={0}
           mode="bleed"
-          style={{width: `100%`}}
+          style={{ width: `100%` }}
         >
-          <AvatarGroup users={userList.filter((u) => assignees.includes(u.id))} />
+          <AvatarGroup
+            users={userList.filter((u) => assignees.includes(u.id))}
+          />
         </Button>
       )}
     </Popover>

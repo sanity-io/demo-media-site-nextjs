@@ -1,9 +1,9 @@
-import {Button, Card, Text, Inline, Stack, useToast} from '@sanity/ui'
-import React, {useEffect} from 'react'
-import {ObjectInputProps, useClient} from 'sanity'
+import { Button, Card, Text, Inline, Stack, useToast } from '@sanity/ui'
+import React, { useEffect } from 'react'
+import { ObjectInputProps, useClient } from 'sanity'
 
-import {useWorkflowMetadata} from '../hooks/useWorkflowMetadata'
-import {State} from '../types'
+import { useWorkflowMetadata } from '../hooks/useWorkflowMetadata'
+import { State } from '../types'
 
 type StateTimelineProps = ObjectInputProps & {
   states: State[]
@@ -19,13 +19,15 @@ export default function StateTimeline(props: StateTimelineProps) {
   //     </Stack>
   //   )
   console.log(props)
-  const {value, states, children} = props
+  const { value, states, children } = props
 
   const documentId = String(value?._id)
 
-  const {data, loading, error} = useWorkflowMetadata(documentId, states)
-  const {state} = data
-  const [mutatingToState, setMutatingToState] = React.useState<string | null>(null)
+  const { data, loading, error } = useWorkflowMetadata(documentId, states)
+  const { state } = data
+  const [mutatingToState, setMutatingToState] = React.useState<string | null>(
+    null
+  )
 
   const client = useClient()
   const toast = useToast()
@@ -44,7 +46,7 @@ export default function StateTimeline(props: StateTimelineProps) {
 
       client
         .patch(`workflow-metadata.${publishedId}`)
-        .set({state: newState.id})
+        .set({ state: newState.id })
         .commit()
         .then(() => {
           toast.push({
@@ -76,7 +78,8 @@ export default function StateTimeline(props: StateTimelineProps) {
               fontSize={1}
               tone="primary"
               mode={
-                (!mutatingToState && s.id === state?.id) || s.id === mutatingToState
+                (!mutatingToState && s.id === state?.id) ||
+                s.id === mutatingToState
                   ? `default`
                   : `ghost`
               }

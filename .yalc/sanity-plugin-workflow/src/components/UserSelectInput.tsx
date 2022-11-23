@@ -1,11 +1,11 @@
-import {Card} from '@sanity/ui'
-import React, {useCallback} from 'react'
-import type {ArrayOfPrimitivesInputProps} from 'sanity'
-import {setIfMissing, insert, unset} from 'sanity'
-import {UserSelectMenu, useProjectUsers} from 'sanity-plugin-utils'
+import { Card } from '@sanity/ui'
+import React, { useCallback } from 'react'
+import type { ArrayOfPrimitivesInputProps } from 'sanity'
+import { setIfMissing, insert, unset } from 'sanity'
+import { UserSelectMenu, useProjectUsers } from 'sanity-plugin-utils'
 
 export default function UserSelectInput(props: ArrayOfPrimitivesInputProps) {
-  const {value = [], onChange} = props
+  const { value = [], onChange } = props
   const userList = useProjectUsers()
 
   const onAssigneeAdd = useCallback(

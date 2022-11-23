@@ -1,10 +1,10 @@
 import React from 'react'
-import {useListeningQuery} from 'sanity-plugin-utils'
-import {useToast} from '@sanity/ui'
-import {SanityDocumentLike, useClient} from 'sanity'
-import {DraggableLocation} from 'react-beautiful-dnd'
+import { useListeningQuery } from 'sanity-plugin-utils'
+import { useToast } from '@sanity/ui'
+import { SanityDocumentLike, useClient } from 'sanity'
+import { DraggableLocation } from 'react-beautiful-dnd'
 
-import {SanityDocumentWithMetadata, Metadata, State} from '../types'
+import { SanityDocumentWithMetadata, Metadata, State } from '../types'
 
 type DocumentsAndMetadata = {
   documents: SanityDocumentLike[]
@@ -32,13 +32,18 @@ const INITIAL_DATA: DocumentsAndMetadata = {
 export function useWorkflowDocuments(schemaTypes: string[]) {
   const toast = useToast()
   const client = useClient()
-  const [localDocuments, setLocalDocuments] = React.useState<SanityDocumentWithMetadata[]>([])
+  const [localDocuments, setLocalDocuments] = React.useState<
+    SanityDocumentWithMetadata[]
+  >([])
 
   // Get and listen to changes on documents + workflow metadata documents
-  const {data, loading, error} = useListeningQuery<DocumentsAndMetadata>(COMBINED_QUERY, {
-    params: {schemaTypes},
-    initialValue: INITIAL_DATA,
-  })
+  const { data, loading, error } = useListeningQuery<DocumentsAndMetadata>(
+    COMBINED_QUERY,
+    {
+      params: { schemaTypes },
+      initialValue: INITIAL_DATA,
+    }
+  )
 
   // Store local state for optimistic updates
   React.useEffect(() => {
@@ -47,14 +52,16 @@ export function useWorkflowDocuments(schemaTypes: string[]) {
       const documentsWithMetadata = data.documents.reduce(
         (acc: SanityDocumentWithMetadata[], cur) => {
           // Filter out documents without metadata
-          const curMeta = data.metadata.find((d) => d.documentId === cur._id.replace(`drafts.`, ``))
+          const curMeta = data.metadata.find(
+            (d) => d.documentId === cur._id.replace(`drafts.`, ``)
+          )
 
           // Add _metadata as null so it can be shown as a document that needs to be imported into workflow
           if (!curMeta) {
-            return [...acc, {_metadata: null, ...cur}]
+            return [...acc, { _metadata: null, ...cur }]
           }
 
-          const curWithMetadata = {_metadata: curMeta, ...cur}
+          const curWithMetadata = { _metadata: curMeta, ...cur }
 
           // Remove `published` from array if `draft` exists
           if (!cur._id.startsWith(`drafts.`)) {
@@ -98,7 +105,9 @@ export function useWorkflowDocuments(schemaTypes: string[]) {
       // Now client-side update
       const newStateId = destination.droppableId
       const newState = states.find((s) => s.id === newStateId)
-      const document = localDocuments.find((d) => d._metadata.documentId === draggedId)
+      const document = localDocuments.find(
+        (d) => d._metadata.documentId === draggedId
+      )
 
       if (!newState?.id) {
         toast.push({
@@ -117,15 +126,15 @@ export function useWorkflowDocuments(schemaTypes: string[]) {
       }
 
       // We need to know if it's a draft or not
-      const {_id, _type} = document
+      const { _id, _type } = document
 
       // Metadata + useDocumentOperation always uses Published id
-      const {_rev, documentId} = document._metadata
+      const { _rev, documentId } = document._metadata
 
       client
         .patch(`workflow-metadata.${documentId}`)
         .ifRevisionId(_rev)
-        .set({state: newStateId})
+        .set({ state: newStateId })
         .commit()
         .then(() => {
           return toast.push({
@@ -146,13 +155,13 @@ export function useWorkflowDocuments(schemaTypes: string[]) {
         })
 
       // Send back to the workflow board so a document update can happen
-      return {_id, _type, documentId, state: newState as State}
+      return { _id, _type, documentId, state: newState as State }
     },
     [client, toast, localDocuments]
   )
 
   return {
-    workflowData: {data: localDocuments, loading, error},
-    operations: {move},
+    workflowData: { data: localDocuments, loading, error },
+    operations: { move },
   }
 }
