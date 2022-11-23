@@ -9,6 +9,7 @@ import { unsplashImageAsset } from 'sanity-plugin-asset-source-unsplash'
 import DocumentsPane from 'sanity-plugin-documents-pane'
 import { scheduledPublishing } from '@sanity/scheduled-publishing'
 import { theme } from 'https://themer.sanity.build/api/hues?preset=tw-cyan&primary=b595f9'
+import { workflow } from 'sanity-plugin-workflow'
 
 import { schemaTypes } from './schemas'
 import { mediaConfigPlugin, structure } from './plugins/config'
@@ -39,6 +40,9 @@ const defaultConfig = (type: string) => {
       mediaConfigPlugin(),
       scheduledPublishing(),
       newsletterPlugin(),
+      workflow({
+        schemaTypes: ['article'],
+      }),
     ],
   })()
 }
