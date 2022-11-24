@@ -17,6 +17,7 @@ function StorySection({
   columns?: number
 }) {
   if (isLifestyleBrand) {
+    /* md:grid-cols-2 md:grid-cols-3 md:grid-cols-4 */
     return (
       <section className="max-w-5xl md:mx-3 lg:mx-auto">
         {title && (
