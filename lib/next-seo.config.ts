@@ -8,7 +8,7 @@ const envBasedConfig = isLifestyle() ? {
     type: 'website',
     locale: 'en',
     url: 'https://www.url.ie/',
-    siteName: 'Media Site',
+    siteName: 'Lifestyle',
   },
 } : {
   titleTemplate: '%s - Media',
@@ -17,7 +17,7 @@ const envBasedConfig = isLifestyle() ? {
     type: 'website',
     locale: 'en',
     url: 'https://www.url.ie/',
-    siteName: 'Lifestyle',
+    siteName: 'Media',
   },
 }
 
