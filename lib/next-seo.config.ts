@@ -22,6 +22,7 @@ const envBasedConfig = isLifestyle() ? {
 }
 
 const config: DefaultSeoProps = {
+  dangerouslySetAllPagesToNoIndex: true,
   ...envBasedConfig,
   description: 'A demo of the Sanity.io editorial workflow',
   additionalLinkTags: [
