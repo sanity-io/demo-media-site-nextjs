@@ -8,7 +8,7 @@ export const useHomepageArticles = (
 ): { topArticles: ArticleProps[]; restArticles: ArticleProps[] } => {
   const topArticles = useMemo(() => {
     if (!isLifestyle()) {
-      return articles
+      return articles.slice(0, limit)
     }
     console.log(articles)
 
