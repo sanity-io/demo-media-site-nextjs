@@ -12,12 +12,17 @@ const PreviewMoreStories = lazy(
   () => import('../components/PreviewMoreStories')
 )
 
-export default function Index({ allArticles, preview, blogSettings }) {
-  const { title = 'Media.' } = blogSettings || {}
+export default function Index({ allArticles, preview }) {
+  const metadata = isLifestyle() ? {
+    title: 'Latest Sugar',
+    description: 'POPSUGAR delivers the biggest moments, the hottest trends, and the best tips in entertainment, fashion, beauty, fitness, and food and the ability to shop for it all in one place.'
+  } : {
+    title: 'Latest Tech News',
+  }
 
   return (
     <>
-      <NextSeo title={title} />
+      <NextSeo title={metadata.title} description={metadata?.description} />
       <Container>
         <div className="">
           {preview ? (
@@ -39,10 +44,9 @@ export async function getStaticProps({ preview = false }) {
     const allArticles = overlayDrafts(
       await getClient(preview).fetch(indexQuery)
     )
-    const blogSettings = await getClient(preview).fetch(settingsQuery)
 
     return {
-      props: { allArticles, preview, blogSettings },
+      props: { allArticles, preview },
       // If webhooks isn't setup then attempt to re-generate in 1 minute intervals
       revalidate: process.env.SANITY_REVALIDATE_SECRET ? undefined : 60,
     }
