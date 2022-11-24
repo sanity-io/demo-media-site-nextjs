@@ -6,5 +6,6 @@ import MoreStories from './MoreStories'
 
 export default function PreviewMoreStories() {
   const { data: allArticles } = usePreview(null, indexQuery)
+
   return <MoreStories articles={allArticles} />
 }

@@ -1,11 +1,16 @@
 import { PreviewSuspense } from 'next-sanity/preview'
 import { NextSeo } from 'next-seo'
+import { lazy, useMemo } from 'react'
 
 import Container from '../components/Container'
 import MoreStories from '../components/MoreStories'
-import PreviewMoreStories from '../components/PreviewMoreStories'
 import { indexQuery, settingsQuery } from '../lib/queries'
 import { getClient, overlayDrafts } from '../lib/sanity.server'
+import { isLifestyle } from '../utils/brand'
+
+const PreviewMoreStories = lazy(
+  () => import('../components/PreviewMoreStories')
+)
 
 export default function Index({ allArticles, preview, blogSettings }) {
   const { title = 'Media.' } = blogSettings || {}
@@ -14,18 +19,8 @@ export default function Index({ allArticles, preview, blogSettings }) {
     <>
       <NextSeo title={title} />
       <Container>
-        {/*{heroArticle && (
-          <HeroPost
-            title={heroArticle.title}
-            mainImage={heroArticle.mainImage}
-            date={heroArticle.date}
-            people={heroArticle.people}
-            slug={heroArticle.slug}
-            excerpt={heroArticle.excerpt}
-          />
-        )}*/}
         <div className="">
-          {allArticles.length > 0 && preview ? (
+          {preview ? (
             <PreviewSuspense fallback="Loading...">
               <PreviewMoreStories />
             </PreviewSuspense>

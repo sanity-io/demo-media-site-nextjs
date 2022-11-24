@@ -1,15 +1,27 @@
 import { PortableText } from '@portabletext/react'
+import cn from 'classnames'
 import Link from 'next/link'
-import React from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 
 import { ArticleProps } from '../types'
 import { isLifestyle } from '../utils/brand'
 import { getUrlForDocumentType } from '../utils/routing'
+import { randomValue, useRandom } from '../utils/useRandom'
 import Avatar from './Avatar'
 import CoverImage from './CoverImage'
 import Date from './Date'
 
 const isLifestyleBrand = isLifestyle()
+
+const CATS = [
+  'Superdrug',
+  'Beauty',
+  'Health',
+  'Lifestyle',
+  'Entertainment',
+  'Fashion',
+  'Christmas',
+]
 
 export default function ArticlePreview({
   title,
@@ -17,30 +29,64 @@ export default function ArticlePreview({
   date,
   intro,
   people,
+  isHighlighted,
   slug,
 }: ArticleProps) {
+  //const [randomCat, setRandomCat] = useState<string | number>()
+  const randomCat = useRandom(CATS)
+
+  //useEffect(() => setRandomCat(randomValue(CATS)), [])
+
   if (isLifestyleBrand) {
     const [firstPerson] = people
+    const aspectClass = isHighlighted ? 'aspect-[6/2]' : 'aspect-square'
+    const width = isHighlighted ? 2500 : 1000
+    const height = isHighlighted ? 1000 : 1000
     return (
-      <div className="p-2">
-        <div className="grid grid-cols-1">
+      <div
+        className={cn('p-2', isHighlighted && 'col-span-4 grid grid-cols-4')}
+      >
+        <div
+          className={cn(
+            !isHighlighted && 'grid grid-cols-1 text-center',
+            isHighlighted && 'col-span-3 text-left'
+          )}
+        >
           <CoverImage
-            aspectClass='aspect-square'
+            aspectClass={aspectClass}
             wrapperClassName="col-start-1 row-start-1"
-            className="aspect-square"
+            className={aspectClass}
             slug={slug}
             title={title}
             image={mainImage}
             priority={false}
-            width={1000}
-            height={1000}
+            width={width}
+            height={height}
           />
-        <div className="col-start-1 row-start-1 self-end justify-self-center">
-          <p className="bg-white p-2 inline-block font-normal text-xs leading-5 text-center uppercase w-8">Superdrug</p>
+          {!isHighlighted && (
+            <div className="col-start-1 row-start-1 self-end justify-self-center">
+              <p className="inline-block w-8 bg-white p-2 text-center text-xs font-normal uppercase leading-5">
+                {randomCat}
+              </p>
+            </div>
+          )}
         </div>
-        </div>
-        <div className="">
-          <h1 className="mb-2 pt-2 text-center text-black font-serif text-xl antialiased leading-none tracking-tight md:text-xl">
+        <div className={cn(isHighlighted && 'px-4 pt-2')}>
+          {isHighlighted && (
+            <div className="col-start-1 row-start-1 self-end justify-self-center">
+              <p className="inline-block w-8 bg-white text-left text-xs font-normal uppercase leading-5">
+                {randomCat}
+              </p>
+            </div>
+          )}
+          <h1
+            className={cn(
+              'mb-2 pt-2 font-serif text-black antialiased',
+              !isHighlighted &&
+                `text-xl leading-none tracking-tight md:text-xl`,
+              isHighlighted && `text-left text-2xl`
+            )}
+          >
             <Link
               href={getUrlForDocumentType('article', slug)}
               className="hover:underline"
@@ -49,7 +95,7 @@ export default function ArticlePreview({
             </Link>
           </h1>
 
-          <div className="mt-4 text-sm text-center md:mt-auto">
+          <div className="mt-4 text-sm md:mt-auto">
             {firstPerson && (
               <span className="font-serif">
                 <span className="italic">by </span>

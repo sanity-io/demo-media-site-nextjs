@@ -19,6 +19,7 @@ export interface ArticleProps {
   sections?: SectionProps[]
   slug?: string
   content?: any
+  isHighlighted?: boolean
 }
 
 export interface MainImage {

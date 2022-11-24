@@ -21,7 +21,17 @@ interface CoverImageProps {
 }
 
 export default function CoverImage(props: CoverImageProps) {
-  const { title, slug, image: source, priority, className, wrapperClassName = '', aspectClass = 'aspect-[4/2] md:aspect-[3/2]', width, height } = props
+  const {
+    title,
+    slug,
+    image: source,
+    priority,
+    className,
+    wrapperClassName = '',
+    aspectClass = 'aspect-[4/2] md:aspect-[3/2]',
+    width,
+    height,
+  } = props
   const alt = source?.alt
   const image = source?.image?.asset?._ref ? (
     <div
@@ -34,7 +44,10 @@ export default function CoverImage(props: CoverImageProps) {
         width={width || 2000}
         height={height || 1000}
         alt={alt}
-        src={urlForImage(source?.image).height(height || 1000).width(width || 2000).url()}
+        src={urlForImage(source?.image)
+          .height(height || 1000)
+          .width(width || 2000)
+          .url()}
         sizes="100vw"
         priority={priority}
       />
