@@ -86,7 +86,6 @@ export const getStaticProps: GetStaticProps<IndexProps> = async ({ preview = fal
       if (variations && variantToShow) {
         const variantValues = variations.find(variant => variant._key === variantToShow)
 
-        console.table(variantValues)
         return {
           ...article,
           ...variantValues
