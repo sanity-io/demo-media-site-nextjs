@@ -13,7 +13,7 @@ export default class Document extends ServerStyleSheetDocument {
             rel="stylesheet"
           />
         </Head>
-        <body>
+        <body className="bg-white text-black dark:bg-black dark:text-white">
           <Main />
           <NextScript />
         </body>

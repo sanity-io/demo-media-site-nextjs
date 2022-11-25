@@ -21,7 +21,7 @@ export default function NavbarLifestyle() {
           <span className="text-purple-300">●</span> Reach
         </Link>
 
-        <nav className="mx-auto flex gap-4 text-sm font-normal leading-snug">
+        <nav className="mx-auto flex flex-wrap gap-4 text-sm font-normal leading-snug">
           {SECTIONS.map((section) => (
             <Link
               href={section.href}

@@ -13,6 +13,27 @@ import Date from './Date'
 
 const isLifestyleBrand = isLifestyle()
 
+const PREVIEW_TYPE_FEATURED_HIGHLIGHTED = 'featured-highlighted'
+const PREVIEW_TYPE_FEATURED_NORMAL = 'featured-normal'
+const PREVIEW_TYPE_NORMAL = 'normal'
+const IMAGE_TYPES = {
+  [PREVIEW_TYPE_FEATURED_HIGHLIGHTED]: {
+    aspectClass: 'aspect-square md:aspect-[26/9]',
+    width: 2500,
+    height: 900,
+  },
+  [PREVIEW_TYPE_FEATURED_NORMAL]: {
+    aspectClass: 'aspect-square',
+    width: 1000,
+    height: 1000,
+  },
+  [PREVIEW_TYPE_NORMAL]: {
+    aspectClass: 'aspect-[6/4.5]',
+    width: 1000,
+    height: 700,
+  },
+}
+
 const CATS = [
   'Superdrug',
   'Beauty',
@@ -31,25 +52,33 @@ export default function ArticlePreview({
   people,
   isHighlighted,
   slug,
-}: ArticleProps) {
-  //const [randomCat, setRandomCat] = useState<string | number>()
+  sectionType,
+}: ArticleProps & { sectionType?: 'featured' | 'normal' }) {
   const randomCat = useRandom(CATS)
-
-  //useEffect(() => setRandomCat(randomValue(CATS)), [])
 
   if (isLifestyleBrand) {
     const [firstPerson] = people
-    const aspectClass = isHighlighted ? 'aspect-[6/2]' : 'aspect-square'
-    const width = isHighlighted ? 2500 : 1000
-    const height = isHighlighted ? 1000 : 1000
+    const imageSettings =
+      sectionType === 'featured'
+        ? isHighlighted
+          ? IMAGE_TYPES[PREVIEW_TYPE_FEATURED_HIGHLIGHTED]
+          : IMAGE_TYPES[PREVIEW_TYPE_FEATURED_NORMAL]
+        : IMAGE_TYPES[PREVIEW_TYPE_NORMAL]
+    const aspectClass = imageSettings.aspectClass
+    const width = imageSettings.width
+    const height = imageSettings.height
     return (
       <div
-        className={cn('p-2', isHighlighted && 'col-span-4 grid grid-cols-4')}
+        className={cn(
+          'p-2',
+          isHighlighted && 'grid md:col-span-4 md:grid-cols-4'
+        )}
       >
         <div
           className={cn(
             !isHighlighted && 'grid grid-cols-1 text-center',
-            isHighlighted && 'col-span-3 text-left'
+            isHighlighted &&
+              'text-center sm:col-span-2 md:text-left lg:col-span-3'
           )}
         >
           <CoverImage
@@ -65,13 +94,18 @@ export default function ArticlePreview({
           />
           {!isHighlighted && (
             <div className="col-start-1 row-start-1 self-end justify-self-center">
-              <p className="inline-block w-8 bg-white p-2 text-center text-xs font-normal uppercase leading-5">
+              <p className="inline-block w-8 bg-white p-2 py-1 text-center text-xs font-normal uppercase leading-5">
                 {randomCat}
               </p>
             </div>
           )}
         </div>
-        <div className={cn(isHighlighted && 'px-4 pt-2')}>
+        <div
+          className={cn(
+            isHighlighted && 'px-4 pt-2',
+            !isHighlighted && `text-center`
+          )}
+        >
           {isHighlighted && (
             <div className="col-start-1 row-start-1 self-end justify-self-center">
               <p className="inline-block w-8 bg-white text-left text-xs font-normal uppercase leading-5">
@@ -81,7 +115,7 @@ export default function ArticlePreview({
           )}
           <h1
             className={cn(
-              'mb-2 pt-2 font-serif text-black antialiased',
+              'mb-2 pt-2 font-serif antialiased',
               !isHighlighted &&
                 `text-xl leading-none tracking-tight md:text-xl`,
               isHighlighted && `text-left text-2xl`

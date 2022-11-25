@@ -1,25 +1,28 @@
 import { DefaultSeoProps } from 'next-seo'
+
 import { isLifestyle } from '../utils/brand'
 
-const envBasedConfig = isLifestyle() ? {
-  titleTemplate: '%s - Lifestyle',
-  defaultTitle: 'Lifestyle',
-  openGraph: {
-    type: 'website',
-    locale: 'en',
-    url: 'https://www.url.ie/',
-    siteName: 'Lifestyle',
-  },
-} : {
-  titleTemplate: '%s - Media',
-  defaultTitle: 'Media',
-  openGraph: {
-    type: 'website',
-    locale: 'en',
-    url: 'https://www.url.ie/',
-    siteName: 'Media',
-  },
-}
+const envBasedConfig = isLifestyle()
+  ? {
+      titleTemplate: '%s - Lifestyle',
+      defaultTitle: 'Lifestyle',
+      openGraph: {
+        type: 'website',
+        locale: 'en',
+        url: 'https://www.url.ie/',
+        siteName: 'Lifestyle',
+      },
+    }
+  : {
+      titleTemplate: '%s - Media',
+      defaultTitle: 'Media',
+      openGraph: {
+        type: 'website',
+        locale: 'en',
+        url: 'https://www.url.ie/',
+        siteName: 'Media',
+      },
+    }
 
 const config: DefaultSeoProps = {
   dangerouslySetAllPagesToNoIndex: true,

@@ -13,12 +13,15 @@ const PreviewMoreStories = lazy(
 )
 
 export default function Index({ allArticles, preview }) {
-  const metadata = isLifestyle() ? {
-    title: 'Latest Sugar',
-    description: 'POPSUGAR delivers the biggest moments, the hottest trends, and the best tips in entertainment, fashion, beauty, fitness, and food and the ability to shop for it all in one place.'
-  } : {
-    title: 'Latest Tech News',
-  }
+  const metadata = isLifestyle()
+    ? {
+        title: 'Latest Sugar',
+        description:
+          'POPSUGAR delivers the biggest moments, the hottest trends, and the best tips in entertainment, fashion, beauty, fitness, and food and the ability to shop for it all in one place.',
+      }
+    : {
+        title: 'Latest Tech News',
+      }
 
   return (
     <>

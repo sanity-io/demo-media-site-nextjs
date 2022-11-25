@@ -11,17 +11,19 @@ function StorySection({
   articles,
   title,
   columns = 4,
+  sectionType,
 }: {
   articles: ArticleProps[]
   title?: string
   columns?: number
+  sectionType?: 'featured' | 'normal'
 }) {
   if (isLifestyleBrand) {
     /* md:grid-cols-2 md:grid-cols-3 md:grid-cols-4 */
     return (
-      <section className="max-w-5xl md:mx-3 lg:mx-auto">
+      <section className="max-w-6xl md:mx-3 lg:mx-auto">
         {title && (
-          <h2 className="mx-auto text-center text-xl font-extrabold leading-none tracking-tight sm:text-2xl md:p-5 md:py-6 lg:px-6">
+          <h2 className="mx-auto text-center text-xl font-extrabold leading-none tracking-tight sm:text-2xl md:p-5 md:py-6 lg:px-6 lg:pt-7">
             <span className="inline text-green-200">●</span> {title}
           </h2>
         )}
@@ -39,6 +41,7 @@ function StorySection({
                 people={article.people}
                 slug={article.slug}
                 intro={article.intro}
+                sectionType={sectionType}
                 isHighlighted={Boolean(article?.isHighlighted)}
               />
             ))}
@@ -79,10 +82,10 @@ export default function MoreStories({
 
   if (isLifestyleBrand) {
     return (
-      <>
+      <div className="mb-6">
         {topArticles?.length && (
           <>
-            <StorySection articles={topArticles} />
+            <StorySection articles={topArticles} sectionType="featured" />
           </>
         )}
         {restArticles?.length && (
@@ -91,10 +94,11 @@ export default function MoreStories({
               title="Latest news"
               articles={restArticles}
               columns={3}
+              sectionType="normal"
             />
           </>
         )}
-      </>
+      </div>
     )
   }
 
