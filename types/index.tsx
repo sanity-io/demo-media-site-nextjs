@@ -11,6 +11,7 @@ export interface SectionProps {
 }
 
 export interface ArticleProps {
+  _id: string
   title: string
   mainImage: any
   date: string
@@ -18,7 +19,12 @@ export interface ArticleProps {
   people: AuthorProps[]
   sections?: SectionProps[]
   slug?: string
-  content?: any
+  content?: any,
+  variations?: {
+    _key: string
+    title: string
+    mainImage: any
+  }[]
 }
 
 export interface MainImage {
