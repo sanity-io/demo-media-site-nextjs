@@ -1,8 +1,5 @@
 //document types
-import {
-  SchemaTypeDefinition,
-  Template,
-} from 'sanity'
+import { SchemaTypeDefinition, Template } from 'sanity'
 
 import article from './article'
 import newsletter from './newsletter'
@@ -57,7 +54,7 @@ export const schemaTypes = (
           filter: 'brand == $brand',
           filterParams: { brand: brandType },
         },
-      // TODO - understand why Typescript doesn't see this as a SchemaTypeDefinition
+        // TODO - understand why Typescript doesn't see this as a SchemaTypeDefinition
       } as SchemaTypeDefinition
     }
 

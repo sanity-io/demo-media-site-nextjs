@@ -51,7 +51,7 @@ export default defineType({
       )
     },
     // TODO - re-enable this preview
-    preview: (props: PreviewProps & { url: string}) => {
+    preview: (props: PreviewProps & { url: string }) => {
       const url = props.url
       console.log('podcast preview props', props)
       if (url) {

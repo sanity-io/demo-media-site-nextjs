@@ -27,9 +27,7 @@ export default defineType({
       name: 'people',
       type: 'array',
       description: 'List of people involved with the production of the article',
-      of: [
-        defineArrayMember({ type: 'contentRole' })
-      ],
+      of: [defineArrayMember({ type: 'contentRole' })],
     }),
     defineField({
       name: 'sections',
