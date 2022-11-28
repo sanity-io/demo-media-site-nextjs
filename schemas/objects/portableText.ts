@@ -59,6 +59,7 @@ export default defineType({
     },
     { type: 'articleReference', title: 'Article' },
     { type: 'articleReferences', title: 'Articles' },
+    { type: 'podcastReference', title: 'Podcast' },
     { type: 'mainImage' },
     { type: 'video' },
   ],
