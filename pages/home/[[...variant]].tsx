@@ -74,6 +74,7 @@ export async function getStaticProps({ preview = false, params }) {
       const variantToShow = variantMap[article._id]
 
       if (variations && variantToShow) {
+        // variantToShow may be 'fallback', which is fine as we can just spread undefined below
         const variantValues = variations.find(variant => variant._key === variantToShow)
 
         return {

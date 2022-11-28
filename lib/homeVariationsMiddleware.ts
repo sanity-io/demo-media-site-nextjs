@@ -45,21 +45,24 @@ export const homeMiddleware: NextMiddleware = async (request) => {
     articles.forEach(article => {
         const currentVariant = currentExperiments[article._id]
 
-        if (currentVariant && article.variations?.includes(currentVariant)) {
+        if (currentVariant && (currentVariant === 'fallback' || article.variations?.includes(currentVariant))) {
             // preserve existing experiments
             newExperiments[article._id] = currentExperiments[article._id]
         } else if (article.variations) {
             // add 1 to account for the fallback/baseline content!
-            newExperiments[article._id] = article.variations[Math.floor(Math.random() * (article.variations.length + 1))]
+            newExperiments[article._id] = article.variations[Math.floor(Math.random() * (article.variations.length + 1))] || 'fallback'
         }
     })
     
     const path = Object.entries(newExperiments).map(item => item.join(':')).join('/')
 
+    // console.log('newExperiments', newExperiments)
+
     const response = NextResponse.rewrite(new URL(`/home/${path}`, request.url))
 
     const newExperimentsHeaderValue = JSON.stringify(newExperiments)
-    console.log('HEADER', newExperimentsHeaderValue)
+    // console.log('header', newExperimentsHeaderValue)
+
     response.cookies.set('homeContent', newExperimentsHeaderValue)
 
     return response
