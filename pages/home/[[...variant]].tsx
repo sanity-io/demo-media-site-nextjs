@@ -9,9 +9,7 @@ import { lazy } from 'react'
 import { ArticleProps } from 'types'
 import { getBrandName, isLifestyle } from 'utils/brand'
 
-const PreviewMoreStories = lazy(
-  () => import('components/PreviewMoreStories')
-)
+const PreviewMoreStories = lazy(() => import('components/PreviewMoreStories'))
 
 export default function Index({ allArticles, preview }) {
   const metadata = isLifestyle()
@@ -47,12 +45,12 @@ export const getStaticPaths: GetStaticPaths = async () => {
     // we return no paths at build time.
     // paths will be revalidated once built.
     paths: [],
-    fallback: 'blocking'
+    fallback: 'blocking',
   }
 }
 
 export async function getStaticProps({ preview = false, params }) {
-  const variant = params.variant as string[] || []
+  const variant = (params.variant as string[]) || []
 
   /* check if the project id has been defined by fetching the vercel envs */
   if (process.env.NEXT_PUBLIC_SANITY_PROJECT_ID) {
@@ -63,23 +61,27 @@ export async function getStaticProps({ preview = false, params }) {
     ) as ArticleProps[]
 
     // given a url like /a:1/b:2/c:3, split it out into {a:"1", b:"2", c:"3"}
-    const variantMap = variant.map(variantParam => variantParam.split(':')).reduce((prev, current) => {
-      prev[current[0]] = current[1]
-      return prev
-    }, {})
+    const variantMap = variant
+      .map((variantParam) => variantParam.split(':'))
+      .reduce((prev, current) => {
+        prev[current[0]] = current[1]
+        return prev
+      }, {})
 
-    const allArticles = rawArticles.map(rawArticle => {
-      const {variations, ...article} = rawArticle
-      
+    const allArticles = rawArticles.map((rawArticle) => {
+      const { variations, ...article } = rawArticle
+
       const variantToShow = variantMap[article._id]
 
       if (variations && variantToShow) {
         // variantToShow may be 'fallback', which is fine as we can just spread undefined below
-        const variantValues = variations.find(variant => variant._key === variantToShow)
+        const variantValues = variations.find(
+          (variant) => variant._key === variantToShow
+        )
 
         return {
           ...article,
-          ...variantValues
+          ...variantValues,
         }
       }
 

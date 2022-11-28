@@ -56,7 +56,7 @@ const defaultConfig = (type: string) => {
       workflow({
         schemaTypes: ['article'],
       }),
-      variations()
+      variations(),
     ],
   })()
 }

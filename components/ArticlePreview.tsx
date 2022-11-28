@@ -43,7 +43,10 @@ const CATS = [
   'Christmas',
 ]
 
-type ArticlePreviewProps = Pick<ArticleProps, 'title' | 'mainImage'| 'date' | 'intro' | 'people' | 'isHighlighted' | 'slug'> & { sectionType?: 'featured' | 'normal' }
+type ArticlePreviewProps = Pick<
+  ArticleProps,
+  'title' | 'mainImage' | 'date' | 'intro' | 'people' | 'isHighlighted' | 'slug'
+> & { sectionType?: 'featured' | 'normal' }
 
 export default function ArticlePreview({
   title,

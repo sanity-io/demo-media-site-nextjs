@@ -11,7 +11,6 @@ export const middleware: NextMiddleware = async (request, event) => {
     if (homeResponse) {
       return homeResponse
     }
-
   } catch (e) {
     console.error('MIDDLEWARE ERROR', e)
   }

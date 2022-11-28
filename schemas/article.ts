@@ -50,7 +50,7 @@ export default defineType({
     defineField({ type: 'brand', name: 'brand' }),
   ],
   options: {
-    enableVariations: ['title', 'mainImage']
+    enableVariations: ['title', 'mainImage'],
   },
   preview: {
     select: {

@@ -6,7 +6,7 @@ export interface AuthorProps {
 }
 
 export interface SectionProps {
-  _id: string,
+  _id: string
   name: string
   slug?: string
 }
