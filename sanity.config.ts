@@ -8,6 +8,7 @@ import { deskTool } from 'sanity/desk'
 import { unsplashImageAsset } from 'sanity-plugin-asset-source-unsplash'
 import { scheduledPublishing } from '@sanity/scheduled-publishing'
 import { theme } from 'https://themer.sanity.build/api/hues?preset=tw-cyan&primary=b595f9'
+// @ts-ignore
 import { workflow } from 'sanity-plugin-workflow'
 
 import { schemaTemplates, schemaTypes } from './schemas'
@@ -18,14 +19,19 @@ import {
   LifestyleLogo,
   LifestyleWorkspaceLogo,
   Logo,
+  ReviewsLogo,
+  ReviewsWorkspaceLogo,
   TechLogo,
   TechWorkspaceLogo,
   WorkspaceLogo,
 } from './logo'
 
 // @TODO: update next-sanity/studio to automatically set this when needed
-const basePath = '/studio/tech'
-const basePathLifestyle = '/studio/lifestyle'
+const basePaths = {
+  tech: '/studio/tech',
+  lifestyle: '/studio/lifestyle',
+  reviews: '/studio/reviews',
+}
 
 const defaultConfig = (type: string) => {
   // const defaultConfig = (type) => {
@@ -57,7 +63,7 @@ const defaultConfig = (type: string) => {
 
 export default defineConfig([
   {
-    basePath,
+    basePath: basePaths.tech,
     name: 'tech',
     projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
     dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
@@ -72,7 +78,7 @@ export default defineConfig([
   },
   {
     name: 'lifestyle',
-    basePath: basePathLifestyle,
+    basePath: basePaths.lifestyle,
     projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
     dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
     title: process.env.NEXT_PUBLIC_SANITY_PROJECT_TITLE || 'Lifestyle',
@@ -82,6 +88,21 @@ export default defineConfig([
     studio: {
       components: {
         logo: LifestyleLogo,
+      },
+    },
+  },
+  {
+    name: 'reviews',
+    basePath: basePaths.reviews,
+    projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
+    dataset: process.env.NEXT_PUBLIC_SANITY_DATASET_REVIEWS || 'reviews',
+    title: process.env.NEXT_PUBLIC_SANITY_PROJECT_TITLE || 'Reviews',
+    theme,
+    plugins: [defaultConfig('reviews')],
+    icon: ReviewsWorkspaceLogo,
+    studio: {
+      components: {
+        logo: ReviewsLogo,
       },
     },
   },

@@ -16,6 +16,7 @@ import podcast from './podcast'
 import podcastEpisode from './objects/podcastEpisode'
 import brand from './objects/brand'
 import { Template, TemplateResolver } from 'sanity'
+import review from './review'
 
 export const schemaTypes = [
   // Objects
@@ -32,6 +33,7 @@ export const schemaTypes = [
 
   // Document types
   article,
+  review,
   newsletter,
   person,
   podcast,
@@ -40,7 +42,7 @@ export const schemaTypes = [
 
 export const schemaTemplates = (prev: Template[]) => [
   ...prev,
-  ...['article', 'newsletter', 'person', 'podcast', 'section'].map(
+  ...['article', 'review', 'newsletter', 'person', 'podcast', 'section'].map(
     (schemaType) => ({
       id: `${schemaType}-brand`,
       title: `${schemaType} with Brand`,

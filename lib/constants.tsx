@@ -1,4 +1,11 @@
-import { FiFeather, FiHash, FiHeadphones, FiMail, FiUser } from 'react-icons/fi'
+import {
+  FiFeather,
+  FiHash,
+  FiHeadphones,
+  FiMail,
+  FiStar,
+  FiUser,
+} from 'react-icons/fi'
 export type Brand = {
   name: string
   title: string
@@ -35,6 +42,10 @@ export const SCHEMA_ITEMS_TECH: (SchemaItem | SchemaDivider)[] = [
   { schemaType: `section`, title: 'Sections', icon: FiHash },
 ]
 
+export const SCHEMA_ITEMS_REVIEWS: (SchemaItem | SchemaDivider)[] = [
+  { schemaType: `review`, title: 'Reviews', icon: FiStar },
+]
+
 export const BRANDS: Brand[] = [
   {
     name: 'tech',
@@ -45,5 +56,10 @@ export const BRANDS: Brand[] = [
     name: 'lifestyle',
     title: 'Lifestyle',
     structure: SCHEMA_ITEMS_LIFESTYLE,
+  },
+  {
+    name: 'reviews',
+    title: 'Reviews',
+    structure: SCHEMA_ITEMS_REVIEWS,
   },
 ]
