@@ -8,8 +8,8 @@ export default defineField({
   description: 'Used to colocate documents to only those in the same "Brand"',
   type: 'string',
   // TODO: Hide field completely once initial value templates are configured
-  hidden: ({ value }) => Boolean(value),
-  readOnly: ({ value }) => Boolean(value),
+  hidden: ({ document, value }) =>
+    !document._id.startsWith(`drafts.`) && Boolean(value),
   validation: (Rule) => Rule.required(),
   options: {
     list: BRANDS.map((brand) => ({
