@@ -1,53 +1,79 @@
 //document types
+import { SchemaTypeDefinition, Template } from 'sanity'
+
 import article from './article'
-//objects
+import newsletter from './newsletter'
 import articleReference from './objects/articleReference'
+import articleReferences from './objects/articleReferences'
+import brand from './objects/brand'
 import contentRole from './objects/contentRole'
 import mainImage from './objects/mainImage'
 import minimalPortableText from './objects/minimalPortableText'
+import podcastEpisode from './objects/podcastEpisode'
 import portableText from './objects/portableText'
 import seo from './objects/seo'
 import video from './objects/video'
 import person from './person'
-import section from './section'
-import newsletter from './newsletter'
-import articleReferences from './objects/articleReferences'
 import podcast from './podcast'
-import podcastEpisode from './objects/podcastEpisode'
-import brand from './objects/brand'
-import { Template, TemplateResolver } from 'sanity'
+import review from './review'
+import section from './section'
 
-export const schemaTypes = [
-  // Objects
-  articleReference,
-  articleReferences,
-  contentRole,
-  mainImage,
-  minimalPortableText,
-  portableText,
-  seo,
-  podcastEpisode,
-  video,
-  brand,
+const schemaTypesToFilterBrandOn = ['articleReference', 'person']
 
-  // Document types
-  article,
-  newsletter,
-  person,
-  podcast,
-  section,
-]
+export const schemaTypes = (
+  prev: SchemaTypeDefinition[],
+  brandType: string
+): SchemaTypeDefinition[] => {
+  return [
+    ...prev,
+    // Objects
+    articleReference,
+    articleReferences,
+    contentRole,
+    mainImage,
+    minimalPortableText,
+    portableText,
+    seo,
+    podcastEpisode,
+    video,
+    brand,
 
-export const schemaTemplates = (prev: Template[]) => [
-  ...prev,
-  ...['article', 'newsletter', 'person', 'podcast', 'section'].map(
-    (schemaType) => ({
-      id: `${schemaType}-brand`,
-      title: `${schemaType} with Brand`,
-      type: 'initialValueTemplateItem',
-      schemaType,
-      parameters: [{ name: `brand`, title: `Brand`, type: `string` }],
-      value: ({ brand }) => ({ brand }),
-    })
-  ),
-]
+    // Document types
+    article,
+    review,
+    newsletter,
+    person,
+    podcast,
+    section,
+  ].map((def: SchemaTypeDefinition) => {
+    // todo: contentRole.fields.reference
+    if (schemaTypesToFilterBrandOn.includes(def?.name)) {
+      return {
+        ...def,
+        options: {
+          filter: 'brand == $brand',
+          filterParams: { brand: brandType },
+        },
+        // TODO - understand why Typescript doesn't see this as a SchemaTypeDefinition
+      } as SchemaTypeDefinition
+    }
+
+    return def
+  })
+}
+
+export const schemaTemplates = (prev: Template[]) => {
+  return [
+    ...prev,
+    ...['article', 'review', 'newsletter', 'person', 'podcast', 'section'].map(
+      (schemaType) => ({
+        id: `${schemaType}-brand`,
+        title: `${schemaType} with Brand`,
+        type: 'initialValueTemplateItem',
+        schemaType,
+        parameters: [{ name: `brand`, title: `Brand`, type: `string` }],
+        value: ({ brand }) => ({ brand }),
+      })
+    ),
+  ]
+}

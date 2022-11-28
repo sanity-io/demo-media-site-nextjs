@@ -1,4 +1,4 @@
-import { defineType } from 'sanity'
+import { defineField, defineType } from 'sanity'
 export default defineType({
   type: 'object',
   name: 'articleReferences',
@@ -15,11 +15,11 @@ export default defineType({
     },
   },
   fields: [
-    {
+    defineField({
       type: 'array',
       name: 'references',
       title: 'References',
       of: [{ type: 'articleReference' }],
-    },
+    }),
   ],
 })

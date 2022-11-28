@@ -13,6 +13,10 @@ export const Logo = memo(function Logo(props: { type?: string }) {
         text: 'Technology',
         background: '#FFFFFF',
       },
+      reviews: {
+        text: 'Reviews',
+        background: '#86DF9F',
+      },
     }
   }, [])
 
@@ -43,12 +47,20 @@ export function LifestyleLogo() {
   return <Logo type="lifestyle" />
 }
 
+export function ReviewsLogo() {
+  return <Logo type="reviews" />
+}
+
 export function TechWorkspaceLogo() {
   return <WorkspaceLogo type="tech" />
 }
 
 export function LifestyleWorkspaceLogo() {
   return <WorkspaceLogo type="lifestyle" />
+}
+
+export function ReviewsWorkspaceLogo() {
+  return <WorkspaceLogo type="reviews" />
 }
 
 export const WorkspaceLogo = memo(function WorkspaceLogo(props: {
@@ -64,6 +76,10 @@ export const WorkspaceLogo = memo(function WorkspaceLogo(props: {
       tech: {
         background: '#111213',
         foreground: '#FFFFFF',
+      },
+      reviews: {
+        background: '#86DF9F',
+        foreground: '#119236',
       },
     }
   }, [])

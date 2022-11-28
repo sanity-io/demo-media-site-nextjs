@@ -1,8 +1,8 @@
+import { Box, Stack, Text } from '@sanity/ui'
 import { FiVideo } from 'react-icons/fi'
-// Import issues with react-player in Studio fixed by importing each one individually
-import { defineType, PreviewProps } from 'sanity'
 import ReactPlayer from 'react-player'
-import { Box, Card, Stack, Text } from '@sanity/ui'
+// Import issues with react-player in Studio fixed by importing each one individually
+import { defineField, defineType, InputProps, PreviewProps, Rule } from 'sanity'
 import styled from 'styled-components'
 
 interface Audio {
@@ -19,16 +19,16 @@ export default defineType({
   icon: FiVideo,
   title: 'Podcast Audio',
   fields: [
-    {
+    defineField({
       name: 'url',
       type: 'url',
       title: 'Audio URL',
       description: `Accepts: SoundCloud and Mixcloud`,
-      validation: (Rule) => Rule.required(),
-    },
+      validation: (rule: Rule) => rule.required(),
+    }),
   ],
   components: {
-    input: (props: PreviewProps) => {
+    input: (props: InputProps) => {
       console.log('props', props)
       const audio = props.value as Audio
       const hasAudio = audio && audio.url
@@ -50,14 +50,13 @@ export default defineType({
         </Stack>
       )
     },
-    preview: (props: PreviewProps) => {
-      const audio = props.value as Audio
-      debugger
-      if (audio && audio.url) {
+    preview: (props: PreviewProps & { url: string }) => {
+      const url = props.url
+      if (url) {
         return (
           <div style={{ position: 'relative', paddingTop: '56.25%' }}>
             <ReactPlayer
-              url={audio.url}
+              url={url}
               width="100%"
               height="100%"
               style={{ position: 'absolute', top: 0, left: 0 }}
