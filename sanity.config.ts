@@ -38,7 +38,7 @@ const defaultConfig = (type: string) => {
   return definePlugin({
     name: 'default-config',
     schema: {
-      types: schemaTypes,
+      types: (prev) => schemaTypes(prev, type),
       templates: schemaTemplates,
     },
     plugins: [
