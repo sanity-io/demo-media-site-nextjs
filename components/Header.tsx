@@ -9,8 +9,10 @@ import { Figure } from './Figure'
 
 const brandName = getBrandName()
 
-export default function Header(props: ArticleProps) {
-  const { title, mainImage, date, people, sections, slug } = props
+type HeaderProps = Pick<ArticleProps, 'title' | 'mainImage' | 'sections'>
+
+export default function Header(props: HeaderProps) {
+  const { title, mainImage, sections } = props
 
   if (brandName === BRAND_LIFESTYLE_NAME) {
     return <HeaderLifestyle {...props} />
@@ -42,8 +44,10 @@ export default function Header(props: ArticleProps) {
   )
 }
 
-export function HeaderLifestyle(props: ArticleProps) {
-  const { title, mainImage, date, people, sections, slug } = props
+type HeaderLifestyleProps = Pick<ArticleProps, 'title' | 'mainImage'>
+
+export function HeaderLifestyle(props: HeaderLifestyleProps) {
+  const { title, mainImage } = props
   return (
     <>
       {mainImage && (
@@ -105,7 +109,9 @@ function MainCoverImage({
   )
 }
 
-function SectionLinks({ sections }) {
+type SectionLinkProps = Pick<ArticleProps, 'sections'>
+
+function SectionLinks({ sections }: SectionLinkProps) {
   return (
     <div className="text-sm sm:text-lg md:text-xl">
       {sections.map((section) => (

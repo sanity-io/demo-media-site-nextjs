@@ -1,13 +1,12 @@
 import { PortableText } from '@portabletext/react'
 import cn from 'classnames'
 import Link from 'next/link'
-import React, { useEffect, useMemo, useState } from 'react'
+import React from 'react'
 
 import { ArticleProps } from '../types'
 import { isLifestyle } from '../utils/brand'
 import { getUrlForDocumentType } from '../utils/routing'
-import { randomValue, useRandom } from '../utils/useRandom'
-import Avatar from './Avatar'
+import { useRandom } from '../utils/useRandom'
 import CoverImage from './CoverImage'
 import Date from './Date'
 
@@ -44,6 +43,8 @@ const CATS = [
   'Christmas',
 ]
 
+type ArticlePreviewProps = Pick<ArticleProps, 'title' | 'mainImage'| 'date' | 'intro' | 'people' | 'isHighlighted' | 'slug'> & { sectionType?: 'featured' | 'normal' }
+
 export default function ArticlePreview({
   title,
   mainImage,
@@ -53,7 +54,7 @@ export default function ArticlePreview({
   isHighlighted,
   slug,
   sectionType,
-}: ArticleProps & { sectionType?: 'featured' | 'normal' }) {
+}: ArticlePreviewProps) {
   const randomCat = useRandom(CATS)
 
   if (isLifestyleBrand) {

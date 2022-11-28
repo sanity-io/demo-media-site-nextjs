@@ -1,5 +1,3 @@
-import Link from 'next/link'
-
 import { ArticleProps } from '../types'
 import { isLifestyle } from '../utils/brand'
 import { useHomepageArticles } from '../utils/useHomepageArticles'
