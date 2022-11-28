@@ -1,11 +1,11 @@
-import { defineType } from 'sanity'
+import { defineField, defineType } from 'sanity'
 
 export default defineType({
   name: 'contentRole',
   title: 'Content role',
   type: 'object',
   fields: [
-    {
+    defineField({
       name: 'role',
       type: 'string',
       options: {
@@ -16,12 +16,12 @@ export default defineType({
           { value: 'copyEditor', title: 'Copy editor' },
         ],
       },
-    },
-    {
+    }),
+    defineField({
       name: 'person',
       type: 'reference',
       to: [{ type: 'person' }],
-    },
+    }),
   ],
   preview: {
     select: {
