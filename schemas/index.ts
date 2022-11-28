@@ -10,6 +10,7 @@ import contentRole from './objects/contentRole'
 import mainImage from './objects/mainImage'
 import minimalPortableText from './objects/minimalPortableText'
 import podcastEpisode from './objects/podcastEpisode'
+import podcastReference from './objects/podcastReference'
 import portableText from './objects/portableText'
 import seo from './objects/seo'
 import video from './objects/video'
@@ -29,6 +30,7 @@ export const schemaTypes = (
     // Objects
     articleReference,
     articleReferences,
+    podcastReference,
     contentRole,
     mainImage,
     minimalPortableText,

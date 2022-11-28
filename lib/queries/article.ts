@@ -9,6 +9,7 @@ export const articleFields = groq`
   "content": content[]{
     _type == 'articleReference' => @->{_type, _id, title, "slug": slug.current},
     _type != 'articleReference' => @,
+    _type == 'podcastReference' => @->{_type, _id, "url": podcastEpisode.url },
   },          
   "date": _updatedAt,
   "slug": slug.current,

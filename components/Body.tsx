@@ -66,6 +66,14 @@ const components = {
         </div>
       )
     },
+    podcast: ({ value }) => {
+      const { url } = value
+      return (
+        <div>
+          <ReactPlayer url={url} />
+        </div>
+      )
+    },
   },
 }
 
