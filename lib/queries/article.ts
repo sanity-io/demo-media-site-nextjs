@@ -7,20 +7,21 @@ export const articleFields = groq`
   intro,
   mainImage,
   "content": content[]{
-    _type == 'articleReference' => @->{_type, _id, title, "slug": slug.current },
+    _type == 'articleReference' => @->{_type, _id, title, "slug": slug.current},
     _type != 'articleReference' => @,
   },          
   "date": _updatedAt,
   "slug": slug.current,
   "people": people[]{ role, ...person->{name, image, bio, 'slug': slug.current} },
-  "sections": sections[]->{name, _id, "slug": slug.current}
+  "sections": sections[]->{name, _id, "slug": slug.current},
 `
 
 export const settingsQuery = groq`*[_type == "settings"][0]{title}`
 
 export const indexQuery = groq`
-*[_type == "article" && brand == $brand][0..10] | order(date desc, _createdAt desc) {
+*[_type == "article" && brand == $brand] | order(date desc, _createdAt desc) [0..10]{
   ${articleFields}
+  variations
 }`
 
 export const articleQuery = groq`

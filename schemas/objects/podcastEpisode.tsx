@@ -50,10 +50,8 @@ export default defineType({
         </Stack>
       )
     },
-    // TODO - re-enable this preview
     preview: (props: PreviewProps & { url: string }) => {
       const url = props.url
-      console.log('podcast preview props', props)
       if (url) {
         return (
           <div style={{ position: 'relative', paddingTop: '56.25%' }}>

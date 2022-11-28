@@ -6,11 +6,13 @@ export interface AuthorProps {
 }
 
 export interface SectionProps {
+  _id: string,
   name: string
   slug?: string
 }
 
 export interface ArticleProps {
+  _id: string
   title: string
   mainImage: any
   date: string
@@ -18,6 +20,11 @@ export interface ArticleProps {
   people: AuthorProps[]
   sections?: SectionProps[]
   slug?: string
+  variations?: {
+    _key: string
+    title: string
+    mainImage: any
+  }[]
   content?: any
   isHighlighted?: boolean
 }

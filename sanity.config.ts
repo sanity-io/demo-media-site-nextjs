@@ -8,7 +8,7 @@ import { theme } from 'https://themer.sanity.build/api/hues?preset=tw-cyan&prima
 import { defineConfig, definePlugin } from 'sanity'
 import { deskTool } from 'sanity/desk'
 import { unsplashImageAsset } from 'sanity-plugin-asset-source-unsplash'
-// @ts-ignore
+// import DocumentsPane from 'sanity-plugin-documents-pane'
 import { workflow } from 'sanity-plugin-workflow'
 
 import {
@@ -22,6 +22,7 @@ import {
 import { mediaConfigPlugin, structure } from './plugins/config'
 import defaultDocumentNode from './plugins/config/defaultDocumentNode'
 import newsletterPlugin from './plugins/newsletter'
+import variations from './plugins/variations'
 import { schemaTemplates, schemaTypes } from './schemas'
 
 // @TODO: update next-sanity/studio to automatically set this when needed
@@ -55,6 +56,7 @@ const defaultConfig = (type: string) => {
       workflow({
         schemaTypes: ['article'],
       }),
+      variations()
     ],
   })()
 }

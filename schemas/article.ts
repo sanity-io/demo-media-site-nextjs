@@ -49,6 +49,9 @@ export default defineType({
     defineField({ type: 'seo', name: 'seo', title: 'SEO' }),
     defineField({ type: 'brand', name: 'brand' }),
   ],
+  options: {
+    enableVariations: ['title', 'mainImage']
+  },
   preview: {
     select: {
       title: 'title',

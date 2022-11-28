@@ -1,5 +1,3 @@
-import Link from 'next/link'
-
 import { ArticleProps } from '../types'
 import { isLifestyle } from '../utils/brand'
 import { useHomepageArticles } from '../utils/useHomepageArticles'
@@ -13,7 +11,7 @@ function StorySection({
   columns = 4,
   sectionType,
 }: {
-  articles: ArticleProps[]
+  articles?: ArticleProps[]
   title?: string
   columns?: number
   sectionType?: 'featured' | 'normal'
@@ -56,7 +54,7 @@ function StorySection({
       <h2 className="sr-only">Articles</h2>
       <div className="font-merriweather container mx-auto">
         <div className="divide-y divide-gray-200 rounded border-t border-b border-gray-200 dark:divide-gray-900 dark:border-gray-900 md:border">
-          {articles.map((article) => (
+          {articles?.map((article) => (
             <ArticlePreview
               key={article.slug}
               title={article.title}

@@ -21,8 +21,6 @@ export default function ArticlePage({ article }: ArticleComponentProps) {
         <Header
           title={article?.title}
           mainImage={article?.mainImage}
-          date={article?.date}
-          people={article?.people}
           sections={article?.sections}
         />
         <Body content={article?.content} people={article?.people} />
