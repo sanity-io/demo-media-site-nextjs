@@ -2,29 +2,27 @@
  * This config is used to set up Sanity Studio that's mounted on the `/pages/studio/[[...index]].tsx` route
  */
 
+import { scheduledPublishing } from '@sanity/scheduled-publishing'
 import { visionTool } from '@sanity/vision'
+import { theme } from 'https://themer.sanity.build/api/hues?preset=tw-cyan&primary=b595f9'
 import { defineConfig, definePlugin } from 'sanity'
 import { deskTool } from 'sanity/desk'
 import { unsplashImageAsset } from 'sanity-plugin-asset-source-unsplash'
-import { scheduledPublishing } from '@sanity/scheduled-publishing'
-import { theme } from 'https://themer.sanity.build/api/hues?preset=tw-cyan&primary=b595f9'
 // @ts-ignore
 import { workflow } from 'sanity-plugin-workflow'
 
-import { schemaTemplates, schemaTypes } from './schemas'
-import { mediaConfigPlugin, structure } from './plugins/config'
-import newsletterPlugin from './plugins/newsletter'
-import defaultDocumentNode from './plugins/config/defaultDocumentNode'
 import {
   LifestyleLogo,
   LifestyleWorkspaceLogo,
-  Logo,
   ReviewsLogo,
   ReviewsWorkspaceLogo,
   TechLogo,
   TechWorkspaceLogo,
-  WorkspaceLogo,
 } from './logo'
+import { mediaConfigPlugin, structure } from './plugins/config'
+import defaultDocumentNode from './plugins/config/defaultDocumentNode'
+import newsletterPlugin from './plugins/newsletter'
+import { schemaTemplates, schemaTypes } from './schemas'
 
 // @TODO: update next-sanity/studio to automatically set this when needed
 const basePaths = {
