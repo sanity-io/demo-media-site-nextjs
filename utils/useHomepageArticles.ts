@@ -10,7 +10,7 @@ export const useHomepageArticles = (
     if (!isLifestyle()) {
       return articles.slice(0, limit)
     }
-    console.log(articles)
+    // console.log(articles)
 
     const sliced = articles?.slice(0, limit)
     const lastIndex = sliced?.length - 1

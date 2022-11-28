@@ -1,36 +1,30 @@
 //document types
+import { SchemaTypeDefinition, Template } from 'sanity'
+
 import article from './article'
-//objects
+import newsletter from './newsletter'
 import articleReference from './objects/articleReference'
 import articleReferences from './objects/articleReferences'
+import brand from './objects/brand'
 import contentRole from './objects/contentRole'
 import mainImage from './objects/mainImage'
 import minimalPortableText from './objects/minimalPortableText'
+import podcastEpisode from './objects/podcastEpisode'
+import podcastReference from './objects/podcastReference'
 import portableText from './objects/portableText'
 import seo from './objects/seo'
 import video from './objects/video'
 import person from './person'
-import section from './section'
-import newsletter from './newsletter'
 import podcast from './podcast'
-import podcastEpisode from './objects/podcastEpisode'
-import brand from './objects/brand'
-import podcastReference from './objects/podcastReference'
-
-import {
-  SchemaPluginOptions,
-  SchemaTypeDefinition,
-  Template,
-  TemplateResolver,
-} from 'sanity'
 import review from './review'
+import section from './section'
 
 const schemaTypesToFilterBrandOn = ['articleReference', 'person']
 
 export const schemaTypes = (
   prev: SchemaTypeDefinition[],
   brandType: string
-) => {
+): SchemaTypeDefinition[] => {
   return [
     ...prev,
     // Objects
@@ -53,7 +47,7 @@ export const schemaTypes = (
     person,
     podcast,
     section,
-  ].map((def) => {
+  ].map((def: SchemaTypeDefinition) => {
     // todo: contentRole.fields.reference
     if (schemaTypesToFilterBrandOn.includes(def?.name)) {
       return {
@@ -62,7 +56,8 @@ export const schemaTypes = (
           filter: 'brand == $brand',
           filterParams: { brand: brandType },
         },
-      }
+        // TODO - understand why Typescript doesn't see this as a SchemaTypeDefinition
+      } as SchemaTypeDefinition
     }
 
     return def
