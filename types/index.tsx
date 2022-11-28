@@ -1,7 +1,7 @@
 export interface AuthorProps {
   name: string
   slug?: string
-  picture: any
+  image: any
   bio: any
 }
 
@@ -19,6 +19,7 @@ export interface ArticleProps {
   sections?: SectionProps[]
   slug?: string
   content?: any
+  isHighlighted?: boolean
 }
 
 export interface MainImage {

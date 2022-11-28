@@ -3,11 +3,19 @@ import Link from 'next/link'
 
 import { urlForImage } from '../lib/sanity'
 import { ArticleProps, MainImage } from '../types'
+import { BRAND_LIFESTYLE_NAME, getBrandName } from '../utils/brand'
 import { getUrlForDocumentType } from '../utils/routing'
 import { Figure } from './Figure'
 
+const brandName = getBrandName()
+
 export default function Header(props: ArticleProps) {
   const { title, mainImage, date, people, sections, slug } = props
+
+  if (brandName === BRAND_LIFESTYLE_NAME) {
+    return <HeaderLifestyle {...props} />
+  }
+
   return (
     <>
       <div className="m-auto max-w-5xl p-4 md:p-5 lg:p-6">
@@ -22,7 +30,35 @@ export default function Header(props: ArticleProps) {
           recently emerged as a powerful media in its own right.
         </p>
       </div>
-      {mainImage && <MainCoverImage title={title} mainImage={mainImage} />}
+      {mainImage && (
+        <MainCoverImage
+          title={title}
+          mainImage={mainImage}
+          width={2000}
+          height={1000}
+        />
+      )}
+    </>
+  )
+}
+
+export function HeaderLifestyle(props: ArticleProps) {
+  const { title, mainImage, date, people, sections, slug } = props
+  return (
+    <>
+      {mainImage && (
+        <MainCoverImage
+          title={title}
+          mainImage={mainImage}
+          width={1000}
+          height={1000}
+        />
+      )}
+      <div className="m-auto max-w-5xl p-4 md:p-5 lg:p-6 lg:pt-2">
+        <h1 className="my-3 font-serif text-4xl leading-none tracking-tight antialiased sm:text-center sm:text-6xl md:text-5xl">
+          {title || 'Untitled'}
+        </h1>
+      </div>
     </>
   )
 }
@@ -30,8 +66,12 @@ export default function Header(props: ArticleProps) {
 function MainCoverImage({
   title,
   mainImage,
+  width = 2000,
+  height = 1000,
 }: {
   title: string
+  width?: number
+  height?: number
   mainImage: MainImage
 }) {
   return (
@@ -42,14 +82,21 @@ function MainCoverImage({
             <>{mainImage.caption} ● Photo by Hardcoded, pull from People</>
           )
         }
-        className="m-auto max-w-5xl p-2"
+        className="m-auto max-w-xl p-2"
         img={
           <Image
-            className="block aspect-[4/2]"
+            className={
+              brandName === BRAND_LIFESTYLE_NAME
+                ? 'block aspect-square'
+                : 'block aspect-[4/2]'
+            }
             alt={mainImage?.alt || title}
-            src={urlForImage(mainImage?.image).height(1000).width(2000).url()}
-            width={2000}
-            height={1000}
+            src={urlForImage(mainImage?.image)
+              .height(height || 1000)
+              .width(width || 2000)
+              .url()}
+            width={width || 2000}
+            height={height || 1000}
             style={{ objectFit: 'cover' }}
           />
         }
