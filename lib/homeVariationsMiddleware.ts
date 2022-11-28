@@ -2,6 +2,7 @@
  * Logic to fetch the available experiments and determine which to show to a user
  */
 import { NextMiddleware, NextResponse } from "next/server"
+import { getBrandName } from "utils/brand"
 
 import { sanityConfig } from "./config"
 
@@ -10,7 +11,7 @@ const { projectId, dataset, apiVersion } = sanityConfig
 // this query must match the filter and order of the home page
 // but only needs to fetch the ones we are going to experiment on
 const query = `
-*[_type == "article" && defined(variations)] | order(date desc, _updatedAt desc) [0...3] {
+*[_type == "article" && defined(variations) && brand == $brand] | order(date desc, _updatedAt desc) [0...3] {
     _id,
     'variations': variations[]._key
 }
@@ -23,7 +24,7 @@ interface Article {
 
 const urlQuery = encodeURIComponent(query)
 
-const queryUrl = new URL(`https://${projectId}.apicdn.sanity.io/v${apiVersion}/data/query/${dataset}?query=${urlQuery}`)
+const queryUrl = new URL(`https://${projectId}.apicdn.sanity.io/v${apiVersion}/data/query/${dataset}?query=${urlQuery}&$brand="${getBrandName()}"`)
 
 // NOTE this calls the APICDN for every view of the homepage
 // Although Netlify has a way to rewrite HTML in edge middleware, and thus not call the API for every page view,
@@ -58,6 +59,7 @@ export const homeMiddleware: NextMiddleware = async (request) => {
     const response = NextResponse.rewrite(new URL(`/home/${path}`, request.url))
 
     const newExperimentsHeaderValue = JSON.stringify(newExperiments)
+    console.log('HEADER', newExperimentsHeaderValue)
     response.cookies.set('homeContent', newExperimentsHeaderValue)
 
     return response

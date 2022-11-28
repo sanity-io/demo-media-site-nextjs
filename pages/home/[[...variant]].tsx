@@ -1,38 +1,35 @@
 import Container from 'components/Container'
 import MoreStories from 'components/MoreStories'
-import PreviewMoreStories from 'components/PreviewMoreStories'
-import { indexQuery, settingsQuery } from 'lib/queries'
+import { indexQuery } from 'lib/queries'
 import { getClient, overlayDrafts } from 'lib/sanity.server'
-import { GetStaticPaths, GetStaticProps } from 'next'
+import { GetStaticPaths } from 'next'
 import { PreviewSuspense } from 'next-sanity/preview'
 import { NextSeo } from 'next-seo'
+import { lazy } from 'react'
 import { ArticleProps } from 'types'
+import { getBrandName, isLifestyle } from 'utils/brand'
 
-interface IndexProps {
-  allArticles: ArticleProps[],
-  preview: boolean,
-  blogSettings: any
-}
+const PreviewMoreStories = lazy(
+  () => import('components/PreviewMoreStories')
+)
 
-export default function Index({ allArticles, preview, blogSettings }: IndexProps) {
-  const { title = 'Media.' } = blogSettings || {}
+export default function Index({ allArticles, preview }) {
+  const metadata = isLifestyle()
+    ? {
+        title: 'Latest Sugar',
+        description:
+          'POPSUGAR delivers the biggest moments, the hottest trends, and the best tips in entertainment, fashion, beauty, fitness, and food and the ability to shop for it all in one place.',
+      }
+    : {
+        title: 'Latest Tech News',
+      }
 
   return (
     <>
-      <NextSeo title={title} />
+      <NextSeo title={metadata.title} description={metadata?.description} />
       <Container>
-        {/*{heroArticle && (
-          <HeroPost
-            title={heroArticle.title}
-            mainImage={heroArticle.mainImage}
-            date={heroArticle.date}
-            people={heroArticle.people}
-            slug={heroArticle.slug}
-            excerpt={heroArticle.excerpt}
-          />
-        )}*/}
         <div className="">
-          {allArticles.length > 0 && preview ? (
+          {preview ? (
             <PreviewSuspense fallback="Loading...">
               <PreviewMoreStories />
             </PreviewSuspense>
@@ -54,23 +51,16 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }
 }
 
-/**
- * We take a url with parameters for which variants to show.
- * This lets us build different URLs for different collections of documents
- * the pattern is:
- * /docId:variantId/docId:variantId/docId:variantId
- * 
- * If no parameters are provided, we just get the regular list
- */
-export const getStaticProps: GetStaticProps<IndexProps> = async ({ preview = false, params }) => {
+export async function getStaticProps({ preview = false, params }) {
   const variant = params.variant as string[] || []
 
   /* check if the project id has been defined by fetching the vercel envs */
   if (process.env.NEXT_PUBLIC_SANITY_PROJECT_ID) {
     const rawArticles = overlayDrafts(
-      await getClient(preview).fetch(indexQuery)
+      await getClient(preview).fetch(indexQuery, {
+        brand: getBrandName(),
+      })
     ) as ArticleProps[]
-    const blogSettings = await getClient(preview).fetch(settingsQuery)
 
     // given a url like /a:1/b:2/c:3, split it out into {a:"1", b:"2", c:"3"}
     const variantMap = variant.map(variantParam => variantParam.split(':')).reduce((prev, current) => {
@@ -96,20 +86,16 @@ export const getStaticProps: GetStaticProps<IndexProps> = async ({ preview = fal
     })
 
     return {
-      props: { allArticles, preview, blogSettings },
+      props: { allArticles, preview },
       // If webhooks isn't setup then attempt to re-generate in 1 minute intervals
       revalidate: process.env.SANITY_REVALIDATE_SECRET ? undefined : 60,
     }
   }
 
   /* when the client isn't set up */
-  // TODO: why do this? Shouldn't the clinet just query the public APICDN?
+  // TODO: why do this? Shouldn't the client just query the public APICDN?
   return {
-    props: {
-      allArticles: [],
-      preview: false,
-      blogSettings: undefined,
-    },
-    revalidate: 60,
+    props: {},
+    revalidate: undefined,
   }
 }
