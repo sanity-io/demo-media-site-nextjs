@@ -14,9 +14,9 @@ export const sectionIndexQuery = groq`
   ${sectionFields}
 }`
 
-export const sectionBySlugQuery = groq`*[_type == "section" && slug.current == $slug] | order(_updatedAt desc) [0] {
+export const sectionBySlugQuery = groq`*[_type == "section" && slug.current == $slug && brand == $brand] | order(_updatedAt desc) [0] {
     ${sectionFields}
-     "articles": *[_type == 'article' && references(^._id)] | order(_updatedAt desc) {
+     "articles": *[_type == 'article' && references(^._id) && brand == $brand] | order(_updatedAt desc) {
       ${articleFields}
     }
 }`

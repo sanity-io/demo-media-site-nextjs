@@ -19,7 +19,7 @@ export const articleFields = groq`
 export const settingsQuery = groq`*[_type == "settings"][0]{title}`
 
 export const indexQuery = groq`
-*[_type == "article"] | order(date desc, _createdAt desc) {
+*[_type == "article" && brand == $brand][0..10] | order(date desc, _createdAt desc) {
   ${articleFields}
 }`
 

@@ -71,7 +71,8 @@ export default function ArticlePreview({
       <div
         className={cn(
           'p-2',
-          isHighlighted && 'grid text-center md:text-left md:col-span-4 md:grid-cols-4'
+          isHighlighted &&
+            'grid text-center md:col-span-4 md:grid-cols-4 md:text-left'
         )}
       >
         <div
@@ -94,7 +95,7 @@ export default function ArticlePreview({
           />
           {!isHighlighted && (
             <div className="col-start-1 row-start-1 self-end justify-self-center">
-              <p className="inline-block w-8 bg-white dark:bg-black p-2 py-1 text-center text-xs font-normal uppercase leading-5">
+              <p className="inline-block w-8 bg-white p-2 py-1 text-center text-xs font-normal uppercase leading-5 dark:bg-black">
                 {randomCat}
               </p>
             </div>
@@ -115,9 +116,8 @@ export default function ArticlePreview({
           )}
           <h1
             className={cn(
-              'mb-2 pt-4 md:pt-2 font-serif antialiased',
-              !isHighlighted &&
-                `text-xl tracking-tight md:text-xl`,
+              'mb-2 pt-4 font-serif antialiased md:pt-2',
+              !isHighlighted && `text-xl tracking-tight md:text-xl`,
               isHighlighted && `text-xl md:text-2xl`
             )}
           >

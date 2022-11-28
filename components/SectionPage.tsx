@@ -1,12 +1,24 @@
 import { NextSeo } from 'next-seo'
 
 import openGraphObjectFromDocument from '../lib/openGraphObjectFromDocument'
+import { isLifestyle } from '../utils/brand'
 import Container from './Container'
 import MoreStories from './MoreStories'
-import Title from './Title'
+import Title, { TitleLifeStyle } from './Title'
+
+const isLifestyleBrand = () => isLifestyle()
 
 export default function SectionPage({ section }) {
   const { name, articles } = section || {}
+
+  if (isLifestyleBrand()) {
+    return (
+      <Container>
+        <TitleLifeStyle>{name}</TitleLifeStyle>
+        <MoreStories articles={articles} />
+      </Container>
+    )
+  }
 
   return (
     <Container>

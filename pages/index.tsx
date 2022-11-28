@@ -6,7 +6,7 @@ import Container from '../components/Container'
 import MoreStories from '../components/MoreStories'
 import { indexQuery, settingsQuery } from '../lib/queries'
 import { getClient, overlayDrafts } from '../lib/sanity.server'
-import { isLifestyle } from '../utils/brand'
+import { getBrandName, isLifestyle } from '../utils/brand'
 
 const PreviewMoreStories = lazy(
   () => import('../components/PreviewMoreStories')
@@ -45,7 +45,9 @@ export async function getStaticProps({ preview = false }) {
   /* check if the project id has been defined by fetching the vercel envs */
   if (process.env.NEXT_PUBLIC_SANITY_PROJECT_ID) {
     const allArticles = overlayDrafts(
-      await getClient(preview).fetch(indexQuery)
+      await getClient(preview).fetch(indexQuery, {
+        brand: getBrandName(),
+      })
     )
 
     return {
