@@ -8,14 +8,22 @@ import { theme } from 'https://themer.sanity.build/api/hues?preset=tw-cyan&prima
 import { defineConfig, definePlugin } from 'sanity'
 import { deskTool } from 'sanity/desk'
 import { unsplashImageAsset } from 'sanity-plugin-asset-source-unsplash'
-import DocumentsPane from 'sanity-plugin-documents-pane'
+// import DocumentsPane from 'sanity-plugin-documents-pane'
 import { workflow } from 'sanity-plugin-workflow'
 
+import {
+  LifestyleLogo,
+  LifestyleWorkspaceLogo,
+  // Logo,
+  TechLogo,
+  TechWorkspaceLogo,
+  // WorkspaceLogo,
+} from './logo'
 import { mediaConfigPlugin, structure } from './plugins/config'
 import defaultDocumentNode from './plugins/config/defaultDocumentNode'
 import newsletterPlugin from './plugins/newsletter'
 import variations from './plugins/variations'
-import { schemaTypes } from './schemas'
+import { schemaTemplates, schemaTypes } from './schemas'
 
 // @TODO: update next-sanity/studio to automatically set this when needed
 const basePath = '/studio/tech'
@@ -27,6 +35,7 @@ const defaultConfig = (type: string) => {
     name: 'default-config',
     schema: {
       types: schemaTypes,
+      templates: schemaTemplates,
     },
     plugins: [
       deskTool({
@@ -55,8 +64,14 @@ export default defineConfig([
     name: 'tech',
     projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
     dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
-    title: process.env.NEXT_PUBLIC_SANITY_PROJECT_TITLE || 'Tech',
+    title: process.env.NEXT_PUBLIC_SANITY_PROJECT_TITLE || 'Technology',
     plugins: [defaultConfig('tech')],
+    icon: TechWorkspaceLogo,
+    studio: {
+      components: {
+        logo: TechLogo,
+      },
+    },
   },
   {
     name: 'lifestyle',
@@ -66,5 +81,11 @@ export default defineConfig([
     title: process.env.NEXT_PUBLIC_SANITY_PROJECT_TITLE || 'Lifestyle',
     theme,
     plugins: [defaultConfig('lifestyle')],
+    icon: LifestyleWorkspaceLogo,
+    studio: {
+      components: {
+        logo: LifestyleLogo,
+      },
+    },
   },
 ])

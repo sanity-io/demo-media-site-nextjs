@@ -1,14 +1,19 @@
 import cn from 'classnames'
 import Link from 'next/link'
 
+import { isLifestyle } from '../utils/brand'
 import Container from './Container'
+
+const isLifestyleBrand = isLifestyle()
 
 export default function Alert({ preview }) {
   return (
     <div
-      className={cn('border-b', {
+      className={cn(!isLifestyleBrand && 'border-b', {
         'border-accent-7 bg-accent-7 text-white': preview,
-        'border-accent-2 bg-accent-1': !preview,
+        'mx-auto mb-6 flex max-w-lg rounded-md bg-purple-300 py-1 text-white dark:text-white':
+          isLifestyleBrand && preview,
+        hidden: !preview,
       })}
     >
       <Container>

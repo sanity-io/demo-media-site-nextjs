@@ -1,15 +1,33 @@
 import { DefaultSeoProps } from 'next-seo'
 
+import { isLifestyle } from '../utils/brand'
+
+const envBasedConfig = isLifestyle()
+  ? {
+      titleTemplate: '%s - Lifestyle',
+      defaultTitle: 'Lifestyle',
+      openGraph: {
+        type: 'website',
+        locale: 'en',
+        url: 'https://www.url.ie/',
+        siteName: 'Lifestyle',
+      },
+    }
+  : {
+      titleTemplate: '%s - Media',
+      defaultTitle: 'Media',
+      openGraph: {
+        type: 'website',
+        locale: 'en',
+        url: 'https://www.url.ie/',
+        siteName: 'Media',
+      },
+    }
+
 const config: DefaultSeoProps = {
-  titleTemplate: '%s - Media Site',
-  defaultTitle: 'Media Site',
+  dangerouslySetAllPagesToNoIndex: true,
+  ...envBasedConfig,
   description: 'A demo of the Sanity.io editorial workflow',
-  openGraph: {
-    type: 'website',
-    locale: 'en',
-    url: 'https://www.url.ie/',
-    siteName: 'Media Site',
-  },
   additionalLinkTags: [
     {
       rel: 'apple-touch-icon',
