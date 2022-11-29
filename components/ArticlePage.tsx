@@ -20,6 +20,7 @@ export default function ArticlePage({ article }: ArticleComponentProps) {
       <article className="pb-4 md:pb-6">
         <Header
           title={article?.title}
+          intro={article?.intro}
           mainImage={article?.mainImage}
           sections={article?.sections}
         />
