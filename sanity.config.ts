@@ -8,6 +8,7 @@ import { theme } from 'https://themer.sanity.build/api/hues?preset=tw-cyan&prima
 import { defineConfig, definePlugin } from 'sanity'
 import { deskTool } from 'sanity/desk'
 import { unsplashImageAsset } from 'sanity-plugin-asset-source-unsplash'
+import { dashboardTool } from '@sanity/dashboard'
 // import DocumentsPane from 'sanity-plugin-documents-pane'
 import { workflow } from 'sanity-plugin-workflow'
 
@@ -24,6 +25,7 @@ import defaultDocumentNode from './plugins/config/defaultDocumentNode'
 import newsletterPlugin from './plugins/newsletter'
 import variations from './plugins/variations'
 import { schemaTemplates, schemaTypes } from './schemas'
+import { reviewsPlugin } from './plugins/reviews'
 
 // @TODO: update next-sanity/studio to automatically set this when needed
 const basePaths = {
@@ -33,6 +35,9 @@ const basePaths = {
 }
 
 const defaultConfig = (type: string) => {
+  const typedPlugins = {
+    reviews: [reviewsPlugin()],
+  }
   // const defaultConfig = (type) => {
   return definePlugin({
     name: 'default-config',
@@ -57,6 +62,7 @@ const defaultConfig = (type: string) => {
         schemaTypes: ['article'],
       }),
       variations(),
+      ...(typedPlugins[type] || []),
     ],
   })()
 }
