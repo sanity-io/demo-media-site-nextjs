@@ -87,12 +87,12 @@ export default function MoreStories({
   if (isLifestyleBrand) {
     return (
       <div className="mb-6">
-        {topArticles?.length && (
+        {Boolean(topArticles?.length) && (
           <>
             <StorySection articles={topArticles} sectionType="featured" />
           </>
         )}
-        {restArticles?.length && (
+        {Boolean(restArticles?.length) && (
           <>
             <StorySection
               title="Latest news"
