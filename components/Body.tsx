@@ -92,7 +92,13 @@ export default function Body({
   }, [])
 
   return (
-    <div className="m-auto max-w-5xl p-4 pt-0 md:p-5 md:pt-0 lg:p-6 lg:pt-0">
+    <div
+      className={
+        isLifestyle
+          ? 'm-auto max-w-5xl p-4 pt-0 md:p-5 md:pt-0 lg:p-6 lg:pt-0'
+          : 'm-auto max-w-5xl p-4 md:p-5 lg:p-6'
+      }
+    >
       {people && <Credits people={people} />}
 
       <div
@@ -163,7 +169,7 @@ function Credits({ people }: { people: ArticleProps['people'] }) {
   }
 
   return (
-    <div className="mt-4 mb-4 max-w-2xl border-b border-gray-200 pb-3 text-sm dark:border-gray-900 sm:text-lg md:mt-auto md:pb-4 md:text-xl">
+    <div className="mx-auto mt-4 mb-4 max-w-2xl border-b border-gray-200 pb-3 text-sm dark:border-gray-900 sm:text-lg md:mt-auto md:pb-4 md:text-xl">
       <span
         data-after=" ● "
         className="after:inline after:content-[attr(data-after)]"

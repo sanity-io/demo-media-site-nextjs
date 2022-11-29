@@ -103,7 +103,11 @@ function MainCoverImage({
             <>{mainImage.caption} ● Photo by Hardcoded, pull from People</>
           )
         }
-        className="m-auto max-w-xl p-2"
+        className={
+          brandName === BRAND_LIFESTYLE_NAME
+            ? 'm-auto max-w-xl p-2'
+            : 'm-auto max-w-5xl p-2'
+        }
         img={
           <Image
             className={
@@ -113,8 +117,8 @@ function MainCoverImage({
             }
             alt={mainImage?.alt || title}
             src={urlForImage(mainImage?.image)
-              .height(height || 1000)
               .width(width || 2000)
+              .height(height || 1000)
               .url()}
             width={width || 2000}
             height={height || 1000}
