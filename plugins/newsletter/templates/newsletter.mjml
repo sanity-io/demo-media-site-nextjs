@@ -9,12 +9,17 @@
       href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap"
     />
     <mj-preview>{{ subject ?? 'No subject' }}</mj-preview>
+    <mj-style>
+      .link-color, .link-color a { color: #000 !important; text-decoration: none
+      !important; } .link-color:hover, .link-color a:hover { color: #ccc
+      !important; text-decoration: underline !important; }
+    </mj-style>
   </mj-head>
   <mj-body>
     <mj-section padding-bottom="0">
       <mj-column>
         <mj-text font-family="Inter, Arial" font-size="48px" font-weight="800">
-          Media
+          Tech
         </mj-text>
       </mj-column>
     </mj-section>
@@ -51,40 +56,50 @@
     </mj-section>
 
     {# https://mjml.io/try-it-live/KEXT-aEPS #} {% set textTypes = ['paragraph',
-    'heading'] %} {% set lastBlockType = null %} {% for index,contentBlock in
-    contentBlocks %} {# Text types #} {% if contentBlock.type in textTypes %} {%
-    set isNextBlockTextType = contentBlocks[index + 1] is defined ?
-    contentBlocks[index + 1].type in textTypes : false %} {% if
-    contentBlock.type == 'paragraph' %}
-    <mj-section padding="10px 0">
+    'heading'] %} {% set lastBlockType = null %} {% set hasOpenTextTypeBlock =
+    false %} {% for index,contentBlock in contentBlocks %} {# Text types #} {%
+    if contentBlock.type in textTypes %} {% set isNextBlockTextType =
+    contentBlocks[index + 1] is defined ? contentBlocks[index + 1].type in
+    textTypes : false %} {% if not hasOpenTextTypeBlock %} {# If this is a
+    single text block, we need to tell the end tag to close right away #} {% if
+    not isNextBlockTextType %} {% set hasOpenTextTypeBlock = true %} {% endif %}
+    <mj-section padding="10px 20px">
       <mj-column>
+        {% endif %} {% if contentBlock.type == 'paragraph' %}
         <mj-text
           font-family="PT Serif, Arial"
           font-size="16px"
           line-height="21px"
           font-weight="500"
+          padding="0 0"
         >
           {{contentBlock.html}}
         </mj-text>
-      </mj-column>
-    </mj-section>
-    {% elseif contentBlock.type == 'heading' %}
-    <mj-section padding="10px 0">
-      <mj-column>
+        {% elseif contentBlock.type == 'heading' %}
         <mj-text
           font-family="PT Serif, Arial"
           font-size="36px"
           line-height="36px"
           font-weight="800"
+          padding="0 0"
         >
           {{contentBlock.html}}
         </mj-text>
+        {% endif %} {% if isNextBlockTextType and not hasOpenTextTypeBlock %} {#
+        Remember that we need to close the tag #} {% set hasOpenTextTypeBlock =
+        true %} {% endif %} {# When we hit last block, we will have
+        hasOpenTextTypeBlock == true and isNextBlockTextType == false #} {% if
+        (not isNextBlockTextType and hasOpenTextTypeBlock) %} {# We need to
+        close the tag, because the next block is not a text type #} {% set
+        hasOpenTextTypeBlock = false %} {# Close the tag #}
       </mj-column>
     </mj-section>
     {% endif %} {# Other block types #} {% elseif contentBlock.type == 'article'
-    %}
-    <mj-wrapper full-width="full-width" padding="0px">
-      {% if contentBlock.imageUrl %}
+    or contentBlock.type == 'articles' %} {% set articles = contentBlock.type ==
+    'article' ? [contentBlock] : contentBlock.articles %} {% for article in
+    articles %}
+    <mj-wrapper full-width="full-width" padding="0 20px">
+      {# Large image + text below start #} {# {% if article.imageUrl %}
       <mj-section
         border-top="1px solid #aaaaaa"
         border-left="1px solid #aaaaaa"
@@ -93,11 +108,12 @@
       >
         <mj-column>
           <mj-image
+            href="{{ article.url }}"
             padding="0"
-            src="{{ contentBlock.imageUrl }}"
-            alt="{{ contentBlock.imageAlt }}"
+            src="{{ article.imageUrl }}"
+            alt="{{ article.imageAlt }}"
             width="600"
-            height="600"
+            height="320"
           />
         </mj-column>
       </mj-section>
@@ -105,32 +121,76 @@
       <mj-section
         border-left="1px solid #aaaaaa"
         border-right="1px solid #aaaaaa"
-        padding="20px"
+        padding="0 0 0 0"
         border-bottom="1px solid #aaaaaa"
       >
         <mj-column border="1px solid #dddddd">
           <mj-text
+            css-class="link-color"
+            color="#000"
             font-family="PT Serif, Arial"
-            font-size="36px"
-            line-height="36px"
+            font-size="28px"
+            line-height="28px"
             font-weight="500"
           >
-            {{contentBlock.title}}
+            <a href="{{ article.url }}" target="_blank"> {{article.title}} </a>
           </mj-text>
-          {% if contentBlock.description %}
+          {% if article.description %}
           <mj-text
             font-family="PT Serif, Arial"
             font-size="16px"
             line-height="21px"
             font-weight="500"
           >
-            {{ contentBlock.description }}
+            {{ article.description }}
           </mj-text>
           {% endif %}
         </mj-column>
       </mj-section>
+      #} {# Large image + text below end #} {# Image + text side by side #} {%
+      if article.imageUrl %}
+      <mj-section
+        border-top="1px solid #aaaaaa"
+        border-bottom="1px solid #aaaaaa"
+        padding="20px 0"
+        vertical-align="middle"
+      >
+        <mj-column width="30%">
+          <mj-image
+            href="{{ article.url }}"
+            padding="0"
+            src="{{ article.imageUrl }}"
+            alt="{{ article.imageAlt }}"
+            width="600"
+            height="320"
+          />
+        </mj-column>
+        <mj-column width="70%">
+          <mj-text
+            css-class="link-color"
+            color="#000"
+            font-family="PT Serif, Arial"
+            font-size="24px"
+            line-height="24px"
+            font-weight="500"
+          >
+            <a href="{{ article.url }}" target="_blank"> {{article.title}} </a>
+          </mj-text>
+          {% if article.description %}
+          <mj-text
+            font-family="PT Serif, Arial"
+            font-size="16px"
+            line-height="21px"
+            font-weight="500"
+          >
+            {{ article.description }}
+          </mj-text>
+          {% endif %}
+        </mj-column>
+      </mj-section>
+      {% endif %} {# Image + text side by side end #}
     </mj-wrapper>
-    {# Unsupported fallback #} {% else %}
+    {% endfor %} {# Unsupported fallback #} {% else %}
     <mj-section padding="10px 0">
       <mj-column>
         <mj-text

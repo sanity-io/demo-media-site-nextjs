@@ -15,7 +15,7 @@ interface TextBlock {
 }
 
 interface ModuleBlock {
-  type: 'article' | 'image'
+  type: 'article' | 'image' | 'articles'
   [key: string]: unknown
 }
 
@@ -43,6 +43,7 @@ export function blocksToCustomContentBlocks(
   return blocks
     .map((block) => {
       if (block._type !== 'block') {
+        console.log(block)
         return renderCustomBlock(block)
       }
 
@@ -77,6 +78,20 @@ export function renderCustomBlock(block): ModuleBlock | null {
           : null,
         imageAlt: block?.mainImage?.alt,
         url: `https://demo-media-site-nextjs.sanity.build/articles/${block.slug}`,
+      }
+    case 'articleReferences':
+      return {
+        type: 'articles',
+        articles: block?.references.filter(Boolean).map((article) => ({
+          title: article?.title,
+          description: article?.intro ? toPlainText(article.intro) : null,
+          slug: article.slug,
+          imageUrl: article.mainImage
+            ? urlForImage(article.mainImage?.image).width(600).height(320).url()
+            : null,
+          imageAlt: block?.mainImage?.alt,
+          url: `https://demo-media-site-nextjs.sanity.build/articles/${article.slug}`,
+        })),
       }
     default:
       return null

@@ -8,7 +8,8 @@ export const newsletterFields = groq`
   hasCustomTextContent,
   "content": content[]{
     _type == 'articleReference' => @->{_type, _id, title, intro, "slug": slug.current, mainImage },
-    _type != 'articleReference' => @,
+    _type == 'articleReferences' => @{_type, _key, references[]->{_type, _id, title, intro, "slug": slug.current, mainImage }},
+    _type != 'articleReference' && _type != 'articleReferences' => @,
   },          
   "date": _updatedAt,
 `
