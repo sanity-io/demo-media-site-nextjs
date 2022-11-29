@@ -14,9 +14,10 @@ import Link from 'next/link'
 import React, { useMemo } from 'react'
 
 import { urlForImage } from '../lib/sanity'
-import { ArticleProps, MainImage } from '../types'
+import { ArticlePreviewProps, ArticleProps, MainImage } from '../types'
 import { BRAND_LIFESTYLE_NAME, getBrandName } from '../utils/brand'
 import { getUrlForDocumentType } from '../utils/routing'
+import ArticlePreview from './ArticlePreview'
 import { Figure } from './Figure'
 
 const brandName = getBrandName()
@@ -58,7 +59,12 @@ const components = {
         />
       )
     },
-    video: ({ value }) => {
+    review: ({ value }: { value: ArticlePreviewProps }) => {
+      return (
+        <ArticlePreview {...value} dataset='reviews' />
+      )
+    },
+    podcast: ({ value }) => {
       const { url } = value
       return (
         <div>
@@ -66,7 +72,7 @@ const components = {
         </div>
       )
     },
-    podcast: ({ value }) => {
+    video: ({ value }) => {
       const { url } = value
       return (
         <div>

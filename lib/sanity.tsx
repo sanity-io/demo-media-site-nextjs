@@ -1,8 +1,12 @@
 import createImageUrlBuilder from '@sanity/image-url'
 
-import { sanityConfig } from './config'
+import { sanityConfig, reviewConfig } from './config'
 
-export const imageBuilder = createImageUrlBuilder(sanityConfig)
+const imageBuilder = createImageUrlBuilder(sanityConfig)
+const reviewImageBuilder = createImageUrlBuilder(reviewConfig)
 
-export const urlForImage = (source) =>
-  imageBuilder.image(source).auto('format').fit('max')
+
+export const urlForImage = (source: any, dataset?: string) => {
+  const builder = dataset === 'reviews' ? reviewImageBuilder : imageBuilder
+  return builder.image(source).auto('format').fit('max')
+}

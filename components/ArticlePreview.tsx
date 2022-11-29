@@ -3,7 +3,7 @@ import cn from 'classnames'
 import Link from 'next/link'
 import React from 'react'
 
-import { ArticleProps } from '../types'
+import { ArticlePreviewProps, ArticleProps } from '../types'
 import { isLifestyle } from '../utils/brand'
 import { getUrlForDocumentType } from '../utils/routing'
 import { useRandom } from '../utils/useRandom'
@@ -43,10 +43,9 @@ const CATS = [
   'Christmas',
 ]
 
-type ArticlePreviewProps = Pick<
-  ArticleProps,
-  'title' | 'mainImage' | 'date' | 'intro' | 'people' | 'isHighlighted' | 'slug'
-> & { sectionType?: 'featured' | 'normal' }
+type MultiDatasetPreview = {
+  dataset?: string
+}
 
 export default function ArticlePreview({
   title,
@@ -57,7 +56,8 @@ export default function ArticlePreview({
   isHighlighted,
   slug,
   sectionType,
-}: ArticlePreviewProps) {
+  dataset
+}: ArticlePreviewProps & MultiDatasetPreview) {
   const randomCat = useRandom(CATS)
 
   if (isLifestyleBrand) {
@@ -96,6 +96,7 @@ export default function ArticlePreview({
             priority={false}
             width={width}
             height={height}
+            dataset={dataset}
           />
           {!isHighlighted && (
             <div className="col-start-1 row-start-1 self-end justify-self-center">
@@ -161,6 +162,7 @@ export default function ArticlePreview({
           title={title}
           image={mainImage}
           priority={false}
+          dataset={dataset}
         />
       </div>
       <div className="flex flex-1 flex-col p-4 md:w-1/2">
