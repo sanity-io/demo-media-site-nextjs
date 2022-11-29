@@ -5,7 +5,11 @@ export const articleContentFields = groq`
     _type == 'articleReference' => @->{_type, _id, title, "slug": slug.current},
     _type != 'articleReference' => @,
     _type == 'podcastReference' => @->{_type, _id, "url": podcastEpisode.url },
-    _type == 'reviewReference' => @.review->{_type, _id, "slug": slug.current, intro, mainImage, "title": coalesce(^.titleOverride, title) },
+    _type == 'reviewReference'=> {
+      "_type": @._type,
+      "title": titleOverride,
+      "slug": @->review.slug.current,
+    }
   },        
 `
 

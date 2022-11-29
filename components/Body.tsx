@@ -59,9 +59,18 @@ const components = {
         />
       )
     },
-    review: ({ value }: { value: ArticlePreviewProps }) => {
+    reviewReference: ({ value }: { value: ArticlePreviewProps }) => {
+      const { title, slug } = value
+      const url = getUrlForDocumentType('article', slug)
       return (
-        <ArticlePreview {...value} dataset='reviews' />
+        <div className="text-black">
+          <p className="dark border border-gray-200 border-gray-900 p-4">
+            <span className="font-bold">Read more:</span>{' '}
+            <Link href={url} className="no-underline hover:underline">
+              {title}
+            </Link>
+          </p>
+        </div>
       )
     },
     podcast: ({ value }) => {

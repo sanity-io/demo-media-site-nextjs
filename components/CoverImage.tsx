@@ -18,7 +18,6 @@ interface CoverImageProps {
   priority?: boolean
   width?: number
   height?: number
-  dataset?: string
 }
 
 export default function CoverImage(props: CoverImageProps) {
@@ -32,7 +31,6 @@ export default function CoverImage(props: CoverImageProps) {
     aspectClass = 'aspect-[4/2] md:aspect-[3/2]',
     width,
     height,
-    dataset
   } = props
   const alt = source?.alt
   const image = source?.image?.asset?._ref ? (
@@ -46,9 +44,9 @@ export default function CoverImage(props: CoverImageProps) {
         width={width || 2000}
         height={height || 1000}
         alt={alt}
-        src={urlForImage(source?.image, dataset)
-          .width(width || 2000)
+        src={urlForImage(source?.image)
           .height(height || 1000)
+          .width(width || 2000)
           .url()}
         sizes="100vw"
         priority={priority}
