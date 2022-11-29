@@ -1,16 +1,21 @@
 import groq from 'groq'
 
-export const articleFields = groq`
-  _id,
-  title,
-  date,
-  intro,
-  mainImage,
+export const articleContentFields = groq`
   "content": content[]{
     _type == 'articleReference' => @->{_type, _id, title, "slug": slug.current},
     _type != 'articleReference' => @,
     _type == 'podcastReference' => @->{_type, _id, "url": podcastEpisode.url },
-  },          
+  },        
+`
+
+export const articleFields = groq`
+  _id,
+  _rev,
+  title,
+  date,
+  intro,
+  "summary": intro,
+  mainImage, 
   "date": _updatedAt,
   "slug": slug.current,
   "people": people[]{ role, ...person->{name, image, bio, 'slug': slug.current} },
@@ -28,7 +33,7 @@ export const indexQuery = groq`
 export const articleQuery = groq`
 {
   "article": *[_type == "article" && slug.current == $slug] | order(_updatedAt desc) [0] {
-    content,
+    ${articleContentFields}
     ${articleFields}
   },
   "morePosts": *[_type == "article" && slug.current != $slug] | order(date desc, _updatedAt desc) [0...2] {

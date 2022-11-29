@@ -20,7 +20,6 @@ const PreviewArticlePage = lazy(
 interface Props {
   data: { article: ArticleProps; moreArticles: any }
   preview: any
-  globalSettings: any
 }
 
 export default function Article(props: Props) {
@@ -56,7 +55,6 @@ export async function getStaticProps({ params, preview = false }) {
       slug: params.slug,
     }
   )
-  const globalSettings = await getClient(preview).fetch(settingsQuery)
 
   return {
     props: {
@@ -65,7 +63,6 @@ export async function getStaticProps({ params, preview = false }) {
         article,
         moreArticles: overlayDrafts(moreArticles),
       },
-      globalSettings,
     },
     // If webhooks isn't setup then attempt to re-generate in 1 minute intervals
     revalidate: process.env.SANITY_REVALIDATE_SECRET ? undefined : 60,

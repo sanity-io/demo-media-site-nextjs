@@ -1,5 +1,7 @@
+import { PortableText } from '@portabletext/react'
 import Image from 'next/image'
 import Link from 'next/link'
+import React from 'react'
 
 import { urlForImage } from '../lib/sanity'
 import { ArticleProps, MainImage } from '../types'
@@ -9,10 +11,13 @@ import { Figure } from './Figure'
 
 const brandName = getBrandName()
 
-type HeaderProps = Pick<ArticleProps, 'title' | 'mainImage' | 'sections'>
+type HeaderProps = Pick<
+  ArticleProps,
+  'title' | 'mainImage' | 'sections' | 'intro'
+>
 
 export default function Header(props: HeaderProps) {
-  const { title, mainImage, sections } = props
+  const { title, mainImage, intro, sections } = props
 
   if (brandName === BRAND_LIFESTYLE_NAME) {
     return <HeaderLifestyle {...props} />
@@ -27,10 +32,22 @@ export default function Header(props: HeaderProps) {
           {title || 'Untitled'}
         </h1>
 
-        <p className="mt-3 font-serif text-2xl leading-snug">
-          The humble newsletter has been around for decades, but it has only
-          recently emerged as a powerful media in its own right.
-        </p>
+        {intro && (
+          <div className="mt-3 font-serif text-2xl leading-snug">
+            <PortableText
+              value={intro}
+              onMissingComponent={(message, options) => {
+                console.error(message, {
+                  // eg `someUnknownType`
+                  type: options.type,
+
+                  // 'block' | 'mark' | 'blockStyle' | 'listStyle' | 'listItemStyle'
+                  nodeType: options.nodeType,
+                })
+              }}
+            />
+          </div>
+        )}
       </div>
       {mainImage && (
         <MainCoverImage
@@ -86,7 +103,11 @@ function MainCoverImage({
             <>{mainImage.caption} ● Photo by Hardcoded, pull from People</>
           )
         }
-        className="m-auto max-w-xl p-2"
+        className={
+          brandName === BRAND_LIFESTYLE_NAME
+            ? 'm-auto max-w-xl p-2'
+            : 'm-auto max-w-5xl p-2'
+        }
         img={
           <Image
             className={
@@ -96,8 +117,8 @@ function MainCoverImage({
             }
             alt={mainImage?.alt || title}
             src={urlForImage(mainImage?.image)
-              .height(height || 1000)
               .width(width || 2000)
+              .height(height || 1000)
               .url()}
             width={width || 2000}
             height={height || 1000}

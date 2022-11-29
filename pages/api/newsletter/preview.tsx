@@ -23,7 +23,7 @@ function wrapIds(ids: any) {
 }
 
 function renderMjml(s: string) {
-  return mjml2html(s, { minify: true }).html
+  return mjml2html(s).html
 }
 
 function renderNewsletter(newsletter: SanityDocumentStub) {
@@ -42,11 +42,14 @@ function renderNewsletter(newsletter: SanityDocumentStub) {
       'utf8'
     ),
   })
-  const htmlOutput = renderMjml(template.render(data))
 
+  try {
+    const htmlOutput = renderMjml(template.render(data))
+    return { data, htmlOutput }
+  } catch (e) {
+    throw e
+  }
   // console.dir(data.contentBlocks)
-
-  return { data, htmlOutput }
 }
 
 export default async function preview(req, res) {

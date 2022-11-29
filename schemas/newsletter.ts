@@ -31,6 +31,9 @@ export default defineType({
       name: 'content',
       title: 'Content',
       type: 'portableText',
+      options: {
+        showSyncButton: true,
+      },
     },
     {
       name: 'hasCustomTextContent',
