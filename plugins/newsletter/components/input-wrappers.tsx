@@ -1,7 +1,17 @@
-import type { InputProps, SanityDocumentLike } from 'sanity'
+import type {
+  InputProps,
+  ObjectDefinition,
+  ArrayDefinition,
+  SanityDocumentLike,
+  SchemaTypeDefinition,
+  ArraySchemaType,
+} from 'sanity'
 import React from 'react'
 import { MailchimpStatusWrapper } from './mailchimp-status-wrapper'
 import { SyncNewArticlesWrapper } from './sync-new-articles'
+
+// const isArrayType = (def: ArraySchemaType): def is ArrayDefinition =>
+//   def.type === 'portableText'
 
 export function InputWrappers(props: InputProps) {
   // console.log(props.schemaType)
@@ -13,10 +23,11 @@ export function InputWrappers(props: InputProps) {
     return <MailchimpStatusWrapper {...props} />
   }
 
-  if (
-    props.schemaType.name === 'portableText' &&
-    props.schemaType.title === 'Content'
-  ) {
+  // if (isArrayType(props.schemaType)) {
+  // }
+
+  if (props.schemaType?.options?.showSyncButton) {
+    console.log(props)
     return <SyncNewArticlesWrapper {...props} />
   }
 
