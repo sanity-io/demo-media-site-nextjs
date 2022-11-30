@@ -1,8 +1,8 @@
 import React from 'react'
-import { Card, useToast } from '@sanity/ui'
-import { useDocumentOperation } from 'sanity'
+import {Card, useToast} from '@sanity/ui'
+import {useDocumentOperation} from 'sanity'
 
-import { State } from '../types'
+import {State} from '../types'
 
 type MutateProps = {
   _id: string
@@ -13,7 +13,7 @@ type MutateProps = {
 }
 
 export default function Mutate(props: MutateProps) {
-  const { _id, _type, documentId, state, onComplete } = props
+  const {_id, _type, documentId, state, onComplete} = props
   const ops = useDocumentOperation(documentId, _type)
   const isDraft = _id.startsWith('drafts.')
 

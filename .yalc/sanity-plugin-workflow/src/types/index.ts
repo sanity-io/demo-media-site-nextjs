@@ -1,5 +1,5 @@
 import React from 'react'
-import { SanityDocumentLike } from 'sanity'
+import {SanityDocumentLike} from 'sanity'
 
 export type State = {
   id: string
