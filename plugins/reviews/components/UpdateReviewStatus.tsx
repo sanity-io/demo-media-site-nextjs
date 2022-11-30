@@ -59,11 +59,24 @@ function UpdateReviewStatus(config: UpdateReviewStatusConfig) {
 
   const handleMarkAsSoldOut = useCallback(async () => {
     setLoading(true)
+    const reviewIntro = reviews.find((review) => review.value === markedReviewId).payload.intro
+    const updatedIntroText = 'Unfortunately no longer available, ' + reviewIntro[0].children[0].text[0].toLowerCase() + reviewIntro[0].children[0].text.slice(1)
+    const newBlock = {
+      ...reviewIntro[0],
+      children: [
+        {
+        ...reviewIntro[0].children[0],
+        text: updatedIntroText
+        },
+        ...reviewIntro[0].children.slice(1)
+      ]
+      
+    }
 
     try {
-      const reviews = await client
+      await client
         .transaction()
-        .patch(markedReviewId, { set: { soldOut: true } })
+        .patch(markedReviewId, { insert: { replace: 'intro[0]', items: [newBlock] } })
         .commit()
     } catch (e) {
       console.error(e)
@@ -75,7 +88,7 @@ function UpdateReviewStatus(config: UpdateReviewStatusConfig) {
     }
 
     setLoading(false)
-  }, [client, markedReviewId, toast])
+  }, [client, markedReviewId, toast, reviews])
 
   useEffect(() => {
     handleLoadReviews().then(() => setLoading(false))
