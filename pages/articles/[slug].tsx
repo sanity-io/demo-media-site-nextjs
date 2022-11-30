@@ -5,11 +5,7 @@ import { lazy } from 'react'
 
 import ArticlePage from '../../components/ArticlePage'
 import Title from '../../components/Title'
-import {
-  articleQuery,
-  articleSlugsQuery,
-  settingsQuery,
-} from '../../lib/queries'
+import { articleQuery, articleSlugsQuery } from '../../lib/queries'
 import { getClient, overlayDrafts } from '../../lib/sanity.server'
 import { ArticleProps } from '../../types'
 

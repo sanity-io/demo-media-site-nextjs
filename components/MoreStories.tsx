@@ -30,7 +30,7 @@ function StorySection({
           <div
             className={`grid divide-y divide-x divide-gray-200 rounded border-b border-gray-200 dark:divide-gray-900 dark:border-gray-900 sm:grid-cols-2 md:grid-cols-${columns} md:border`}
           >
-            {articles.map((article) => (
+            {articles?.map((article) => (
               <ArticlePreview
                 key={article.slug}
                 title={article.title}
@@ -105,7 +105,7 @@ export default function MoreStories({
       <h2 className="sr-only">Articles</h2>
       <div className="font-merriweather container mx-auto">
         <div className="divide-y divide-gray-200 rounded border-t border-b border-gray-200 dark:divide-gray-900 dark:border-gray-900 md:border">
-          {articles.map((article) => (
+          {articles?.map((article) => (
             <ArticlePreview
               key={article.slug}
               title={article.title}

@@ -14,7 +14,7 @@ import Link from 'next/link'
 import React, { useMemo } from 'react'
 
 import { urlForImage } from '../lib/sanity'
-import { ArticleProps, MainImage } from '../types'
+import { ArticlePreviewProps, ArticleProps, MainImage } from '../types'
 import { BRAND_LIFESTYLE_NAME, getBrandName } from '../utils/brand'
 import { getUrlForDocumentType } from '../utils/routing'
 import { Figure } from './Figure'
@@ -58,7 +58,23 @@ const components = {
         />
       )
     },
-    video: ({ value }) => {
+    reviewReference: ({ value }: { value: ArticlePreviewProps }) => {
+      const { title, slug } = value
+      const url = getUrlForDocumentType('review', slug)
+      console.log('slug', slug)
+      console.log('url', url)
+      return (
+        <div className="text-black">
+          <p className="dark border border-gray-200 border-gray-900 p-4">
+            <span className="font-bold">Read more:</span>{' '}
+            <Link href={url} className="no-underline hover:underline">
+              {title}
+            </Link>
+          </p>
+        </div>
+      )
+    },
+    podcast: ({ value }) => {
       const { url } = value
       return (
         <div>
@@ -66,7 +82,7 @@ const components = {
         </div>
       )
     },
-    podcast: ({ value }) => {
+    video: ({ value }) => {
       const { url } = value
       return (
         <div>

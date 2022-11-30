@@ -29,6 +29,11 @@ export interface ArticleProps {
   isHighlighted?: boolean
 }
 
+export type ArticlePreviewProps = Pick<
+  ArticleProps,
+  'title' | 'mainImage' | 'date' | 'intro' | 'people' | 'isHighlighted' | 'slug'
+> & { sectionType?: 'featured' | 'normal' }
+
 export interface MainImage {
   image: any
   alt: string
