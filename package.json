@@ -16,6 +16,7 @@
   "dependencies": {
     "@portabletext/react": "^2.0.0",
     "@portabletext/to-html": "^1.0.4",
+    "@sanity/dashboard": "^3.0.0",
     "@sanity/demo": "^1.0.0",
     "@sanity/image-url": "^1.0.1",
     "@sanity/scheduled-publishing": "0.3.0-v3-studio.11",

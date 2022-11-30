@@ -1,5 +1,5 @@
 import { FiHeadphones, FiMail, FiStar } from 'react-icons/fi'
-import { defineType } from 'sanity'
+import { defineField, defineType } from 'sanity'
 import { Rule } from '@sanity/validation'
 
 export default defineType({
@@ -7,39 +7,41 @@ export default defineType({
   title: 'Review',
   icon: FiStar,
   type: 'document',
+  readOnly: true,
   fields: [
-    {
+    defineField({
       name: 'title',
       title: 'Title',
       type: 'string',
       validation: (Rule) => Rule.required(),
-    },
-    {
+    }),
+    defineField({
       type: 'mainImage',
       name: 'mainImage',
-    },
-    {
+    }),
+    defineField({
       name: 'slug',
       title: 'Slug',
       type: 'slug',
       options: { source: 'title' },
       validation: (Rule) => Rule.required(),
-    },
-    {
+    }),
+    defineField({
       name: 'intro',
       title: 'Summary',
       description:
         'Used by certain presentations to describe what the review is about',
       type: 'minimalPortableText',
       validation: (Rule) => Rule.required(),
-    },
-    {
+    }),
+    defineField({
       name: 'content',
       title: 'Content',
       type: 'portableText',
-    },
-    { type: 'seo', name: 'seo', title: 'SEO' },
-    { type: 'brand', name: 'brand' },
+    }),
+    defineField({ type: 'seo', name: 'seo', title: 'SEO' }),
+    defineField({ type: 'boolean', name: 'soldOut', title: 'Sold out' }),
+    defineField({ type: 'brand', name: 'brand' }),
   ],
   preview: {
     select: {
