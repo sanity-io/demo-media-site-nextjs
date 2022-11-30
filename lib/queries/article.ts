@@ -8,7 +8,7 @@ export const articleContentFields = groq`
     _type == 'reviewReference'=> {
       "_type": @._type,
       "title": titleOverride,
-      "slug": @->review.slug.current,
+      "slug": @.review->slug.current
     }
   },        
 `

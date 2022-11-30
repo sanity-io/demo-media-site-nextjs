@@ -17,7 +17,6 @@ import { urlForImage } from '../lib/sanity'
 import { ArticlePreviewProps, ArticleProps, MainImage } from '../types'
 import { BRAND_LIFESTYLE_NAME, getBrandName } from '../utils/brand'
 import { getUrlForDocumentType } from '../utils/routing'
-import ArticlePreview from './ArticlePreview'
 import { Figure } from './Figure'
 
 const brandName = getBrandName()
@@ -61,7 +60,9 @@ const components = {
     },
     reviewReference: ({ value }: { value: ArticlePreviewProps }) => {
       const { title, slug } = value
-      const url = getUrlForDocumentType('article', slug)
+      const url = getUrlForDocumentType('review', slug)
+      console.log('slug', slug)
+      console.log('url', url)
       return (
         <div className="text-black">
           <p className="dark border border-gray-200 border-gray-900 p-4">
