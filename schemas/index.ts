@@ -19,6 +19,7 @@ import person from './person'
 import podcast from './podcast'
 import review from './review'
 import section from './section'
+import siteSettings from './siteSettings'
 
 const schemaTypesToFilterBrandOn = ['articleReference', 'person']
 
@@ -49,6 +50,7 @@ export const schemaTypes = (
     person,
     podcast,
     section,
+    siteSettings,
   ].map((def: SchemaTypeDefinition) => {
     // todo: contentRole.fields.reference
     if (schemaTypesToFilterBrandOn.includes(def?.name)) {
