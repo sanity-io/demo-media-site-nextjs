@@ -31,7 +31,7 @@ const createSchemaItem = (
               brand: brand.name,
             })
             .initialValueTemplates([
-              S.initialValueTemplateItem(schemaItem.schemaType, {
+              S.initialValueTemplateItem(`${schemaItem.schemaType}-brand`, {
                 brand: brand.name,
               }),
             ])
