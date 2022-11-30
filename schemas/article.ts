@@ -47,7 +47,7 @@ export default defineType({
       type: 'portableText',
     }),
     defineField({ type: 'seo', name: 'seo', title: 'SEO' }),
-    defineField({ type: 'brand', name: 'brand' }),
+    defineField({ type: 'brand', name: 'brand', hidden: true }),
   ],
   options: {
     enableVariations: ['title', 'mainImage'],

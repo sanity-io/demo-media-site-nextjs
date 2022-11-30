@@ -23,6 +23,7 @@ export default function ArticlePage({ article }: ArticleComponentProps) {
           intro={article?.intro}
           mainImage={article?.mainImage}
           sections={article?.sections}
+          brand={article?.brand}
         />
         <Body content={article?.content} people={article?.people} />
       </article>

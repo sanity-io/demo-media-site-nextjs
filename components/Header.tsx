@@ -4,20 +4,21 @@ import Link from 'next/link'
 import React from 'react'
 
 import { urlForImage } from '../lib/sanity'
-import { ArticleProps, MainImage } from '../types'
+import { ArticleProps, BrandSpecificProps, MainImage } from '../types'
 import { BRAND_LIFESTYLE_NAME, getBrandName } from '../utils/brand'
 import { getUrlForDocumentType } from '../utils/routing'
 import { Figure } from './Figure'
 
-const brandName = getBrandName()
 
 type HeaderProps = Pick<
   ArticleProps,
   'title' | 'mainImage' | 'sections' | 'intro'
 >
 
-export default function Header(props: HeaderProps) {
-  const { title, mainImage, intro, sections } = props
+export default function Header(props: HeaderProps & BrandSpecificProps) {
+  const { title, mainImage, intro, sections, brand } = props
+  const brandName = brand || getBrandName()
+  console.log('brandName', brandName)
 
   if (brandName === BRAND_LIFESTYLE_NAME) {
     return <HeaderLifestyle {...props} />
@@ -55,6 +56,7 @@ export default function Header(props: HeaderProps) {
           mainImage={mainImage}
           width={2000}
           height={1000}
+          brandName={brandName}
         />
       )}
     </>
@@ -89,11 +91,13 @@ function MainCoverImage({
   mainImage,
   width = 2000,
   height = 1000,
+  brandName = 'tech'
 }: {
   title: string
   width?: number
   height?: number
   mainImage: MainImage
+  brandName?: string
 }) {
   return (
     <>

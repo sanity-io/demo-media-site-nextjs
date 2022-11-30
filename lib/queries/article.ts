@@ -19,6 +19,7 @@ export const articleFields = groq`
   title,
   date,
   intro,
+  brand,
   "summary": intro,
   mainImage, 
   "date": _updatedAt,
