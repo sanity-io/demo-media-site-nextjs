@@ -19,9 +19,6 @@ import { BRAND_LIFESTYLE_NAME, getBrandName } from '../utils/brand'
 import { getUrlForDocumentType } from '../utils/routing'
 import { Figure } from './Figure'
 
-const brandName = getBrandName()
-const isLifestyle = brandName === BRAND_LIFESTYLE_NAME
-
 const ReactPlayer = dynamic(() => import('react-player'), { ssr: false })
 
 const components = {
@@ -96,16 +93,20 @@ const components = {
 export default function Body({
   content,
   people,
+  brand,
 }: {
   content: any
   people?: any
+  brand?: 'tech' | 'lifestyle'
 }) {
+  const brandName = brand || getBrandName()
+  const isLifestyle = brandName === BRAND_LIFESTYLE_NAME
   const bodyClassNames = useMemo(() => {
     if (isLifestyle) {
       return 'prose mx-auto max-w-2xl prose-headings:font-bold prose-headings:tracking-tight prose-p:font-serif prose-p:leading-relaxed dark:prose-invert md:prose-lg lg:prose-xl'
     }
     return 'prose mx-auto max-w-2xl prose-headings:font-extrabold prose-headings:tracking-tight prose-p:font-normal prose-p:leading-relaxed dark:prose-invert md:prose-lg lg:prose-xl'
-  }, [])
+  }, [isLifestyle])
 
   return (
     <div
@@ -115,7 +116,7 @@ export default function Body({
           : 'm-auto max-w-5xl p-4 md:p-5 lg:p-6'
       }
     >
-      {people && <Credits people={people} />}
+      {people && <Credits people={people} brandName={brandName} />}
 
       <div
         className={
@@ -142,7 +143,14 @@ export default function Body({
   )
 }
 
-function Credits({ people }: { people: ArticleProps['people'] }) {
+function Credits({
+  people,
+  brandName,
+}: {
+  people: ArticleProps['people']
+  brandName?: string
+}) {
+  const isLifestyle = brandName === BRAND_LIFESTYLE_NAME
   if (isLifestyle) {
     const [firstPerson, _] = people
 
