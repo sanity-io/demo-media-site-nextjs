@@ -1,8 +1,6 @@
 import { Head, Html, Main, NextScript } from 'next/document'
-import { ServerStyleSheetDocument } from 'next-sanity/studio'
 
-export default class Document extends ServerStyleSheetDocument {
-  render() {
+export default function Document() {
     return (
       <Html lang="en">
         <Head>
@@ -19,5 +17,4 @@ export default class Document extends ServerStyleSheetDocument {
         </body>
       </Html>
     )
-  }
 }
