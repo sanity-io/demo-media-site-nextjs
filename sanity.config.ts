@@ -33,31 +33,49 @@ const basePaths = {
 }
 
 const defaultConfig = (type: string) => {
-  // const defaultConfig = (type) => {
+  const plugins = [
+    deskTool({
+      structure: (S, context) => structure(S, context, type),
+      defaultDocumentNode,
+    }),
+  ]
+
+  if (type !== 'reviews') {
+    const minimumUserPlugins = [
+      mediaConfigPlugin(),
+      unsplashImageAsset(),
+      variations(),
+    ]
+    minimumUserPlugins.forEach((plugin) => plugins.push(plugin))
+  }
+
+  if (type === 'tech') {
+    const techPlugins = [
+      scheduledPublishing(),
+      newsletterPlugin(),
+      workflow({
+        schemaTypes: ['article'],
+      }),
+    ]
+    techPlugins.forEach((plugin) => plugins.push(plugin))
+  }
+
+  //@TODO: remove this after the recording -- it's nice to have vision in demos :)
+  if (process.env.NODE_ENV === 'development') {
+    plugins.push(
+      visionTool({
+        defaultApiVersion: '2022-11-11',
+      })
+    )
+  }
+
   return definePlugin({
     name: 'default-config',
     schema: {
       types: (prev) => schemaTypes(prev, type),
       templates: schemaTemplates,
     },
-    plugins: [
-      deskTool({
-        structure: (S, context) => structure(S, context, type),
-        defaultDocumentNode,
-      }),
-      // Add an image asset source for Unsplash
-      unsplashImageAsset(),
-      visionTool({
-        defaultApiVersion: '2022-11-11',
-      }),
-      mediaConfigPlugin(),
-      scheduledPublishing(),
-      newsletterPlugin(),
-      workflow({
-        schemaTypes: ['article'],
-      }),
-      variations(),
-    ],
+    plugins,
   })()
 }
 
