@@ -8,6 +8,8 @@ const createSchemaItem = (
   schemaItem: SchemaItem | SchemaDivider,
   brand: Brand
 ) => {
+  console.log('brand', brand)
+  console.log('schemaItem', schemaItem)
   return schemaItem === 'divider'
     ? S.divider()
     : S.listItem()
@@ -31,7 +33,7 @@ const createSchemaItem = (
               brand: brand.name,
             })
             .initialValueTemplates([
-              S.initialValueTemplateItem(schemaItem.schemaType, {
+              S.initialValueTemplateItem(`${schemaItem.schemaType}-brand`, {
                 brand: brand.name,
               }),
             ])
