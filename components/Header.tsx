@@ -17,7 +17,6 @@ type HeaderProps = Pick<
 export default function Header(props: HeaderProps & BrandSpecificProps) {
   const { title, mainImage, intro, sections, brand } = props
   const brandName = brand || getBrandName()
-  console.log('brandName', brandName)
 
   if (brandName === BRAND_LIFESTYLE_NAME) {
     return <HeaderLifestyle {...props} />
