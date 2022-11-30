@@ -87,7 +87,7 @@ export function renderCustomBlock(block): ModuleBlock | null {
           description: article?.intro ? toPlainText(article.intro) : null,
           slug: article.slug,
           imageUrl: article.mainImage
-            ? urlForImage(article.mainImage?.image).width(600).height(320).url()
+            ? urlForImage(article.mainImage?.image).width(340).height(480).url()
             : null,
           imageAlt: block?.mainImage?.alt,
           url: `https://demo-media-site-nextjs.sanity.build/articles/${article.slug}`,
