@@ -13,7 +13,7 @@ import { AddIcon, DragHandleIcon } from '@sanity/icons'
 import React, { useState } from 'react'
 import { useSchema, SchemaType } from 'sanity'
 import { UserSelectMenu } from 'sanity-plugin-utils'
-import { SanityPreview as Preview } from 'sanity'
+import { Preview } from 'sanity'
 
 import EditButton from './EditButton'
 import { SanityDocumentWithMetadata, User } from '../../types'

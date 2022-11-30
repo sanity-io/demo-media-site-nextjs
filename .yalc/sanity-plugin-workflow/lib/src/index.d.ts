@@ -1,10 +1,10 @@
-import { Plugin as Plugin_2 } from 'sanity'
-import { default as React_2 } from 'react'
+import {Plugin as Plugin_2} from 'sanity'
+import {default as React_2} from 'react'
 
 declare type State = {
   id: string
   title: string
-  operation?: 'publish' | 'unpublish'
+  operation?: 'publish' | 'unpublish' | null
   color?: 'primary' | 'success' | 'warning' | 'danger'
   icon?: React_2.ReactNode | React_2.ComponentType
 }
