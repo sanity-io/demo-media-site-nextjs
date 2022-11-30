@@ -50,7 +50,9 @@ function UpdateReviewStatus(config: UpdateReviewStatusConfig) {
 
   const handleLoadReviews = useCallback(async () => {
     setLoading(true)
-    const reviews = await client.fetch(`*[_type == 'review' && (!defined(soldOut) || soldOut == false)]`)
+    const reviews = await client.fetch(
+      `*[_type == 'review' && (!defined(soldOut) || soldOut == false)]`
+    )
     setReviews(
       reviews.map((review) => ({ value: review?._id, payload: review }))
     )
@@ -59,24 +61,30 @@ function UpdateReviewStatus(config: UpdateReviewStatusConfig) {
 
   const handleMarkAsSoldOut = useCallback(async () => {
     setLoading(true)
-    const reviewIntro = reviews.find((review) => review.value === markedReviewId).payload.intro
-    const updatedIntroText = 'Unfortunately no longer available, ' + reviewIntro[0].children[0].text[0].toLowerCase() + reviewIntro[0].children[0].text.slice(1)
+    const reviewIntro = reviews.find(
+      (review) => review.value === markedReviewId
+    ).payload.intro
+    const updatedIntroText =
+      'Unfortunately no longer available, ' +
+      reviewIntro[0].children[0].text[0].toLowerCase() +
+      reviewIntro[0].children[0].text.slice(1)
     const newBlock = {
       ...reviewIntro[0],
       children: [
         {
-        ...reviewIntro[0].children[0],
-        text: updatedIntroText
+          ...reviewIntro[0].children[0],
+          text: updatedIntroText,
         },
-        ...reviewIntro[0].children.slice(1)
-      ]
-      
+        ...reviewIntro[0].children.slice(1),
+      ],
     }
 
     try {
       await client
         .transaction()
-        .patch(markedReviewId, { insert: { replace: 'intro[0]', items: [newBlock] } })
+        .patch(markedReviewId, {
+          insert: { replace: 'intro[0]', items: [newBlock] },
+        })
         .commit()
     } catch (e) {
       console.error(e)
