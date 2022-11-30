@@ -61,7 +61,9 @@ export function DocumentCard(props: DocumentCardProps) {
 
           <Card padding={2} radius={2} tone="inherit">
             <Flex align="center" justify="space-between" gap={1}>
-              {documentId && <UserAssignment userList={userList} assignees={assignees} documentId={documentId} />}
+              {documentId && (
+                <UserAssignment userList={userList} assignees={assignees} documentId={documentId} />
+              )}
 
               <EditButton id={item._id} type={item._type} />
             </Flex>

@@ -1,5 +1,14 @@
 import type { InputProps, SanityDocumentLike } from 'sanity'
-import { Box, Button, Card, Flex, Label, Stack, Text, useToast } from '@sanity/ui'
+import {
+  Box,
+  Button,
+  Card,
+  Flex,
+  Label,
+  Stack,
+  Text,
+  useToast,
+} from '@sanity/ui'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { format, formatRelative, parseISO } from 'date-fns'
 import { useClient, useFormValue } from 'sanity'
@@ -69,13 +78,13 @@ export function SyncNewArticlesWrapper(props: InputProps) {
               .filter(Boolean)
           })
           .flat() ?? []
-      )
+      ),
     ]
 
     // Then we get any articles not referenced in any newsletter
     const articleRefs = (await client.fetch(QUERY_NOT_REFERENCED, {
       referencedArticles: existingReferenceIds,
-      brand: 'tech'
+      brand: 'tech',
     })) as string[]
 
     setStatus({ syncStatus: 'done', ids: articleRefs })
@@ -105,47 +114,42 @@ export function SyncNewArticlesWrapper(props: InputProps) {
 
   const handleSync = useCallback(async () => {
     // Create new block or update existing
-    setStatusDetails(statusDetails ? { ...statusDetails, syncStatus: 'loading' } : { syncStatus: 'loading' })
+    setStatusDetails(
+      statusDetails
+        ? { ...statusDetails, syncStatus: 'loading' }
+        : { syncStatus: 'loading' }
+    )
 
     try {
       await client
         .transaction()
-        .patch(
-          documentId,
-          (patch) => {
-            const references = [
-              // @ts-ignore
-              ...(articleReferenceBlock?.references ?? []),
-              ...status.ids?.map((id) => ({
+        .patch(documentId, (patch) => {
+          const references = [
+            // @ts-ignore
+            ...(articleReferenceBlock?.references ?? []),
+            ...status.ids?.map((id) => ({
+              _key: nanoid(10),
+              _ref: id,
+              _type: 'articleReference',
+            })),
+          ]
+
+          if (articleReferenceBlock?._key) {
+            patch.set({
+              [`content[_key=="${articleReferenceBlock._key}"].references`]:
+                references,
+            })
+          } else {
+            patch.insert('after', 'content[-1]', [
+              {
                 _key: nanoid(10),
-                _ref: id,
-                _type: 'articleReference'
-              }))
-            ]
-
-            if (articleReferenceBlock?._key) {
-              patch.set(
-                {
-                  [`content[_key=="${articleReferenceBlock._key}"].references`]: references
-                }
-              )
-            } else {
-              patch.insert(
-                'after',
-                'content[-1]',
-                [
-                  {
-                    _key: nanoid(10),
-                    _type: TYPE_REFERENCES,
-                    references
-                  }
-                ]
-              )
-
-            }
-            return patch
+                _type: TYPE_REFERENCES,
+                references,
+              },
+            ])
           }
-        )
+          return patch
+        })
         .commit()
 
       toast.push({
@@ -160,13 +164,20 @@ export function SyncNewArticlesWrapper(props: InputProps) {
         duration: 5000,
         status: 'error',
         title: 'Error',
-        description: error.message
+        description: error.message,
       })
     }
     // setTimeout(() => {
     //   setStatusDetails({ syncStatus: 'synced', dateSynced: new Date().toISOString() })
     // }, 2500)
-  }, [toast, articleReferenceBlock, client, documentId, status.ids, statusDetails])
+  }, [
+    toast,
+    articleReferenceBlock,
+    client,
+    documentId,
+    status.ids,
+    statusDetails,
+  ])
 
   return (
     <Stack space={4}>
