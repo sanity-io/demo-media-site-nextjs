@@ -5,6 +5,11 @@ export const articleContentFields = groq`
     _type == 'articleReference' => @->{_type, _id, title, "slug": slug.current},
     _type != 'articleReference' => @,
     _type == 'podcastReference' => @->{_type, _id, "url": podcastEpisode.url },
+    _type == 'reviewReference'=> {
+      "_type": @._type,
+      "title": titleOverride,
+      "slug": @.review->slug.current
+    }
   },        
 `
 
@@ -14,6 +19,7 @@ export const articleFields = groq`
   title,
   date,
   intro,
+  brand,
   "summary": intro,
   mainImage, 
   "date": _updatedAt,

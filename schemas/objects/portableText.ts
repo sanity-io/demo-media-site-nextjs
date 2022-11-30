@@ -60,6 +60,7 @@ export default defineType({
     { type: 'articleReference', title: 'Article' },
     { type: 'articleReferences', title: 'Articles' },
     { type: 'podcastReference', title: 'Podcast' },
+    { type: 'reviewReference', title: 'Review' },
     { type: 'mainImage' },
     { type: 'video' },
   ],

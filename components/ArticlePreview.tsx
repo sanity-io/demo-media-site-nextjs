@@ -83,7 +83,7 @@ export default function ArticlePreview({
           className={cn(
             !isHighlighted && 'grid grid-cols-1 text-center',
             isHighlighted &&
-              'text-center sm:col-span-2 md:text-left lg:col-span-3'
+              'text-center sm:col-span-2 md:col-span-3 md:text-left lg:col-span-3'
           )}
         >
           <CoverImage

@@ -1,15 +1,13 @@
+import Layout from 'components/Layout'
 import ErrorPage from 'next/error'
 import { useRouter } from 'next/router'
 import { PreviewSuspense } from 'next-sanity/preview'
 import { lazy } from 'react'
 
 import ArticlePage from '../../components/ArticlePage'
+import LayoutLifestyle from '../../components/LayoutLifestyle'
 import Title from '../../components/Title'
-import {
-  articleQuery,
-  articleSlugsQuery,
-  settingsQuery,
-} from '../../lib/queries'
+import { articleQuery, articleSlugsQuery } from '../../lib/queries'
 import { getClient, overlayDrafts } from '../../lib/sanity.server'
 import { ArticleProps } from '../../types'
 
@@ -75,4 +73,12 @@ export async function getStaticPaths() {
     paths: paths.map((slug) => ({ params: { slug } })),
     fallback: true,
   }
+}
+
+Article.getLayout = function getLayout(page) {
+  const { data, preview } = page?.props
+  if (data?.article?.brand == 'lifestyle') {
+    return <LayoutLifestyle preview={preview}>{page}</LayoutLifestyle>
+  }
+  return <Layout preview={preview}>{page}</Layout>
 }

@@ -27,10 +27,20 @@ export interface ArticleProps {
   }[]
   content?: any
   isHighlighted?: boolean
+  brand?: 'tech' | 'lifestyle'
 }
+
+export type ArticlePreviewProps = Pick<
+  ArticleProps,
+  'title' | 'mainImage' | 'date' | 'intro' | 'people' | 'isHighlighted' | 'slug'
+> & { sectionType?: 'featured' | 'normal' }
 
 export interface MainImage {
   image: any
   alt: string
   caption: string
+}
+
+export type BrandSpecificProps = {
+  brand?: 'tech' | 'lifestyle'
 }

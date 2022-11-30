@@ -1,16 +1,38 @@
+import { FiSliders } from 'react-icons/fi'
 import { ConfigContext } from 'sanity'
 import { StructureBuilder } from 'sanity/desk'
 
-import { Brand, BRANDS, SchemaDivider, SchemaItem } from '../../lib/constants'
+import {
+  Brand,
+  BRANDS,
+  SchemaDivider,
+  SchemaItem,
+  SchemaSiteSettings,
+} from '../../lib/constants'
 
 const createSchemaItem = (
   S: StructureBuilder,
-  schemaItem: SchemaItem | SchemaDivider,
+  schemaItem: SchemaItem | SchemaDivider | SchemaSiteSettings,
   brand: Brand
 ) => {
-  return schemaItem === 'divider'
-    ? S.divider()
-    : S.listItem()
+  let structureItem
+  switch (schemaItem) {
+    case 'divider':
+      structureItem = S.divider()
+      break
+    case 'siteSettings':
+      structureItem = S.listItem()
+        .title('Settings')
+        .icon(FiSliders)
+        .child(
+          S.document()
+            .schemaType('siteSettings')
+            .documentId(`${brand.name}-siteSettings`)
+            .title('Settings')
+        )
+      break
+    default:
+      structureItem = S.listItem()
         .id(
           `${brand.name.toLowerCase()}-${schemaItem.title
             .toLowerCase()
@@ -31,11 +53,13 @@ const createSchemaItem = (
               brand: brand.name,
             })
             .initialValueTemplates([
-              S.initialValueTemplateItem(schemaItem.schemaType, {
+              S.initialValueTemplateItem(`${schemaItem.schemaType}-brand`, {
                 brand: brand.name,
               }),
             ])
         )
+  }
+  return structureItem
 }
 
 const createAllSchemaItems = (
@@ -61,7 +85,7 @@ const structure = (
   return S.list()
     .id(`${brand.name.toLowerCase()}-root`)
     .title(`${brand.title} content`)
-    .items(createAllSchemaItems(S, context, brand))
+    .items(createAllSchemaItems(S, context, brand).filter(Boolean))
 }
 
 export { structure }
