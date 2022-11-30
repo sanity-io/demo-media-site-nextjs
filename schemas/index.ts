@@ -12,6 +12,7 @@ import minimalPortableText from './objects/minimalPortableText'
 import podcastEpisode from './objects/podcastEpisode'
 import podcastReference from './objects/podcastReference'
 import portableText from './objects/portableText'
+import reviewReference from './objects/reviewReference'
 import seo from './objects/seo'
 import video from './objects/video'
 import person from './person'
@@ -37,6 +38,7 @@ export const schemaTypes = (
     portableText,
     seo,
     podcastEpisode,
+    reviewReference,
     video,
     brand,
 

@@ -15,3 +15,10 @@ export const sanityConfig = {
   apiVersion: '2022-03-13',
   // see https://www.sanity.io/docs/api-versioning for how versioning works
 }
+
+const reviewDataset = process.env.NEXT_PUBLIC_SANITY_REVIEW_DATASET || 'reviews'
+
+export const reviewConfig = {
+  ...sanityConfig,
+  dataset: reviewDataset,
+}
