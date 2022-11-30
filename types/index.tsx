@@ -42,5 +42,5 @@ export interface MainImage {
 }
 
 export type BrandSpecificProps = {
-  brand?: 'tech' | 'lifestyle' 
+  brand?: 'tech' | 'lifestyle'
 }

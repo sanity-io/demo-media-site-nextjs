@@ -9,7 +9,6 @@ import { BRAND_LIFESTYLE_NAME, getBrandName } from '../utils/brand'
 import { getUrlForDocumentType } from '../utils/routing'
 import { Figure } from './Figure'
 
-
 type HeaderProps = Pick<
   ArticleProps,
   'title' | 'mainImage' | 'sections' | 'intro'
@@ -91,7 +90,7 @@ function MainCoverImage({
   mainImage,
   width = 2000,
   height = 1000,
-  brandName = 'tech'
+  brandName = 'tech',
 }: {
   title: string
   width?: number
