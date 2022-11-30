@@ -1,3 +1,5 @@
+import { useMemo } from 'react'
+
 import { ArticleProps } from '../types'
 import { isLifestyle } from '../utils/brand'
 import { useHomepageArticles } from '../utils/useHomepageArticles'
@@ -16,6 +18,12 @@ function StorySection({
   columns?: number
   sectionType?: 'featured' | 'normal'
 }) {
+  // Sorry for the mess, but this was the only way I could get the correct borders to work in all breakpoints, in light and dark mode :grimacing:
+  const gridClass = useMemo(() => {
+    return sectionType === 'featured'
+      ? `grid border-gray-200 dark:divide-gray-900 dark:border-gray-900 max-sm:divide-gray-200 max-sm:divide-y max-sm:dark:divide-gray-900 border-b sm:grid-cols-2 sm:border sm:[&>*]:dark:border-gray-900 sm:[&>:not(:last-child):nth-child(odd)]:border-r sm:[&>:not(:last-child)]:border-b md:rounded md:grid-cols-${columns} md:[&>:not(:last-child):not(:nth-child(4))]:border-r`
+      : `grid border-gray-200 dark:divide-gray-900 dark:border-gray-900 max-sm:divide-gray-200 max-sm:dark:divide-gray-900 max-sm:divide-y sm:grid-cols-2 sm:border sm:[&>*]:dark:border-gray-900 sm:[&>:nth-child(odd)]:border-r sm:[&>:nth-child(-n+3):not(:last-child)]:border-b md:rounded md:grid-cols-${columns} md:border md:[&>:not(:nth-child(3n))]:border-r`
+  }, [columns, sectionType])
   if (isLifestyleBrand) {
     /* md:grid-cols-2 md:grid-cols-3 md:grid-cols-4 */
     return (
@@ -27,9 +35,7 @@ function StorySection({
         )}
 
         <div className="font-merriweather container mx-auto">
-          <div
-            className={`grid divide-y divide-x divide-gray-200 rounded border-b border-gray-200 dark:divide-gray-900 dark:border-gray-900 sm:grid-cols-2 md:grid-cols-${columns} md:border`}
-          >
+          <div className={gridClass}>
             {articles?.map((article) => (
               <ArticlePreview
                 key={article.slug}
@@ -81,12 +87,12 @@ export default function MoreStories({
   if (isLifestyleBrand) {
     return (
       <div className="mb-6">
-        {topArticles?.length && (
+        {Boolean(topArticles?.length) && (
           <>
             <StorySection articles={topArticles} sectionType="featured" />
           </>
         )}
-        {restArticles?.length && (
+        {Boolean(restArticles?.length) && (
           <>
             <StorySection
               title="Latest news"
@@ -101,10 +107,10 @@ export default function MoreStories({
   }
 
   return (
-    <section className="max-w-6xl md:mx-3 lg:mx-auto">
+    <section className="mb-6 max-w-6xl first:mt-5 first:sm:mt-6 md:mx-3 lg:mx-auto">
       <h2 className="sr-only">Articles</h2>
       <div className="font-merriweather container mx-auto">
-        <div className="divide-y divide-gray-200 rounded border-t border-b border-gray-200 dark:divide-gray-900 dark:border-gray-900 md:border">
+        <div className="divide-y divide-gray-200 border-gray-200 dark:divide-gray-900 dark:border-gray-900 sm:rounded sm:border-t sm:border-b md:border">
           {articles?.map((article) => (
             <ArticlePreview
               key={article.slug}
