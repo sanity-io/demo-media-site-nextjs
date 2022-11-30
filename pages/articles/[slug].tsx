@@ -77,8 +77,7 @@ export async function getStaticPaths() {
 
 Article.getLayout = function getLayout(page) {
   const { data, preview } = page?.props
-  const { brand } = data?.article
-  if (brand && brand == 'lifestyle') {
+  if (data?.article?.brand == 'lifestyle') {
     return <LayoutLifestyle preview={preview}>{page}</LayoutLifestyle>
   }
   return <Layout preview={preview}>{page}</Layout>
