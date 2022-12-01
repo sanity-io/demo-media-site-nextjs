@@ -1,6 +1,5 @@
 import { FiVideo } from 'react-icons/fi'
 import ReactPlayer from 'react-player'
-// Import issues with react-player in Studio fixed by importing each one individually
 import { defineType, PreviewProps } from 'sanity'
 
 export default defineType({
