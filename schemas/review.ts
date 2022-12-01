@@ -1,6 +1,5 @@
-import { FiHeadphones, FiMail, FiStar } from 'react-icons/fi'
+import { FiStar } from 'react-icons/fi'
 import { defineField, defineType } from 'sanity'
-import { Rule } from '@sanity/validation'
 
 export default defineType({
   name: 'review',
@@ -40,7 +39,6 @@ export default defineType({
       type: 'portableText',
     }),
     defineField({ type: 'seo', name: 'seo', title: 'SEO' }),
-    defineField({ type: 'boolean', name: 'soldOut', title: 'Sold out' }),
     defineField({ type: 'brand', name: 'brand' }),
   ],
   preview: {

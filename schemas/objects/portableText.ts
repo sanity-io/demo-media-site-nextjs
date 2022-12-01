@@ -1,12 +1,12 @@
 import { FiFeather } from 'react-icons/fi'
-import { defineType } from 'sanity'
+import { defineArrayMember, defineType } from 'sanity'
 
 export default defineType({
   name: 'portableText',
   type: 'array',
   title: 'Content',
   of: [
-    {
+    defineArrayMember({
       type: 'block',
       title: 'Block',
       // Styles let you set what your user can mark up blocks with. These
@@ -56,12 +56,12 @@ export default defineType({
           },
         ],
       },
-    },
-    { type: 'articleReference', title: 'Article' },
-    { type: 'articleReferences', title: 'Articles' },
-    { type: 'podcastReference', title: 'Podcast' },
-    { type: 'reviewReference', title: 'Review' },
-    { type: 'mainImage' },
-    { type: 'video' },
+    }),
+    defineArrayMember({ type: 'articleReference', title: 'Article' }),
+    defineArrayMember({ type: 'articleReferences', title: 'Articles' }),
+    defineArrayMember({ type: 'podcastReference', title: 'Podcast' }),
+    defineArrayMember({ type: 'reviewReference', title: 'Review' }),
+    defineArrayMember({ type: 'mainImage' }),
+    defineArrayMember({ type: 'video' }),
   ],
 })

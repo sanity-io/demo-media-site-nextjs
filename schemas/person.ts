@@ -1,5 +1,5 @@
 import { FiUser } from 'react-icons/fi'
-import { defineType } from 'sanity'
+import { defineField, defineType } from 'sanity'
 
 export default defineType({
   name: 'person',
@@ -7,33 +7,33 @@ export default defineType({
   icon: FiUser,
   type: 'document',
   fields: [
-    {
+    defineField({
       name: 'name',
       type: 'string',
-    },
-    {
+    }),
+    defineField({
       name: 'slug',
       type: 'slug',
       options: {
         source: 'name',
       },
-    },
-    {
+    }),
+    defineField({
       name: 'image',
       type: 'image',
       options: {
         hotspot: true,
       },
-    },
-    {
+    }),
+    defineField({
       name: 'bio',
       type: 'minimalPortableText',
-    },
-    {
+    }),
+    defineField({
       name: 'isStaff',
       type: 'boolean',
-    },
-    { type: 'brand', name: 'brand' },
+    }),
+    defineField({ type: 'brand', name: 'brand' }),
   ],
   preview: {
     select: {

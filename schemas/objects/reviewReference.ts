@@ -1,5 +1,5 @@
 import { FiStar } from 'react-icons/fi'
-import { defineField, defineType, Rule } from 'sanity'
+import { defineField, defineType } from 'sanity'
 
 export default defineType({
   name: 'reviewReference',
@@ -29,7 +29,7 @@ export default defineType({
       name: 'titleOverride',
       type: 'string',
       description: 'Use a custom title for this review.',
-      validation: (rule: Rule) => rule.required(),
+      validation: (Rule) => Rule.required(),
     }),
   ],
   preview: {

@@ -1,7 +1,6 @@
 import { Box, Stack, Text } from '@sanity/ui'
 import { FiVideo } from 'react-icons/fi'
 import ReactPlayer from 'react-player'
-// Import issues with react-player in Studio fixed by importing each one individually
 import { defineField, defineType, InputProps, PreviewProps, Rule } from 'sanity'
 import styled from 'styled-components'
 
@@ -29,7 +28,6 @@ export default defineType({
   ],
   components: {
     input: (props: InputProps) => {
-      console.log('props', props)
       const audio = props.value as Audio
       const hasAudio = audio && audio.url
       return (
