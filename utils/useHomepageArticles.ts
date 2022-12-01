@@ -1,13 +1,15 @@
 import { useMemo } from 'react'
 import { ArticleProps } from '../types'
-import { isLifestyle } from './brand'
+import { BRAND_LIFESTYLE_NAME, isLifestyle } from './brand'
 
 export const useHomepageArticles = (
   articles: ArticleProps[],
+  brandName = 'tech',
   limit = 5
 ): { topArticles: ArticleProps[]; restArticles: ArticleProps[] } => {
+  const isLifestyleBrand = (brandName === BRAND_LIFESTYLE_NAME) || isLifestyle()
   const topArticles = useMemo(() => {
-    if (!isLifestyle()) {
+    if (!isLifestyleBrand) {
       return articles?.slice(0, limit)
     }
     // console.log(articles)
