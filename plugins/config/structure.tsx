@@ -1,3 +1,4 @@
+import DocumentPreview from '../preview/DocumentPreview'
 import { FiSliders } from 'react-icons/fi'
 import { ConfigContext } from 'sanity'
 import { StructureBuilder } from 'sanity/desk'
@@ -29,6 +30,17 @@ const createSchemaItem = (
             .schemaType('siteSettings')
             .documentId(`${brand.name}-siteSettings`)
             .title('Settings')
+            .views([
+              S.view.form(),
+              S.view
+                .component(({ document }) => (
+                  <DocumentPreview
+                    slug={`/?brand=${brand.name}`}
+                    _type={document.displayed._type}
+                  />
+                ))
+                .title('Preview'),
+            ])
         )
       break
     default:

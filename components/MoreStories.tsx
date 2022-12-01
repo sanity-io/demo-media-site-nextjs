@@ -1,23 +1,24 @@
 import { useMemo } from 'react'
 
 import { ArticleProps } from '../types'
-import { isLifestyle } from '../utils/brand'
+import { BRAND_LIFESTYLE_NAME, isLifestyle } from '../utils/brand'
 import { useHomepageArticles } from '../utils/useHomepageArticles'
 import ArticlePreview from './ArticlePreview'
-
-const isLifestyleBrand = isLifestyle()
 
 function StorySection({
   articles,
   title,
   columns = 4,
   sectionType,
+  brandName,
 }: {
   articles?: ArticleProps[]
   title?: string
   columns?: number
   sectionType?: 'featured' | 'normal'
+  brandName?: string
 }) {
+  const isLifestyleBrand = brandName === BRAND_LIFESTYLE_NAME || isLifestyle()
   // Sorry for the mess, but this was the only way I could get the correct borders to work in all breakpoints, in light and dark mode :grimacing:
   const gridClass = useMemo(() => {
     return sectionType === 'featured'
@@ -38,15 +39,16 @@ function StorySection({
           <div className={gridClass}>
             {articles?.map((article) => (
               <ArticlePreview
-                key={article.slug}
-                title={article.title}
-                mainImage={article.mainImage}
-                date={article.date}
-                people={article.people}
-                slug={article.slug}
-                intro={article.intro}
+                key={article?.slug}
+                title={article?.title}
+                mainImage={article?.mainImage}
+                date={article?.date}
+                people={article?.people}
+                slug={article?.slug}
+                intro={article?.intro}
                 sectionType={sectionType}
                 isHighlighted={Boolean(article?.isHighlighted)}
+                brandName={brandName}
               />
             ))}
           </div>
@@ -62,13 +64,14 @@ function StorySection({
         <div className="divide-y divide-gray-200 rounded border-t border-b border-gray-200 dark:divide-gray-900 dark:border-gray-900 md:border">
           {articles?.map((article) => (
             <ArticlePreview
-              key={article.slug}
-              title={article.title}
-              mainImage={article.mainImage}
-              date={article.date}
-              people={article.people}
-              slug={article.slug}
-              intro={article.intro}
+              key={article?.slug}
+              title={article?.title}
+              mainImage={article?.mainImage}
+              date={article?.date}
+              people={article?.people}
+              slug={article?.slug}
+              intro={article?.intro}
+              brandName={brandName}
             />
           ))}
         </div>
@@ -79,17 +82,24 @@ function StorySection({
 
 export default function MoreStories({
   articles,
+  brandName,
 }: {
   articles: ArticleProps[]
+  brandName?: string
 }) {
-  const { topArticles, restArticles } = useHomepageArticles(articles)
+  const { topArticles, restArticles } = useHomepageArticles(articles, brandName)
+  const isLifestyleBrand = brandName === BRAND_LIFESTYLE_NAME || isLifestyle()
 
   if (isLifestyleBrand) {
     return (
       <div className="mb-6">
         {Boolean(topArticles?.length) && (
           <>
-            <StorySection articles={topArticles} sectionType="featured" />
+            <StorySection
+              articles={topArticles}
+              sectionType="featured"
+              brandName={brandName}
+            />
           </>
         )}
         {Boolean(restArticles?.length) && (
@@ -99,6 +109,7 @@ export default function MoreStories({
               articles={restArticles}
               columns={3}
               sectionType="normal"
+              brandName={brandName}
             />
           </>
         )}
@@ -113,13 +124,14 @@ export default function MoreStories({
         <div className="divide-y divide-gray-200 border-gray-200 dark:divide-gray-900 dark:border-gray-900 sm:rounded sm:border-t sm:border-b md:border">
           {articles?.map((article) => (
             <ArticlePreview
-              key={article.slug}
-              title={article.title}
-              mainImage={article.mainImage}
-              date={article.date}
-              people={article.people}
-              slug={article.slug}
-              intro={article.intro}
+              key={article?.slug}
+              title={article?.title}
+              mainImage={article?.mainImage}
+              date={article?.date}
+              people={article?.people}
+              slug={article?.slug}
+              intro={article?.intro}
+              brandName={brandName}
             />
           ))}
         </div>

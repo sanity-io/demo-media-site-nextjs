@@ -61,6 +61,7 @@ const defaultConfig = (type: string) => {
         schemaTypes: ['article'],
       }),
     ]
+    //@ts-ignore -- type error from workflow
     techPlugins.forEach((plugin) => plugins.push(plugin))
   }
 

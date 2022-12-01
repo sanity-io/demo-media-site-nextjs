@@ -5,11 +5,13 @@ import { usePreview } from '../lib/sanity.preview'
 import { getBrandName } from '../utils/brand'
 import MoreStories from './MoreStories'
 
-export default function PreviewMoreStories() {
-  // TODO: I believe this does not return a `data` key anymore
-  const { data: allArticles } = usePreview(null, indexQuery, {
-    brand: getBrandName(),
-  })
+export default function PreviewMoreStories({
+  brandName,
+}: {
+  brandName: string
+}) {
+  const brand = brandName || getBrandName()
+  const allArticles = usePreview(null, indexQuery, { brand })
 
-  return <MoreStories articles={allArticles} />
+  return <MoreStories articles={allArticles} brandName={brand} />
 }

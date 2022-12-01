@@ -4,13 +4,11 @@ import Link from 'next/link'
 import React from 'react'
 
 import { ArticleProps } from '../types'
-import { isLifestyle } from '../utils/brand'
+import { BRAND_LIFESTYLE_NAME, isLifestyle } from '../utils/brand'
 import { getUrlForDocumentType } from '../utils/routing'
 import { useRandom } from '../utils/useRandom'
 import CoverImage from './CoverImage'
 import Date from './Date'
-
-const isLifestyleBrand = isLifestyle()
 
 const PREVIEW_TYPE_FEATURED_HIGHLIGHTED = 'featured-highlighted'
 const PREVIEW_TYPE_FEATURED_NORMAL = 'featured-normal'
@@ -57,11 +55,13 @@ export default function ArticlePreview({
   isHighlighted,
   slug,
   sectionType,
-}: ArticlePreviewProps) {
+  brandName,
+}: ArticlePreviewProps & { brandName?: string }) {
   const randomCat = useRandom(CATS)
+  const isLifestyleBrand = brandName === BRAND_LIFESTYLE_NAME || isLifestyle()
 
   if (isLifestyleBrand) {
-    const [firstPerson] = people
+    const firstPerson = people?.[0] || {name: "", slug: ""}
     const imageSettings =
       sectionType === 'featured'
         ? isHighlighted
