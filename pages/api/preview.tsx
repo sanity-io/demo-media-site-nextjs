@@ -30,6 +30,10 @@ export default async function preview(req, res) {
   let content = { slug: '' }
   let subpath = ''
   switch (req.query.type) {
+    case 'siteSettings':
+      //@TODO: temporary hack for product day.
+      const brand = req.query.slug.replace('/?brand=', '')
+      return redirectToPreview(res, `/home/brand:${brand}`)
     case 'article':
       subpath = 'articles'
       content = await getClient(true).fetch(articleBySlugQuery, {

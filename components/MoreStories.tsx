@@ -1,23 +1,24 @@
 import { useMemo } from 'react'
 
 import { ArticleProps } from '../types'
-import { isLifestyle } from '../utils/brand'
+import { BRAND_LIFESTYLE_NAME, isLifestyle } from '../utils/brand'
 import { useHomepageArticles } from '../utils/useHomepageArticles'
 import ArticlePreview from './ArticlePreview'
-
-const isLifestyleBrand = isLifestyle()
 
 function StorySection({
   articles,
   title,
   columns = 4,
   sectionType,
+  brandName,
 }: {
   articles?: ArticleProps[]
   title?: string
   columns?: number
   sectionType?: 'featured' | 'normal'
+  brandName?: string
 }) {
+  const isLifestyleBrand = brandName === BRAND_LIFESTYLE_NAME || isLifestyle()
   // Sorry for the mess, but this was the only way I could get the correct borders to work in all breakpoints, in light and dark mode :grimacing:
   const gridClass = useMemo(() => {
     return sectionType === 'featured'
@@ -47,6 +48,7 @@ function StorySection({
                 intro={article.intro}
                 sectionType={sectionType}
                 isHighlighted={Boolean(article?.isHighlighted)}
+                brandName={brandName}
               />
             ))}
           </div>
@@ -69,6 +71,7 @@ function StorySection({
               people={article.people}
               slug={article.slug}
               intro={article.intro}
+              brandName={brandName}
             />
           ))}
         </div>
@@ -79,17 +82,24 @@ function StorySection({
 
 export default function MoreStories({
   articles,
+  brandName,
 }: {
   articles: ArticleProps[]
+  brandName?: string
 }) {
   const { topArticles, restArticles } = useHomepageArticles(articles)
+  const isLifestyleBrand = brandName === 'lifestyle' || isLifestyle()
 
   if (isLifestyleBrand) {
     return (
       <div className="mb-6">
         {Boolean(topArticles?.length) && (
           <>
-            <StorySection articles={topArticles} sectionType="featured" />
+            <StorySection
+              articles={topArticles}
+              sectionType="featured"
+              brandName={brandName}
+            />
           </>
         )}
         {Boolean(restArticles?.length) && (
@@ -99,6 +109,7 @@ export default function MoreStories({
               articles={restArticles}
               columns={3}
               sectionType="normal"
+              brandName={brandName}
             />
           </>
         )}
@@ -120,6 +131,7 @@ export default function MoreStories({
               people={article.people}
               slug={article.slug}
               intro={article.intro}
+              brandName={brandName}
             />
           ))}
         </div>

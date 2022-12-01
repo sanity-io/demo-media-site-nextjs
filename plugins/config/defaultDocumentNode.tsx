@@ -8,7 +8,7 @@ const defaultDocumentNode: DefaultDocumentNodeResolver = (
   { schemaType }
 ) => {
   const articleReferenceTypes = ['person', 'section']
-  const previewTypes = ['article', 'person', 'section']
+  const previewTypes = ['article', 'person', 'section', 'siteSettings']
   const views = []
 
   if (previewTypes.includes(schemaType)) {
