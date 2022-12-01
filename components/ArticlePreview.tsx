@@ -61,7 +61,7 @@ export default function ArticlePreview({
   const isLifestyleBrand = brandName === BRAND_LIFESTYLE_NAME || isLifestyle()
 
   if (isLifestyleBrand) {
-    const [firstPerson] = people
+    const firstPerson = people?.[0] || {name: "", slug: ""}
     const imageSettings =
       sectionType === 'featured'
         ? isHighlighted

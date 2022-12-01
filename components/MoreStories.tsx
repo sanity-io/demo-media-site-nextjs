@@ -39,13 +39,13 @@ function StorySection({
           <div className={gridClass}>
             {articles?.map((article) => (
               <ArticlePreview
-                key={article.slug}
-                title={article.title}
-                mainImage={article.mainImage}
-                date={article.date}
-                people={article.people}
-                slug={article.slug}
-                intro={article.intro}
+                key={article?.slug}
+                title={article?.title}
+                mainImage={article?.mainImage}
+                date={article?.date}
+                people={article?.people}
+                slug={article?.slug}
+                intro={article?.intro}
                 sectionType={sectionType}
                 isHighlighted={Boolean(article?.isHighlighted)}
                 brandName={brandName}
@@ -64,13 +64,13 @@ function StorySection({
         <div className="divide-y divide-gray-200 rounded border-t border-b border-gray-200 dark:divide-gray-900 dark:border-gray-900 md:border">
           {articles?.map((article) => (
             <ArticlePreview
-              key={article.slug}
-              title={article.title}
-              mainImage={article.mainImage}
-              date={article.date}
-              people={article.people}
-              slug={article.slug}
-              intro={article.intro}
+              key={article?.slug}
+              title={article?.title}
+              mainImage={article?.mainImage}
+              date={article?.date}
+              people={article?.people}
+              slug={article?.slug}
+              intro={article?.intro}
               brandName={brandName}
             />
           ))}
@@ -124,13 +124,13 @@ export default function MoreStories({
         <div className="divide-y divide-gray-200 border-gray-200 dark:divide-gray-900 dark:border-gray-900 sm:rounded sm:border-t sm:border-b md:border">
           {articles?.map((article) => (
             <ArticlePreview
-              key={article.slug}
-              title={article.title}
-              mainImage={article.mainImage}
-              date={article.date}
-              people={article.people}
-              slug={article.slug}
-              intro={article.intro}
+              key={article?.slug}
+              title={article?.title}
+              mainImage={article?.mainImage}
+              date={article?.date}
+              people={article?.people}
+              slug={article?.slug}
+              intro={article?.intro}
               brandName={brandName}
             />
           ))}

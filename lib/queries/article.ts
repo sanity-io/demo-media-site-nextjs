@@ -31,7 +31,16 @@ export const articleFields = groq`
 export const settingsQuery = groq`*[_type == "settings"][0]{title}`
 
 export const indexQuery = groq`
-*[_type == "article" && brand == $brand] | order(date desc, _createdAt desc) [0..10]{
+{
+  "featuredArticles": *[_type == 'siteSettings' && brand == $brand].featured[defined(_ref)]->,
+  "recentArticles": *[_type == "article" && brand == $brand] | order(date desc, _createdAt desc) [0..10]
+} |
+{
+  "featuredArticles": @.featuredArticles,
+  "filteredRecent": @.recentArticles[!(_id in ^.featuredArticles[]._id) && !((string::split(_id, 'drafts.'))[1] in ^.featuredArticles[]._id)]
+} | {
+  "combined": @.featuredArticles + @.filteredRecent
+}.combined[0..10]{
   ${articleFields}
   variations
 }`
