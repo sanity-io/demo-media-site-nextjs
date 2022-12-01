@@ -7,7 +7,7 @@ export const useHomepageArticles = (
   brandName = 'tech',
   limit = 5
 ): { topArticles: ArticleProps[]; restArticles: ArticleProps[] } => {
-  const isLifestyleBrand = (brandName === BRAND_LIFESTYLE_NAME) || isLifestyle()
+  const isLifestyleBrand = brandName === BRAND_LIFESTYLE_NAME || isLifestyle()
   const topArticles = useMemo(() => {
     if (!isLifestyleBrand) {
       return articles?.slice(0, limit)

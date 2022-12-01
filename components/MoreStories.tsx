@@ -18,7 +18,7 @@ function StorySection({
   sectionType?: 'featured' | 'normal'
   brandName?: string
 }) {
-  const isLifestyleBrand = (brandName === BRAND_LIFESTYLE_NAME) || isLifestyle()
+  const isLifestyleBrand = brandName === BRAND_LIFESTYLE_NAME || isLifestyle()
   // Sorry for the mess, but this was the only way I could get the correct borders to work in all breakpoints, in light and dark mode :grimacing:
   const gridClass = useMemo(() => {
     return sectionType === 'featured'
@@ -88,7 +88,7 @@ export default function MoreStories({
   brandName?: string
 }) {
   const { topArticles, restArticles } = useHomepageArticles(articles, brandName)
-  const isLifestyleBrand = (brandName === BRAND_LIFESTYLE_NAME) || isLifestyle()
+  const isLifestyleBrand = brandName === BRAND_LIFESTYLE_NAME || isLifestyle()
 
   if (isLifestyleBrand) {
     return (
