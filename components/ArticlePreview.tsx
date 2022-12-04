@@ -134,7 +134,7 @@ export default function ArticlePreview({
           </h1>
 
           <div className="mt-4 text-sm md:mt-auto">
-            {firstPerson && (
+            {firstPerson.name && (
               <span className="font-serif">
                 <span className="italic">by </span>
                 <span className="uppercase">

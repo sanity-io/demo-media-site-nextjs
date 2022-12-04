@@ -32,7 +32,13 @@ export const settingsQuery = groq`*[_type == "settings"][0]{title}`
 
 export const indexQuery = groq`
 {
-  "featuredArticles": *[_type == 'siteSettings' && brand == $brand].featured[defined(_ref)]->,
+  "featuredArticles": *[_type == 'siteSettings' && brand == $brand].featured[defined(_ref) || defined(review._ref)]{
+    _type == 'articleReference' => @->,
+    _type == 'reviewReference'=> {
+      ...@.review->,
+      "title": coalesce(@.titleOverride, @.review->{title}.title)
+    }
+  },
   "recentArticles": *[_type == "article" && brand == $brand] | order(date desc, _createdAt desc) [0..10]
 } |
 {
