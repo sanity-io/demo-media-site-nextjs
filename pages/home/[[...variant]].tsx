@@ -16,7 +16,7 @@ const PreviewMoreStories = lazy(() => import('components/PreviewMoreStories'))
 export default function Index({ allArticles, preview, brand }) {
   const metadata = isLifestyle()
     ? {
-        title: 'Latest Lifestyle News, Trends & Tips | Lifestyle',
+        title: 'Latest Lifestyle News, Trends & Tips | STREETREADY',
         description:
           'STREETREADY delivers the biggest moments, the hottest trends, and the best tips in entertainment, fashion, beauty, fitness, and food and the ability to shop for it all in one place.',
       }
@@ -29,13 +29,14 @@ export default function Index({ allArticles, preview, brand }) {
       <NextSeo title={metadata.title} description={metadata?.description} />
       <Container>
         <div className="">
-          {preview ? (
+          {/* live preview commented out here for demo day purposes, please do not uncomment!! */}
+          {/* {preview ? (
             <PreviewSuspense fallback="Loading...">
               <PreviewMoreStories brandName={brand} />
             </PreviewSuspense>
-          ) : (
-            <MoreStories articles={allArticles} brandName={brand} />
-          )}
+          ) : ( */}
+          <MoreStories articles={allArticles} brandName={brand} />
+          {/* )} */}
         </div>
       </Container>
     </>

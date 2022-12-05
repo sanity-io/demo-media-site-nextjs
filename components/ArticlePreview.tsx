@@ -43,7 +43,14 @@ const CATS = [
 
 type ArticlePreviewProps = Pick<
   ArticleProps,
-  'title' | 'mainImage' | 'date' | 'intro' | 'people' | 'isHighlighted' | 'slug'
+  | 'title'
+  | 'mainImage'
+  | 'date'
+  | 'intro'
+  | 'people'
+  | 'sections'
+  | 'isHighlighted'
+  | 'slug'
 > & { sectionType?: 'featured' | 'normal' }
 
 export default function ArticlePreview({
@@ -52,12 +59,14 @@ export default function ArticlePreview({
   date,
   intro,
   people,
+  sections,
   isHighlighted,
   slug,
   sectionType,
   brandName,
 }: ArticlePreviewProps & { brandName?: string }) {
-  const randomCat = useRandom(CATS)
+  let category = useRandom(CATS)
+  category = sections?.[0]?.name || category
   const isLifestyleBrand = brandName === BRAND_LIFESTYLE_NAME || isLifestyle()
 
   if (isLifestyleBrand) {
@@ -100,7 +109,7 @@ export default function ArticlePreview({
           {!isHighlighted && (
             <div className="col-start-1 row-start-1 self-end justify-self-center">
               <p className="inline-block w-8 bg-white p-2 py-1 text-center text-xs font-normal uppercase leading-5 dark:bg-black">
-                {randomCat}
+                {category}
               </p>
             </div>
           )}
@@ -114,7 +123,7 @@ export default function ArticlePreview({
           {isHighlighted && (
             <div className="col-start-1 row-start-1 self-end justify-self-center">
               <p className="inline-block w-8 text-xs font-normal uppercase leading-5">
-                {randomCat}
+                {category}
               </p>
             </div>
           )}
@@ -134,7 +143,7 @@ export default function ArticlePreview({
           </h1>
 
           <div className="mt-4 text-sm md:mt-auto">
-            {firstPerson && (
+            {firstPerson.name && (
               <span className="font-serif">
                 <span className="italic">by </span>
                 <span className="uppercase">
