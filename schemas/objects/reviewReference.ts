@@ -1,5 +1,5 @@
 import { FiStar } from 'react-icons/fi'
-import { defineField, defineType } from 'sanity'
+import { defineArrayMember, defineField, defineType } from 'sanity'
 
 export default defineType({
   name: 'reviewReference',
@@ -30,6 +30,16 @@ export default defineType({
       type: 'string',
       description: 'Use a custom title for this review.',
       validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'sections',
+      type: 'array',
+      of: [
+        defineArrayMember({
+          type: 'reference',
+          to: [{ type: 'section' }],
+        }),
+      ],
     }),
   ],
   preview: {

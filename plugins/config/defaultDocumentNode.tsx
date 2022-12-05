@@ -32,7 +32,7 @@ const defaultDocumentNode: DefaultDocumentNodeResolver = (
           query: `*[!(_id in path("drafts.**")) && references($id)]`,
           params: { id: `_id` },
         })
-        .title('Incoming References')
+        .title('Related Content')
     )
   }
 

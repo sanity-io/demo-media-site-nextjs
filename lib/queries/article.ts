@@ -36,7 +36,8 @@ export const indexQuery = groq`
     _type == 'articleReference' => @->,
     _type == 'reviewReference'=> {
       ...@.review->,
-      "title": coalesce(@.titleOverride, @.review->{title}.title)
+      "title": coalesce(@.titleOverride, @.review->{title}.title),
+      "sections": @.sections
     }
   },
   "recentArticles": *[_type == "article" && brand == $brand] | order(date desc, _createdAt desc) [0..10]

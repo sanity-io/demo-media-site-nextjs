@@ -21,4 +21,15 @@ export default defineType({
     }),
     defineField({ type: 'brand', name: 'brand' }),
   ],
+  preview: {
+    select: {
+      title: 'name',
+    },
+    prepare({ title }) {
+      return {
+        title,
+        media: FiHash,
+      }
+    },
+  },
 })

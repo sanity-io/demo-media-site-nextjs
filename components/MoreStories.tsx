@@ -49,6 +49,7 @@ function StorySection({
                 sectionType={sectionType}
                 isHighlighted={Boolean(article?.isHighlighted)}
                 brandName={brandName}
+                sections={article?.sections}
               />
             ))}
           </div>
@@ -72,6 +73,7 @@ function StorySection({
               slug={article?.slug}
               intro={article?.intro}
               brandName={brandName}
+              sections={article?.sections}
             />
           ))}
         </div>
@@ -132,6 +134,7 @@ export default function MoreStories({
               slug={article?.slug}
               intro={article?.intro}
               brandName={brandName}
+              sections={article?.sections}
             />
           ))}
         </div>

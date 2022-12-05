@@ -55,10 +55,6 @@ const createSchemaItem = (
         .child(
           S.documentTypeList(schemaItem.schemaType)
             .title(`${schemaItem.title}`)
-            // .filter(
-            //   `_type == $schemaType && (!defined(brand) || brand == $brand)`
-            // )
-            // TODO: Replace when brand is added by initial value template
             .filter(`_type == $schemaType && brand == $brand`)
             .params({
               schemaType: schemaItem.schemaType,
