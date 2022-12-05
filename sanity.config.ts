@@ -128,7 +128,7 @@ export default defineConfig([
     projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
     dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
     title: process.env.NEXT_PUBLIC_SANITY_PROJECT_TITLE || 'High Fashion',
-    icon: HighFashionWorkspaceLogo
+    icon: HighFashionWorkspaceLogo,
   },
   {
     name: 'outdoors',
@@ -136,7 +136,7 @@ export default defineConfig([
     projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
     dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
     title: process.env.NEXT_PUBLIC_SANITY_PROJECT_TITLE || 'Outdoors',
-    icon: OutdoorsWorkspaceLogo
+    icon: OutdoorsWorkspaceLogo,
   },
   {
     name: 'gossip',
@@ -144,7 +144,7 @@ export default defineConfig([
     projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
     dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
     title: process.env.NEXT_PUBLIC_SANITY_PROJECT_TITLE || 'Gossip',
-    icon: GossipWorkspaceLogo
+    icon: GossipWorkspaceLogo,
   },
   {
     name: 'entertainment',
@@ -152,7 +152,7 @@ export default defineConfig([
     projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
     dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
     title: process.env.NEXT_PUBLIC_SANITY_PROJECT_TITLE || 'Entertainment',
-    icon: EntertainmentWorkspaceLogo
+    icon: EntertainmentWorkspaceLogo,
   },
   {
     name: 'reviews',
