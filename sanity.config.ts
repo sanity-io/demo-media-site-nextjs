@@ -13,8 +13,12 @@ import { dashboardTool } from '@sanity/dashboard'
 import { workflow } from 'sanity-plugin-workflow'
 
 import {
+  EntertainmentWorkspaceLogo,
+  GossipWorkspaceLogo,
+  HighFashionWorkspaceLogo,
   LifestyleLogo,
   LifestyleWorkspaceLogo,
+  OutdoorsWorkspaceLogo,
   ReviewsLogo,
   ReviewsWorkspaceLogo,
   TechLogo,
@@ -32,6 +36,10 @@ const basePaths = {
   tech: '/studio/tech',
   lifestyle: '/studio/lifestyle',
   reviews: '/studio/reviews',
+  highFashion: '/studio/highFashion',
+  outdoors: '/studio/outdoors',
+  gossip: '/studio/gossip',
+  entertainment: '/studio/entertainment',
 }
 
 const defaultConfig = (type: string) => {
@@ -113,6 +121,38 @@ export default defineConfig([
         logo: LifestyleLogo,
       },
     },
+  },
+  {
+    name: 'highFashion',
+    basePath: basePaths.highFashion,
+    projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
+    dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
+    title: process.env.NEXT_PUBLIC_SANITY_PROJECT_TITLE || 'High Fashion',
+    icon: HighFashionWorkspaceLogo
+  },
+  {
+    name: 'outdoors',
+    basePath: basePaths.outdoors,
+    projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
+    dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
+    title: process.env.NEXT_PUBLIC_SANITY_PROJECT_TITLE || 'Outdoors',
+    icon: OutdoorsWorkspaceLogo
+  },
+  {
+    name: 'gossip',
+    basePath: basePaths.gossip,
+    projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
+    dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
+    title: process.env.NEXT_PUBLIC_SANITY_PROJECT_TITLE || 'Gossip',
+    icon: GossipWorkspaceLogo
+  },
+  {
+    name: 'entertainment',
+    basePath: basePaths.entertainment,
+    projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
+    dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
+    title: process.env.NEXT_PUBLIC_SANITY_PROJECT_TITLE || 'Entertainment',
+    icon: EntertainmentWorkspaceLogo
   },
   {
     name: 'reviews',

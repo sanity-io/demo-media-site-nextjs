@@ -84,6 +84,7 @@ function UpdateReviewStatus(config: UpdateReviewStatusConfig) {
         .transaction()
         .patch(markedReviewId, {
           insert: { replace: 'intro[0]', items: [newBlock] },
+          set: { title: '[SOLD OUT] Audio-Technica Sound Burger Record Player' }
         })
         .commit()
     } catch (e) {

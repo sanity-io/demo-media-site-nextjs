@@ -17,6 +17,22 @@ export const Logo = memo(function Logo(props: { type?: string }) {
         text: 'Reviews',
         background: '#86DF9F',
       },
+      highFashion: {
+        text: 'High Fashion',
+        background: '#fbd024',
+      },
+      outdoors: {
+        text: 'Outdoors',
+        background: '#59e3f6',
+      },
+      gossip: {
+        text: 'Gossip',
+        background: '#fca86d',
+      },
+      entertainment: {
+        text: 'Entertainment',
+        background: '#f68b82',
+      },
     }
   }, [])
 
@@ -63,6 +79,21 @@ export function ReviewsWorkspaceLogo() {
   return <WorkspaceLogo type="reviews" />
 }
 
+export function HighFashionWorkspaceLogo() {
+  return <WorkspaceLogo type="highFashion" />
+}
+
+export function OutdoorsWorkspaceLogo() {
+  return <WorkspaceLogo type="outdoors" />
+}
+
+export function GossipWorkspaceLogo() {
+  return <WorkspaceLogo type="gossip" />
+}
+
+export function EntertainmentWorkspaceLogo() {
+  return <WorkspaceLogo type="entertainment" />
+}
 export const WorkspaceLogo = memo(function WorkspaceLogo(props: {
   type?: string
 }) {
@@ -80,6 +111,22 @@ export const WorkspaceLogo = memo(function WorkspaceLogo(props: {
       reviews: {
         background: '#86DF9F',
         foreground: '#119236',
+      },
+      highFashion: {
+        background: '#fbd024',
+        foreground: '#967e1c',
+      },
+      outdoors: {
+        background: '#59e3f6',
+        foreground: '#1c97a8',
+      },
+      gossip: {
+        background: '#fca86d',
+        foreground: '#ba5f1f',
+      },
+      entertainment: {
+        background: '#f68b82',
+        foreground: '#c33529',
       },
     }
   }, [])

@@ -6,7 +6,7 @@ export default defineType({
   title: 'Review',
   icon: FiStar,
   type: 'document',
-  readOnly: true,
+  // readOnly: true,
   fields: [
     defineField({
       name: 'title',
