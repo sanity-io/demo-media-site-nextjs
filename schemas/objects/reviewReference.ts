@@ -29,7 +29,7 @@ export default defineType({
       name: 'titleOverride',
       type: 'string',
       description: 'Use a custom title for this review.',
-      validation: (Rule) => Rule.required(),
+      // validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'sections',
