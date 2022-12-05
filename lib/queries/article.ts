@@ -36,7 +36,12 @@ export const indexQuery = groq`
     _type == 'articleReference' => @->,
     _type == 'reviewReference'=> {
       ...@.review->,
-      "title": coalesce(@.titleOverride, @.review->{title}.title),
+      @.review->soldOut => {
+        "title": "SOLD OUT: " + coalesce(@.titleOverride, @.review->{title}.title)
+      },
+      @.review->soldOut == false => {
+        "title": coalesce(@.titleOverride, @.review->{title}.title)
+      },      
       "sections": @.sections
     }
   },

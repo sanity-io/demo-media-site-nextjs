@@ -6,7 +6,7 @@ export default defineType({
   title: 'Review',
   icon: FiStar,
   type: 'document',
-  readOnly: true,
+  // readOnly: true,
   fields: [
     defineField({
       name: 'title',
@@ -38,6 +38,7 @@ export default defineType({
       title: 'Content',
       type: 'portableText',
     }),
+    defineField({ type: 'boolean', name: 'soldOut' }),
     defineField({ type: 'seo', name: 'seo', title: 'SEO' }),
     defineField({ type: 'brand', name: 'brand' }),
   ],
