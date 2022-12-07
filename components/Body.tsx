@@ -39,21 +39,24 @@ const components = {
     },
     mainImage: ({ value }: { value: MainImage }) => {
       const { image, caption, alt } = value
-      return (
-        <Figure
-          caption={caption}
-          img={
-            <Image
-              className="block aspect-[4/2]"
-              alt={alt}
-              src={urlForImage(image).height(1000).width(2000).url()}
-              width={2000}
-              height={1000}
-              style={{ objectFit: 'cover' }}
-            />
-          }
-        />
-      )
+      if (image) {
+        return (
+          <Figure
+            caption={caption}
+            img={
+              <Image
+                className="block aspect-[4/2]"
+                alt={alt}
+                src={urlForImage(image).height(1000).width(2000).url()}
+                width={2000}
+                height={1000}
+                style={{ objectFit: 'cover' }}
+              />
+            }
+          />
+        )
+      }
+      return <div />
     },
     reviewReference: ({ value }: { value: ArticlePreviewProps }) => {
       const { title, slug } = value
