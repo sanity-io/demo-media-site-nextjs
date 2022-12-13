@@ -4,6 +4,7 @@ import openGraphObjectFromDocument from '../lib/openGraphObjectFromDocument'
 import { ArticleProps } from '../types'
 import Body from './Body'
 import Container from './Container'
+import { PeopleProvider } from './Credits'
 import Header from './Header'
 
 interface ArticleComponentProps {
@@ -18,18 +19,21 @@ export default function ArticlePage({ article }: ArticleComponentProps) {
         openGraph={article ? openGraphObjectFromDocument(article) : undefined}
       />
       <article className="pb-4 md:pb-6">
-        <Header
-          title={article?.title}
-          intro={article?.intro}
-          mainImage={article?.mainImage}
-          sections={article?.sections}
-          brand={article?.brand}
-        />
-        <Body
-          content={article?.content}
-          people={article?.people}
-          brand={article?.brand}
-        />
+        <PeopleProvider people={article.people}>
+          <Header
+            title={article?.title}
+            intro={article?.intro}
+            mainImage={article?.mainImage}
+            sections={article?.sections}
+            brand={article?.brand}
+          />
+          <Body
+            date={article?.date}
+            content={article?.content}
+            people={article?.people}
+            brand={article?.brand}
+          />
+        </PeopleProvider>
       </article>
     </Container>
   )

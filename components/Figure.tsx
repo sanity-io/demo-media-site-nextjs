@@ -11,7 +11,7 @@ export function Figure(props: {
     <figure className={className}>
       {img}
 
-      <figcaption className="mt-1">
+      <figcaption className="not-prose mt-1">
         <p className="text-sm leading-tight">{caption}</p>
       </figcaption>
     </figure>

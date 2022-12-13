@@ -7,6 +7,7 @@ import { urlForImage } from '../lib/sanity'
 import { ArticleProps, BrandSpecificProps, MainImage } from '../types'
 import { BRAND_LIFESTYLE_NAME, getBrandName } from '../utils/brand'
 import { getUrlForDocumentType } from '../utils/routing'
+import { Credits, PeopleList, PeopleProvider, usePeople } from './Credits'
 import { Figure } from './Figure'
 
 type HeaderProps = Pick<
@@ -97,12 +98,24 @@ function MainCoverImage({
   mainImage: MainImage
   brandName?: string
 }) {
+  const photographers = usePeople('photographer')
+  const hasPhotographers = photographers.length > 0
+  const separator = mainImage?.caption && photographers.length > 0 && ' ● '
+
   return (
     <>
       <Figure
         caption={
-          mainImage?.caption && (
-            <>{mainImage.caption} ● Photo by Hardcoded, pull from People</>
+          (mainImage?.caption || photographers?.length > 0) && (
+            <span className="font-sans">
+              {mainImage.caption}
+              {separator}
+              {hasPhotographers && (
+                <>
+                  Photo: <PeopleList people={photographers} />
+                </>
+              )}
+            </span>
           )
         }
         className={
