@@ -39,6 +39,7 @@
     "sanity": "3.0.0-rc.3",
     "sanity-plugin-asset-source-unsplash": "3.0.0-v3-studio.13",
     "sanity-plugin-documents-pane": "^2.0.1",
+    "sanity-plugin-iframe-pane": "^2.1.1",
     "sanity-plugin-media": "^2.0.2",
     "sanity-plugin-workflow": "file:.yalc/sanity-plugin-workflow",
     "seedrandom": "^3.0.5",

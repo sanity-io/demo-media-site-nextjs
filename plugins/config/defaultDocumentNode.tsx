@@ -1,7 +1,10 @@
 import DocumentsPane from 'sanity-plugin-documents-pane'
+import Iframe from 'sanity-plugin-iframe-pane'
 import { DefaultDocumentNodeResolver } from 'sanity/desk'
 import { NewsletterPreview } from '../newsletter'
-import DocumentPreview from '../preview/DocumentPreview'
+import { SanityDocumentLike } from 'sanity'
+
+type ProductionUrlDoc = SanityDocumentLike & { slug: any }
 
 const defaultDocumentNode: DefaultDocumentNodeResolver = (
   S,
@@ -14,12 +17,14 @@ const defaultDocumentNode: DefaultDocumentNodeResolver = (
   if (previewTypes.includes(schemaType)) {
     views.push(
       S.view
-        .component(({ document }) => (
-          <DocumentPreview
-            slug={document.displayed.slug?.current}
-            _type={document.displayed._type}
-          />
-        ))
+        .component(Iframe)
+        .options({
+          url: (doc: ProductionUrlDoc) => resolveProductionUrl(doc),
+          reload: {
+            button: true,
+            revision: false,
+          },
+        })
         .title('Preview')
     )
   }
@@ -41,6 +46,21 @@ const defaultDocumentNode: DefaultDocumentNodeResolver = (
   }
 
   return S.document().views([S.view.form(), ...views])
+}
+
+function resolveProductionUrl(doc: ProductionUrlDoc) {
+  const { slug, _type } = doc
+  const secret = process.env.NEXT_PUBLIC_PREVIEW_SECRET
+  const url = new URL('/api/preview', location.origin)
+
+  url.searchParams.set('slug', slug?.current)
+  url.searchParams.set('type', _type)
+
+  if (secret) {
+    url.searchParams.set('secret', secret)
+  }
+
+  return url.toString()
 }
 
 export default defaultDocumentNode
