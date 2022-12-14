@@ -5,14 +5,14 @@ export function Figure(props: {
   className?: string
   img?: ReactNode
 }) {
-  const { caption, className, img } = props
+  const { caption, className = '', img } = props
 
   return (
-    <figure className={className}>
+    <figure className={`not-prose ${className}`}>
       {img}
 
       <figcaption className="mt-1">
-        <p className="text-sm leading-tight">{caption}</p>
+        <p className="my-0 text-sm leading-tight">{caption}</p>
       </figcaption>
     </figure>
   )

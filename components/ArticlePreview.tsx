@@ -8,6 +8,7 @@ import { BRAND_LIFESTYLE_NAME, isLifestyle } from '../utils/brand'
 import { getUrlForDocumentType } from '../utils/routing'
 import { useRandom } from '../utils/useRandom'
 import CoverImage from './CoverImage'
+import { PeopleList } from './Credits'
 import Date from './Date'
 
 const PREVIEW_TYPE_FEATURED_HIGHLIGHTED = 'featured-highlighted'
@@ -190,23 +191,12 @@ export default function ArticlePreview({
 
         <div className="mt-4 text-sm md:mt-auto">
           <span
-            data-after=" ● "
+            data-after={people?.length > 0 ? ' ● ' : ''}
             className="after:inline after:content-[attr(data-after)]"
           >
             <Date dateString={date} />
           </span>
-          {people?.length &&
-            people.map((person, index) => (
-              <span
-                key={index}
-                data-after=" ● "
-                className="after:inline after:content-[attr(data-after)] last:after:hidden"
-              >
-                <Link href={getUrlForDocumentType('person', person?.slug)}>
-                  {person.name}
-                </Link>
-              </span>
-            ))}
+          <PeopleList people={people} />
         </div>
       </div>
     </div>
