@@ -1,24 +1,10 @@
-import type { InputProps, SanityDocumentLike } from 'sanity'
-import {
-  Box,
-  Button,
-  Card,
-  Flex,
-  Label,
-  Stack,
-  Text,
-  useToast,
-} from '@sanity/ui'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { format, formatRelative, parseISO } from 'date-fns'
-import { useClient, useFormValue } from 'sanity'
-import { PortableTextBlock } from '@portabletext/types'
+import {PortableTextBlock} from '@portabletext/types'
+import {Box, Button, Card, Flex, Stack, Text, useToast} from '@sanity/ui'
 import groq from 'groq'
-import { nanoid } from 'nanoid'
-
-function removePrefix(id?: string) {
-  return id?.replace('drafts.', '')
-}
+import {nanoid} from 'nanoid'
+import React, {useCallback, useEffect, useMemo, useState} from 'react'
+import type {InputProps, SanityDocumentLike} from 'sanity'
+import {useClient, useFormValue} from 'sanity'
 
 interface SyncStatus {
   syncStatus: 'loading' | 'done'
@@ -35,13 +21,43 @@ interface ArticleReferencesBlock extends PortableTextBlock {
   }[]
 }
 
+/*
 groq`*[_type == 'newsletter']{content[_type == 'articleReferences']}`
 groq`*[_type=="newsletter" && references(*[_type=="article"]._id)]{title}`
+*/
+
+const findExistingReferenceIds = (
+  queryResult: Record<string, any>[],
+  typeReferences: string
+) => {
+  const existingReferenceIds = [
+    ...new Set(
+      queryResult
+        ?.map((newsletter: SanityDocumentLike) => {
+          const content = (newsletter?.content ||
+            []) as ArticleReferencesBlock[]
+          return (
+            content
+              ?.filter((block) => block._type === typeReferences)
+              ?.map(
+                (block: ArticleReferencesBlock) =>
+                  block.references?.map((reference) => reference._ref) ?? []
+              ) ?? []
+          )
+            .flat()
+            .filter(Boolean)
+        })
+        .flat() ?? []
+    ),
+  ]
+
+  return existingReferenceIds
+}
 
 export function SyncNewArticlesWrapper(props: InputProps) {
   const toast = useToast()
-  const [status, setStatus] = useState<SyncStatus>({ syncStatus: 'loading' })
-  const client = useClient({ apiVersion: '2022-03-13' })
+  const [status, setStatus] = useState<SyncStatus>({syncStatus: 'loading'})
+  const client = useClient({apiVersion: '2022-03-13'})
   const [statusDetails, setStatusDetails] = useState<SyncStatus>()
   const content = useFormValue(['content']) as PortableTextBlock[]
   const documentId = useFormValue(['_id']) as string
@@ -54,32 +70,15 @@ export function SyncNewArticlesWrapper(props: InputProps) {
   )
 
   const handleFetch = useCallback(async () => {
-    setStatus({ syncStatus: 'loading' })
+    setStatus({syncStatus: 'loading'})
     const queryResult = await client.fetch(QUERY)
 
     // @todo Map all documents
     // @todo Get all reference ids
-
-    const existingReferenceIds = [
-      ...new Set(
-        queryResult
-          ?.map((newsletter: SanityDocumentLike) => {
-            const content = (newsletter?.content ||
-              []) as ArticleReferencesBlock[]
-            return (
-              content
-                ?.filter((block) => block._type === TYPE_REFERENCES)
-                ?.map(
-                  (block: ArticleReferencesBlock) =>
-                    block.references?.map((reference) => reference._ref) ?? []
-                ) ?? []
-            )
-              .flat()
-              .filter(Boolean)
-          })
-          .flat() ?? []
-      ),
-    ]
+    const existingReferenceIds = findExistingReferenceIds(
+      queryResult,
+      TYPE_REFERENCES
+    )
 
     // Then we get any articles not referenced in any newsletter
     const articleRefs = (await client.fetch(QUERY_NOT_REFERENCED, {
@@ -87,7 +86,7 @@ export function SyncNewArticlesWrapper(props: InputProps) {
       brand: 'tech',
     })) as string[]
 
-    setStatus({ syncStatus: 'done', ids: articleRefs })
+    setStatus({syncStatus: 'done', ids: articleRefs})
   }, [client, QUERY, QUERY_NOT_REFERENCED])
 
   useEffect(() => {
@@ -101,23 +100,12 @@ export function SyncNewArticlesWrapper(props: InputProps) {
     [pendingArticleCount]
   )
 
-  const existingReferenceIds = (
-    content
-      ?.filter((block) => block._type === TYPE_REFERENCES)
-      ?.map(
-        (block: ArticleReferencesBlock) =>
-          block.references?.map((reference) => reference._ref) ?? []
-      ) ?? []
-  )
-    .flat()
-    .filter(Boolean)
-
   const handleSync = useCallback(async () => {
     // Create new block or update existing
     setStatusDetails(
       statusDetails
-        ? { ...statusDetails, syncStatus: 'loading' }
-        : { syncStatus: 'loading' }
+        ? {...statusDetails, syncStatus: 'loading'}
+        : {syncStatus: 'loading'}
     )
 
     try {
@@ -172,6 +160,7 @@ export function SyncNewArticlesWrapper(props: InputProps) {
     // }, 2500)
   }, [
     toast,
+    handleFetch,
     articleReferenceBlock,
     client,
     documentId,

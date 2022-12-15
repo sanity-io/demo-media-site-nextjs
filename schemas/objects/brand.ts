@@ -1,6 +1,6 @@
-import { defineField } from 'sanity'
+import {defineField} from 'sanity'
 
-import { BRANDS } from '../../lib/constants'
+import {BRANDS} from '../../lib/constants'
 
 export default defineField({
   name: 'brand',
@@ -8,7 +8,7 @@ export default defineField({
   description: 'Used to colocate documents to only those in the same "Brand"',
   type: 'string',
   // TODO: Hide field completely once initial value templates are configured
-  hidden: ({ document, value }) =>
+  hidden: ({document, value}) =>
     !document._id.startsWith(`drafts.`) && Boolean(value),
   validation: (Rule) => Rule.required(),
   options: {

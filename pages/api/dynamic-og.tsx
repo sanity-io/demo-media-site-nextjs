@@ -1,18 +1,19 @@
-import { ImageResponse } from '@vercel/og'
-import { NextRequest } from 'next/server'
+import {ImageResponse} from '@vercel/og'
+import {NextRequest} from 'next/server'
+import * as React from 'react'
 
-import { getClient } from '../../lib/sanity.server'
+import {getClient} from '../../lib/sanity.server'
 
 export const config = {
   runtime: 'experimental-edge',
 }
 
 export default async function handler(req: NextRequest) {
-  const { searchParams } = req.nextUrl
+  const {searchParams} = req.nextUrl
   const username = searchParams.get('username')
   const type = searchParams.get('type')
   const id = searchParams.get('id')
-  const secret = searchParams.get('secret')
+  // const secret = searchParams.get('secret')
   if (!id || !type) {
     return new ImageResponse(<>{'Visit with "?type=&id="'}</>, {
       width: 1200,
@@ -29,10 +30,8 @@ export default async function handler(req: NextRequest) {
 
   const doc = await getClient(false).fetch(
     `*[_type == "${type}" && _id == $id][0]`,
-    { id }
+    {id}
   )
-
-  console.log(doc)
 
   if (type === 'article') {
     return new ImageResponse(

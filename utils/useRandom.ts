@@ -1,13 +1,13 @@
-import { useId, useRef } from 'react'
+import {useId, useRef} from 'react'
 import seedrandom from 'seedrandom'
 
-export const useRandom = (values: (string | number)[]) => {
+export const useRandom = (values: (string | number)[]): string | number => {
   const seed = useId()
   const random = useRef(values[Math.floor(seedrandom(seed)() * values.length)])
 
   return random.current
 }
 
-export function randomValue(values: (string | number)[]) {
+export function randomValue(values: (string | number)[]): string | number {
   return values[Math.floor(Math.random() * values.length)]
 }

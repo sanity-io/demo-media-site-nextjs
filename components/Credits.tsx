@@ -1,11 +1,11 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import React, { createContext, useContext } from 'react'
+import React, {createContext, useContext} from 'react'
 
-import { urlForImage } from '../lib/sanity'
-import { ArticleProps } from '../types'
-import { BRAND_LIFESTYLE_NAME } from '../utils/brand'
-import { getUrlForDocumentType } from '../utils/routing'
+import {urlForImage} from '../lib/sanity'
+import {ArticleProps} from '../types'
+import {BRAND_LIFESTYLE_NAME} from '../utils/brand'
+import {getUrlForDocumentType} from '../utils/routing'
 import Date from './Date'
 
 const PeopleContext = createContext([])
@@ -44,7 +44,7 @@ export function Credits({
   const people = usePeople(role)
   const isLifestyle = brandName === BRAND_LIFESTYLE_NAME
   if (isLifestyle) {
-    const [firstPerson, _] = people
+    const [firstPerson] = people
 
     return (
       <div className="sm:text-md mx-auto flex max-w-2xl justify-center pb-3 text-sm md:mb-4 md:pb-4 md:pb-5">
@@ -103,13 +103,13 @@ export function Credits({
   )
 }
 
-export const PeopleList = ({ people }: { people: ArticleProps['people'] }) => {
+export const PeopleList = ({people}: {people: ArticleProps['people']}) => {
   return (
     <>
       {people?.length &&
-        people.map((person, index) => (
+        people.map((person) => (
           <span
-            key={index}
+            key={person.name}
             data-after=" ● "
             className="after:inline after:content-[attr(data-after)] last:after:hidden"
           >

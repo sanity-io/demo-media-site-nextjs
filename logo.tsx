@@ -1,7 +1,7 @@
-import React, { useMemo, memo } from 'react'
-import { Flex, Text } from '@sanity/ui'
+import {Flex, Text} from '@sanity/ui'
+import React, {memo, useMemo} from 'react'
 
-export const Logo = memo(function Logo(props: { type?: string }) {
+export const Logo = memo(function Logo(props: {type?: string}) {
   const type = props?.type || 'tech'
   const settings = useMemo(() => {
     return {

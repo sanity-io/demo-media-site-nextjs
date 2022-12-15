@@ -1,7 +1,8 @@
-import { Box, Stack, Text } from '@sanity/ui'
-import { FiVideo } from 'react-icons/fi'
+import {Box, Stack, Text} from '@sanity/ui'
+import * as React from 'react'
+import {FiVideo} from 'react-icons/fi'
 import ReactPlayer from 'react-player'
-import { defineField, defineType, InputProps, PreviewProps, Rule } from 'sanity'
+import {defineField, defineType, InputProps, PreviewProps, Rule} from 'sanity'
 import styled from 'styled-components'
 
 interface Audio {
@@ -39,7 +40,7 @@ export default defineType({
                 url={audio.url}
                 width="100%"
                 height="100%"
-                style={{ aspectRatio: '16/5.5' }}
+                style={{aspectRatio: '16/5.5'}}
               />
             ) : (
               <Text as="p">Audio missing URL</Text>
@@ -48,26 +49,25 @@ export default defineType({
         </Stack>
       )
     },
-    preview: (props: PreviewProps & { url: string }) => {
+    preview: (props: PreviewProps & {url: string}) => {
       const url = props.url
       if (url) {
         return (
-          <div style={{ position: 'relative', paddingTop: '56.25%' }}>
+          <div style={{position: 'relative', paddingTop: '56.25%'}}>
             <ReactPlayer
               url={url}
               width="100%"
               height="100%"
-              style={{ position: 'absolute', top: 0, left: 0 }}
+              style={{position: 'absolute', top: 0, left: 0}}
             />
           </div>
         )
-      } else {
-        return (
-          <Box paddingY={2}>
-            <Text as="p">Audio missing URL</Text>
-          </Box>
-        )
       }
+      return (
+        <Box paddingY={2}>
+          <Text as="p">Audio missing URL</Text>
+        </Box>
+      )
     },
   },
   preview: {

@@ -1,6 +1,6 @@
-import { DefaultSeoProps } from 'next-seo'
+import {DefaultSeoProps} from 'next-seo'
 
-import { isLifestyle } from '../utils/brand'
+import {isLifestyle} from '../utils/brand'
 
 const envBasedConfig = isLifestyle()
   ? {

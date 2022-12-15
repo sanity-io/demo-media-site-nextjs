@@ -1,5 +1,5 @@
-import { FiHash } from 'react-icons/fi'
-import { defineType, defineField } from 'sanity'
+import {FiHash} from 'react-icons/fi'
+import {defineField, defineType} from 'sanity'
 
 export default defineType({
   name: 'section',
@@ -16,16 +16,16 @@ export default defineType({
       name: 'slug',
       title: 'Slug',
       type: 'slug',
-      options: { source: 'name' },
+      options: {source: 'name'},
       validation: (Rule) => Rule.required(),
     }),
-    defineField({ type: 'brand', name: 'brand' }),
+    defineField({type: 'brand', name: 'brand'}),
   ],
   preview: {
     select: {
       title: 'name',
     },
-    prepare({ title }) {
+    prepare({title}) {
       return {
         title,
         media: FiHash,

@@ -24,9 +24,10 @@
 
  */
 
-import { isValidSignature, SIGNATURE_HEADER_NAME } from '@sanity/webhook'
+import {isValidSignature, SIGNATURE_HEADER_NAME} from '@sanity/webhook'
+import {env} from 'utils/env'
 
-import { getClient } from '../../lib/sanity.server'
+import {getClient} from '../../lib/sanity.server'
 
 // Next.js will by default parse the body, which can lead to invalid signatures
 export const config = {
@@ -56,6 +57,7 @@ const getQueryForType = (type) => {
 }
 
 const log = (msg, error?) =>
+  // eslint-disable-next-line no-console
   console[error ? 'error' : 'log'](`[revalidate] ${msg}`)
 
 async function readBody(readable) {
@@ -70,28 +72,23 @@ export default async function revalidate(req, res) {
   const signature = req.headers[SIGNATURE_HEADER_NAME]
   const body = await readBody(req) // Read the body into a string
   if (
-    !isValidSignature(
-      body,
-      signature,
-      process.env.SANITY_REVALIDATE_SECRET?.trim()
-    )
+    !isValidSignature(body, signature, env('SANITY_REVALIDATE_SECRET')?.trim())
   ) {
     const invalidSignature = 'Invalid signature'
     log(invalidSignature, true)
-    res.status(401).json({ success: false, message: invalidSignature })
-    return
+    return res.status(401).json({success: false, message: invalidSignature})
   }
 
   const jsonBody = JSON.parse(body)
-  const { _id: id, _type } = jsonBody
+  const {_id: id, _type} = jsonBody
   if (typeof id !== 'string' || !id) {
     const invalidId = 'Invalid _id'
     log(invalidId, true)
-    return res.status(400).json({ message: invalidId })
+    return res.status(400).json({message: invalidId})
   }
 
   log(`Querying post slug for _id '${id}', type '${_type}' ..`)
-  const slug = await getClient(false).fetch(getQueryForType(_type), { id })
+  const slug = await getClient(false).fetch(getQueryForType(_type), {id})
   const slugs = (Array.isArray(slug) ? slug : [slug]).map(
     (_slug) => `/articles/${_slug}`
   )
@@ -101,9 +98,9 @@ export default async function revalidate(req, res) {
     await Promise.all(staleRoutes.map((route) => res.revalidate(route)))
     const updatedRoutes = `Updated routes: ${staleRoutes.join(', ')}`
     log(updatedRoutes)
-    return res.status(200).json({ message: updatedRoutes })
+    return res.status(200).json({message: updatedRoutes})
   } catch (err) {
     log(err.message, true)
-    return res.status(500).json({ message: err.message })
+    return res.status(500).json({message: err.message})
   }
 }

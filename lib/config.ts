@@ -1,11 +1,12 @@
-export const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || 'production'
-export const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || ''
+import {env} from 'utils/env'
+
+export const dataset = env('NEXT_PUBLIC_SANITY_DATASET') || 'production'
+export const projectId = env('NEXT_PUBLIC_SANITY_PROJECT_ID') || ''
 
 export const sanityConfig = {
   dataset,
   projectId,
-  useCdn:
-    typeof document !== 'undefined' && process.env.NODE_ENV === 'production',
+  useCdn: typeof document !== 'undefined' && env('NODE_ENV') === 'production',
   // useCdn == true gives fast, cheap responses using a globally distributed cache.
   // When in production the Sanity API is only queried on build-time, and on-demand when responding to webhooks.
   // Thus the data need to be fresh and API response time is less important.
@@ -16,7 +17,7 @@ export const sanityConfig = {
   // see https://www.sanity.io/docs/api-versioning for how versioning works
 }
 
-const reviewDataset = process.env.NEXT_PUBLIC_SANITY_REVIEW_DATASET || 'reviews'
+const reviewDataset = env('NEXT_PUBLIC_SANITY_REVIEW_DATASET') || 'reviews'
 
 export const reviewConfig = {
   ...sanityConfig,

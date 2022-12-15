@@ -1,5 +1,7 @@
-import { urlForImage } from './sanity'
+import {urlForImage} from './sanity'
 
+// @fixme: Either type this, or we disable the rule and allow inferring types
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export default function openGraphObjectFromDocument(document: any) {
   // article.mainImage?.image?.asset?._ref
   return {

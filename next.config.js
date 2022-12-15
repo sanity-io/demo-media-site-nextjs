@@ -1,14 +1,15 @@
+/* eslint-disable no-process-env */
 /** @type {import('next').NextConfig} */
 module.exports = {
   // @TODO figure out why the swc minifier breaks preview mode
   swcMinify: false,
 
-  experimental: { urlImports: ['https://themer.sanity.build/'] },
+  experimental: {urlImports: ['https://themer.sanity.build/']},
 
   images: {
     remotePatterns: [
-      { hostname: 'cdn.sanity.io' },
-      { hostname: 'source.unsplash.com' },
+      {hostname: 'cdn.sanity.io'},
+      {hostname: 'source.unsplash.com'},
     ],
   },
   typescript: {

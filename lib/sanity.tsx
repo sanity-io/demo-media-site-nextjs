@@ -1,8 +1,8 @@
 import createImageUrlBuilder from '@sanity/image-url'
-import { SanityAsset } from '@sanity/image-url/lib/types/types'
-import { CrossDatasetReferenceValue } from 'sanity'
+import {SanityAsset} from '@sanity/image-url/lib/types/types'
+import {CrossDatasetReferenceValue} from 'sanity'
 
-import { reviewConfig, sanityConfig } from './config'
+import {reviewConfig, sanityConfig} from './config'
 
 type CrossDatasetSource = {
   _type: 'image'

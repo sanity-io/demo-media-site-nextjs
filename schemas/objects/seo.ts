@@ -1,10 +1,10 @@
-import { defineField, defineType } from 'sanity'
+import {defineField, defineType} from 'sanity'
 
 export default defineType({
   name: 'seo',
   title: 'SEO',
   type: 'object',
-  options: { collapsible: true, collapsed: true },
+  options: {collapsible: true, collapsed: true},
   fields: [
     defineField({
       name: 'title',

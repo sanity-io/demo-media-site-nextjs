@@ -1,14 +1,15 @@
-import { PortableText } from '@portabletext/react'
+import {PortableText} from '@portabletext/react'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
+import {logError} from 'utils/logError'
 
-import { urlForImage } from '../lib/sanity'
-import { ArticleProps, BrandSpecificProps, MainImage } from '../types'
-import { BRAND_LIFESTYLE_NAME, getBrandName } from '../utils/brand'
-import { getUrlForDocumentType } from '../utils/routing'
-import { Credits, PeopleList, PeopleProvider, usePeople } from './Credits'
-import { Figure } from './Figure'
+import {urlForImage} from '../lib/sanity'
+import {ArticleProps, BrandSpecificProps, MainImage} from '../types'
+import {BRAND_LIFESTYLE_NAME, getBrandName} from '../utils/brand'
+import {getUrlForDocumentType} from '../utils/routing'
+import {PeopleList, usePeople} from './Credits'
+import {Figure} from './Figure'
 
 type HeaderProps = Pick<
   ArticleProps,
@@ -16,7 +17,7 @@ type HeaderProps = Pick<
 >
 
 export default function Header(props: HeaderProps & BrandSpecificProps) {
-  const { title, mainImage, intro, sections, brand } = props
+  const {title, mainImage, intro, sections, brand} = props
   const brandName = brand || getBrandName()
 
   if (brandName === BRAND_LIFESTYLE_NAME) {
@@ -34,18 +35,7 @@ export default function Header(props: HeaderProps & BrandSpecificProps) {
 
         {intro && (
           <div className="mt-3 font-serif text-2xl leading-snug">
-            <PortableText
-              value={intro}
-              onMissingComponent={(message, options) => {
-                console.error(message, {
-                  // eg `someUnknownType`
-                  type: options.type,
-
-                  // 'block' | 'mark' | 'blockStyle' | 'listStyle' | 'listItemStyle'
-                  nodeType: options.nodeType,
-                })
-              }}
-            />
+            <PortableText value={intro} onMissingComponent={logError} />
           </div>
         )}
       </div>
@@ -65,7 +55,7 @@ export default function Header(props: HeaderProps & BrandSpecificProps) {
 type HeaderLifestyleProps = Pick<ArticleProps, 'title' | 'mainImage'>
 
 export function HeaderLifestyle(props: HeaderLifestyleProps) {
-  const { title, mainImage } = props
+  const {title, mainImage} = props
   return (
     <>
       {mainImage && (
@@ -137,7 +127,7 @@ function MainCoverImage({
               .url()}
             width={width || 2000}
             height={height || 1000}
-            style={{ objectFit: 'cover' }}
+            style={{objectFit: 'cover'}}
           />
         }
       />
@@ -147,7 +137,7 @@ function MainCoverImage({
 
 type SectionLinkProps = Pick<ArticleProps, 'sections'>
 
-function SectionLinks({ sections }: SectionLinkProps) {
+function SectionLinks({sections}: SectionLinkProps) {
   return (
     <div className="text-sm sm:text-lg md:text-xl">
       {sections.map((section) => (

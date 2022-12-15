@@ -1,5 +1,5 @@
-import { SanityReference } from '@sanity/image-url/lib/types/types'
-import { defineArrayMember, defineField, defineType } from 'sanity'
+import {SanityReference} from '@sanity/image-url/lib/types/types'
+import {defineArrayMember, defineField, defineType} from 'sanity'
 
 export default defineType({
   type: 'object',
@@ -9,7 +9,7 @@ export default defineType({
     select: {
       references: 'references',
     },
-    prepare({ references }) {
+    prepare({references}) {
       const count = references?.filter(
         (ref: SanityReference) => ref._ref
       ).length
@@ -23,7 +23,7 @@ export default defineType({
       type: 'array',
       name: 'references',
       title: 'References',
-      of: [defineArrayMember({ type: 'articleReference' })],
+      of: [defineArrayMember({type: 'articleReference'})],
     }),
   ],
 })

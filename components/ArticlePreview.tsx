@@ -1,14 +1,14 @@
-import { PortableText } from '@portabletext/react'
+import {PortableText} from '@portabletext/react'
 import cn from 'classnames'
 import Link from 'next/link'
-import React from 'react'
+import * as React from 'react'
 
-import { ArticleProps } from '../types'
-import { BRAND_LIFESTYLE_NAME, isLifestyle } from '../utils/brand'
-import { getUrlForDocumentType } from '../utils/routing'
-import { useRandom } from '../utils/useRandom'
+import {ArticleProps} from '../types'
+import {BRAND_LIFESTYLE_NAME, isLifestyle} from '../utils/brand'
+import {getUrlForDocumentType} from '../utils/routing'
+import {useRandom} from '../utils/useRandom'
 import CoverImage from './CoverImage'
-import { PeopleList } from './Credits'
+import {PeopleList} from './Credits'
 import Date from './Date'
 
 const PREVIEW_TYPE_FEATURED_HIGHLIGHTED = 'featured-highlighted'
@@ -52,7 +52,7 @@ type ArticlePreviewProps = Pick<
   | 'sections'
   | 'isHighlighted'
   | 'slug'
-> & { sectionType?: 'featured' | 'normal' }
+> & {sectionType?: 'featured' | 'normal'}
 
 export default function ArticlePreview({
   title,
@@ -65,13 +65,13 @@ export default function ArticlePreview({
   slug,
   sectionType,
   brandName,
-}: ArticlePreviewProps & { brandName?: string }) {
+}: ArticlePreviewProps & {brandName?: string}) {
   let category = useRandom(CATS)
   category = sections?.[0]?.name || category
   const isLifestyleBrand = brandName === BRAND_LIFESTYLE_NAME || isLifestyle()
 
   if (isLifestyleBrand) {
-    const firstPerson = people?.[0] || { name: '', slug: '' }
+    const firstPerson = people?.[0] || {name: '', slug: ''}
     const imageSettings =
       sectionType === 'featured'
         ? isHighlighted

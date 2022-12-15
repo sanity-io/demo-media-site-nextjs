@@ -1,9 +1,10 @@
 import cn from 'classnames'
 import Image from 'next/image'
 import Link from 'next/link'
+import * as React from 'react'
 
-import { urlForImage } from '../lib/sanity'
-import { getUrlForDocumentType } from '../utils/routing'
+import {urlForImage} from '../lib/sanity'
+import {getUrlForDocumentType} from '../utils/routing'
 
 interface CoverImageProps {
   title: string
@@ -53,7 +54,7 @@ export default function CoverImage(props: CoverImageProps) {
       />
     </div>
   ) : (
-    <div style={{ paddingTop: '50%', backgroundColor: '#ddd' }} />
+    <div style={{paddingTop: '50%', backgroundColor: '#ddd'}} />
   )
 
   return (

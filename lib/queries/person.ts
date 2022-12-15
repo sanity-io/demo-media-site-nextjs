@@ -1,6 +1,6 @@
 import groq from 'groq'
 
-import { articleFields } from './article'
+import {articleFields} from './article'
 
 export const personFields = groq`
   _id,

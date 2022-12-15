@@ -1,8 +1,8 @@
-import { useMemo } from 'react'
+import React, {useMemo} from 'react'
 
-import { ArticleProps } from '../types'
-import { BRAND_LIFESTYLE_NAME, isLifestyle } from '../utils/brand'
-import { useHomepageArticles } from '../utils/useHomepageArticles'
+import {ArticleProps} from '../types'
+import {BRAND_LIFESTYLE_NAME, isLifestyle} from '../utils/brand'
+import {useHomepageArticles} from '../utils/useHomepageArticles'
 import ArticlePreview from './ArticlePreview'
 
 function StorySection({
@@ -89,7 +89,7 @@ export default function MoreStories({
   articles: ArticleProps[]
   brandName?: string
 }) {
-  const { topArticles, restArticles } = useHomepageArticles(articles, brandName)
+  const {topArticles, restArticles} = useHomepageArticles(articles, brandName)
   const isLifestyleBrand = brandName === BRAND_LIFESTYLE_NAME || isLifestyle()
 
   if (isLifestyleBrand) {

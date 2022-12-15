@@ -1,11 +1,12 @@
+import {toPlainText} from '@portabletext/react'
+import {toHTML} from '@portabletext/to-html'
 import type {
   PortableTextBlock,
   PortableTextBlockStyle,
 } from '@portabletext/types'
-import { toPlainText } from '@portabletext/react'
-import { format, parseISO } from 'date-fns'
-import { toHTML, uriLooksSafe } from '@portabletext/to-html'
-import { urlForImage } from '../../../lib/sanity'
+import {format, parseISO} from 'date-fns'
+
+import {urlForImage} from '../../../lib/sanity'
 
 interface TextBlock {
   type: 'paragraph' | 'heading'
@@ -43,7 +44,6 @@ export function blocksToCustomContentBlocks(
   return blocks
     .map((block) => {
       if (block._type !== 'block') {
-        console.log(block)
         return renderCustomBlock(block)
       }
 
@@ -52,7 +52,7 @@ export function blocksToCustomContentBlocks(
     .filter(Boolean)
 }
 
-export function customToPlainText(blocks: PortableTextBlock[] = []) {
+export function customToPlainText(blocks: PortableTextBlock[] = []): string {
   return blocks
     .map((block) => {
       if (block._type !== 'block') {
@@ -65,7 +65,10 @@ export function customToPlainText(blocks: PortableTextBlock[] = []) {
     .join('\n\n')
 }
 
-export function renderCustomBlock(block): ModuleBlock | null {
+// @fixme: Add a proper type
+export function renderCustomBlock(
+  block: Record<string, any>
+): ModuleBlock | null {
   switch (block._type) {
     case 'article':
       return {
@@ -98,7 +101,7 @@ export function renderCustomBlock(block): ModuleBlock | null {
   }
 }
 
-export function formatDate(dateValue: string) {
+export function formatDate(dateValue: string): string {
   try {
     return format(parseISO(dateValue), 'LLLL d, yyyy')
   } catch (err) {
@@ -106,7 +109,12 @@ export function formatDate(dateValue: string) {
   }
 }
 
-export function emailToHTML(email) {
+type Email = {
+  subject: string
+  content: PortableTextBlock[]
+}
+
+export function emailToHTML(email: Email): string {
   return `
     <h1>${email.subject}</h1>
     <p>${toPlainText(email.content)}</p>
