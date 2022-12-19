@@ -36,7 +36,6 @@ const preview: NextApiHandler = async (req, res): Promise<void> => {
 
   switch (req.query.type) {
     case 'siteSettings':
-      //@TODO: temporary hack for product day.
       return redirectToPreview(
         res,
         `/home/brand:${slug.replace('/?brand=', '')}`

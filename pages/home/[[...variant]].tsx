@@ -96,8 +96,6 @@ export async function getStaticProps({preview = false, params}) {
     }
   }
 
-  /* when the client isn't set up */
-  // TODO: why do this? Shouldn't the client just query the public APICDN?
   return {
     props: {},
     revalidate: undefined,

@@ -69,7 +69,7 @@ export default async function preview(req, res) {
 
   const renderedNewsletter = await renderNewsletter(newsletters[0])
 
-  res.status(200).json({output: renderedNewsletter, newsletters})
+  return res.status(200).json({output: renderedNewsletter, newsletters})
 }
 
 function getTemplate(): Promise<Template> {

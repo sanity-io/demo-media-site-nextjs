@@ -13,12 +13,8 @@ import {unsplashImageAsset} from 'sanity-plugin-asset-source-unsplash'
 import {workflow} from 'sanity-plugin-workflow'
 
 import {
-  EntertainmentWorkspaceLogo,
-  GossipWorkspaceLogo,
-  HighFashionWorkspaceLogo,
   LifestyleLogo,
   LifestyleWorkspaceLogo,
-  OutdoorsWorkspaceLogo,
   ReviewsLogo,
   ReviewsWorkspaceLogo,
   TechLogo,
@@ -32,15 +28,12 @@ import variations from './plugins/variations'
 import {schemaTemplates, schemaTypes} from './schemas'
 import { config, reviewConfig } from 'lib/config'
 
-// @TODO: update next-sanity/studio to automatically set this when needed
+//https://github.com/sanity-io/next-sanity#the-usebackgroundcolorsfromtheme-usebasepath-useconfigwithbasepath-and-usetextfontfamilyfromtheme-hooks-are-removed
+//as useBasePath is removed, we need to manually set the base path for each studio
 const basePaths = {
   tech: '/studio/tech',
   lifestyle: '/studio/lifestyle',
   reviews: '/studio/reviews',
-  highFashion: '/studio/highFashion',
-  outdoors: '/studio/outdoors',
-  gossip: '/studio/gossip',
-  entertainment: '/studio/entertainment',
 }
 
 const defaultConfig = (type: string) => {
