@@ -1,6 +1,6 @@
+import { config, reviewConfig } from 'lib/config'
 import {FiStar} from 'react-icons/fi'
 import {defineArrayMember, defineField, defineType} from 'sanity'
-import {env} from 'utils/env'
 
 export default defineType({
   name: 'reviewReference',
@@ -11,9 +11,9 @@ export default defineType({
     defineField({
       name: 'review',
       type: 'crossDatasetReference',
-      dataset: env('NEXT_PUBLIC_SANITY_DATASET_REVIEWS') || 'reviews',
+      dataset: reviewConfig.sanity.dataset || 'reviews',
       //required by crossDatasetReference type but not actually required?
-      projectId: env('NEXT_PUBLIC_SANITY_PROJECT_ID'),
+      projectId: config.sanity.projectId,
       to: [
         {
           type: 'review',

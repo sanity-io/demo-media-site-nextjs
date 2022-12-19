@@ -1,11 +1,11 @@
+import { config } from 'lib/config'
 import {SanityDocumentLike} from 'sanity'
-import {env} from 'utils/env'
 
 export type ProductionUrlDoc = SanityDocumentLike & {slug: any}
 
 export function resolveProductionUrl(doc: ProductionUrlDoc): string {
   const {slug, _type} = doc
-  const secret = env('NEXT_PUBLIC_PREVIEW_SECRET')
+  const secret = config.previewSecret
   const url = new URL('/api/preview', location.origin)
 
   if (_type !== 'siteSettings') {

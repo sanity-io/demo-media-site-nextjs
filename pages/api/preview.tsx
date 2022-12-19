@@ -1,5 +1,5 @@
+import { config } from 'lib/config'
 import {NextApiHandler} from 'next'
-import {env} from 'utils/env'
 
 import {
   articleBySlugQuery,
@@ -17,7 +17,7 @@ function redirectToPreview(res, Location) {
 }
 
 const preview: NextApiHandler = async (req, res): Promise<void> => {
-  const secret = env('NEXT_PUBLIC_PREVIEW_SECRET')
+  const secret = config.previewSecret
   // Check the secret if it's provided, enables running preview mode locally before the env var is setup
   if (secret && req.query.secret !== secret) {
     return res.status(401).json({message: 'Invalid secret'})

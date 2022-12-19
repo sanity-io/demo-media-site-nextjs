@@ -30,7 +30,7 @@ import newsletterPlugin from './plugins/newsletter'
 import {reviewsPlugin} from './plugins/reviews'
 import variations from './plugins/variations'
 import {schemaTemplates, schemaTypes} from './schemas'
-import {env} from './utils/env'
+import { config, reviewConfig } from 'lib/config'
 
 // @TODO: update next-sanity/studio to automatically set this when needed
 const basePaths = {
@@ -75,7 +75,7 @@ const defaultConfig = (type: string) => {
   }
 
   //@TODO: remove this after the recording -- it's nice to have vision in demos :)
-  if (env('NODE_ENV') === 'development') {
+  if (config.env === 'development') {
     plugins.push(
       visionTool({
         defaultApiVersion: '2022-11-11',
@@ -97,9 +97,9 @@ export default defineConfig([
   {
     basePath: basePaths.tech,
     name: 'tech',
-    projectId: env('NEXT_PUBLIC_SANITY_PROJECT_ID'),
-    dataset: env('NEXT_PUBLIC_SANITY_DATASET'),
-    title: env('NEXT_PUBLIC_SANITY_PROJECT_TITLE') || 'Technology',
+    projectId: config.sanity.projectId,
+    dataset: config.sanity.dataset,
+    title: config.sanity.projectTitle || 'Technology',
     plugins: [defaultConfig('tech')],
     icon: TechWorkspaceLogo,
     studio: {
@@ -111,9 +111,9 @@ export default defineConfig([
   {
     name: 'lifestyle',
     basePath: basePaths.lifestyle,
-    projectId: env('NEXT_PUBLIC_SANITY_PROJECT_ID'),
-    dataset: env('NEXT_PUBLIC_SANITY_DATASET'),
-    title: env('NEXT_PUBLIC_SANITY_PROJECT_TITLE ') || 'Lifestyle',
+    projectId: config.sanity.projectId,
+    dataset: config.sanity.dataset,
+    title: config.sanity.projectTitle || 'Lifestyle',
     theme,
     plugins: [defaultConfig('lifestyle')],
     icon: LifestyleWorkspaceLogo,
@@ -126,9 +126,9 @@ export default defineConfig([
   {
     name: 'reviews',
     basePath: basePaths.reviews,
-    projectId: env('NEXT_PUBLIC_SANITY_PROJECT_ID'),
-    dataset: env('NEXT_PUBLIC_SANITY_DATASET_REVIEWS') || 'reviews',
-    title: env('NEXT_PUBLIC_SANITY_PROJECT_TITLE') || 'Reviews',
+    projectId: reviewConfig.sanity.projectId,
+    dataset: reviewConfig.sanity.dataset || 'reviews',
+    title: reviewConfig.sanity.projectTitle || 'Reviews',
     theme,
     plugins: [defaultConfig('reviews')],
     icon: ReviewsWorkspaceLogo,

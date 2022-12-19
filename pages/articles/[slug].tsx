@@ -1,10 +1,10 @@
 import Layout from 'components/Layout'
+import { config } from 'lib/config'
 import ErrorPage from 'next/error'
 import {useRouter} from 'next/router'
 import {PreviewSuspense} from 'next-sanity/preview'
 import {lazy} from 'react'
 import * as React from 'react'
-import {env} from 'utils/env'
 
 import ArticlePage from '../../components/ArticlePage'
 import LayoutLifestyle from '../../components/LayoutLifestyle'
@@ -62,7 +62,7 @@ export async function getStaticProps({params, preview = false}) {
       },
     },
     // If webhooks isn't setup then attempt to re-generate in 1 minute intervals
-    revalidate: env('SANITY_REVALIDATE_SECRET') ? undefined : 60,
+    revalidate: config.revalidateSecret ? undefined : 60,
   }
 }
 

@@ -25,7 +25,7 @@
  */
 
 import {isValidSignature, SIGNATURE_HEADER_NAME} from '@sanity/webhook'
-import {env} from 'utils/env'
+import { config as globalConfig } from 'lib/config'
 
 import {getClient} from '../../lib/sanity.server'
 
@@ -72,7 +72,7 @@ export default async function revalidate(req, res) {
   const signature = req.headers[SIGNATURE_HEADER_NAME]
   const body = await readBody(req) // Read the body into a string
   if (
-    !isValidSignature(body, signature, env('SANITY_REVALIDATE_SECRET')?.trim())
+    !isValidSignature(body, signature, globalConfig.revalidateSecret?.trim())
   ) {
     const invalidSignature = 'Invalid signature'
     log(invalidSignature, true)

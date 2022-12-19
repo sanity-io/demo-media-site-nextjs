@@ -4,9 +4,9 @@
 import {NextMiddleware, NextResponse} from 'next/server'
 import {getBrandName} from 'utils/brand'
 
-import {sanityConfig} from './config'
+import {config} from './config'
 
-const {projectId, dataset, apiVersion} = sanityConfig
+const {projectId, dataset, apiVersion} = config.sanity
 
 // this query must match the filter and order of the home page
 // but only needs to fetch the ones we are going to experiment on

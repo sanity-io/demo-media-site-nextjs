@@ -2,6 +2,7 @@ import Container from 'components/Container'
 import Layout from 'components/Layout'
 import LayoutLifestyle from 'components/LayoutLifestyle'
 import MoreStories from 'components/MoreStories'
+import { config } from 'lib/config'
 import {indexQuery} from 'lib/queries'
 import {getClient, overlayDrafts} from 'lib/sanity.server'
 import {GetStaticPaths} from 'next'
@@ -9,7 +10,6 @@ import {NextSeo} from 'next-seo'
 import * as React from 'react'
 import {ArticleProps} from 'types'
 import {getBrandName, isLifestyle} from 'utils/brand'
-import {env} from 'utils/env'
 export default function Index({allArticles, preview, brand}) {
   const metadata = isLifestyle()
     ? {
@@ -53,7 +53,7 @@ export async function getStaticProps({preview = false, params}) {
   const variant = (params.variant as string[]) || []
 
   /* check if the project id has been defined by fetching the vercel envs */
-  if (env('NEXT_PUBLIC_SANITY_PROJECT_ID')) {
+  if (config.sanity.projectId) {
     // given a url like /a:1/b:2/c:3, split it out into {a:"1", b:"2", c:"3"}
     const variantMap: Record<string, string> = variant
       .map((variantParam) => variantParam.split(':'))
@@ -92,7 +92,7 @@ export async function getStaticProps({preview = false, params}) {
     return {
       props: {allArticles, preview, brand},
       // If webhooks isn't setup then attempt to re-generate in 1 minute intervals
-      revalidate: env('SANITY_REVALIDATE_SECRET') ? undefined : 60,
+      revalidate: config.revalidateSecret ? undefined : 60,
     }
   }
 
