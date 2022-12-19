@@ -25,7 +25,7 @@ export default function SectionPage({section}) {
     <Container>
       <NextSeo
         title={name}
-        openGraph={name ? openGraphObjectFromDocument({name}) : undefined}
+        // openGraph={name ? openGraphObjectFromDocument({name}) : undefined}
       />
       <div className="">
         <div className="m-auto max-w-5xl p-4 md:p-5 lg:p-6">

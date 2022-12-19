@@ -4,6 +4,7 @@ export interface AuthorProps {
   image: any
   bio: any
   role: string
+  articles?: ArticleProps[]
 }
 
 export interface SectionProps {
