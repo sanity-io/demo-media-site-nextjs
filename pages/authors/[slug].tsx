@@ -9,7 +9,7 @@ import AuthorPage from '../../components/AuthorPage'
 import Title from '../../components/Title'
 import {personBySlugQuery, personSlugsQuery} from '../../lib/queries'
 import {getClient, overlayDrafts} from '../../lib/sanity.server'
-import {ArticleProps, AuthorProps} from '../../types'
+import {AuthorProps} from '../../types'
 
 const PreviewAuthorPage = lazy(
   () => import('../../components/PreviewAuthorPage')

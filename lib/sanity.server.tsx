@@ -22,6 +22,7 @@ export const getClient = (preview) =>
         dataset: config.sanity.dataset,
         apiVersion: config.sanity.apiVersion,
         token: null,
+        useCdn: true,
       })
 
 export function overlayDrafts(docs) {
