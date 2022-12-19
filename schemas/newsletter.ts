@@ -1,5 +1,5 @@
-import { FiMail } from 'react-icons/fi'
-import { defineField, defineType } from 'sanity'
+import {FiMail} from 'react-icons/fi'
+import {defineField, defineType} from 'sanity'
 
 export default defineType({
   name: 'newsletter',
@@ -45,16 +45,16 @@ export default defineType({
       name: 'textContent',
       title: 'Text Content',
       type: 'minimalPortableText',
-      hidden: ({ parent }) => !parent?.hasCustomTextContent,
+      hidden: ({parent}) => !parent?.hasCustomTextContent,
     }),
-    defineField({ type: 'brand', name: 'brand' }),
+    defineField({type: 'brand', name: 'brand'}),
   ],
   preview: {
     select: {
       title: 'title',
       subject: 'subject',
     },
-    prepare({ title, subject }) {
+    prepare({title, subject}) {
       return {
         title,
         subtitle: subject,

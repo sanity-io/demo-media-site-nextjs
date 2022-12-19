@@ -1,13 +1,13 @@
 import path from 'node:path'
 
-import { toPlainText } from '@portabletext/react'
-import { SanityDocumentStub } from '@sanity/client'
+import {toPlainText} from '@portabletext/react'
+import {SanityDocumentStub} from '@sanity/client'
 import * as fs from 'fs'
 import mjml2html from 'mjml'
-import { twig } from 'twig'
+import {twig} from 'twig'
 
-import { newslettersByIdQuery } from '../../../lib/queries/newsletter'
-import { getClient } from '../../../lib/sanity.server'
+import {newslettersByIdQuery} from '../../../lib/queries/newsletter'
+import {getClient} from '../../../lib/sanity.server'
 import {
   blocksToCustomContentBlocks,
   customToPlainText,
@@ -26,7 +26,7 @@ function renderMjml(s: string) {
   return mjml2html(s).html
 }
 
-function renderNewsletter(newsletter: SanityDocumentStub) {
+async function renderNewsletter(newsletter: SanityDocumentStub) {
   const data = {
     subject: newsletter.subject ?? newsletter.title,
     intro: toPlainText(newsletter.intro),
@@ -36,16 +36,12 @@ function renderNewsletter(newsletter: SanityDocumentStub) {
     text: customToPlainText(newsletter.content),
   }
 
-  const template = twig({
-    data: fs.readFileSync(
-      path.join(process.cwd(), 'plugins/newsletter/templates/newsletter.mjml'),
-      'utf8'
-    ),
-  })
+  const templateFile = await getTemplateFile()
+  const template = twig({data: templateFile.toString()})
 
   try {
     const htmlOutput = renderMjml(template.render(data))
-    return { data, htmlOutput }
+    return {data, htmlOutput}
   } catch (e) {
     throw e
   }
@@ -59,7 +55,7 @@ export default async function preview(req, res) {
 
   // If no ids is provided return error
   if (!req.query.ids) {
-    return res.status(401).json({ message: 'Invalid ids' })
+    return res.status(401).json({message: 'Invalid ids'})
   }
 
   // // Get newsletter by ids
@@ -69,10 +65,25 @@ export default async function preview(req, res) {
 
   // If no newsletter is found return error
   if (!newsletters || newsletters?.length === 0) {
-    return res.status(401).json({ message: 'No newsletter documents found' })
+    return res.status(401).json({message: 'No newsletter documents found'})
   }
 
-  const renderedNewsletter = renderNewsletter(newsletters[0])
+  const renderedNewsletter = await renderNewsletter(newsletters[0])
 
-  res.status(200).json({ output: renderedNewsletter, newsletters })
+  return res.status(200).json({output: renderedNewsletter, newsletters})
+}
+
+function getTemplateFile(): Promise<Buffer> {
+  return new Promise((resolve) => {
+    const templateLocation = path.join(
+      process.cwd(),
+      'plugins/newsletter/templates/newsletter.mjml'
+    )
+    fs.readFile(templateLocation, (error, data) => {
+      if (error) {
+        throw error
+      }
+      return resolve(data)
+    })
+  })
 }

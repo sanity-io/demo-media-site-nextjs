@@ -1,25 +1,26 @@
-import { CollectionPageJsonLd } from 'next-seo'
+import {config} from 'lib/config'
+import {NextApiHandler} from 'next'
 
 import {
   articleBySlugQuery,
   personBySlugQuery,
   sectionBySlugQuery,
 } from '../../lib/queries'
-import { getClient } from '../../lib/sanity.server'
+import {getClient} from '../../lib/sanity.server'
 
 function redirectToPreview(res, Location) {
   // Enable Preview Mode by setting the cookies
   res.setPreviewData({})
   // Redirect to a preview capable route
-  res.writeHead(307, { Location })
+  res.writeHead(307, {Location})
   res.end()
 }
 
-export default async function preview(req, res) {
-  const secret = process.env.NEXT_PUBLIC_PREVIEW_SECRET
+const preview: NextApiHandler = async (req, res): Promise<void> => {
+  const secret = config.previewSecret
   // Check the secret if it's provided, enables running preview mode locally before the env var is setup
   if (secret && req.query.secret !== secret) {
-    return res.status(401).json({ message: 'Invalid secret' })
+    return res.status(401).json({message: 'Invalid secret'})
   }
   // If no slug is provided open preview mode on the frontpage
   if (!req.query.slug) {
@@ -27,13 +28,18 @@ export default async function preview(req, res) {
   }
 
   // Check if content with given slug exists
-  let content = { slug: '' }
+  let content = {slug: ''}
   let subpath = ''
+  const slug =
+    req.query.slug &&
+    (Array.isArray(req.query.slug) ? req.query.slug[0] : req.query.slug)
+
   switch (req.query.type) {
     case 'siteSettings':
-      //@TODO: temporary hack for product day.
-      const brand = req.query.slug.replace('/?brand=', '')
-      return redirectToPreview(res, `/home/brand:${brand}`)
+      return redirectToPreview(
+        res,
+        `/home/brand:${slug.replace('/?brand=', '')}`
+      )
     case 'article':
       subpath = 'articles'
       content = await getClient(true).fetch(articleBySlugQuery, {
@@ -65,5 +71,7 @@ export default async function preview(req, res) {
 
   // Redirect to the path from the fetched post
   // We don't redirect to req.query.slug as that might lead to open redirect vulnerabilities
-  redirectToPreview(res, `/${subpath}/${content.slug}`)
+  return redirectToPreview(res, `/${subpath}/${content.slug}`)
 }
+
+export default preview

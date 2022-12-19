@@ -1,5 +1,6 @@
-import { definePlugin } from 'sanity'
-import { InputWrappers } from './components'
+import {definePlugin} from 'sanity'
+
+import {InputWrappers} from './components'
 
 declare module 'sanity' {
   export interface ArrayOptions {

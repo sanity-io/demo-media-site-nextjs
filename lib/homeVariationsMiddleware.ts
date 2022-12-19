@@ -1,12 +1,12 @@
 /**
  * Logic to fetch the available experiments and determine which to show to a user
  */
-import { NextMiddleware, NextResponse } from 'next/server'
-import { getBrandName } from 'utils/brand'
+import {NextMiddleware, NextResponse} from 'next/server'
+import {getBrandName} from 'utils/brand'
 
-import { sanityConfig } from './config'
+import {config} from './config'
 
-const { projectId, dataset, apiVersion } = sanityConfig
+const {projectId, dataset, apiVersion} = config.sanity
 
 // this query must match the filter and order of the home page
 // but only needs to fetch the ones we are going to experiment on
@@ -33,7 +33,7 @@ const queryUrl = new URL(
 // Vercel does not have such a capability, so we have to do this on every page view for now.
 const fetchArticles = async () => {
   const response = await fetch(queryUrl)
-  const { result } = (await response.json()) as { result: Article[] }
+  const {result} = (await response.json()) as {result: Article[]}
   return result
 }
 

@@ -1,12 +1,13 @@
 import cn from 'classnames'
 import Link from 'next/link'
+import * as React from 'react'
 
-import { isLifestyle } from '../utils/brand'
+import {isLifestyle} from '../utils/brand'
 import Container from './Container'
 
 const isLifestyleBrand = isLifestyle()
 
-export default function Alert({ preview }) {
+export default function Alert({preview}) {
   return (
     <div
       className={cn(!isLifestyleBrand && 'border-b', {

@@ -1,5 +1,5 @@
 //document types
-import { SchemaTypeDefinition, Template } from 'sanity'
+import {SchemaTypeDefinition, Template} from 'sanity'
 
 import article from './article'
 import newsletter from './newsletter'
@@ -52,15 +52,13 @@ export const schemaTypes = (
     section,
     siteSettings,
   ].map((def: SchemaTypeDefinition) => {
-    // todo: contentRole.fields.reference
     if (schemaTypesToFilterBrandOn.includes(def?.name)) {
       return {
         ...def,
         options: {
           filter: 'brand == $brand',
-          filterParams: { brand: brandType },
+          filterParams: {brand: brandType},
         },
-        // TODO - understand why Typescript doesn't see this as a SchemaTypeDefinition
       } as SchemaTypeDefinition
     }
 
@@ -68,7 +66,7 @@ export const schemaTypes = (
   })
 }
 
-export const schemaTemplates = (prev: Template[]) => {
+export const schemaTemplates = (prev: Template[]): Template[] => {
   return [
     ...prev,
     ...['article', 'review', 'newsletter', 'person', 'podcast', 'section'].map(
@@ -77,8 +75,8 @@ export const schemaTemplates = (prev: Template[]) => {
         title: `${schemaType} with Brand`,
         type: 'initialValueTemplateItem',
         schemaType,
-        parameters: [{ name: `brand`, title: `Brand`, type: `string` }],
-        value: ({ brand }) => ({ brand }),
+        parameters: [{name: `brand`, title: `Brand`, type: `string`}],
+        value: (initialValue) => ({brand: initialValue.brand}),
       })
     ),
   ]

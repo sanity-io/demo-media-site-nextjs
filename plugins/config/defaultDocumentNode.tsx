@@ -1,13 +1,11 @@
+import {DefaultDocumentNodeResolver} from 'sanity/desk'
 import DocumentsPane from 'sanity-plugin-documents-pane'
 import Iframe from 'sanity-plugin-iframe-pane'
-import { DefaultDocumentNodeResolver } from 'sanity/desk'
-import { NewsletterPreview } from '../newsletter'
-import { resolveProductionUrl, ProductionUrlDoc } from './resolveProductionUrl'
 
-const defaultDocumentNode: DefaultDocumentNodeResolver = (
-  S,
-  { schemaType }
-) => {
+import {NewsletterPreview} from '../newsletter'
+import {ProductionUrlDoc, resolveProductionUrl} from './resolveProductionUrl'
+
+const defaultDocumentNode: DefaultDocumentNodeResolver = (S, {schemaType}) => {
   const articleReferenceTypes = ['person', 'section']
   const previewTypes = ['article', 'person', 'section', 'siteSettings']
   const views = []
@@ -33,7 +31,7 @@ const defaultDocumentNode: DefaultDocumentNodeResolver = (
         .component(DocumentsPane)
         .options({
           query: `*[!(_id in path("drafts.**")) && references($id)]`,
-          params: { id: `_id` },
+          params: {id: `_id`},
         })
         .title('Related Content')
     )

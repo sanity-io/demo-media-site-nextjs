@@ -3,7 +3,6 @@ import {
   FiHash,
   FiHeadphones,
   FiMail,
-  FiSliders,
   FiStar,
   FiUser,
 } from 'react-icons/fi'
@@ -34,10 +33,10 @@ export const SCHEMA_ITEMS_LIFESTYLE: (
 )[] = [
   'siteSettings',
   'divider',
-  { schemaType: `article`, title: 'Articles', icon: FiFeather },
+  {schemaType: `article`, title: 'Articles', icon: FiFeather},
   'divider',
-  { schemaType: `person`, title: 'People', icon: FiUser },
-  { schemaType: `section`, title: 'Sections', icon: FiHash },
+  {schemaType: `person`, title: 'People', icon: FiUser},
+  {schemaType: `section`, title: 'Sections', icon: FiHash},
 ]
 
 export const SCHEMA_ITEMS_TECH: (
@@ -47,16 +46,16 @@ export const SCHEMA_ITEMS_TECH: (
 )[] = [
   'siteSettings',
   'divider',
-  { schemaType: `article`, title: 'Articles', icon: FiFeather },
-  { schemaType: `newsletter`, title: 'Newsletter', icon: FiMail },
-  { schemaType: `podcast`, title: 'Podcast', icon: FiHeadphones },
+  {schemaType: `article`, title: 'Articles', icon: FiFeather},
+  {schemaType: `newsletter`, title: 'Newsletter', icon: FiMail},
+  {schemaType: `podcast`, title: 'Podcast', icon: FiHeadphones},
   'divider',
-  { schemaType: `person`, title: 'People', icon: FiUser },
-  { schemaType: `section`, title: 'Sections', icon: FiHash },
+  {schemaType: `person`, title: 'People', icon: FiUser},
+  {schemaType: `section`, title: 'Sections', icon: FiHash},
 ]
 
 export const SCHEMA_ITEMS_REVIEWS: (SchemaItem | SchemaDivider)[] = [
-  { schemaType: `review`, title: 'Reviews', icon: FiStar },
+  {schemaType: `review`, title: 'Reviews', icon: FiStar},
 ]
 
 export const BRANDS: Brand[] = [

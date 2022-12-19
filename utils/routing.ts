@@ -1,4 +1,4 @@
-export const getUrlForDocumentType = (type: string, slug?: string) => {
+export const getUrlForDocumentType = (type: string, slug?: string): string => {
   if (!slug) {
     return '/'
   }

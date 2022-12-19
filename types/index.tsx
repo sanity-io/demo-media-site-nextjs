@@ -4,6 +4,7 @@ export interface AuthorProps {
   image: any
   bio: any
   role: string
+  articles?: ArticleProps[]
 }
 
 export interface SectionProps {
@@ -34,7 +35,7 @@ export interface ArticleProps {
 export type ArticlePreviewProps = Pick<
   ArticleProps,
   'title' | 'mainImage' | 'date' | 'intro' | 'people' | 'isHighlighted' | 'slug'
-> & { sectionType?: 'featured' | 'normal' }
+> & {sectionType?: 'featured' | 'normal'}
 
 export interface MainImage {
   image: any

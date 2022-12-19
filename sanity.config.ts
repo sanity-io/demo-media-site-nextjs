@@ -2,44 +2,38 @@
  * This config is used to set up Sanity Studio that's mounted on the `/pages/studio/[[...index]].tsx` route
  */
 
-import { scheduledPublishing } from '@sanity/scheduled-publishing'
-import { visionTool } from '@sanity/vision'
-import { theme } from 'https://themer.sanity.build/api/hues?preset=tw-cyan&primary=b595f9'
-import { defineConfig, definePlugin } from 'sanity'
-import { deskTool } from 'sanity/desk'
-import { unsplashImageAsset } from 'sanity-plugin-asset-source-unsplash'
-import { dashboardTool } from '@sanity/dashboard'
-// import DocumentsPane from 'sanity-plugin-documents-pane'
-import { workflow } from 'sanity-plugin-workflow'
+//import {dashboardTool} from '@sanity/dashboard'
+import {scheduledPublishing} from '@sanity/scheduled-publishing'
+import {visionTool} from '@sanity/vision'
+import {theme} from 'https://themer.sanity.build/api/hues?preset=tw-cyan&primary=b595f9'
+import {config, reviewConfig} from 'lib/config'
+import {defineConfig, definePlugin} from 'sanity'
+import {deskTool} from 'sanity/desk'
+import {unsplashImageAsset} from 'sanity-plugin-asset-source-unsplash'
 
+// import DocumentsPane from 'sanity-plugin-documents-pane'
+// import {workflow} from 'sanity-plugin-workflow'
 import {
-  EntertainmentWorkspaceLogo,
-  GossipWorkspaceLogo,
-  HighFashionWorkspaceLogo,
   LifestyleLogo,
   LifestyleWorkspaceLogo,
-  OutdoorsWorkspaceLogo,
   ReviewsLogo,
   ReviewsWorkspaceLogo,
   TechLogo,
   TechWorkspaceLogo,
 } from './logo'
-import { mediaConfigPlugin, structure } from './plugins/config'
+import {mediaConfigPlugin, structure} from './plugins/config'
 import defaultDocumentNode from './plugins/config/defaultDocumentNode'
 import newsletterPlugin from './plugins/newsletter'
+import {reviewsPlugin} from './plugins/reviews'
 import variations from './plugins/variations'
-import { schemaTemplates, schemaTypes } from './schemas'
-import { reviewsPlugin } from './plugins/reviews'
+import {schemaTemplates, schemaTypes} from './schemas'
 
-// @TODO: update next-sanity/studio to automatically set this when needed
+//https://github.com/sanity-io/next-sanity#the-usebackgroundcolorsfromtheme-usebasepath-useconfigwithbasepath-and-usetextfontfamilyfromtheme-hooks-are-removed
+//as useBasePath is removed, we need to manually set the base path for each studio
 const basePaths = {
   tech: '/studio/tech',
   lifestyle: '/studio/lifestyle',
   reviews: '/studio/reviews',
-  highFashion: '/studio/highFashion',
-  outdoors: '/studio/outdoors',
-  gossip: '/studio/gossip',
-  entertainment: '/studio/entertainment',
 }
 
 const defaultConfig = (type: string) => {
@@ -48,38 +42,31 @@ const defaultConfig = (type: string) => {
       structure: (S, context) => structure(S, context, type),
       defaultDocumentNode,
     }),
+    visionTool({
+      defaultApiVersion: '2022-11-11',
+    }),
   ]
 
-  if (type !== 'reviews') {
+  if (type === 'reviews') {
+    plugins.push(reviewsPlugin())
+  } else {
     const minimumUserPlugins = [
       mediaConfigPlugin(),
       unsplashImageAsset(),
       variations(),
     ]
     minimumUserPlugins.forEach((plugin) => plugins.push(plugin))
-  } else {
-    plugins.push(reviewsPlugin())
   }
 
   if (type === 'tech') {
     const techPlugins = [
       scheduledPublishing(),
       newsletterPlugin(),
-      workflow({
-        schemaTypes: ['article'],
-      }),
+      // workflow({
+      //   schemaTypes: ['article'],
+      // }),
     ]
-    //@ts-ignore -- type error from workflow
     techPlugins.forEach((plugin) => plugins.push(plugin))
-  }
-
-  //@TODO: remove this after the recording -- it's nice to have vision in demos :)
-  if (process.env.NODE_ENV === 'development') {
-    plugins.push(
-      visionTool({
-        defaultApiVersion: '2022-11-11',
-      })
-    )
   }
 
   return definePlugin({
@@ -96,9 +83,9 @@ export default defineConfig([
   {
     basePath: basePaths.tech,
     name: 'tech',
-    projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
-    dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
-    title: process.env.NEXT_PUBLIC_SANITY_PROJECT_TITLE || 'Technology',
+    projectId: config.sanity.projectId,
+    dataset: config.sanity.dataset,
+    title: config.sanity.projectTitle || 'Technology',
     plugins: [defaultConfig('tech')],
     icon: TechWorkspaceLogo,
     studio: {
@@ -110,9 +97,9 @@ export default defineConfig([
   {
     name: 'lifestyle',
     basePath: basePaths.lifestyle,
-    projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
-    dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
-    title: process.env.NEXT_PUBLIC_SANITY_PROJECT_TITLE || 'Lifestyle',
+    projectId: config.sanity.projectId,
+    dataset: config.sanity.dataset,
+    title: config.sanity.projectTitle || 'Lifestyle',
     theme,
     plugins: [defaultConfig('lifestyle')],
     icon: LifestyleWorkspaceLogo,
@@ -123,43 +110,11 @@ export default defineConfig([
     },
   },
   {
-    name: 'highFashion',
-    basePath: basePaths.highFashion,
-    projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
-    dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
-    title: process.env.NEXT_PUBLIC_SANITY_PROJECT_TITLE || 'High Fashion',
-    icon: HighFashionWorkspaceLogo,
-  },
-  {
-    name: 'outdoors',
-    basePath: basePaths.outdoors,
-    projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
-    dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
-    title: process.env.NEXT_PUBLIC_SANITY_PROJECT_TITLE || 'Outdoors',
-    icon: OutdoorsWorkspaceLogo,
-  },
-  {
-    name: 'gossip',
-    basePath: basePaths.gossip,
-    projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
-    dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
-    title: process.env.NEXT_PUBLIC_SANITY_PROJECT_TITLE || 'Gossip',
-    icon: GossipWorkspaceLogo,
-  },
-  {
-    name: 'entertainment',
-    basePath: basePaths.entertainment,
-    projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
-    dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
-    title: process.env.NEXT_PUBLIC_SANITY_PROJECT_TITLE || 'Entertainment',
-    icon: EntertainmentWorkspaceLogo,
-  },
-  {
     name: 'reviews',
     basePath: basePaths.reviews,
-    projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
-    dataset: process.env.NEXT_PUBLIC_SANITY_DATASET_REVIEWS || 'reviews',
-    title: process.env.NEXT_PUBLIC_SANITY_PROJECT_TITLE || 'Reviews',
+    projectId: reviewConfig.sanity.projectId,
+    dataset: reviewConfig.sanity.dataset || 'reviews',
+    title: reviewConfig.sanity.projectTitle || 'Reviews',
     theme,
     plugins: [defaultConfig('reviews')],
     icon: ReviewsWorkspaceLogo,

@@ -1,15 +1,15 @@
-import { NextSeo } from 'next-seo'
+import {NextSeo} from 'next-seo'
+import * as React from 'react'
 
-import openGraphObjectFromDocument from '../lib/openGraphObjectFromDocument'
-import { isLifestyle } from '../utils/brand'
+import {isLifestyle} from '../utils/brand'
 import Container from './Container'
 import MoreStories from './MoreStories'
-import Title, { TitleLifeStyle } from './Title'
+import Title, {TitleLifeStyle} from './Title'
 
 const isLifestyleBrand = () => isLifestyle()
 
-export default function SectionPage({ section }) {
-  const { name, articles } = section || {}
+export default function SectionPage({section}) {
+  const {name, articles} = section || {}
 
   if (isLifestyleBrand()) {
     return (
@@ -24,7 +24,7 @@ export default function SectionPage({ section }) {
     <Container>
       <NextSeo
         title={name}
-        openGraph={name ? openGraphObjectFromDocument({ name }) : undefined}
+        // openGraph={name ? openGraphObjectFromDocument({name}) : undefined}
       />
       <div className="">
         <div className="m-auto max-w-5xl p-4 md:p-5 lg:p-6">

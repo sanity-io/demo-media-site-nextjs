@@ -1,20 +1,19 @@
-import { DashboardWidgetContainer } from '@sanity/dashboard'
+import type {DashboardWidget, LayoutConfig} from '@sanity/dashboard'
+import {DashboardWidgetContainer} from '@sanity/dashboard'
+import {SearchIcon} from '@sanity/icons'
 import {
   Autocomplete,
-  Avatar,
   Box,
   Button,
   Card,
   Flex,
-  Label,
   Stack,
   Text,
   useToast,
 } from '@sanity/ui'
-import type { DashboardWidget, LayoutConfig } from '@sanity/dashboard'
-import { SearchIcon } from '@sanity/icons'
-import { useClient } from 'sanity'
-import { useCallback, useEffect, useState } from 'react'
+import * as React from 'react'
+import {useCallback, useEffect, useState} from 'react'
+import {useClient} from 'sanity'
 
 export interface UpdateReviewStatusConfig {
   title: string
@@ -41,6 +40,23 @@ interface ReviewOption {
   payload: ReviewDocument
 }
 
+function filterOption(query, option: ReviewOption) {
+  return option.payload.title.toLowerCase().indexOf(query.toLowerCase()) > -1
+}
+
+const renderOption = (option: ReviewOption) => (
+  <Card as="button">
+    <Flex align="center">
+      <Box flex={1} padding={3}>
+        <Text size={[2, 2, 3]}>{option.payload.title}</Text>
+      </Box>
+    </Flex>
+  </Card>
+)
+
+const renderValue = (value, option: ReviewOption) =>
+  option?.payload.title || value
+
 function UpdateReviewStatus(config: UpdateReviewStatusConfig) {
   const toast = useToast()
   const client = useClient()
@@ -50,12 +66,10 @@ function UpdateReviewStatus(config: UpdateReviewStatusConfig) {
 
   const handleLoadReviews = useCallback(async () => {
     setLoading(true)
-    const reviews = await client.fetch(
+    const result = await client.fetch(
       `*[_type == 'review' && (!defined(soldOut) || soldOut == false)]`
     )
-    setReviews(
-      reviews.map((review) => ({ value: review?._id, payload: review }))
-    )
+    setReviews(result.map((review) => ({value: review?._id, payload: review})))
     setLoading(false)
   }, [client])
 
@@ -64,10 +78,9 @@ function UpdateReviewStatus(config: UpdateReviewStatusConfig) {
     const reviewIntro = reviews.find(
       (review) => review.value === markedReviewId
     ).payload.intro
-    const updatedIntroText =
-      'Unfortunately no longer available, ' +
-      reviewIntro[0].children[0].text[0].toLowerCase() +
-      reviewIntro[0].children[0].text.slice(1)
+    const updatedIntroText = `Unfortunately no longer available, ${reviewIntro[0].children[0].text[0].toLowerCase()}${reviewIntro[0].children[0].text.slice(
+      1
+    )}`
     const newBlock = {
       ...reviewIntro[0],
       children: [
@@ -83,7 +96,7 @@ function UpdateReviewStatus(config: UpdateReviewStatusConfig) {
       await client
         .transaction()
         .patch(markedReviewId, {
-          insert: { replace: 'intro[0]', items: [newBlock] },
+          insert: {replace: 'intro[0]', items: [newBlock]},
           set: {
             title: '[SOLD OUT] Audio-Technica Sound Burger Record Player',
             soldOut: true,
@@ -104,7 +117,7 @@ function UpdateReviewStatus(config: UpdateReviewStatusConfig) {
 
   useEffect(() => {
     handleLoadReviews().then(() => setLoading(false))
-  }, [])
+  }, [handleLoadReviews])
 
   return (
     <DashboardWidgetContainer header={config.title}>
@@ -114,13 +127,8 @@ function UpdateReviewStatus(config: UpdateReviewStatusConfig) {
             id="review-autocomplete"
             loading={loading}
             // custom search filter
-            filterOption={(query, option: ReviewOption) =>
-              option.payload.title.toLowerCase().indexOf(query.toLowerCase()) >
-              -1
-            }
-            onSelect={(value: string) => {
-              setMarkedReviewId(value)
-            }}
+            filterOption={filterOption}
+            onSelect={setMarkedReviewId}
             fontSize={[2, 2, 3]}
             icon={SearchIcon}
             openButton
@@ -129,19 +137,9 @@ function UpdateReviewStatus(config: UpdateReviewStatusConfig) {
             padding={[3, 3, 4]}
             placeholder="Type to find review …"
             // custom option render function
-            renderOption={(option: ReviewOption) => (
-              <Card as="button">
-                <Flex align="center">
-                  <Box flex={1} padding={3}>
-                    <Text size={[2, 2, 3]}>{option.payload.title}</Text>
-                  </Box>
-                </Flex>
-              </Card>
-            )}
+            renderOption={renderOption}
             // custom value render function
-            renderValue={(value, option: ReviewOption) =>
-              option?.payload.title || value
-            }
+            renderValue={renderValue}
           />
           <Flex align="stretch" gap={2}>
             <Button

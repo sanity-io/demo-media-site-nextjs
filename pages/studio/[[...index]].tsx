@@ -7,8 +7,9 @@
  * https://github.com/sanity-io/next-sanity
  */
 
-import { NextStudio } from 'next-sanity/studio'
-import { ReactElement } from 'react'
+import {NextStudio} from 'next-sanity/studio'
+import {ReactElement} from 'react'
+import * as React from 'react'
 
 import config from '../../sanity.config'
 

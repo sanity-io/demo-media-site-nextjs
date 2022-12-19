@@ -1,13 +1,13 @@
 import Link from 'next/link'
+import * as React from 'react'
 
-import { ArticleProps } from '../types'
-import { getUrlForDocumentType } from '../utils/routing'
-import Avatar from './Avatar'
+import {ArticleProps} from '../types'
+import {getUrlForDocumentType} from '../utils/routing'
 import CoverImage from './CoverImage'
 import Date from './Date'
 
 export default function HeroPost(props: ArticleProps) {
-  const { title, mainImage, date, intro, people, slug } = props
+  const {title, mainImage, date, intro, slug} = props
   return (
     <section>
       <div className="mb-8 md:mb-16">

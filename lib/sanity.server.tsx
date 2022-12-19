@@ -3,22 +3,27 @@
  * utilities we use on the client side, we are able to tree-shake (remove)
  * code that is not used on the client side.
  */
-import { createClient } from 'next-sanity'
+import {createClient} from 'next-sanity'
 
-import { sanityConfig } from './config'
+import {config} from './config'
 
 export const getClient = (preview) =>
   preview
     ? createClient({
-        ...sanityConfig,
+        projectId: config.sanity.projectId,
+        dataset: config.sanity.dataset,
         useCdn: false,
         // Fallback to using the WRITE token until https://www.sanity.io/docs/vercel-integration starts shipping a READ token.
         // As this client only exists on the server and the token is never shared with the browser, we don't risk escalating permissions to untrustworthy users
-        token:
-          process.env.SANITY_API_READ_TOKEN ||
-          process.env.SANITY_API_WRITE_TOKEN,
+        token: config.sanity.readToken || config.sanity.writeToken,
       })
-    : createClient(sanityConfig)
+    : createClient({
+        projectId: config.sanity.projectId,
+        dataset: config.sanity.dataset,
+        apiVersion: config.sanity.apiVersion,
+        token: null,
+        useCdn: true,
+      })
 
 export function overlayDrafts(docs) {
   const documents = docs || []

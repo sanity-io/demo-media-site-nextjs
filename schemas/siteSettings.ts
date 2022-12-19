@@ -1,4 +1,4 @@
-import { defineArrayMember, defineField, defineType } from 'sanity'
+import {defineArrayMember, defineField, defineType} from 'sanity'
 
 export default defineType({
   name: 'siteSettings',
@@ -24,6 +24,6 @@ export default defineType({
     }),
   ],
   preview: {
-    prepare: () => ({ title: 'Site Settings' }),
+    prepare: () => ({title: 'Site Settings'}),
   },
 })

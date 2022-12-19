@@ -1,6 +1,18 @@
-import { urlForImage } from './sanity'
+import {ArticleProps} from 'types'
 
-export default function openGraphObjectFromDocument(document: any) {
+import {urlForImage} from './sanity'
+
+interface OpenGraphObject {
+  title: string
+  description?: string
+  url?: string
+  type: 'article'
+  images?: Array<{url: string}>
+}
+
+export default function openGraphObjectFromDocument(
+  document: ArticleProps
+): OpenGraphObject {
   // article.mainImage?.image?.asset?._ref
   return {
     title: document.title,

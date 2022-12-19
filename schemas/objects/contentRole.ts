@@ -1,4 +1,4 @@
-import { defineField, defineType } from 'sanity'
+import {defineField, defineType} from 'sanity'
 
 export default defineType({
   name: 'contentRole',
@@ -10,17 +10,17 @@ export default defineType({
       type: 'string',
       options: {
         list: [
-          { value: 'author', title: 'Author' },
-          { value: 'contributor', title: 'Contributor' },
-          { value: 'photographer', title: 'Photographer' },
-          { value: 'copyEditor', title: 'Copy editor' },
+          {value: 'author', title: 'Author'},
+          {value: 'contributor', title: 'Contributor'},
+          {value: 'photographer', title: 'Photographer'},
+          {value: 'copyEditor', title: 'Copy editor'},
         ],
       },
     }),
     defineField({
       name: 'person',
       type: 'reference',
-      to: [{ type: 'person' }],
+      to: [{type: 'person'}],
     }),
   ],
   preview: {

@@ -1,7 +1,7 @@
-import type { InputProps, SanityDocumentLike } from 'sanity'
-import { Button, Card, Flex, Label, Stack, Text } from '@sanity/ui'
-import React, { useCallback, useMemo, useState } from 'react'
-import { formatRelative, parseISO } from 'date-fns'
+import {Button, Card, Flex, Label, Stack, Text} from '@sanity/ui'
+import {formatRelative, parseISO} from 'date-fns'
+import React, {useCallback, useMemo, useState} from 'react'
+import type {InputProps} from 'sanity'
 
 const STATUS_PENDING = 'pending'
 const STATUS_SYNCED = 'synced'
@@ -23,12 +23,12 @@ function randomString(length: number) {
 // https://github.com/sanity-io/sanity/releases/tag/v3.0.0-dev-preview.22
 // https://mailchimp.com/developer/marketing/api/campaigns/add-campaign/
 export function MailchimpStatusWrapper(props: InputProps) {
-  const [status, setStatus] = useState(STATUS_PENDING)
+  const [status] = useState(STATUS_PENDING)
   const [statusDetails, setStatusDetails] = useState<SyncStatus>()
 
-  const handleSync = useCallback(async () => {
+  const handleSync = useCallback(() => {
     setStatusDetails((prev) =>
-      prev ? { ...prev, syncStatus: 'syncing' } : { syncStatus: 'syncing' }
+      prev ? {...prev, syncStatus: 'syncing'} : {syncStatus: 'syncing'}
     )
     // setStatus(STATUS_PENDING)
     // const { document } = props

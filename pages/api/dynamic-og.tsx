@@ -1,18 +1,19 @@
-import { ImageResponse } from '@vercel/og'
-import { NextRequest } from 'next/server'
+import {ImageResponse} from '@vercel/og'
+import {NextRequest} from 'next/server'
+import * as React from 'react'
 
-import { getClient } from '../../lib/sanity.server'
+import {getClient} from '../../lib/sanity.server'
 
 export const config = {
   runtime: 'experimental-edge',
 }
 
 export default async function handler(req: NextRequest) {
-  const { searchParams } = req.nextUrl
+  const {searchParams} = req.nextUrl
   const username = searchParams.get('username')
   const type = searchParams.get('type')
   const id = searchParams.get('id')
-  const secret = searchParams.get('secret')
+  // const secret = searchParams.get('secret')
   if (!id || !type) {
     return new ImageResponse(<>{'Visit with "?type=&id="'}</>, {
       width: 1200,
@@ -29,10 +30,8 @@ export default async function handler(req: NextRequest) {
 
   const doc = await getClient(false).fetch(
     `*[_type == "${type}" && _id == $id][0]`,
-    { id }
+    {id}
   )
-
-  console.log(doc)
 
   if (type === 'article') {
     return new ImageResponse(
@@ -48,10 +47,10 @@ export default async function handler(req: NextRequest) {
             backgroundColor: 'white',
           }}
         >
-          <div tw="bg-purple-300 h-full flex">
-            <div tw="h-full flex flex-col p-8 py-12">
-              <h2 tw="flex items-center text-3xl sm:text-4xl font-extrabold tracking-tight text-black text-left">
-                <span tw="text-purple-300 inline-block pr-2">
+          <div className="flex h-full bg-purple-300">
+            <div className="flex h-full flex-col p-8 py-12">
+              <h2 className="flex items-center text-left text-3xl font-extrabold tracking-tight text-black sm:text-4xl">
+                <span className="inline-block pr-2 text-purple-300">
                   <svg
                     width="19"
                     height="19"
@@ -67,8 +66,8 @@ export default async function handler(req: NextRequest) {
                 </span>{' '}
                 Reach
               </h2>
-              <div tw="flex flex-col md:flex-row flex-wrap w-full pt-4 md:items-center justify-between">
-                <h2 tw="flex flex-col text-4xl sm:text-7xl font-black tracking-tight leading-none text-gray-900 text-left">
+              <div className="flex w-full flex-col flex-wrap justify-between pt-4 md:flex-row md:items-center">
+                <h2 className="flex flex-col text-left text-4xl font-black leading-none tracking-tight text-gray-900 sm:text-7xl">
                   {doc?.title || 'Untitled'}
                 </h2>
               </div>

@@ -69,6 +69,7 @@ function augmentSchema(type: DocumentDefinition): DocumentDefinition {
   }
 }
 
+/* eslint-disable-next-line no-warning-comments */
 /**
  * Given all the types registered in the schema, add the variation field to those that are opted in
  * TODO: also define and hoist the variation object shape for each enabled type, to support GraphQL

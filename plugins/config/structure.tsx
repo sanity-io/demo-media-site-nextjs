@@ -1,6 +1,7 @@
-import { FiSliders } from 'react-icons/fi'
-import { ConfigContext, SanityDocumentLike } from 'sanity'
-import { StructureBuilder } from 'sanity/desk'
+import {FiSliders} from 'react-icons/fi'
+import {ConfigContext} from 'sanity'
+import {StructureBuilder} from 'sanity/desk'
+import Iframe from 'sanity-plugin-iframe-pane'
 
 import {
   Brand,
@@ -9,8 +10,7 @@ import {
   SchemaItem,
   SchemaSiteSettings,
 } from '../../lib/constants'
-import Iframe from 'sanity-plugin-iframe-pane'
-import { resolveProductionUrl, ProductionUrlDoc } from './resolveProductionUrl'
+import {ProductionUrlDoc, resolveProductionUrl} from './resolveProductionUrl'
 
 const createSchemaItem = (
   S: StructureBuilder,
@@ -84,11 +84,11 @@ const structure = (
   context: ConfigContext,
   brandType: string
 ) => {
-  const brand = BRANDS.find((brand) => brand.name === brandType)
+  const brand = BRANDS.find((b) => b.name === brandType)
   if (!brand) {
     throw new Error(
       `Invalid brand '${brandType}' provided to structure resolver. Valid brands are: ${BRANDS.map(
-        (brand) => brand.name
+        (b) => b.name
       ).join(', ')}`
     )
   }
@@ -99,4 +99,4 @@ const structure = (
     .items(createAllSchemaItems(S, context, brand).filter(Boolean))
 }
 
-export { structure }
+export {structure}

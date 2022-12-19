@@ -1,5 +1,5 @@
-import { FiFeather } from 'react-icons/fi'
-import { defineArrayMember, defineField, defineType } from 'sanity'
+import {FiFeather} from 'react-icons/fi'
+import {defineArrayMember, defineField, defineType} from 'sanity'
 
 export default defineType({
   name: 'article',
@@ -16,7 +16,7 @@ export default defineType({
       name: 'slug',
       title: 'Slug',
       type: 'slug',
-      options: { source: 'title' },
+      options: {source: 'title'},
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -27,12 +27,12 @@ export default defineType({
       name: 'people',
       type: 'array',
       description: 'List of people involved with the production of the article',
-      of: [defineArrayMember({ type: 'contentRole' })],
+      of: [defineArrayMember({type: 'contentRole'})],
     }),
     defineField({
       name: 'sections',
       type: 'array',
-      of: [{ type: 'reference', to: [{ type: 'section' }] }],
+      of: [{type: 'reference', to: [{type: 'section'}]}],
     }),
     defineField({
       name: 'intro',
@@ -46,8 +46,8 @@ export default defineType({
       title: 'Content',
       type: 'portableText',
     }),
-    defineField({ type: 'seo', name: 'seo', title: 'SEO' }),
-    defineField({ type: 'brand', name: 'brand', hidden: true }),
+    defineField({type: 'seo', name: 'seo', title: 'SEO'}),
+    defineField({type: 'brand', name: 'brand', hidden: true}),
   ],
   options: {
     enableVariations: ['title', 'mainImage'],
@@ -58,7 +58,7 @@ export default defineType({
       author: 'people.0.person.name',
       media: 'mainImage.image',
     },
-    prepare({ title, author, media }) {
+    prepare({title, author, media}) {
       return {
         title,
         subtitle: author,
