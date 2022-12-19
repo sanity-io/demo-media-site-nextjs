@@ -141,6 +141,7 @@ function SectionLinks({sections}: SectionLinkProps) {
   return (
     <div className="text-sm sm:text-lg md:text-xl">
       {sections.map((section) => (
+        (section && section._id && section.slug) ? 
         <Link
           key={section._id}
           href={getUrlForDocumentType('section', section.slug)}
@@ -149,6 +150,7 @@ function SectionLinks({sections}: SectionLinkProps) {
         >
           {section.name}
         </Link>
+        : null
       ))}
     </div>
   )

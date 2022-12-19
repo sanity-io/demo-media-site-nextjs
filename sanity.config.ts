@@ -62,9 +62,9 @@ const defaultConfig = (type: string) => {
     const techPlugins = [
       scheduledPublishing(),
       newsletterPlugin(),
-      workflow({
-        schemaTypes: ['article'],
-      }),
+      // workflow({
+      //   schemaTypes: ['article'],
+      // }),
     ]
     techPlugins.forEach((plugin) => plugins.push(plugin))
   }
