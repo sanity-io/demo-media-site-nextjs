@@ -50,8 +50,6 @@ export const config: Config = {
   previewSecret: process.env.NEXT_PUBLIC_PREVIEW_SECRET,
 }
 
-console.log('condfig', config)
-
 export const reviewConfig: Config = {
   ...config,
   sanity: {
