@@ -4,7 +4,7 @@ import {toPlainText} from '@portabletext/react'
 import {SanityDocumentStub} from '@sanity/client'
 import * as fs from 'fs'
 import mjml2html from 'mjml'
-import {Template, twig} from 'twig'
+import {twig} from 'twig'
 
 import {newslettersByIdQuery} from '../../../lib/queries/newsletter'
 import {getClient} from '../../../lib/sanity.server'
@@ -36,7 +36,8 @@ async function renderNewsletter(newsletter: SanityDocumentStub) {
     text: customToPlainText(newsletter.content),
   }
 
-  const template = await getTemplate()
+  const templateFile = await getTemplateFile()
+  const template = twig({data: templateFile.toString()})
 
   try {
     const htmlOutput = renderMjml(template.render(data))
@@ -72,13 +73,17 @@ export default async function preview(req, res) {
   return res.status(200).json({output: renderedNewsletter, newsletters})
 }
 
-function getTemplate(): Promise<Template> {
+function getTemplateFile(): Promise<Buffer> {
   return new Promise((resolve) => {
-    fs.readFile(
-      path.join(process.cwd(), 'plugins/newsletter/templates/newsletter.mjml'),
-      (data) => {
-        return resolve(twig({data}))
-      }
+    const templateLocation = path.join(
+      process.cwd(),
+      'plugins/newsletter/templates/newsletter.mjml'
     )
+    fs.readFile(templateLocation, (error, data) => {
+      if (error) {
+        throw error
+      }
+      return resolve(data)
+    })
   })
 }

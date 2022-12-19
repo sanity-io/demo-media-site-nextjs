@@ -1,7 +1,6 @@
 import {NextSeo} from 'next-seo'
 import * as React from 'react'
 
-import openGraphObjectFromDocument from '../lib/openGraphObjectFromDocument'
 import {isLifestyle} from '../utils/brand'
 import Container from './Container'
 import MoreStories from './MoreStories'

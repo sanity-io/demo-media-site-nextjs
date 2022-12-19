@@ -140,18 +140,18 @@ type SectionLinkProps = Pick<ArticleProps, 'sections'>
 function SectionLinks({sections}: SectionLinkProps) {
   return (
     <div className="text-sm sm:text-lg md:text-xl">
-      {sections.map((section) => (
-        (section && section._id && section.slug) ? 
-        <Link
-          key={section._id}
-          href={getUrlForDocumentType('section', section.slug)}
-          data-after=" ● "
-          className="after:inline after:content-[attr(data-after)] last:after:hidden hover:text-blue-500"
-        >
-          {section.name}
-        </Link>
-        : null
-      ))}
+      {sections.map((section) =>
+        section && section._id && section.slug ? (
+          <Link
+            key={section._id}
+            href={getUrlForDocumentType('section', section.slug)}
+            data-after=" ● "
+            className="after:inline after:content-[attr(data-after)] last:after:hidden hover:text-blue-500"
+          >
+            {section.name}
+          </Link>
+        ) : null
+      )}
     </div>
   )
 }

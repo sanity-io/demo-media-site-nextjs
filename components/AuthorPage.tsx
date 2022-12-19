@@ -1,8 +1,7 @@
 import {NextSeo} from 'next-seo'
 import * as React from 'react'
 
-import openGraphObjectFromDocument from '../lib/openGraphObjectFromDocument'
-import {ArticleProps, AuthorProps} from '../types'
+import {AuthorProps} from '../types'
 import Body from './Body'
 import Container from './Container'
 import MoreStories from './MoreStories'

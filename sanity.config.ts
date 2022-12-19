@@ -10,9 +10,9 @@ import {config, reviewConfig} from 'lib/config'
 import {defineConfig, definePlugin} from 'sanity'
 import {deskTool} from 'sanity/desk'
 import {unsplashImageAsset} from 'sanity-plugin-asset-source-unsplash'
-// import DocumentsPane from 'sanity-plugin-documents-pane'
-import {workflow} from 'sanity-plugin-workflow'
 
+// import DocumentsPane from 'sanity-plugin-documents-pane'
+// import {workflow} from 'sanity-plugin-workflow'
 import {
   LifestyleLogo,
   LifestyleWorkspaceLogo,

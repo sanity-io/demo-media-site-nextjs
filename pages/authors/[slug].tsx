@@ -9,14 +9,14 @@ import AuthorPage from '../../components/AuthorPage'
 import Title from '../../components/Title'
 import {personBySlugQuery, personSlugsQuery} from '../../lib/queries'
 import {getClient, overlayDrafts} from '../../lib/sanity.server'
-import {ArticleProps} from '../../types'
+import {ArticleProps, AuthorProps} from '../../types'
 
 const PreviewAuthorPage = lazy(
   () => import('../../components/PreviewAuthorPage')
 )
 
 interface Props {
-  data: {articles: ArticleProps[]; name?: string; slug?: string; bio?: any}
+  data: AuthorProps
   preview: any
 }
 
