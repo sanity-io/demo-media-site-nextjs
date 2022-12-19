@@ -1,5 +1,5 @@
-import { FiUser } from 'react-icons/fi'
-import { defineField, defineType } from 'sanity'
+import {FiUser} from 'react-icons/fi'
+import {defineField, defineType} from 'sanity'
 
 export default defineType({
   name: 'person',
@@ -33,7 +33,7 @@ export default defineType({
       name: 'isStaff',
       type: 'boolean',
     }),
-    defineField({ type: 'brand', name: 'brand' }),
+    defineField({type: 'brand', name: 'brand'}),
   ],
   preview: {
     select: {
@@ -41,7 +41,7 @@ export default defineType({
       isStaff: 'isStaff',
       media: 'image',
     },
-    prepare({ title, isStaff, media }) {
+    prepare({title, isStaff, media}) {
       return {
         title: `${title}`,
         subtitle: isStaff ? 'Staff' : 'Contributor',

@@ -1,5 +1,5 @@
-import { FiImage } from 'react-icons/fi'
-import { defineField, defineType } from 'sanity'
+import {FiImage} from 'react-icons/fi'
+import {defineField, defineType} from 'sanity'
 
 export default defineType({
   name: 'mainImage',
@@ -31,7 +31,7 @@ export default defineType({
       validation: (Rule) => Rule.required(),
       fieldset: 'text',
     }),
-    defineField({ name: 'caption', type: 'string', fieldset: 'text' }),
+    defineField({name: 'caption', type: 'string', fieldset: 'text'}),
   ],
   preview: {
     select: {
@@ -39,7 +39,7 @@ export default defineType({
       alt: 'alt',
       caption: 'caption',
     },
-    prepare({ media, alt, caption }) {
+    prepare({media, alt, caption}) {
       return {
         title: alt || caption || 'No alt text or caption',
         media,

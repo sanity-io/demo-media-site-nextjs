@@ -1,5 +1,5 @@
-import { FiHeadphones } from 'react-icons/fi'
-import { defineField, defineType } from 'sanity'
+import {FiHeadphones} from 'react-icons/fi'
+import {defineField, defineType} from 'sanity'
 
 export default defineType({
   name: 'podcast',
@@ -25,13 +25,13 @@ export default defineType({
       type: 'minimalPortableText',
       validation: (Rule) => Rule.required(),
     }),
-    defineField({ type: 'brand', name: 'brand' }),
+    defineField({type: 'brand', name: 'brand'}),
   ],
   preview: {
     select: {
       title: 'title',
     },
-    prepare({ title }) {
+    prepare({title}) {
       return {
         title,
       }

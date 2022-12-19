@@ -7,20 +7,21 @@
  * https://portabletext.org/
  *
  */
-import { PortableText } from '@portabletext/react'
+import {PortableText} from '@portabletext/react'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import Link from 'next/link'
-import React, { useMemo } from 'react'
+import * as React from 'react'
+import {logError} from 'utils/logError'
 
-import { urlForImage } from '../lib/sanity'
-import { ArticlePreviewProps, MainImage } from '../types'
-import { BRAND_LIFESTYLE_NAME, getBrandName } from '../utils/brand'
-import { getUrlForDocumentType } from '../utils/routing'
-import { Credits, PeopleList, usePeople } from './Credits'
-import { Figure } from './Figure'
+import {urlForImage} from '../lib/sanity'
+import {ArticlePreviewProps, MainImage} from '../types'
+import {BRAND_LIFESTYLE_NAME, getBrandName} from '../utils/brand'
+import {getUrlForDocumentType} from '../utils/routing'
+import {Credits, PeopleList, usePeople} from './Credits'
+import {Figure} from './Figure'
 
-const ReactPlayer = dynamic(() => import('react-player'), { ssr: false })
+const ReactPlayer = dynamic(() => import('react-player'), {ssr: false})
 
 const BodyImage = React.memo(function BodyImage({
   image,
@@ -55,7 +56,7 @@ const BodyImage = React.memo(function BodyImage({
           src={urlForImage(image).height(1000).width(2000).url()}
           width={2000}
           height={1000}
-          style={{ objectFit: 'cover' }}
+          style={{objectFit: 'cover'}}
         />
       }
     />
@@ -64,8 +65,8 @@ const BodyImage = React.memo(function BodyImage({
 
 const components = {
   types: {
-    article: ({ value }) => {
-      const { title, slug } = value
+    article: ({value}) => {
+      const {title, slug} = value
       const url = getUrlForDocumentType('article', slug)
       return (
         <div className="text-black">
@@ -78,14 +79,16 @@ const components = {
         </div>
       )
     },
-    mainImage: ({ value }: { value: MainImage }) => {
+    mainImage: ({value}: {value: MainImage}) => {
       return <BodyImage {...value} />
     },
-    reviewReference: ({ value }: { value: ArticlePreviewProps }) => {
-      const { title, slug } = value
+    reviewReference: ({value}: {value: ArticlePreviewProps}) => {
+      const {title, slug} = value
       const url = getUrlForDocumentType('review', slug)
+      /*
       console.log('slug', slug)
       console.log('url', url)
+      */
       return (
         <div className="text-black">
           <p className="dark border border-gray-200 border-gray-900 p-4">
@@ -97,25 +100,25 @@ const components = {
         </div>
       )
     },
-    podcast: ({ value }) => {
-      const { url } = value
+    podcast: ({value}) => {
+      const {url} = value
       return (
         <div>
           <ReactPlayer url={url} />
         </div>
       )
     },
-    video: ({ value }) => {
-      const { url } = value
+    video: ({value}) => {
+      const {url} = value
       return (
         <div>
           <ReactPlayer url={url} />
         </div>
       )
     },
-    articleLink: ({ value }) => {
-      debugger
-      const { url } = value
+    articleLink: ({value}) => {
+      // debugger
+      const {url} = value
       return (
         <div>
           <ReactPlayer url={url} />
@@ -138,12 +141,14 @@ export default function Body({
 }) {
   const brandName = brand || getBrandName()
   const isLifestyle = brandName === BRAND_LIFESTYLE_NAME
+  /*
   const bodyClassNames = useMemo(() => {
     if (isLifestyle) {
       return 'prose mx-auto max-w-2xl prose-headings:font-bold prose-headings:tracking-tight prose-p:font-serif prose-p:leading-relaxed dark:prose-invert md:prose-lg lg:prose-xl'
     }
     return 'prose mx-auto max-w-2xl prose-headings:font-extrabold prose-headings:tracking-tight prose-p:font-normal prose-p:leading-relaxed dark:prose-invert md:prose-lg lg:prose-xl'
   }, [isLifestyle])
+  */
 
   return (
     <div
@@ -160,20 +165,10 @@ export default function Body({
           'prose mx-auto max-w-2xl prose-headings:font-bold prose-headings:tracking-tight prose-p:font-serif prose-p:leading-relaxed dark:prose-invert md:prose-lg lg:prose-xl'
         }
       >
-        {/* @TODO: override wrappers for p tags so we get decent spacing
-        @TODO: ensure h1s, h2s, h3s, etc. are styled correctly */}
         <PortableText
           value={content}
           components={components}
-          onMissingComponent={(message, options) => {
-            console.error(message, {
-              // eg `someUnknownType`
-              type: options.type,
-
-              // 'block' | 'mark' | 'blockStyle' | 'listStyle' | 'listItemStyle'
-              nodeType: options.nodeType,
-            })
-          }}
+          onMissingComponent={logError}
         />
       </div>
     </div>

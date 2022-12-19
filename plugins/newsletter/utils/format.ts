@@ -1,11 +1,13 @@
+import {toPlainText} from '@portabletext/react'
+import {toHTML} from '@portabletext/to-html'
 import type {
   PortableTextBlock,
   PortableTextBlockStyle,
 } from '@portabletext/types'
-import { toPlainText } from '@portabletext/react'
-import { format, parseISO } from 'date-fns'
-import { toHTML, uriLooksSafe } from '@portabletext/to-html'
-import { urlForImage } from '../../../lib/sanity'
+import {format, parseISO} from 'date-fns'
+import {ArticleProps} from 'types'
+
+import {urlForImage} from '../../../lib/sanity'
 
 interface TextBlock {
   type: 'paragraph' | 'heading'
@@ -17,6 +19,16 @@ interface TextBlock {
 interface ModuleBlock {
   type: 'article' | 'image' | 'articles'
   [key: string]: unknown
+}
+
+type CustomBlock =
+  | (ArticleProps & {_type: 'article'})
+  | {_type: 'articleReferences'; references: ArticleProps[]}
+
+function isCustomBlock(
+  block: PortableTextBlock | CustomBlock
+): block is CustomBlock {
+  return block._type !== 'block'
 }
 
 function renderTextBlock(block: PortableTextBlock): TextBlock {
@@ -38,12 +50,11 @@ function renderTextBlock(block: PortableTextBlock): TextBlock {
 }
 
 export function blocksToCustomContentBlocks(
-  blocks: PortableTextBlock[] = []
+  blocks: Array<PortableTextBlock | CustomBlock> = []
 ): (ModuleBlock | TextBlock)[] {
   return blocks
     .map((block) => {
-      if (block._type !== 'block') {
-        console.log(block)
+      if (isCustomBlock(block)) {
         return renderCustomBlock(block)
       }
 
@@ -52,10 +63,10 @@ export function blocksToCustomContentBlocks(
     .filter(Boolean)
 }
 
-export function customToPlainText(blocks: PortableTextBlock[] = []) {
+export function customToPlainText(blocks: PortableTextBlock[] = []): string {
   return blocks
     .map((block) => {
-      if (block._type !== 'block') {
+      if (isCustomBlock(block)) {
         return renderCustomBlock(block)
       }
 
@@ -65,7 +76,7 @@ export function customToPlainText(blocks: PortableTextBlock[] = []) {
     .join('\n\n')
 }
 
-export function renderCustomBlock(block): ModuleBlock | null {
+export function renderCustomBlock(block: CustomBlock): ModuleBlock | null {
   switch (block._type) {
     case 'article':
       return {
@@ -89,7 +100,7 @@ export function renderCustomBlock(block): ModuleBlock | null {
           imageUrl: article.mainImage
             ? urlForImage(article.mainImage?.image).width(340).height(480).url()
             : null,
-          imageAlt: block?.mainImage?.alt,
+          imageAlt: article?.mainImage?.alt,
           url: `https://demo-media-site-nextjs.sanity.build/articles/${article.slug}`,
         })),
       }
@@ -98,7 +109,7 @@ export function renderCustomBlock(block): ModuleBlock | null {
   }
 }
 
-export function formatDate(dateValue: string) {
+export function formatDate(dateValue: string): string {
   try {
     return format(parseISO(dateValue), 'LLLL d, yyyy')
   } catch (err) {
@@ -106,7 +117,12 @@ export function formatDate(dateValue: string) {
   }
 }
 
-export function emailToHTML(email) {
+type Email = {
+  subject: string
+  content: PortableTextBlock[]
+}
+
+export function emailToHTML(email: Email): string {
   return `
     <h1>${email.subject}</h1>
     <p>${toPlainText(email.content)}</p>

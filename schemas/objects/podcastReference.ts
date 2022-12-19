@@ -1,8 +1,8 @@
-import { defineType } from 'sanity'
+import {defineType} from 'sanity'
 
 export default defineType({
   type: 'reference',
   name: 'podcastReference',
   title: 'Podcast Reference',
-  to: [{ type: 'podcast' }],
+  to: [{type: 'podcast'}],
 })

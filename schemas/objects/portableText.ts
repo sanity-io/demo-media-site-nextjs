@@ -1,5 +1,5 @@
-import { FiFeather } from 'react-icons/fi'
-import { defineArrayMember, defineType } from 'sanity'
+import {FiFeather} from 'react-icons/fi'
+import {defineArrayMember, defineType} from 'sanity'
 
 export default defineType({
   name: 'portableText',
@@ -14,25 +14,25 @@ export default defineType({
       // you want and decide how you want to deal with it where you want to
       // use your content.
       styles: [
-        { title: 'Normal', value: 'normal' },
-        { title: 'H2', value: 'h2' },
-        { title: 'H3', value: 'h3' },
-        { title: 'Quote', value: 'blockquote' },
-        { title: 'Figure', value: 'figure' },
-        { title: 'Pre', value: 'pre' },
-        { title: 'Code', value: 'code' },
+        {title: 'Normal', value: 'normal'},
+        {title: 'H2', value: 'h2'},
+        {title: 'H3', value: 'h3'},
+        {title: 'Quote', value: 'blockquote'},
+        {title: 'Figure', value: 'figure'},
+        {title: 'Pre', value: 'pre'},
+        {title: 'Code', value: 'code'},
       ],
       lists: [
-        { title: 'Bullet', value: 'bullet' },
-        { title: 'Number', value: 'number' },
+        {title: 'Bullet', value: 'bullet'},
+        {title: 'Number', value: 'number'},
       ],
       // Marks let you mark up inline text in the block editor.
       marks: {
         // Decorators usually describe a single property – e.g. a typographic
         // preference or highlighting by editors.
         decorators: [
-          { title: 'Strong', value: 'strong' },
-          { title: 'Emphasis', value: 'em' },
+          {title: 'Strong', value: 'strong'},
+          {title: 'Emphasis', value: 'em'},
         ],
         // Annotations can be any object structure – e.g. a link or a footnote.
         annotations: [
@@ -40,7 +40,7 @@ export default defineType({
             name: 'articleLink',
             icon: FiFeather,
             type: 'object',
-            fields: [{ type: 'articleReference', name: 'article' }],
+            fields: [{type: 'articleReference', name: 'article'}],
           },
           {
             name: 'link',
@@ -57,11 +57,11 @@ export default defineType({
         ],
       },
     }),
-    defineArrayMember({ type: 'articleReference', title: 'Article' }),
-    defineArrayMember({ type: 'articleReferences', title: 'Articles' }),
-    defineArrayMember({ type: 'podcastReference', title: 'Podcast' }),
-    defineArrayMember({ type: 'reviewReference', title: 'Review' }),
-    defineArrayMember({ type: 'mainImage' }),
-    defineArrayMember({ type: 'video' }),
+    defineArrayMember({type: 'articleReference', title: 'Article'}),
+    defineArrayMember({type: 'articleReferences', title: 'Articles'}),
+    defineArrayMember({type: 'podcastReference', title: 'Podcast'}),
+    defineArrayMember({type: 'reviewReference', title: 'Review'}),
+    defineArrayMember({type: 'mainImage'}),
+    defineArrayMember({type: 'video'}),
   ],
 })

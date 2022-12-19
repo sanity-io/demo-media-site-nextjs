@@ -1,5 +1,5 @@
-import { FiStar } from 'react-icons/fi'
-import { defineField, defineType } from 'sanity'
+import {FiStar} from 'react-icons/fi'
+import {defineField, defineType} from 'sanity'
 
 export default defineType({
   name: 'review',
@@ -22,7 +22,7 @@ export default defineType({
       name: 'slug',
       title: 'Slug',
       type: 'slug',
-      options: { source: 'title' },
+      options: {source: 'title'},
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -38,16 +38,16 @@ export default defineType({
       title: 'Content',
       type: 'portableText',
     }),
-    defineField({ type: 'boolean', name: 'soldOut' }),
-    defineField({ type: 'seo', name: 'seo', title: 'SEO' }),
-    defineField({ type: 'brand', name: 'brand' }),
+    defineField({type: 'boolean', name: 'soldOut'}),
+    defineField({type: 'seo', name: 'seo', title: 'SEO'}),
+    defineField({type: 'brand', name: 'brand'}),
   ],
   preview: {
     select: {
       title: 'title',
       media: 'mainImage.image',
     },
-    prepare({ title, media }) {
+    prepare({title, media}) {
       return {
         title,
         media,

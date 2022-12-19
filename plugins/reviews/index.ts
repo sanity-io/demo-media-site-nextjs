@@ -1,5 +1,6 @@
-import { definePlugin } from 'sanity'
-import { dashboardTool } from '@sanity/dashboard'
+import {dashboardTool} from '@sanity/dashboard'
+import {definePlugin} from 'sanity'
+
 import updateReviewStatusWidget from './components/UpdateReviewStatus'
 
 export const reviewsPlugin = definePlugin({

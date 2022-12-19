@@ -1,17 +1,18 @@
-import { NextSeo } from 'next-seo'
+import {NextSeo} from 'next-seo'
+import * as React from 'react'
 
 import openGraphObjectFromDocument from '../lib/openGraphObjectFromDocument'
-import { ArticleProps } from '../types'
+import {ArticleProps} from '../types'
 import Body from './Body'
 import Container from './Container'
-import { PeopleProvider } from './Credits'
+import {PeopleProvider} from './Credits'
 import Header from './Header'
 
 interface ArticleComponentProps {
   article?: ArticleProps
 }
 
-export default function ArticlePage({ article }: ArticleComponentProps) {
+export default function ArticlePage({article}: ArticleComponentProps) {
   return (
     <Container>
       <NextSeo

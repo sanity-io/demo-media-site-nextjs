@@ -1,5 +1,5 @@
-import { definePlugin } from 'sanity'
-import { media, mediaAssetSource } from 'sanity-plugin-media'
+import {definePlugin} from 'sanity'
+import {media, mediaAssetSource} from 'sanity-plugin-media'
 
 const mediaConfigPlugin = definePlugin({
   name: 'mediaConfigPlugin',
@@ -24,4 +24,4 @@ const mediaConfigPlugin = definePlugin({
   },
 })
 
-export { mediaConfigPlugin }
+export {mediaConfigPlugin}

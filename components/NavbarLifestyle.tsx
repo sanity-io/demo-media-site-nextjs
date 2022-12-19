@@ -1,12 +1,13 @@
 import Link from 'next/link'
-import { useRouter } from 'next/router'
+import {useRouter} from 'next/router'
+import * as React from 'react'
 
 const SECTIONS = [
-  { name: 'Entertainment', href: '/sections/entertainment' },
-  { name: 'Wellness', href: '/sections/wellness' },
-  { name: 'Beauty', href: '/sections/beauty' },
-  { name: 'Fashion', href: '/sections/fashion' },
-  { name: 'Must have', href: '/sections/must-have' },
+  {name: 'Entertainment', href: '/sections/entertainment'},
+  {name: 'Wellness', href: '/sections/wellness'},
+  {name: 'Beauty', href: '/sections/beauty'},
+  {name: 'Fashion', href: '/sections/fashion'},
+  {name: 'Must have', href: '/sections/must-have'},
 ]
 
 const CLASS_NAMES = `uppercase antialiased transition ease-in-out duration-300 text-black-500 hover:text-purple-500`

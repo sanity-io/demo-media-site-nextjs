@@ -1,7 +1,8 @@
 import Link from 'next/link'
-import { useRouter } from 'next/router'
+import {useRouter} from 'next/router'
+import * as React from 'react'
 
-import { BRAND_LIFESTYLE_NAME, getBrandName } from '../utils/brand'
+import {BRAND_LIFESTYLE_NAME, getBrandName} from '../utils/brand'
 
 const brandName = getBrandName()
 

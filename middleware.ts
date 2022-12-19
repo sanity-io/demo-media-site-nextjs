@@ -1,7 +1,7 @@
 // middleware.ts
-import { homeMiddleware } from 'lib/homeVariationsMiddleware'
-import { NextMiddleware } from 'next/server'
-import { NextResponse } from 'next/server'
+import {homeMiddleware} from 'lib/homeVariationsMiddleware'
+import {NextMiddleware} from 'next/server'
+import {NextResponse} from 'next/server'
 
 // This function can be marked `async` if using `await` inside
 export const middleware: NextMiddleware = async (request, event) => {
