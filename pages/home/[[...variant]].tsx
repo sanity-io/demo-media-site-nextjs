@@ -55,7 +55,7 @@ export async function getStaticProps({preview = false, params}) {
   /* check if the project id has been defined by fetching the vercel envs */
   if (env('NEXT_PUBLIC_SANITY_PROJECT_ID')) {
     // given a url like /a:1/b:2/c:3, split it out into {a:"1", b:"2", c:"3"}
-    const variantMap: Record<string,string> = variant
+    const variantMap: Record<string, string> = variant
       .map((variantParam) => variantParam.split(':'))
       .reduce((prev, current) => {
         prev[current[0]] = current[1]

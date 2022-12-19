@@ -11,7 +11,6 @@ import {deskTool} from 'sanity/desk'
 import {unsplashImageAsset} from 'sanity-plugin-asset-source-unsplash'
 // import DocumentsPane from 'sanity-plugin-documents-pane'
 import {workflow} from 'sanity-plugin-workflow'
-import {env} from 'utils/env'
 
 import {
   EntertainmentWorkspaceLogo,
@@ -31,6 +30,7 @@ import newsletterPlugin from './plugins/newsletter'
 import {reviewsPlugin} from './plugins/reviews'
 import variations from './plugins/variations'
 import {schemaTemplates, schemaTypes} from './schemas'
+import {env} from './utils/env'
 
 // @TODO: update next-sanity/studio to automatically set this when needed
 const basePaths = {
@@ -122,38 +122,6 @@ export default defineConfig([
         logo: LifestyleLogo,
       },
     },
-  },
-  {
-    name: 'highFashion',
-    basePath: basePaths.highFashion,
-    projectId: env('NEXT_PUBLIC_SANITY_PROJECT_ID'),
-    dataset: env('NEXT_PUBLIC_SANITY_DATASET'),
-    title: env('NEXT_PUBLIC_SANITY_PROJECT_TITLE') || 'High Fashion',
-    icon: HighFashionWorkspaceLogo,
-  },
-  {
-    name: 'outdoors',
-    basePath: basePaths.outdoors,
-    projectId: env('NEXT_PUBLIC_SANITY_PROJECT_ID'),
-    dataset: env('NEXT_PUBLIC_SANITY_DATASET'),
-    title: env('NEXT_PUBLIC_SANITY_PROJECT_TITLE') || 'Outdoors',
-    icon: OutdoorsWorkspaceLogo,
-  },
-  {
-    name: 'gossip',
-    basePath: basePaths.gossip,
-    projectId: env('NEXT_PUBLIC_SANITY_PROJECT_ID'),
-    dataset: env('NEXT_PUBLIC_SANITY_DATASET'),
-    title: env('NEXT_PUBLIC_SANITY_PROJECT_TITLE') || 'Gossip',
-    icon: GossipWorkspaceLogo,
-  },
-  {
-    name: 'entertainment',
-    basePath: basePaths.entertainment,
-    projectId: env('NEXT_PUBLIC_SANITY_PROJECT_ID'),
-    dataset: env('NEXT_PUBLIC_SANITY_DATASET'),
-    title: env('NEXT_PUBLIC_SANITY_PROJECT_TITLE') || 'Entertainment',
-    icon: EntertainmentWorkspaceLogo,
   },
   {
     name: 'reviews',

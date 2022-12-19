@@ -72,12 +72,15 @@ export default function ArticlePreview({
 
   if (isLifestyleBrand) {
     const firstPerson = people?.[0] || {name: '', slug: ''}
-    const imageSettings =
-      sectionType === 'featured'
-        ? isHighlighted
-          ? IMAGE_TYPES[PREVIEW_TYPE_FEATURED_HIGHLIGHTED]
-          : IMAGE_TYPES[PREVIEW_TYPE_FEATURED_NORMAL]
-        : IMAGE_TYPES[PREVIEW_TYPE_NORMAL]
+    let imageSettings = IMAGE_TYPES[PREVIEW_TYPE_NORMAL]
+    if (sectionType === 'featured') {
+      if (isHighlighted) {
+        imageSettings = IMAGE_TYPES[PREVIEW_TYPE_FEATURED_HIGHLIGHTED]
+      } else {
+        imageSettings = IMAGE_TYPES[PREVIEW_TYPE_FEATURED_NORMAL]
+      }
+    }
+
     const aspectClass = imageSettings.aspectClass
     const width = imageSettings.width
     const height = imageSettings.height

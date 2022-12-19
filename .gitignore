@@ -45,3 +45,6 @@ studio/.env.development
 
 #yalc
 .yalc/sanity-plugin-workflow/node_modules/
+
+#sanity
+.sanity*

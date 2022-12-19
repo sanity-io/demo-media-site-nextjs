@@ -165,8 +165,6 @@ export default function Body({
           'prose mx-auto max-w-2xl prose-headings:font-bold prose-headings:tracking-tight prose-p:font-serif prose-p:leading-relaxed dark:prose-invert md:prose-lg lg:prose-xl'
         }
       >
-        {/* @TODO: override wrappers for p tags so we get decent spacing
-        @TODO: ensure h1s, h2s, h3s, etc. are styled correctly */}
         <PortableText
           value={content}
           components={components}

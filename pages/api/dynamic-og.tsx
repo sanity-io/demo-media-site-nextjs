@@ -47,10 +47,10 @@ export default async function handler(req: NextRequest) {
             backgroundColor: 'white',
           }}
         >
-          <div tw="bg-purple-300 h-full flex">
-            <div tw="h-full flex flex-col p-8 py-12">
-              <h2 tw="flex items-center text-3xl sm:text-4xl font-extrabold tracking-tight text-black text-left">
-                <span tw="text-purple-300 inline-block pr-2">
+          <div className="flex h-full bg-purple-300">
+            <div className="flex h-full flex-col p-8 py-12">
+              <h2 className="flex items-center text-left text-3xl font-extrabold tracking-tight text-black sm:text-4xl">
+                <span className="inline-block pr-2 text-purple-300">
                   <svg
                     width="19"
                     height="19"
@@ -66,8 +66,8 @@ export default async function handler(req: NextRequest) {
                 </span>{' '}
                 Reach
               </h2>
-              <div tw="flex flex-col md:flex-row flex-wrap w-full pt-4 md:items-center justify-between">
-                <h2 tw="flex flex-col text-4xl sm:text-7xl font-black tracking-tight leading-none text-gray-900 text-left">
+              <div className="flex w-full flex-col flex-wrap justify-between pt-4 md:flex-row md:items-center">
+                <h2 className="flex flex-col text-left text-4xl font-black leading-none tracking-tight text-gray-900 sm:text-7xl">
                   {doc?.title || 'Untitled'}
                 </h2>
               </div>

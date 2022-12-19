@@ -4,7 +4,7 @@ import {toPlainText} from '@portabletext/react'
 import {SanityDocumentStub} from '@sanity/client'
 import * as fs from 'fs'
 import mjml2html from 'mjml'
-import {twig} from 'twig'
+import {Template, twig} from 'twig'
 
 import {newslettersByIdQuery} from '../../../lib/queries/newsletter'
 import {getClient} from '../../../lib/sanity.server'
@@ -26,7 +26,7 @@ function renderMjml(s: string) {
   return mjml2html(s).html
 }
 
-function renderNewsletter(newsletter: SanityDocumentStub) {
+async function renderNewsletter(newsletter: SanityDocumentStub) {
   const data = {
     subject: newsletter.subject ?? newsletter.title,
     intro: toPlainText(newsletter.intro),
@@ -36,12 +36,7 @@ function renderNewsletter(newsletter: SanityDocumentStub) {
     text: customToPlainText(newsletter.content),
   }
 
-  const template = twig({
-    data: fs.readFileSync(
-      path.join(process.cwd(), 'plugins/newsletter/templates/newsletter.mjml'),
-      'utf8'
-    ),
-  })
+  const template = await getTemplate()
 
   try {
     const htmlOutput = renderMjml(template.render(data))
@@ -72,7 +67,18 @@ export default async function preview(req, res) {
     return res.status(401).json({message: 'No newsletter documents found'})
   }
 
-  const renderedNewsletter = renderNewsletter(newsletters[0])
+  const renderedNewsletter = await renderNewsletter(newsletters[0])
 
   res.status(200).json({output: renderedNewsletter, newsletters})
+}
+
+function getTemplate(): Promise<Template> {
+  return new Promise((resolve) => {
+    fs.readFile(
+      path.join(process.cwd(), 'plugins/newsletter/templates/newsletter.mjml'),
+      (data) => {
+        return resolve(twig({data}))
+      }
+    )
+  })
 }
