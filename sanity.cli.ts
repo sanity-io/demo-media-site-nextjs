@@ -1,5 +1,5 @@
 import {loadEnvConfig} from '@next/env'
-import { config } from 'lib/config'
+import {config} from 'lib/config'
 import {createCliConfig} from 'sanity/cli'
 
 const dev = config.env !== 'production'

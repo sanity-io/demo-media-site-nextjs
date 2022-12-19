@@ -25,7 +25,7 @@
  */
 
 import {isValidSignature, SIGNATURE_HEADER_NAME} from '@sanity/webhook'
-import { config as globalConfig } from 'lib/config'
+import {config as globalConfig} from 'lib/config'
 
 import {getClient} from '../../lib/sanity.server'
 

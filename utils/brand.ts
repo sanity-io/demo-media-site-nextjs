@@ -1,4 +1,4 @@
-import { config } from "lib/config"
+import {config} from 'lib/config'
 
 export const BRAND_LIFESTYLE_NAME = 'lifestyle'
 

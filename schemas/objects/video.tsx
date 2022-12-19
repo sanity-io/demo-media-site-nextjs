@@ -18,7 +18,6 @@ export default defineType({
     },
   ],
   components: {
-    // TODO: remove this type when the preview types are sorted out
     preview: (props: PreviewProps & {url: string}) => {
       const url = props.url
       if (url) {

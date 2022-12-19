@@ -1,5 +1,5 @@
 import Layout from 'components/Layout'
-import { config } from 'lib/config'
+import {config} from 'lib/config'
 import ErrorPage from 'next/error'
 import {useRouter} from 'next/router'
 import {PreviewSuspense} from 'next-sanity/preview'

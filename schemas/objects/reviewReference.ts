@@ -1,4 +1,4 @@
-import { config, reviewConfig } from 'lib/config'
+import {config, reviewConfig} from 'lib/config'
 import {FiStar} from 'react-icons/fi'
 import {defineArrayMember, defineField, defineType} from 'sanity'
 

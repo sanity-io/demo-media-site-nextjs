@@ -73,8 +73,6 @@ export function SyncNewArticlesWrapper(props: InputProps) {
     setStatus({syncStatus: 'loading'})
     const queryResult = await client.fetch(QUERY)
 
-    // @todo Map all documents
-    // @todo Get all reference ids
     const existingReferenceIds = findExistingReferenceIds(
       queryResult,
       TYPE_REFERENCES

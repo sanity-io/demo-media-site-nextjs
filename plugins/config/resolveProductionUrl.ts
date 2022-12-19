@@ -1,4 +1,4 @@
-import { config } from 'lib/config'
+import {config} from 'lib/config'
 import {SanityDocumentLike} from 'sanity'
 
 export type ProductionUrlDoc = SanityDocumentLike & {slug: any}

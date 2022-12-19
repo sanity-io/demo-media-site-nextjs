@@ -10,7 +10,9 @@ interface OpenGraphObject {
   images?: Array<{url: string}>
 }
 
-export default function openGraphObjectFromDocument(document: ArticleProps): OpenGraphObject {
+export default function openGraphObjectFromDocument(
+  document: ArticleProps
+): OpenGraphObject {
   // article.mainImage?.image?.asset?._ref
   return {
     title: document.title,

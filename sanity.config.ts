@@ -6,6 +6,7 @@
 import {scheduledPublishing} from '@sanity/scheduled-publishing'
 import {visionTool} from '@sanity/vision'
 import {theme} from 'https://themer.sanity.build/api/hues?preset=tw-cyan&primary=b595f9'
+import {config, reviewConfig} from 'lib/config'
 import {defineConfig, definePlugin} from 'sanity'
 import {deskTool} from 'sanity/desk'
 import {unsplashImageAsset} from 'sanity-plugin-asset-source-unsplash'
@@ -26,7 +27,6 @@ import newsletterPlugin from './plugins/newsletter'
 import {reviewsPlugin} from './plugins/reviews'
 import variations from './plugins/variations'
 import {schemaTemplates, schemaTypes} from './schemas'
-import { config, reviewConfig } from 'lib/config'
 
 //https://github.com/sanity-io/next-sanity#the-usebackgroundcolorsfromtheme-usebasepath-useconfigwithbasepath-and-usetextfontfamilyfromtheme-hooks-are-removed
 //as useBasePath is removed, we need to manually set the base path for each studio
@@ -41,6 +41,9 @@ const defaultConfig = (type: string) => {
     deskTool({
       structure: (S, context) => structure(S, context, type),
       defaultDocumentNode,
+    }),
+    visionTool({
+      defaultApiVersion: '2022-11-11',
     }),
   ]
 
@@ -63,17 +66,7 @@ const defaultConfig = (type: string) => {
         schemaTypes: ['article'],
       }),
     ]
-    //@ts-ignore -- type error from workflow
     techPlugins.forEach((plugin) => plugins.push(plugin))
-  }
-
-  //@TODO: remove this after the recording -- it's nice to have vision in demos :)
-  if (config.env === 'development') {
-    plugins.push(
-      visionTool({
-        defaultApiVersion: '2022-11-11',
-      })
-    )
   }
 
   return definePlugin({

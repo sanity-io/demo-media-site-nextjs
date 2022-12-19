@@ -5,6 +5,7 @@ import type {
   PortableTextBlockStyle,
 } from '@portabletext/types'
 import {format, parseISO} from 'date-fns'
+import {ArticleProps} from 'types'
 
 import {urlForImage} from '../../../lib/sanity'
 
@@ -18,6 +19,16 @@ interface TextBlock {
 interface ModuleBlock {
   type: 'article' | 'image' | 'articles'
   [key: string]: unknown
+}
+
+type CustomBlock =
+  | (ArticleProps & {_type: 'article'})
+  | {_type: 'articleReferences'; references: ArticleProps[]}
+
+function isCustomBlock(
+  block: PortableTextBlock | CustomBlock
+): block is CustomBlock {
+  return block._type !== 'block'
 }
 
 function renderTextBlock(block: PortableTextBlock): TextBlock {
@@ -39,11 +50,11 @@ function renderTextBlock(block: PortableTextBlock): TextBlock {
 }
 
 export function blocksToCustomContentBlocks(
-  blocks: PortableTextBlock[] = []
+  blocks: Array<PortableTextBlock | CustomBlock> = []
 ): (ModuleBlock | TextBlock)[] {
   return blocks
     .map((block) => {
-      if (block._type !== 'block') {
+      if (isCustomBlock(block)) {
         return renderCustomBlock(block)
       }
 
@@ -55,7 +66,7 @@ export function blocksToCustomContentBlocks(
 export function customToPlainText(blocks: PortableTextBlock[] = []): string {
   return blocks
     .map((block) => {
-      if (block._type !== 'block') {
+      if (isCustomBlock(block)) {
         return renderCustomBlock(block)
       }
 
@@ -65,10 +76,7 @@ export function customToPlainText(blocks: PortableTextBlock[] = []): string {
     .join('\n\n')
 }
 
-// @fixme: Add a proper type
-export function renderCustomBlock(
-  block: Record<string, any>
-): ModuleBlock | null {
+export function renderCustomBlock(block: CustomBlock): ModuleBlock | null {
   switch (block._type) {
     case 'article':
       return {
@@ -92,7 +100,7 @@ export function renderCustomBlock(
           imageUrl: article.mainImage
             ? urlForImage(article.mainImage?.image).width(340).height(480).url()
             : null,
-          imageAlt: block?.mainImage?.alt,
+          imageAlt: article?.mainImage?.alt,
           url: `https://demo-media-site-nextjs.sanity.build/articles/${article.slug}`,
         })),
       }

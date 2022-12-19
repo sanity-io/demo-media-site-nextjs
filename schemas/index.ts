@@ -52,7 +52,6 @@ export const schemaTypes = (
     section,
     siteSettings,
   ].map((def: SchemaTypeDefinition) => {
-    // todo: contentRole.fields.reference
     if (schemaTypesToFilterBrandOn.includes(def?.name)) {
       return {
         ...def,
@@ -60,7 +59,6 @@ export const schemaTypes = (
           filter: 'brand == $brand',
           filterParams: {brand: brandType},
         },
-        // TODO - understand why Typescript doesn't see this as a SchemaTypeDefinition
       } as SchemaTypeDefinition
     }
 
