@@ -13,6 +13,7 @@ import {
   customToPlainText,
   formatDate,
 } from '../../../plugins/newsletter/utils/format'
+import { NextApiRequest, NextApiResponse } from 'next'
 
 function wrapIds(ids: any) {
   if (!Array.isArray(ids)) {
@@ -48,7 +49,7 @@ async function renderNewsletter(newsletter: SanityDocumentStub) {
   // console.dir(data.contentBlocks)
 }
 
-export default async function preview(req, res) {
+export default async function preview(req: NextApiRequest, res: NextApiResponse) {
   // if (secret && req.query.secret !== secret) {
   //   return res.status(401).json({ message: 'Invalid secret' })
   // }

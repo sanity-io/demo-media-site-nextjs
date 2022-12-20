@@ -3,7 +3,7 @@ import React, {memo, useMemo} from 'react'
 
 export const Logo = memo(function Logo(props: {type?: string}) {
   const type = props?.type || 'tech'
-  const settings = useMemo(() => {
+  const settings: Record<string, any> = useMemo(() => {
     return {
       lifestyle: {
         text: 'Lifestyle',
@@ -16,22 +16,6 @@ export const Logo = memo(function Logo(props: {type?: string}) {
       reviews: {
         text: 'Reviews',
         background: '#86DF9F',
-      },
-      highFashion: {
-        text: 'High Fashion',
-        background: '#fbd024',
-      },
-      outdoors: {
-        text: 'Outdoors',
-        background: '#59e3f6',
-      },
-      gossip: {
-        text: 'Gossip',
-        background: '#fca86d',
-      },
-      entertainment: {
-        text: 'Entertainment',
-        background: '#f68b82',
       },
     }
   }, [])
@@ -98,7 +82,7 @@ export const WorkspaceLogo = memo(function WorkspaceLogo(props: {
   type?: string
 }) {
   const type = props?.type || 'tech'
-  const logos = useMemo(() => {
+  const logos: Record<string, any> = useMemo(() => {
     return {
       lifestyle: {
         background: '#BB9FF9',
@@ -111,22 +95,6 @@ export const WorkspaceLogo = memo(function WorkspaceLogo(props: {
       reviews: {
         background: '#86DF9F',
         foreground: '#119236',
-      },
-      highFashion: {
-        background: '#fbd024',
-        foreground: '#967e1c',
-      },
-      outdoors: {
-        background: '#59e3f6',
-        foreground: '#1c97a8',
-      },
-      gossip: {
-        background: '#fca86d',
-        foreground: '#ba5f1f',
-      },
-      entertainment: {
-        background: '#f68b82',
-        foreground: '#c33529',
       },
     }
   }, [])

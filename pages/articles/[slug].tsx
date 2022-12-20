@@ -3,8 +3,7 @@ import {config} from 'lib/config'
 import ErrorPage from 'next/error'
 import {useRouter} from 'next/router'
 import {PreviewSuspense} from 'next-sanity/preview'
-import {lazy} from 'react'
-import * as React from 'react'
+import {lazy, ReactElement} from 'react'
 
 import ArticlePage from '../../components/ArticlePage'
 import LayoutLifestyle from '../../components/LayoutLifestyle'
@@ -12,6 +11,7 @@ import Title from '../../components/Title'
 import {articleQuery, articleSlugsQuery} from '../../lib/queries'
 import {getClient, overlayDrafts} from '../../lib/sanity.server'
 import {ArticleProps} from '../../types'
+import { GetStaticProps, NextPage } from 'next'
 
 const PreviewArticlePage = lazy(
   () => import('../../components/PreviewArticlePage')
@@ -37,7 +37,7 @@ export default function Article(props: Props) {
     return <Title>Loading…</Title>
   }
 
-  if (preview) {
+  if (preview && slug) {
     return (
       <PreviewSuspense fallback={<ArticlePage article={article} />}>
         <PreviewArticlePage slug={slug} />
@@ -48,9 +48,9 @@ export default function Article(props: Props) {
   return <ArticlePage article={article} />
 }
 
-export async function getStaticProps({params, preview = false}) {
+export const getStaticProps: GetStaticProps = async ({params, preview = false}) => {
   const {article, moreArticles} = await getClient(preview).fetch(articleQuery, {
-    slug: params.slug,
+    slug: params?.slug,
   })
 
   return {
@@ -69,12 +69,12 @@ export async function getStaticProps({params, preview = false}) {
 export async function getStaticPaths() {
   const paths = await getClient(false).fetch(articleSlugsQuery)
   return {
-    paths: paths.map((slug) => ({params: {slug}})),
+    paths: paths.map((slug: string) => ({params: {slug}})),
     fallback: true,
   }
 }
 
-Article.getLayout = function getLayout(page) {
+Article.getLayout = function getLayout(page:ReactElement) {
   const {data, preview} = page?.props
   if (data?.article?.brand == 'lifestyle') {
     return <LayoutLifestyle preview={preview}>{page}</LayoutLifestyle>

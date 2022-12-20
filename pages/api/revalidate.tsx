@@ -26,6 +26,7 @@
 
 import {isValidSignature, SIGNATURE_HEADER_NAME} from '@sanity/webhook'
 import {config as globalConfig} from 'lib/config'
+import { NextApiRequest, NextApiResponse } from 'next'
 
 import {getClient} from '../../lib/sanity.server'
 
@@ -43,7 +44,7 @@ const AUTHOR_UPDATED_QUERY = /* groq */ `
 const POST_UPDATED_QUERY = /* groq */ `*[_type == "post" && _id == $id].slug.current`
 const SETTINGS_UPDATED_QUERY = /* groq */ `*[_type == "post"].slug.current`
 
-const getQueryForType = (type) => {
+const getQueryForType = (type: string) => {
   switch (type) {
     case 'author':
       return AUTHOR_UPDATED_QUERY
@@ -56,11 +57,11 @@ const getQueryForType = (type) => {
   }
 }
 
-const log = (msg, error?) =>
+const log = (msg: string, error?: boolean) =>
   // eslint-disable-next-line no-console
   console[error ? 'error' : 'log'](`[revalidate] ${msg}`)
 
-async function readBody(readable) {
+async function readBody(readable: NodeJS.ReadableStream) {
   const chunks = []
   for await (const chunk of readable) {
     chunks.push(typeof chunk === 'string' ? Buffer.from(chunk) : chunk)
@@ -68,11 +69,16 @@ async function readBody(readable) {
   return Buffer.concat(chunks).toString('utf8')
 }
 
-export default async function revalidate(req, res) {
-  const signature = req.headers[SIGNATURE_HEADER_NAME]
+export default async function revalidate(req: NextApiRequest, res: NextApiResponse) {
+  let signature = req.headers[SIGNATURE_HEADER_NAME]
+  if (Array.isArray(signature)) {
+    signature = signature[0]
+  } else if (typeof signature !== 'string') {
+    signature = ''
+  }
   const body = await readBody(req) // Read the body into a string
   if (
-    !isValidSignature(body, signature, globalConfig.revalidateSecret?.trim())
+    !isValidSignature(body, signature, globalConfig.revalidateSecret?.trim() || '')
   ) {
     const invalidSignature = 'Invalid signature'
     log(invalidSignature, true)
@@ -99,7 +105,7 @@ export default async function revalidate(req, res) {
     const updatedRoutes = `Updated routes: ${staleRoutes.join(', ')}`
     log(updatedRoutes)
     return res.status(200).json({message: updatedRoutes})
-  } catch (err) {
+  } catch (err: any) {
     log(err.message, true)
     return res.status(500).json({message: err.message})
   }

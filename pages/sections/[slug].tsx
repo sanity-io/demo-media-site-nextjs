@@ -2,8 +2,7 @@ import {config} from 'lib/config'
 import ErrorPage from 'next/error'
 import {useRouter} from 'next/router'
 import {PreviewSuspense} from 'next-sanity/preview'
-import {lazy} from 'react'
-import * as React from 'react'
+import {lazy, ReactElement} from 'react'
 
 import SectionPage from '../../components/SectionPage'
 import Title from '../../components/Title'
@@ -11,13 +10,14 @@ import {sectionBySlugQuery, sectionSlugsQuery} from '../../lib/queries'
 import {getClient, overlayDrafts} from '../../lib/sanity.server'
 import {ArticleProps} from '../../types'
 import {getBrandName} from '../../utils/brand'
+import { GetStaticProps } from 'next'
 
 const PreviewSectionPage = lazy(
   () => import('../../components/PreviewSectionPage')
 )
 
 interface Props {
-  data: {articles: ArticleProps[]; name?: string; slug?: string}
+  data: {articles: ArticleProps[]; name: string; slug?: string}
   preview: any
 }
 
@@ -35,7 +35,7 @@ export default function Section(props: Props) {
     return <Title>Loading…</Title>
   }
 
-  if (preview) {
+  if (preview && slug) {
     return (
       <PreviewSuspense fallback={<SectionPage section={data} />}>
         <PreviewSectionPage slug={slug} />
@@ -46,9 +46,9 @@ export default function Section(props: Props) {
   return <SectionPage section={data} />
 }
 
-export async function getStaticProps({params, preview = false}) {
+export const getStaticProps: GetStaticProps = async ({params, preview = false}) => {
   const section = await getClient(preview).fetch(sectionBySlugQuery, {
-    slug: params.slug,
+    slug: params?.slug,
     brand: getBrandName(),
   })
   return {
@@ -67,7 +67,7 @@ export async function getStaticProps({params, preview = false}) {
 export async function getStaticPaths() {
   const paths = await getClient(false).fetch(sectionSlugsQuery)
   return {
-    paths: paths.map((slug) => ({params: {slug}})),
+    paths: paths.map((slug: string) => ({params: {slug}})),
     fallback: true,
   }
 }

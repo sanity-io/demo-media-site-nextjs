@@ -1,6 +1,6 @@
-import {NextApiResponse} from 'next'
+import {NextApiRequest, NextApiResponse} from 'next'
 
-export default function exit(_, res: NextApiResponse) {
+export default function exit(_: NextApiRequest, res: NextApiResponse) {
   // Exit the current user from "Preview Mode". This function accepts no args.
   res.clearPreviewData()
 

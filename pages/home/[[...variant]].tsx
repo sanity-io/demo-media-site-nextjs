@@ -5,12 +5,18 @@ import MoreStories from 'components/MoreStories'
 import {config} from 'lib/config'
 import {indexQuery} from 'lib/queries'
 import {getClient, overlayDrafts} from 'lib/sanity.server'
-import {GetStaticPaths} from 'next'
+import {GetStaticPaths, GetStaticProps} from 'next'
 import {NextSeo} from 'next-seo'
 import * as React from 'react'
 import {ArticleProps} from 'types'
 import {getBrandName, isLifestyle} from 'utils/brand'
-export default function Index({allArticles, preview, brand}) {
+
+interface IndexProps {
+  allArticles: ArticleProps[]
+  preview: boolean
+  brand: string
+}
+export default function Index({allArticles, preview, brand}: IndexProps) {
   const metadata = isLifestyle()
     ? {
         title: 'Latest Lifestyle News, Trends & Tips | STREETREADY',
@@ -49,15 +55,15 @@ export const getStaticPaths: GetStaticPaths = () => {
   }
 }
 
-export async function getStaticProps({preview = false, params}) {
-  const variant = (params.variant as string[]) || []
+export const getStaticProps: GetStaticProps = async ({params, preview = false}) => {
+  const variant = (params?.variant as string[]) || []
 
   /* check if the project id has been defined by fetching the vercel envs */
   if (config.sanity.projectId) {
     // given a url like /a:1/b:2/c:3, split it out into {a:"1", b:"2", c:"3"}
     const variantMap: Record<string, string> = variant
       .map((variantParam) => variantParam.split(':'))
-      .reduce((prev, current) => {
+      .reduce((prev: Record<string, any>, current) => {
         prev[current[0]] = current[1]
         return prev
       }, {})
@@ -102,7 +108,7 @@ export async function getStaticProps({preview = false, params}) {
   }
 }
 
-Index.getLayout = function getLayout(page) {
+Index.getLayout = function getLayout(page: React.ReactElement) {
   const {preview, brand} = page?.props
   if (brand == 'lifestyle') {
     return <LayoutLifestyle preview={preview}>{page}</LayoutLifestyle>
