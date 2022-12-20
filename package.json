@@ -17,9 +17,9 @@
     "lint": "eslint . --ext .js,.ts,.jsx,.tsx --ignore-path .gitignore",
     "lint:fix": "npm run format && npm run lint -- --fix",
     "lint:next": "next lint -- --ignore-path .gitignore",
+    "prepare": "husky install",
     "start": "next start",
-    "type-check": "tsc --noEmit",
-    "prepare": "husky install"
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "@portabletext/react": "^2.0.0",
@@ -49,7 +49,7 @@
     "sanity-plugin-documents-pane": "^2.0.1",
     "sanity-plugin-iframe-pane": "^2.1.1",
     "sanity-plugin-media": "^2.0.2",
-    "sanity-plugin-workflow": "file:.yalc/sanity-plugin-workflow",
+    "sanity-plugin-workflow": "^1.0.0-beta.1",
     "seedrandom": "^3.0.5",
     "styled-components": "^5.3.6",
     "twig": "^1.15.4"
