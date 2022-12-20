@@ -20,9 +20,9 @@ export default function ArticlePage({article}: ArticleComponentProps) {
         openGraph={article ? openGraphObjectFromDocument(article) : undefined}
       />
       <article className="pb-4 md:pb-6">
-        <PeopleProvider people={article.people}>
+        <PeopleProvider people={article?.people ?? []}>
           <Header
-            title={article?.title}
+            title={article?.title || ''}
             intro={article?.intro}
             mainImage={article?.mainImage}
             sections={article?.sections}

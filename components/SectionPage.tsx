@@ -1,5 +1,6 @@
 import {NextSeo} from 'next-seo'
 import * as React from 'react'
+import {Section} from 'types'
 
 import {isLifestyle} from '../utils/brand'
 import Container from './Container'
@@ -8,14 +9,14 @@ import Title, {TitleLifeStyle} from './Title'
 
 const isLifestyleBrand = () => isLifestyle()
 
-export default function SectionPage({section}) {
+export default function SectionPage({section}: {section: Section}) {
   const {name, articles} = section || {}
 
   if (isLifestyleBrand()) {
     return (
       <Container>
         <TitleLifeStyle>{name}</TitleLifeStyle>
-        <MoreStories articles={articles} />
+        <MoreStories articles={articles || []} />
       </Container>
     )
   }
@@ -30,7 +31,9 @@ export default function SectionPage({section}) {
         <div className="m-auto max-w-5xl p-4 md:p-5 lg:p-6">
           <Title>{name}</Title>
         </div>
-        {articles?.length > 0 && <MoreStories articles={articles} />}
+        {articles && articles?.length > 0 && (
+          <MoreStories articles={articles} />
+        )}
       </div>
     </Container>
   )

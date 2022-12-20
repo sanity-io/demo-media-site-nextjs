@@ -55,9 +55,11 @@ export const homeMiddleware: NextMiddleware = async (request) => {
         article.variations?.includes(currentVariant))
     ) {
       // preserve existing experiments
+      //@ts-expect-error
       newExperiments[article._id] = currentExperiments[article._id]
     } else if (article.variations) {
       // add 1 to account for the fallback/baseline content!
+      //@ts-expect-error
       newExperiments[article._id] =
         article.variations[
           Math.floor(Math.random() * (article.variations.length + 1))

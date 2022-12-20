@@ -15,13 +15,18 @@ import * as React from 'react'
 import {logError} from 'utils/logError'
 
 import {urlForImage} from '../lib/sanity'
-import {ArticlePreviewProps, MainImage} from '../types'
+import {ArticlePreviewProps, ArticleProps, MainImage} from '../types'
 import {BRAND_LIFESTYLE_NAME, getBrandName} from '../utils/brand'
 import {getUrlForDocumentType} from '../utils/routing'
 import {Credits, PeopleList, usePeople} from './Credits'
 import {Figure} from './Figure'
 
 const ReactPlayer = dynamic(() => import('react-player'), {ssr: false})
+
+type MediaNode = {
+  _type: 'video' | 'podcast'
+  url: string
+}
 
 const BodyImage = React.memo(function BodyImage({
   image,
@@ -65,7 +70,7 @@ const BodyImage = React.memo(function BodyImage({
 
 const components = {
   types: {
-    article: ({value}) => {
+    article: ({value}: {value: ArticleProps}) => {
       const {title, slug} = value
       const url = getUrlForDocumentType('article', slug)
       return (
@@ -100,7 +105,7 @@ const components = {
         </div>
       )
     },
-    podcast: ({value}) => {
+    podcast: ({value}: {value: MediaNode}) => {
       const {url} = value
       return (
         <div>
@@ -108,16 +113,7 @@ const components = {
         </div>
       )
     },
-    video: ({value}) => {
-      const {url} = value
-      return (
-        <div>
-          <ReactPlayer url={url} />
-        </div>
-      )
-    },
-    articleLink: ({value}) => {
-      // debugger
+    video: ({value}: {value: MediaNode}) => {
       const {url} = value
       return (
         <div>

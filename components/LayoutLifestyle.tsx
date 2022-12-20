@@ -4,7 +4,13 @@ import Alert from './Alert'
 import Footer from './Footer'
 import NavbarLifestyle from './NavbarLifestyle'
 
-export default function Layout({preview, children}) {
+export default function Layout({
+  preview,
+  children,
+}: {
+  preview: boolean
+  children: React.ReactNode
+}) {
   return (
     <>
       <NavbarLifestyle />
