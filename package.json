@@ -14,11 +14,12 @@
     "build": "next build",
     "dev": "next",
     "format": "npx prettier --write . --ignore-path .gitignore",
-    "lint": "eslint .",
+    "lint": "eslint . --ext .js,.ts,.jsx,.tsx --ignore-path .gitignore",
     "lint:fix": "npm run format && npm run lint -- --fix",
     "lint:next": "next lint -- --ignore-path .gitignore",
     "start": "next start",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@portabletext/react": "^2.0.0",
@@ -54,6 +55,8 @@
     "twig": "^1.15.4"
   },
   "devDependencies": {
+    "@commitlint/cli": "^17.3.0",
+    "@commitlint/config-conventional": "^17.3.0",
     "@types/react": "^18.0.25",
     "@types/twig": "^1.12.9",
     "@typescript-eslint/eslint-plugin": "^5.46.1",
@@ -64,6 +67,8 @@
     "eslint-config-sanity": "^6.0.0",
     "eslint-plugin-react": "^7.31.11",
     "eslint-plugin-simple-import-sort": "^8.0.0",
+    "husky": "^8.0.2",
+    "lint-staged": "^13.1.0",
     "postcss": "^8.4.19",
     "prettier": "^2.8.0",
     "prettier-plugin-packagejson": "^2.3.0",
