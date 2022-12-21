@@ -4,6 +4,7 @@ import {toPlainText} from '@portabletext/react'
 import {SanityDocumentStub} from '@sanity/client'
 import * as fs from 'fs'
 import mjml2html from 'mjml'
+import {NextApiRequest, NextApiResponse} from 'next'
 import {twig} from 'twig'
 
 import {newslettersByIdQuery} from '../../../lib/queries/newsletter'
@@ -13,7 +14,6 @@ import {
   customToPlainText,
   formatDate,
 } from '../../../plugins/newsletter/utils/format'
-import { NextApiRequest, NextApiResponse } from 'next'
 
 function wrapIds(ids: any) {
   if (!Array.isArray(ids)) {
@@ -49,7 +49,10 @@ async function renderNewsletter(newsletter: SanityDocumentStub) {
   // console.dir(data.contentBlocks)
 }
 
-export default async function preview(req: NextApiRequest, res: NextApiResponse) {
+export default async function preview(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   // if (secret && req.query.secret !== secret) {
   //   return res.status(401).json({ message: 'Invalid secret' })
   // }

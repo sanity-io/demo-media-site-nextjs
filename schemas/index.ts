@@ -76,7 +76,7 @@ export const schemaTemplates = (prev: Template[]): Template[] => {
         type: 'initialValueTemplateItem',
         schemaType,
         parameters: [{name: `brand`, title: `Brand`, type: `string`}],
-        value: (initialValue) => ({brand: initialValue.brand}),
+        value: (initialValue: {brand: string}) => ({brand: initialValue.brand}),
       })
     ),
   ]

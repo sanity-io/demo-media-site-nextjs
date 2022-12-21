@@ -26,7 +26,7 @@
 
 import {isValidSignature, SIGNATURE_HEADER_NAME} from '@sanity/webhook'
 import {config as globalConfig} from 'lib/config'
-import { NextApiRequest, NextApiResponse } from 'next'
+import {NextApiRequest, NextApiResponse} from 'next'
 
 import {getClient} from '../../lib/sanity.server'
 
@@ -69,7 +69,10 @@ async function readBody(readable: NodeJS.ReadableStream) {
   return Buffer.concat(chunks).toString('utf8')
 }
 
-export default async function revalidate(req: NextApiRequest, res: NextApiResponse) {
+export default async function revalidate(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   let signature = req.headers[SIGNATURE_HEADER_NAME]
   if (Array.isArray(signature)) {
     signature = signature[0]
@@ -78,7 +81,11 @@ export default async function revalidate(req: NextApiRequest, res: NextApiRespon
   }
   const body = await readBody(req) // Read the body into a string
   if (
-    !isValidSignature(body, signature, globalConfig.revalidateSecret?.trim() || '')
+    !isValidSignature(
+      body,
+      signature,
+      globalConfig.revalidateSecret?.trim() || ''
+    )
   ) {
     const invalidSignature = 'Invalid signature'
     log(invalidSignature, true)

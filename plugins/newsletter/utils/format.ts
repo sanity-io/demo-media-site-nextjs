@@ -37,7 +37,7 @@ function renderTextBlock(block: PortableTextBlock): TextBlock {
       type: 'heading',
       value: toPlainText(block),
       html: toHTML(block),
-      style: block.style,
+      style: block.style as PortableTextBlockStyle,
     }
   }
 
@@ -57,10 +57,9 @@ export function blocksToCustomContentBlocks(
       if (isCustomBlock(block)) {
         return renderCustomBlock(block)
       }
-
       return renderTextBlock(block)
     })
-    .filter(Boolean)
+    .filter(Boolean) as (ModuleBlock | TextBlock)[]
 }
 
 export function customToPlainText(blocks: PortableTextBlock[] = []): string {

@@ -56,6 +56,8 @@
   "devDependencies": {
     "@types/mjml": "^4.7.0",
     "@types/react": "^18.0.25",
+    "@types/seedrandom": "^3.0.2",
+    "@types/styled-components": "^5.1.26",
     "@types/twig": "^1.12.9",
     "@typescript-eslint/eslint-plugin": "^5.46.1",
     "autoprefixer": "^10.4.13",

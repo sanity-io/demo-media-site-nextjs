@@ -1,9 +1,11 @@
 import Layout from 'components/Layout'
 import {config} from 'lib/config'
+import {GetStaticProps} from 'next'
 import ErrorPage from 'next/error'
 import {useRouter} from 'next/router'
 import {PreviewSuspense} from 'next-sanity/preview'
 import {lazy, ReactElement} from 'react'
+import * as React from 'react'
 
 import ArticlePage from '../../components/ArticlePage'
 import LayoutLifestyle from '../../components/LayoutLifestyle'
@@ -11,7 +13,6 @@ import Title from '../../components/Title'
 import {articleQuery, articleSlugsQuery} from '../../lib/queries'
 import {getClient, overlayDrafts} from '../../lib/sanity.server'
 import {ArticleProps} from '../../types'
-import { GetStaticProps, NextPage } from 'next'
 
 const PreviewArticlePage = lazy(
   () => import('../../components/PreviewArticlePage')
@@ -48,7 +49,10 @@ export default function Article(props: Props) {
   return <ArticlePage article={article} />
 }
 
-export const getStaticProps: GetStaticProps = async ({params, preview = false}) => {
+export const getStaticProps: GetStaticProps = async ({
+  params,
+  preview = false,
+}) => {
   const {article, moreArticles} = await getClient(preview).fetch(articleQuery, {
     slug: params?.slug,
   })
@@ -74,7 +78,7 @@ export async function getStaticPaths() {
   }
 }
 
-Article.getLayout = function getLayout(page:ReactElement) {
+Article.getLayout = function getLayout(page: ReactElement) {
   const {data, preview} = page?.props
   if (data?.article?.brand == 'lifestyle') {
     return <LayoutLifestyle preview={preview}>{page}</LayoutLifestyle>

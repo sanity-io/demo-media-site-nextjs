@@ -1,4 +1,5 @@
 import {config} from 'lib/config'
+import {GetStaticProps} from 'next'
 import ErrorPage from 'next/error'
 import {useRouter} from 'next/router'
 import {PreviewSuspense} from 'next-sanity/preview'
@@ -10,7 +11,6 @@ import Title from '../../components/Title'
 import {personBySlugQuery, personSlugsQuery} from '../../lib/queries'
 import {getClient, overlayDrafts} from '../../lib/sanity.server'
 import {AuthorProps} from '../../types'
-import { GetStaticProps } from 'next'
 
 const PreviewAuthorPage = lazy(
   () => import('../../components/PreviewAuthorPage')
@@ -46,7 +46,10 @@ export default function Author(props: Props) {
   return <AuthorPage author={data} />
 }
 
-  export const getStaticProps: GetStaticProps = async ({params, preview = false}) => {
+export const getStaticProps: GetStaticProps = async ({
+  params,
+  preview = false,
+}) => {
   const person = await getClient(preview).fetch(personBySlugQuery, {
     slug: params?.slug,
   })

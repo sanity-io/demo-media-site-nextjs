@@ -55,7 +55,10 @@ export const getStaticPaths: GetStaticPaths = () => {
   }
 }
 
-export const getStaticProps: GetStaticProps = async ({params, preview = false}) => {
+export const getStaticProps: GetStaticProps = async ({
+  params,
+  preview = false,
+}) => {
   const variant = (params?.variant as string[]) || []
 
   /* check if the project id has been defined by fetching the vercel envs */

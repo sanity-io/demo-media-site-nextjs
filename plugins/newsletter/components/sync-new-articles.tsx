@@ -27,7 +27,7 @@ groq`*[_type=="newsletter" && references(*[_type=="article"]._id)]{title}`
 */
 
 const findExistingReferenceIds = (
-  queryResult: Record<string, any>[],
+  queryResult: SanityDocumentLike[],
   typeReferences: string
 ) => {
   const existingReferenceIds = [
@@ -70,7 +70,7 @@ export function SyncNewArticlesWrapper(props: InputProps) {
   )
 
   const handleFetch = useCallback(async () => {
-    setStatus({syncStatus: 'loading'})
+    setStatus({syncStatus: 'loading', ids: []})
     const queryResult = await client.fetch(QUERY)
 
     const existingReferenceIds = findExistingReferenceIds(
@@ -113,7 +113,7 @@ export function SyncNewArticlesWrapper(props: InputProps) {
           const references = [
             // @ts-ignore
             ...(articleReferenceBlock?.references ?? []),
-            ...status.ids?.map((id) => ({
+            ...status.ids!.map((id) => ({
               _key: nanoid(10),
               _ref: id,
               _type: 'articleReference',
@@ -144,7 +144,7 @@ export function SyncNewArticlesWrapper(props: InputProps) {
       })
 
       await handleFetch()
-    } catch (error) {
+    } catch (error: any) {
       console.error(error)
       toast.push({
         duration: 5000,
