@@ -26,4 +26,4 @@ jobs:
         with:
           default_author: github_actions
           commit: --no-verify
-          message: 'chore(prettier): 🤖 ✨'
+          message: 'chore: prettier 🤖 ✨'
