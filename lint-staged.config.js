@@ -1,11 +1,4 @@
 module.exports = {
-  '**/*.{js,jsx}': [
-    'prettier --list-different --ignore-path .gitignore .',
-    'eslint',
-  ],
-  '**/*.{ts,tsx}': [
-    'prettier --list-different --ignore-path .gitignore .',
-    'eslint',
-    () => 'tsc --noEmit',
-  ],
+  '**/*.{js,jsx}': ['npm run format:verify', 'eslint'],
+  '**/*.{ts,tsx}': ['npm run format:verify', 'eslint', () => 'tsc --noEmit'],
 }

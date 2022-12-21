@@ -14,6 +14,7 @@
     "build": "next build",
     "dev": "next",
     "format": "npx prettier --write . --ignore-path .gitignore",
+    "format:verify": "npx prettier . --ignore-path .gitignore --list-different",
     "lint": "eslint . --ext .js,.ts,.jsx,.tsx --ignore-path .gitignore",
     "lint:fix": "npm run format && npm run lint -- --fix",
     "lint:next": "next lint -- --ignore-path .gitignore",
