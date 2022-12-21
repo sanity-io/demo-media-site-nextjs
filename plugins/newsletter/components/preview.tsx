@@ -35,7 +35,7 @@ export function NewsletterPreview(props: IframeProps) {
     setIsLoading(true)
     try {
       setEmailContent(await fetchEmails(id))
-    } catch (e) {
+    } catch (e: any) {
       console.error(e)
       toast.push({
         id: 'email-preview-error',

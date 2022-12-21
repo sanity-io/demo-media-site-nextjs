@@ -34,7 +34,7 @@ function filterVariableFields(
  * Given a document schema, add the variations field.
  */
 function augmentSchema(type: DocumentDefinition): DocumentDefinition {
-  const variableFieldNames = type.options.enableVariations
+  const variableFieldNames = type?.options?.enableVariations
 
   return {
     ...type,
@@ -54,11 +54,11 @@ function augmentSchema(type: DocumentDefinition): DocumentDefinition {
                 title: 'Variation ID',
                 validation: (rule) => rule.required(),
               }),
-              ...filterVariableFields(type.fields, variableFieldNames),
+              ...filterVariableFields(type.fields, variableFieldNames ?? []),
             ],
             preview: {
               select: {
-                title: variableFieldNames[0],
+                title: variableFieldNames?.[0] ?? '',
                 subtitle: 'variationId',
               },
             },

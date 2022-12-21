@@ -9,9 +9,9 @@ export type Config = {
   }
 
   sanity: {
-    projectId?: string
+    projectId: string
     projectTitle?: string
-    dataset?: string
+    dataset: string
     useCdn?: boolean
     apiVersion?: string
     readToken?: string
@@ -30,7 +30,7 @@ export const config: Config = {
     repoSlug: process.env.NEXT_PUBLIC_GIT_REPO_SLUG,
   },
   sanity: {
-    projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
+    projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || '',
     projectTitle: process.env.NEXT_PUBLIC_SANITY_PROJECT_TITLE,
     dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
     // useCdn == true gives fast, cheap responses using a globally distributed cache.

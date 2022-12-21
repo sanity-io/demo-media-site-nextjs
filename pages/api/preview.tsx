@@ -1,5 +1,5 @@
 import {config} from 'lib/config'
-import {NextApiHandler} from 'next'
+import {NextApiHandler, NextApiResponse} from 'next'
 
 import {
   articleBySlugQuery,
@@ -8,7 +8,7 @@ import {
 } from '../../lib/queries'
 import {getClient} from '../../lib/sanity.server'
 
-function redirectToPreview(res, Location) {
+function redirectToPreview(res: NextApiResponse, Location: string) {
   // Enable Preview Mode by setting the cookies
   res.setPreviewData({})
   // Redirect to a preview capable route

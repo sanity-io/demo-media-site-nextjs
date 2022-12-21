@@ -7,7 +7,7 @@ import Container from './Container'
 
 const isLifestyleBrand = isLifestyle()
 
-export default function Alert({preview}) {
+export default function Alert({preview}: {preview: boolean}) {
   return (
     <div
       className={cn(!isLifestyleBrand && 'border-b', {

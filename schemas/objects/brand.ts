@@ -8,7 +8,7 @@ export default defineField({
   description: 'Used to colocate documents to only those in the same "Brand"',
   type: 'string',
   hidden: ({document, value}) =>
-    !document._id.startsWith(`drafts.`) && Boolean(value),
+    !document?._id.startsWith(`drafts.`) && Boolean(value),
   validation: (Rule) => Rule.required(),
   options: {
     list: BRANDS.map((brand) => ({
