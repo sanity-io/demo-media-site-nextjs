@@ -18,6 +18,7 @@ export default defineType({
     },
   ],
   components: {
+    //@ts-expect-error until fixed in core Sanity
     preview: (props: PreviewProps & {url: string}) => {
       const url = props.url
       if (url) {

@@ -24,7 +24,6 @@ import {
 import {mediaConfigPlugin, structure} from './plugins/config'
 import defaultDocumentNode from './plugins/config/defaultDocumentNode'
 import newsletterPlugin from './plugins/newsletter'
-import {reviewsPlugin} from './plugins/reviews'
 import variations from './plugins/variations'
 import {schemaTemplates, schemaTypes} from './schemas'
 
@@ -47,9 +46,7 @@ const defaultConfig = (type: string) => {
     }),
   ]
 
-  if (type === 'reviews') {
-    plugins.push(reviewsPlugin())
-  } else {
+  if (type !== 'reviews') {
     const minimumUserPlugins = [
       mediaConfigPlugin(),
       unsplashImageAsset(),

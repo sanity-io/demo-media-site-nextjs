@@ -44,7 +44,7 @@ export default function CoverImage(props: CoverImageProps) {
         className={cn('h-auto w-full', className)}
         width={width || 2000}
         height={height || 1000}
-        alt={alt}
+        alt={alt || title || 'Untitled'}
         src={urlForImage(source?.image)
           .height(height || 1000)
           .width(width || 2000)

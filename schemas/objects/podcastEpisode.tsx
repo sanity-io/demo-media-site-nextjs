@@ -2,7 +2,13 @@ import {Box, Stack, Text} from '@sanity/ui'
 import * as React from 'react'
 import {FiVideo} from 'react-icons/fi'
 import ReactPlayer from 'react-player'
-import {defineField, defineType, InputProps, PreviewProps, Rule} from 'sanity'
+import {
+  defineField,
+  defineType,
+  InputProps,
+  PreviewProps,
+  UrlRule,
+} from 'sanity'
 import styled from 'styled-components'
 
 interface Audio {
@@ -24,7 +30,7 @@ export default defineType({
       type: 'url',
       title: 'Audio URL',
       description: `Accepts: SoundCloud and Mixcloud`,
-      validation: (rule: Rule) => rule.required(),
+      validation: (rule: UrlRule) => rule.required(),
     }),
   ],
   components: {
@@ -49,6 +55,7 @@ export default defineType({
         </Stack>
       )
     },
+    //@ts-expect-error until fixed in core Sanity
     preview: (props: PreviewProps & {url: string}) => {
       const url = props.url
       if (url) {

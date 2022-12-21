@@ -1,4 +1,5 @@
 import {config} from 'lib/config'
+import {GetStaticProps} from 'next'
 import ErrorPage from 'next/error'
 import {useRouter} from 'next/router'
 import {PreviewSuspense} from 'next-sanity/preview'
@@ -34,7 +35,7 @@ export default function Author(props: Props) {
     return <Title>Loading…</Title>
   }
 
-  if (preview) {
+  if (preview && slug) {
     return (
       <PreviewSuspense fallback={<AuthorPage author={data} />}>
         <PreviewAuthorPage slug={slug} />
@@ -45,9 +46,12 @@ export default function Author(props: Props) {
   return <AuthorPage author={data} />
 }
 
-export async function getStaticProps({params, preview = false}) {
+export const getStaticProps: GetStaticProps = async ({
+  params,
+  preview = false,
+}) => {
   const person = await getClient(preview).fetch(personBySlugQuery, {
-    slug: params.slug,
+    slug: params?.slug,
   })
   return {
     props: {
@@ -65,7 +69,7 @@ export async function getStaticProps({params, preview = false}) {
 export async function getStaticPaths() {
   const paths = await getClient(false).fetch(personSlugsQuery)
   return {
-    paths: paths.map((slug) => ({params: {slug}})),
+    paths: paths.map((slug: string) => ({params: {slug}})),
     fallback: true,
   }
 }

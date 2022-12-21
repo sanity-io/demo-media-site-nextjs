@@ -4,10 +4,11 @@
  * code that is not used on the client side.
  */
 import {createClient} from 'next-sanity'
+import {SanityDocument} from 'sanity'
 
 import {config} from './config'
 
-export const getClient = (preview) =>
+export const getClient = (preview: boolean) =>
   preview
     ? createClient({
         projectId: config.sanity.projectId,
@@ -21,11 +22,10 @@ export const getClient = (preview) =>
         projectId: config.sanity.projectId,
         dataset: config.sanity.dataset,
         apiVersion: config.sanity.apiVersion,
-        token: null,
         useCdn: true,
       })
 
-export function overlayDrafts(docs) {
+export function overlayDrafts(docs: SanityDocument[]) {
   const documents = docs || []
   const overlayed = documents.reduce((map, doc) => {
     if (!doc._id) {

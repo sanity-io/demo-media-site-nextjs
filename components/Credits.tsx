@@ -8,7 +8,7 @@ import {BRAND_LIFESTYLE_NAME} from '../utils/brand'
 import {getUrlForDocumentType} from '../utils/routing'
 import Date from './Date'
 
-const PeopleContext = createContext([])
+const PeopleContext = createContext<ArticleProps['people']>([])
 
 export function PeopleProvider({
   people,
@@ -23,7 +23,7 @@ export function PeopleProvider({
 }
 
 // Create a hook that uses the PeopleContext and filters the list of people based on their role
-export function usePeople(role) {
+export function usePeople(role: string) {
   try {
     const people = useContext<ArticleProps['people']>(PeopleContext)
     return people.filter((person) => person.role === role)

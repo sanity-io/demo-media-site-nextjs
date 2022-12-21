@@ -23,7 +23,9 @@ export default function AuthorPage({author}: {author: AuthorProps}) {
           </div>
         )}
       </div>
-      {articles?.length > 0 && <MoreStories articles={articles} />}
+      {articles && articles?.length > 0 && (
+        <MoreStories articles={articles || []} />
+      )}
     </Container>
   )
 }

@@ -7,10 +7,11 @@ export interface AuthorProps {
   articles?: ArticleProps[]
 }
 
-export interface SectionProps {
-  _id: string
+export interface Section {
+  _id?: string
   name: string
   slug?: string
+  articles?: ArticleProps[]
 }
 
 export interface ArticleProps {
@@ -20,7 +21,7 @@ export interface ArticleProps {
   date: string
   intro?: any
   people: AuthorProps[]
-  sections?: SectionProps[]
+  sections?: Section[]
   slug?: string
   variations?: {
     _key: string

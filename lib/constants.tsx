@@ -6,6 +6,7 @@ import {
   FiStar,
   FiUser,
 } from 'react-icons/fi'
+import {IconType} from 'react-icons/lib'
 export type Brand = {
   name: string
   title: string
@@ -15,7 +16,7 @@ export type Brand = {
 export type SchemaItem = {
   schemaType: string
   title: string
-  icon?: (props) => JSX.Element
+  icon?: IconType
 }
 
 export type SchemaDivider = 'divider'
