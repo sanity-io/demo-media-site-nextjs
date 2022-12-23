@@ -154,7 +154,7 @@ export default function Body({
 
       <div
         className={
-          'prose mx-auto max-w-2xl prose-headings:font-serif prose-headings:font-bold prose-headings:tracking-tight prose-p:font-serif prose-p:leading-relaxed prose-blockquote:font-serif prose-li:font-serif dark:prose-invert md:prose-lg lg:prose-xl'
+          'prose font-serif text-lg leading-relaxed dark:prose-invert md:prose-lg md:text-xl md:leading-relaxed lg:prose-xl'
         }
       >
         <PortableText
