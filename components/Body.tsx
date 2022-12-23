@@ -90,10 +90,6 @@ const components = {
     reviewReference: ({value}: {value: ArticlePreviewProps}) => {
       const {title, slug} = value
       const url = getUrlForDocumentType('review', slug)
-      /*
-      console.log('slug', slug)
-      console.log('url', url)
-      */
       return (
         <div className="text-black">
           <p className="dark border border-gray-200 border-gray-900 p-4">
@@ -158,7 +154,7 @@ export default function Body({
 
       <div
         className={
-          'prose mx-auto max-w-2xl prose-headings:font-bold prose-headings:tracking-tight prose-p:font-serif prose-p:leading-relaxed dark:prose-invert md:prose-lg lg:prose-xl'
+          'prose mx-auto max-w-2xl prose-headings:font-serif prose-headings:font-bold prose-headings:tracking-tight prose-p:font-serif prose-p:leading-relaxed prose-blockquote:font-serif prose-li:font-serif dark:prose-invert md:prose-lg lg:prose-xl'
         }
       >
         <PortableText

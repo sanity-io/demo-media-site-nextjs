@@ -18,9 +18,6 @@ export default defineType({
         {title: 'H2', value: 'h2'},
         {title: 'H3', value: 'h3'},
         {title: 'Quote', value: 'blockquote'},
-        {title: 'Figure', value: 'figure'},
-        {title: 'Pre', value: 'pre'},
-        {title: 'Code', value: 'code'},
       ],
       lists: [
         {title: 'Bullet', value: 'bullet'},
