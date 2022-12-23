@@ -49,7 +49,7 @@ export const indexQuery = groq`
 } |
 {
   "featuredArticles": @.featuredArticles,
-  "filteredRecent": @.recentArticles[!(_id in ^.featuredArticles[]._id) && !((string::split(_id, 'drafts.'))[1] in ^.featuredArticles[]._id)]
+  "filteredRecent": @.recentArticles[!(_id in ^.featuredArticles[]._id)]
 } | {
   "combined": @.featuredArticles + @.filteredRecent
 }.combined[0..10]{
