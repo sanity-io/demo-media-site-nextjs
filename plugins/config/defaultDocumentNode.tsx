@@ -18,7 +18,6 @@ const defaultDocumentNode: DefaultDocumentNodeResolver = (S, {schemaType}) => {
           url: (doc: ProductionUrlDoc) => resolveProductionUrl(doc),
           reload: {
             button: true,
-            revision: false,
           },
         })
         .title('Preview')
