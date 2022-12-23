@@ -1,4 +1,8 @@
 module.exports = {
-  '**/*.{js,jsx}': ['npm run format:verify', 'eslint'],
-  '**/*.{ts,tsx}': ['npm run format:verify', 'eslint', () => 'tsc --noEmit'],
+  '**/*.{js,jsx}': ['prettier --list-different', 'eslint'],
+  '**/*.{ts,tsx}': [
+    'prettier --list-different',
+    'eslint',
+    () => 'tsc --noEmit',
+  ],
 }
