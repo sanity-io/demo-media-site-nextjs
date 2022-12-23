@@ -69,6 +69,11 @@ const BodyImage = React.memo(function BodyImage({
 })
 
 const components = {
+  block: {
+    normal: ({children}: {children?: React.ReactNode}) => {
+      return <p className="my-4">{children}</p>
+    },
+  },
   types: {
     article: ({value}: {value: ArticleProps}) => {
       const {title, slug} = value
@@ -90,10 +95,6 @@ const components = {
     reviewReference: ({value}: {value: ArticlePreviewProps}) => {
       const {title, slug} = value
       const url = getUrlForDocumentType('review', slug)
-      /*
-      console.log('slug', slug)
-      console.log('url', url)
-      */
       return (
         <div className="text-black">
           <p className="dark border border-gray-200 border-gray-900 p-4">
@@ -137,14 +138,6 @@ export default function Body({
 }) {
   const brandName = brand || getBrandName()
   const isLifestyle = brandName === BRAND_LIFESTYLE_NAME
-  /*
-  const bodyClassNames = useMemo(() => {
-    if (isLifestyle) {
-      return 'prose mx-auto max-w-2xl prose-headings:font-bold prose-headings:tracking-tight prose-p:font-serif prose-p:leading-relaxed dark:prose-invert md:prose-lg lg:prose-xl'
-    }
-    return 'prose mx-auto max-w-2xl prose-headings:font-extrabold prose-headings:tracking-tight prose-p:font-normal prose-p:leading-relaxed dark:prose-invert md:prose-lg lg:prose-xl'
-  }, [isLifestyle])
-  */
 
   return (
     <div
@@ -158,7 +151,7 @@ export default function Body({
 
       <div
         className={
-          'prose mx-auto max-w-2xl prose-headings:font-bold prose-headings:tracking-tight prose-p:font-serif prose-p:leading-relaxed dark:prose-invert md:prose-lg lg:prose-xl'
+          'prose font-serif text-lg leading-relaxed dark:prose-invert md:prose-lg md:text-xl md:leading-relaxed lg:prose-xl'
         }
       >
         <PortableText
