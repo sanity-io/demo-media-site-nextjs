@@ -41,7 +41,7 @@ export default function CoverImage(props: CoverImageProps) {
       })}
     >
       <Image
-        className={cn('h-auto w-full', className)}
+        className={cn('h-auto w-full object-cover', className)}
         width={width || 2000}
         height={height || 1000}
         alt={alt || title || 'Untitled'}
