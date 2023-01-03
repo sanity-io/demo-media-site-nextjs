@@ -151,7 +151,7 @@ export default function Body({
 
       <div
         className={
-          'prose max-w-none font-serif text-lg leading-relaxed prose-figure:w-full prose-figure:p-0 dark:prose-invert md:prose-lg md:text-xl md:leading-relaxed lg:prose-xl'
+          'prose max-w-none font-serif text-lg leading-relaxed dark:prose-invert md:prose-lg md:text-xl md:leading-relaxed lg:prose-xl'
         }
       >
         <PortableText
