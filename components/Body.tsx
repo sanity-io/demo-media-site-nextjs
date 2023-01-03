@@ -56,7 +56,7 @@ const BodyImage = React.memo(function BodyImage({
       }
       img={
         <Image
-          className="block aspect-[4/2]"
+          className="block aspect-[4/2] w-full"
           alt={alt}
           src={urlForImage(image).height(1000).width(2000).url()}
           width={2000}
@@ -71,7 +71,7 @@ const BodyImage = React.memo(function BodyImage({
 const components = {
   block: {
     normal: ({children}: {children?: React.ReactNode}) => {
-      return <p className="my-4">{children}</p>
+      return <p className="my-4 max-w-prose">{children}</p>
     },
   },
   types: {
@@ -79,7 +79,7 @@ const components = {
       const {title, slug} = value
       const url = getUrlForDocumentType('article', slug)
       return (
-        <div className="text-black">
+        <div className="max-w-prose text-black">
           <p className="dark border border-gray-200 border-gray-900 p-4">
             <span className="font-bold">Read more:</span>{' '}
             <Link href={url} className="no-underline hover:underline">
@@ -151,7 +151,7 @@ export default function Body({
 
       <div
         className={
-          'prose font-serif text-lg leading-relaxed dark:prose-invert md:prose-lg md:text-xl md:leading-relaxed lg:prose-xl'
+          'prose max-w-none font-serif text-lg leading-relaxed prose-figure:w-full prose-figure:p-0 dark:prose-invert md:prose-lg md:text-xl md:leading-relaxed lg:prose-xl'
         }
       >
         <PortableText
