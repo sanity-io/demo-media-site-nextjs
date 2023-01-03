@@ -2,7 +2,6 @@
  * This config is used to set up Sanity Studio that's mounted on the `/pages/studio/[[...index]].tsx` route
  */
 
-//import {dashboardTool} from '@sanity/dashboard'
 import {scheduledPublishing} from '@sanity/scheduled-publishing'
 import {visionTool} from '@sanity/vision'
 import {theme} from 'https://themer.sanity.build/api/hues?preset=tw-cyan&primary=b595f9'
@@ -10,9 +9,8 @@ import {config, reviewConfig} from 'lib/config'
 import {defineConfig, definePlugin} from 'sanity'
 import {deskTool} from 'sanity/desk'
 import {unsplashImageAsset} from 'sanity-plugin-asset-source-unsplash'
+import {workflow} from 'sanity-plugin-workflow'
 
-// import DocumentsPane from 'sanity-plugin-documents-pane'
-// import {workflow} from 'sanity-plugin-workflow'
 import {
   LifestyleLogo,
   LifestyleWorkspaceLogo,
@@ -57,11 +55,11 @@ const defaultConfig = (type: string) => {
 
   if (type === 'tech') {
     const techPlugins = [
+      workflow({
+        schemaTypes: ['article'],
+      }),
       scheduledPublishing(),
       newsletterPlugin(),
-      // workflow({
-      //   schemaTypes: ['article'],
-      // }),
     ]
     techPlugins.forEach((plugin) => plugins.push(plugin))
   }
