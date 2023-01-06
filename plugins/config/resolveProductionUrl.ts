@@ -5,7 +5,7 @@ export type ProductionUrlDoc = SanityDocumentLike & {slug: any}
 
 export function resolveProductionUrl(doc: ProductionUrlDoc): string {
   const {slug, _type} = doc
-  const secret = config.previewSecret
+  const secret = config.sanity.previewSecretId
   const url = new URL('/api/preview', location.origin)
 
   if (_type !== 'siteSettings') {

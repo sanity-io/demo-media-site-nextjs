@@ -17,7 +17,7 @@ function redirectToPreview(res: NextApiResponse, Location: string) {
 }
 
 const preview: NextApiHandler = async (req, res): Promise<void> => {
-  const secret = config.previewSecret
+  const secret = config.sanity.previewSecretId
   // Check the secret if it's provided, enables running preview mode locally before the env var is setup
   if (secret && req.query.secret !== secret) {
     return res.status(401).json({message: 'Invalid secret'})
