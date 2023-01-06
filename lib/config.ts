@@ -16,9 +16,9 @@ export type Config = {
     apiVersion?: string
     readToken?: string
     writeToken?: string
+    previewSecretId: `${string}.${string}`
   }
   revalidateSecret?: string
-  previewSecret?: string
 }
 
 export const config: Config = {
@@ -45,9 +45,11 @@ export const config: Config = {
     apiVersion: '2022-03-13',
     readToken: process.env.SANITY_API_READ_TOKEN,
     writeToken: process.env.SANIY_API_WRITE_TOKEN,
+    previewSecretId: `preview.secret`,
   },
   revalidateSecret: process.env.SANIY_REVALIDATE_SECRET,
-  previewSecret: process.env.NEXT_PUBLIC_PREVIEW_SECRET,
+  // This is the document id used for the preview secret that's stored in your dataset.
+  // The secret protects against unauthorized access to your draft content and have a lifetime of 60 minutes, to protect against bruteforcing.
 }
 
 export const reviewConfig: Config = {
