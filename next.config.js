@@ -1,8 +1,6 @@
 /* eslint-disable no-process-env */
 /** @type {import('next').NextConfig} */
 module.exports = {
-  swcMinify: false,
-
   experimental: {urlImports: ['https://themer.sanity.build/']},
 
   images: {
