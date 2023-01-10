@@ -1,30 +1,65 @@
 import {config} from 'lib/config'
-import {NextApiHandler, NextApiResponse} from 'next'
+import {NextApiHandler, NextApiResponse, PageConfig} from 'next'
+import {createClient} from 'next-sanity'
+import {getSecret} from 'plugins/productionUrl/utils'
 
 import {
   articleBySlugQuery,
   personBySlugQuery,
   sectionBySlugQuery,
 } from '../../lib/queries'
-import {getClient} from '../../lib/sanity.server'
 
-function redirectToPreview(res: NextApiResponse, Location: string) {
+// res.setPreviewData only exists in the nodejs runtime, setting the config here allows changing the global runtime
+// option in next.config.mjs without breaking preview mode
+export const runtimeConfig: PageConfig = {runtime: 'nodejs'}
+
+function redirectToPreview(
+  res: NextApiResponse<string | void>,
+  previewData: {token?: string},
+  Location: '/' | `/${string}/${string}`
+): void {
   // Enable Preview Mode by setting the cookies
-  res.setPreviewData({})
+  res.setPreviewData(previewData)
   // Redirect to a preview capable route
   res.writeHead(307, {Location})
   res.end()
 }
 
+const {previewSecretId, projectId, dataset, apiVersion, useCdn, readToken} =
+  config.sanity
+const _client = createClient({projectId, dataset, apiVersion, useCdn})
+
 const preview: NextApiHandler = async (req, res): Promise<void> => {
-  const secret = config.sanity.previewSecretId
-  // Check the secret if it's provided, enables running preview mode locally before the env var is setup
-  if (secret && req.query.secret !== secret) {
+  const previewData: {token?: string} = {}
+
+  if (!req.query.secret) {
     return res.status(401).json({message: 'Invalid secret'})
   }
+
+  // If a secret is present in the URL, verify it and if valid we upgrade to token based preview mode, which works in Safari and Incognito mode
+  if (req.query.secret) {
+    if (!readToken) {
+      throw new Error(
+        `
+        A secret is provided but there is no \`SANITY_API_READ_TOKEN\` environment variable setup.
+        Please ensure \`SANITY_API_READ_TOKEN\` is in your environment,
+        and available in the \`config.ts\` file in the \`lib\` folder.
+        `
+      )
+    }
+    const client = _client.withConfig({useCdn: false, token: readToken})
+    const secret = await getSecret(client, previewSecretId)
+    if (req.query.secret !== secret) {
+      return res.status(401).send('Invalid secret')
+    }
+
+    previewData.token = readToken
+  }
+
   // If no slug is provided open preview mode on the frontpage
+  // add brand logic here
   if (!req.query.slug) {
-    return redirectToPreview(res, '/')
+    return redirectToPreview(res, previewData, '/')
   }
 
   // Check if content with given slug exists
@@ -34,28 +69,29 @@ const preview: NextApiHandler = async (req, res): Promise<void> => {
     req.query.slug &&
     (Array.isArray(req.query.slug) ? req.query.slug[0] : req.query.slug)
 
-  switch (req.query.type) {
-    case 'siteSettings':
-      return redirectToPreview(
-        res,
-        `/home/brand:${slug.replace('/?brand=', '')}`
-      )
+  //get document type
+  const client = _client.withConfig({useCdn: false, token: readToken})
+  const docType = await client.fetch(`*[slug.current == $slug][0]._type`, {
+    slug,
+  })
+
+  switch (docType) {
     case 'article':
       subpath = 'articles'
-      content = await getClient(true).fetch(articleBySlugQuery, {
-        slug: req.query.slug,
+      content = await client.fetch(articleBySlugQuery, {
+        slug,
       })
       break
     case 'section':
       subpath = 'sections'
-      content = await getClient(true).fetch(sectionBySlugQuery, {
-        slug: req.query.slug,
+      content = await client.fetch(sectionBySlugQuery, {
+        slug,
       })
       break
     case 'person':
       subpath = 'authors'
-      content = await getClient(true).fetch(personBySlugQuery, {
-        slug: req.query.slug,
+      content = await client.fetch(personBySlugQuery, {
+        slug,
       })
       break
     default:
@@ -64,14 +100,14 @@ const preview: NextApiHandler = async (req, res): Promise<void> => {
 
   // If the slug doesn't exist prevent preview mode from being enabled
   if (!content) {
-    return res.status(401).json({
-      message: `Invalid slug ${req.query.slug} for type ${req.query.type}`,
+    return res.status(404).json({
+      message: `No content found for ${req.query.slug} for type ${req.query.type}`,
     })
   }
 
   // Redirect to the path from the fetched post
   // We don't redirect to req.query.slug as that might lead to open redirect vulnerabilities
-  return redirectToPreview(res, `/${subpath}/${content.slug}`)
+  return redirectToPreview(res, previewData, `/${subpath}/${content.slug}`)
 }
 
 export default preview
