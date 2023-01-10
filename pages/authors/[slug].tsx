@@ -18,11 +18,11 @@ const PreviewAuthorPage = lazy(
 
 interface Props {
   data: AuthorProps
-  preview: any
+  previewData: {token?: string}
 }
 
 export default function Author(props: Props) {
-  const {data, preview} = props
+  const {data, previewData} = props
   const router = useRouter()
 
   const slug = data?.slug
@@ -35,10 +35,10 @@ export default function Author(props: Props) {
     return <Title>Loading…</Title>
   }
 
-  if (preview && slug) {
+  if (previewData?.token && slug) {
     return (
       <PreviewSuspense fallback={<AuthorPage author={data} />}>
-        <PreviewAuthorPage slug={slug} />
+        <PreviewAuthorPage slug={slug} token={previewData.token} />
       </PreviewSuspense>
     )
   }
@@ -49,13 +49,14 @@ export default function Author(props: Props) {
 export const getStaticProps: GetStaticProps = async ({
   params,
   preview = false,
+  previewData = {},
 }) => {
   const person = await getClient(preview).fetch(personBySlugQuery, {
     slug: params?.slug,
   })
   return {
     props: {
-      preview,
+      previewData,
       data: {
         ...person,
         articles: overlayDrafts(person?.articles),

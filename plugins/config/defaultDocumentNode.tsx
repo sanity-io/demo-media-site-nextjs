@@ -1,9 +1,9 @@
+import {PreviewPane} from 'plugins/PreviewPane'
+import React from 'react'
 import {DefaultDocumentNodeResolver} from 'sanity/desk'
 import DocumentsPane from 'sanity-plugin-documents-pane'
-import Iframe from 'sanity-plugin-iframe-pane'
 
 import {NewsletterPreview} from '../newsletter'
-import {ProductionUrlDoc, resolveProductionUrl} from './resolveProductionUrl'
 
 const defaultDocumentNode: DefaultDocumentNodeResolver = (S, {schemaType}) => {
   const articleReferenceTypes = ['person', 'section']
@@ -13,13 +13,7 @@ const defaultDocumentNode: DefaultDocumentNodeResolver = (S, {schemaType}) => {
   if (previewTypes.includes(schemaType)) {
     views.push(
       S.view
-        .component(Iframe)
-        .options({
-          url: (doc: ProductionUrlDoc) => resolveProductionUrl(doc),
-          reload: {
-            button: true,
-          },
-        })
+        .component(({document}) => <PreviewPane document={document} />)
         .title('Preview')
     )
   }

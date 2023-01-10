@@ -1,7 +1,8 @@
+import {PreviewPane} from 'plugins/PreviewPane'
+import React from 'react'
 import {FiSliders} from 'react-icons/fi'
 import {ConfigContext} from 'sanity'
 import {StructureBuilder} from 'sanity/desk'
-import Iframe from 'sanity-plugin-iframe-pane'
 
 import {
   Brand,
@@ -10,7 +11,6 @@ import {
   SchemaItem,
   SchemaSiteSettings,
 } from '../../lib/constants'
-import {ProductionUrlDoc, resolveProductionUrl} from './resolveProductionUrl'
 
 const createSchemaItem = (
   S: StructureBuilder,
@@ -34,14 +34,7 @@ const createSchemaItem = (
             .views([
               S.view.form(),
               S.view
-                .component(Iframe)
-                .options({
-                  url: (doc: ProductionUrlDoc) => resolveProductionUrl(doc),
-                  reload: {
-                    button: true,
-                    revision: false,
-                  },
-                })
+                .component(({document}) => <PreviewPane document={document} />)
                 .title('Preview'),
             ])
         )

@@ -10,15 +10,15 @@ export type Config = {
 
   sanity: {
     projectId: string
-    projectTitle?: string
     dataset: string
+    apiVersion: string
+    projectTitle?: string
     useCdn?: boolean
-    apiVersion?: string
     readToken?: string
     writeToken?: string
+    previewSecretId: `${string}.${string}`
   }
   revalidateSecret?: string
-  previewSecret?: string
 }
 
 export const config: Config = {
@@ -31,8 +31,9 @@ export const config: Config = {
   },
   sanity: {
     projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || '',
-    projectTitle: process.env.NEXT_PUBLIC_SANITY_PROJECT_TITLE,
     dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
+    apiVersion: '2022-03-13',
+    projectTitle: process.env.NEXT_PUBLIC_SANITY_PROJECT_TITLE,
     // useCdn == true gives fast, cheap responses using a globally distributed cache.
     // When in production the Sanity API is only queried on build-time, and on-demand when responding to webhooks.
     // Thus the data need to be fresh and API response time is less important.
@@ -42,12 +43,13 @@ export const config: Config = {
     // see https://www.sanity.io/docs/api-versioning for how versioning works
     useCdn:
       typeof document !== 'undefined' && process.env.NODE_ENV === 'production',
-    apiVersion: '2022-03-13',
     readToken: process.env.SANITY_API_READ_TOKEN,
     writeToken: process.env.SANIY_API_WRITE_TOKEN,
+    previewSecretId: `preview.secret`,
   },
   revalidateSecret: process.env.SANIY_REVALIDATE_SECRET,
-  previewSecret: process.env.NEXT_PUBLIC_PREVIEW_SECRET,
+  // This is the document id used for the preview secret that's stored in your dataset.
+  // The secret protects against unauthorized access to your draft content and have a lifetime of 60 minutes, to protect against bruteforcing.
 }
 
 export const reviewConfig: Config = {
