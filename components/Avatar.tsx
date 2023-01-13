@@ -2,9 +2,9 @@ import Image from 'next/image'
 import * as React from 'react'
 
 import {urlForImage} from '../lib/sanity'
-import {AuthorProps} from '../types'
+import {Author} from '../types'
 
-export default function Avatar(props: AuthorProps) {
+export default function Avatar(props: Author) {
   const {name, image} = props
   return (
     <div className="flex items-center">

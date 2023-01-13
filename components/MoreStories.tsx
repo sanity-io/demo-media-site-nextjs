@@ -1,6 +1,6 @@
 import React, {useMemo} from 'react'
 
-import {ArticleProps} from '../types'
+import {Article, isArticle, Review} from '../types'
 import {BRAND_LIFESTYLE_NAME, isLifestyle} from '../utils/brand'
 import {useHomepageArticles} from '../utils/useHomepageArticles'
 import ArticlePreview from './ArticlePreview'
@@ -12,7 +12,7 @@ function StorySection({
   sectionType,
   brandName,
 }: {
-  articles?: ArticleProps[]
+  articles?: (Article | Review)[]
   title?: string
   columns?: number
   sectionType?: 'featured' | 'normal'
@@ -37,21 +37,34 @@ function StorySection({
 
         <div className="font-merriweather container mx-auto">
           <div className={gridClass}>
-            {articles?.map((article) => (
-              <ArticlePreview
-                key={article?.slug}
-                title={article?.title}
-                mainImage={article?.mainImage}
-                date={article?.date}
-                people={article?.people}
-                slug={article?.slug}
-                intro={article?.intro}
-                sectionType={sectionType}
-                isHighlighted={Boolean(article?.isHighlighted)}
-                brandName={brandName}
-                sections={article?.sections}
-              />
-            ))}
+            {articles?.map((article) => {
+              const baseProps = {
+                title: article?.title,
+                mainImage: article?.mainImage,
+                slug: article?.slug,
+                intro: article?.intro,
+                sectionType,
+                isHighlighted: Boolean(article?.isHighlighted),
+                brandName,
+              }
+
+              let additionalProps = {}
+
+              if (isArticle(article)) {
+                additionalProps = {
+                  date: article?.date,
+                  people: article?.people,
+                  sections: article?.sections,
+                }
+              }
+
+              const props = {
+                ...baseProps,
+                ...additionalProps,
+              }
+
+              return <ArticlePreview key={article?.slug} {...props} />
+            })}
           </div>
         </div>
       </section>
@@ -63,19 +76,34 @@ function StorySection({
       <h2 className="sr-only">Articles</h2>
       <div className="font-merriweather container mx-auto">
         <div className="divide-y divide-gray-200 rounded border-t border-b border-gray-200 dark:divide-gray-900 dark:border-gray-900 md:border">
-          {articles?.map((article) => (
-            <ArticlePreview
-              key={article?.slug}
-              title={article?.title}
-              mainImage={article?.mainImage}
-              date={article?.date}
-              people={article?.people}
-              slug={article?.slug}
-              intro={article?.intro}
-              brandName={brandName}
-              sections={article?.sections}
-            />
-          ))}
+          {articles?.map((article) => {
+            const baseProps = {
+              title: article?.title,
+              mainImage: article?.mainImage,
+              slug: article?.slug,
+              intro: article?.intro,
+              sectionType,
+              isHighlighted: Boolean(article?.isHighlighted),
+              brandName,
+            }
+
+            let additionalProps = {}
+
+            if (isArticle(article)) {
+              additionalProps = {
+                date: article?.date,
+                people: article?.people,
+                sections: article?.sections,
+              }
+            }
+
+            const props = {
+              ...baseProps,
+              ...additionalProps,
+            }
+
+            return <ArticlePreview key={article?.slug} {...props} />
+          })}
         </div>
       </div>
     </section>
@@ -86,7 +114,7 @@ export default function MoreStories({
   articles,
   brandName,
 }: {
-  articles: ArticleProps[]
+  articles: (Article | Review)[]
   brandName?: string
 }) {
   const {topArticles, restArticles} = useHomepageArticles(articles, brandName)
@@ -124,19 +152,33 @@ export default function MoreStories({
       <h2 className="sr-only">Articles</h2>
       <div className="font-merriweather container mx-auto">
         <div className="divide-y divide-gray-200 border-gray-200 dark:divide-gray-900 dark:border-gray-900 sm:rounded sm:border-t sm:border-b md:border">
-          {articles?.map((article) => (
-            <ArticlePreview
-              key={article?.slug}
-              title={article?.title}
-              mainImage={article?.mainImage}
-              date={article?.date}
-              people={article?.people}
-              slug={article?.slug}
-              intro={article?.intro}
-              brandName={brandName}
-              sections={article?.sections}
-            />
-          ))}
+          {articles?.map((article) => {
+            const baseProps = {
+              title: article?.title,
+              mainImage: article?.mainImage,
+              slug: article?.slug,
+              intro: article?.intro,
+              isHighlighted: Boolean(article?.isHighlighted),
+              brandName,
+            }
+
+            let additionalProps = {}
+
+            if (isArticle(article)) {
+              additionalProps = {
+                date: article?.date,
+                people: article?.people,
+                sections: article?.sections,
+              }
+            }
+
+            const props = {
+              ...baseProps,
+              ...additionalProps,
+            }
+
+            return <ArticlePreview key={article?.slug} {...props} />
+          })}
         </div>
       </div>
     </section>

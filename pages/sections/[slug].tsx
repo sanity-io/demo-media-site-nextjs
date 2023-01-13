@@ -10,7 +10,7 @@ import SectionPage from '../../components/SectionPage'
 import Title from '../../components/Title'
 import {sectionBySlugQuery, sectionSlugsQuery} from '../../lib/queries'
 import {getClient, overlayDrafts} from '../../lib/sanity.server'
-import {ArticleProps} from '../../types'
+import {Article} from '../../types'
 import {getBrandName} from '../../utils/brand'
 
 const PreviewSectionPage = lazy(
@@ -18,7 +18,7 @@ const PreviewSectionPage = lazy(
 )
 
 interface Props {
-  data: {articles: ArticleProps[]; name: string; slug?: string}
+  data: {articles: Article[]; name: string; slug?: string}
   preview: any
 }
 

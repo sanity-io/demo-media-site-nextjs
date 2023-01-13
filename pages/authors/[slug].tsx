@@ -10,18 +10,18 @@ import AuthorPage from '../../components/AuthorPage'
 import Title from '../../components/Title'
 import {personBySlugQuery, personSlugsQuery} from '../../lib/queries'
 import {getClient, overlayDrafts} from '../../lib/sanity.server'
-import {AuthorProps} from '../../types'
+import {Author} from '../../types'
 
 const PreviewAuthorPage = lazy(
   () => import('../../components/PreviewAuthorPage')
 )
 
 interface Props {
-  data: AuthorProps
+  data: Author
   previewData: {token?: string}
 }
 
-export default function Author(props: Props) {
+export default function AuthorRoute(props: Props) {
   const {data, previewData} = props
   const router = useRouter()
 

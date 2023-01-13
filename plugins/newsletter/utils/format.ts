@@ -5,7 +5,7 @@ import type {
   PortableTextBlockStyle,
 } from '@portabletext/types'
 import {format, parseISO} from 'date-fns'
-import {ArticleProps} from 'types'
+import {Article} from 'types'
 
 import {urlForImage} from '../../../lib/sanity'
 
@@ -22,8 +22,8 @@ interface ModuleBlock {
 }
 
 type CustomBlock =
-  | (ArticleProps & {_type: 'article'})
-  | {_type: 'articleReferences'; references: ArticleProps[]}
+  | (Article & {_type: 'article'})
+  | {_type: 'articleReferences'; references: Article[]}
 
 function isCustomBlock(
   block: PortableTextBlock | CustomBlock

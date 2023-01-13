@@ -12,18 +12,18 @@ import LayoutLifestyle from '../../components/LayoutLifestyle'
 import Title from '../../components/Title'
 import {articleQuery, articleSlugsQuery} from '../../lib/queries'
 import {getClient, overlayDrafts} from '../../lib/sanity.server'
-import {ArticleProps} from '../../types'
+import {Article} from '../../types'
 
 const PreviewArticlePage = lazy(
   () => import('../../components/PreviewArticlePage')
 )
 
 interface Props {
-  data: {article: ArticleProps; moreArticles: any}
+  data: {article: Article; moreArticles: any}
   previewData: {token?: string}
 }
 
-export default function Article(props: Props) {
+export default function ArticleRoute(props: Props) {
   const {data, previewData} = props
   const article = data?.article
   const router = useRouter()
@@ -79,7 +79,7 @@ export async function getStaticPaths() {
   }
 }
 
-Article.getLayout = function getLayout(page: ReactElement) {
+ArticleRoute.getLayout = function getLayout(page: ReactElement) {
   const {data, preview} = page?.props
   if (data?.article?.brand == 'lifestyle') {
     return <LayoutLifestyle preview={preview}>{page}</LayoutLifestyle>

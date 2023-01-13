@@ -14,7 +14,7 @@ export const imageBuilder = createImageUrlBuilder({
   dataset: config.sanity.dataset,
 })
 
-export const urlForImage = (source: CrossDatasetSource) => {
+export const urlForImage = (source: SanityAsset | CrossDatasetSource) => {
   if (source?.asset?._dataset == 'reviews') {
     const reviewImageBuilder = createImageUrlBuilder({
       projectId: reviewConfig.sanity.projectId,

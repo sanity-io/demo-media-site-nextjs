@@ -15,7 +15,7 @@ import * as React from 'react'
 import {logError} from 'utils/logError'
 
 import {urlForImage} from '../lib/sanity'
-import {ArticlePreviewProps, ArticleProps, MainImage} from '../types'
+import {Article, ArticlePreviewProps, MainImage} from '../types'
 import {BRAND_LIFESTYLE_NAME, getBrandName} from '../utils/brand'
 import {getUrlForDocumentType} from '../utils/routing'
 import {Credits, PeopleList, usePeople} from './Credits'
@@ -34,8 +34,9 @@ const BodyImage = React.memo(function BodyImage({
   alt,
 }: MainImage) {
   const photographers = usePeople('photographer')
-  const hasPhotographers = photographers.length > 0
-  const separator = caption && photographers.length > 0 && ' ● '
+  const hasPhotographers = photographers && photographers.length > 0
+  const separator =
+    caption && photographers && photographers.length > 0 && ' ● '
 
   if (!image) {
     return <div />
@@ -75,7 +76,7 @@ const components = {
     },
   },
   types: {
-    article: ({value}: {value: ArticleProps}) => {
+    article: ({value}: {value: Article}) => {
       const {title, slug} = value
       const url = getUrlForDocumentType('article', slug)
       return (
