@@ -8,13 +8,13 @@ import {getClient, overlayDrafts} from 'lib/sanity.server'
 import {GetStaticPaths, GetStaticProps} from 'next'
 import {NextSeo} from 'next-seo'
 import * as React from 'react'
-import {ArticleProps} from 'types'
+import {Article, Review} from 'types'
 import {getBrandName, isLifestyle} from 'utils/brand'
 
 interface IndexProps {
-  allArticles: ArticleProps[]
+  allArticles: (Article | Review)[]
   preview: boolean
-  brand: string
+  brand?: string
 }
 export default function Index({allArticles, preview, brand}: IndexProps) {
   const metadata = isLifestyle()
@@ -76,7 +76,7 @@ export const getStaticProps: GetStaticProps = async ({
 
     const rawArticles = overlayDrafts(
       await getClient(preview).fetch(indexQuery, {brand})
-    ) as ArticleProps[]
+    ) as Article[]
 
     const allArticles = rawArticles.map((rawArticle) => {
       const {variations, ...article} = rawArticle

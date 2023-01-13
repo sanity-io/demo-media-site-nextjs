@@ -3,18 +3,18 @@ import Link from 'next/link'
 import React, {createContext, useContext} from 'react'
 
 import {urlForImage} from '../lib/sanity'
-import {ArticleProps} from '../types'
+import {Article} from '../types'
 import {BRAND_LIFESTYLE_NAME} from '../utils/brand'
 import {getUrlForDocumentType} from '../utils/routing'
 import Date from './Date'
 
-const PeopleContext = createContext<ArticleProps['people']>([])
+const PeopleContext = createContext<Article['people']>([])
 
 export function PeopleProvider({
   people,
   children,
 }: {
-  people: ArticleProps['people']
+  people: Article['people']
   children: React.ReactNode
 }) {
   return (
@@ -25,8 +25,8 @@ export function PeopleProvider({
 // Create a hook that uses the PeopleContext and filters the list of people based on their role
 export function usePeople(role: string) {
   try {
-    const people = useContext<ArticleProps['people']>(PeopleContext)
-    return people.filter((person) => person.role === role)
+    const people = useContext<Article['people']>(PeopleContext)
+    return people?.filter((person) => person.role === role)
   } catch (e) {
     return []
   }
@@ -43,7 +43,7 @@ export function Credits({
 }) {
   const people = usePeople(role)
   const isLifestyle = brandName === BRAND_LIFESTYLE_NAME
-  if (isLifestyle) {
+  if (isLifestyle && people) {
     const [firstPerson] = people
 
     return (
@@ -103,7 +103,7 @@ export function Credits({
   )
 }
 
-export const PeopleList = ({people}: {people: ArticleProps['people']}) => {
+export const PeopleList = ({people}: {people: Article['people']}) => {
   return (
     <>
       {people?.length &&

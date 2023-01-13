@@ -1,13 +1,13 @@
 import {NextSeo} from 'next-seo'
 import * as React from 'react'
 
-import {AuthorProps} from '../types'
+import {Author} from '../types'
 import Body from './Body'
 import Container from './Container'
 import MoreStories from './MoreStories'
 import Title from './Title'
 
-export default function AuthorPage({author}: {author: AuthorProps}) {
+export default function AuthorPage({author}: {author: Author}) {
   const {name, bio, articles} = author || {}
   return (
     <Container>

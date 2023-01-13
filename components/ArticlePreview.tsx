@@ -3,7 +3,7 @@ import cn from 'classnames'
 import Link from 'next/link'
 import * as React from 'react'
 
-import {ArticleProps} from '../types'
+import {ArticlePreviewProps} from '../types'
 import {BRAND_LIFESTYLE_NAME, isLifestyle} from '../utils/brand'
 import {getUrlForDocumentType} from '../utils/routing'
 import {useRandom} from '../utils/useRandom'
@@ -41,18 +41,6 @@ const CATS = [
   'Fashion',
   'Christmas',
 ]
-
-type ArticlePreviewProps = Pick<
-  ArticleProps,
-  | 'title'
-  | 'mainImage'
-  | 'date'
-  | 'intro'
-  | 'people'
-  | 'sections'
-  | 'isHighlighted'
-  | 'slug'
-> & {sectionType?: 'featured' | 'normal'}
 
 export default function ArticlePreview({
   title,
@@ -194,10 +182,10 @@ export default function ArticlePreview({
 
         <div className="mt-4 text-sm md:mt-auto">
           <span
-            data-after={people?.length > 0 ? ' ● ' : ''}
+            data-after={people && people?.length > 0 ? ' ● ' : ''}
             className="after:inline after:content-[attr(data-after)]"
           >
-            <Date dateString={date} />
+            {date && <Date dateString={date} />}
           </span>
           <PeopleList people={people} />
         </div>

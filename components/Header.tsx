@@ -5,16 +5,13 @@ import React from 'react'
 import {logError} from 'utils/logError'
 
 import {urlForImage} from '../lib/sanity'
-import {ArticleProps, BrandSpecificProps, MainImage} from '../types'
+import {Article, BrandSpecificProps, MainImage} from '../types'
 import {BRAND_LIFESTYLE_NAME, getBrandName} from '../utils/brand'
 import {getUrlForDocumentType} from '../utils/routing'
 import {PeopleList, usePeople} from './Credits'
 import {Figure} from './Figure'
 
-type HeaderProps = Pick<
-  ArticleProps,
-  'title' | 'mainImage' | 'sections' | 'intro'
->
+type HeaderProps = Pick<Article, 'title' | 'mainImage' | 'sections' | 'intro'>
 
 export default function Header(props: HeaderProps & BrandSpecificProps) {
   const {title, mainImage, intro, sections, brand} = props
@@ -54,7 +51,7 @@ export default function Header(props: HeaderProps & BrandSpecificProps) {
   )
 }
 
-type HeaderLifestyleProps = Pick<ArticleProps, 'title' | 'mainImage'>
+type HeaderLifestyleProps = Pick<Article, 'title' | 'mainImage'>
 
 export function HeaderLifestyle(props: HeaderLifestyleProps) {
   const {title, mainImage} = props
@@ -91,14 +88,15 @@ function MainCoverImage({
   brandName?: string
 }) {
   const photographers = usePeople('photographer')
-  const hasPhotographers = photographers.length > 0
-  const separator = mainImage?.caption && photographers.length > 0 && ' ● '
+  const hasPhotographers = photographers && photographers.length > 0
+  const separator =
+    mainImage?.caption && photographers && photographers.length > 0 && ' ● '
 
   return (
     <>
       <Figure
         caption={
-          (mainImage?.caption || photographers?.length > 0) && (
+          (mainImage?.caption || hasPhotographers) && (
             <span className="font-sans">
               {mainImage.caption}
               {separator}
@@ -137,7 +135,7 @@ function MainCoverImage({
   )
 }
 
-type SectionLinkProps = Pick<ArticleProps, 'sections'>
+type SectionLinkProps = Pick<Article, 'sections'>
 
 function SectionLinks({sections}: SectionLinkProps) {
   return (

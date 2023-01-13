@@ -12,7 +12,7 @@ interface CoverImageProps {
   wrapperClassName?: string
   aspectClass?: string
   slug?: string
-  image: {
+  image?: {
     alt?: string
     image: any
   }

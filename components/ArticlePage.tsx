@@ -2,14 +2,14 @@ import {NextSeo} from 'next-seo'
 import * as React from 'react'
 
 import openGraphObjectFromDocument from '../lib/openGraphObjectFromDocument'
-import {ArticleProps} from '../types'
+import {Article} from '../types'
 import Body from './Body'
 import Container from './Container'
 import {PeopleProvider} from './Credits'
 import Header from './Header'
 
 interface ArticleComponentProps {
-  article?: ArticleProps
+  article?: Article
 }
 
 export default function ArticlePage({article}: ArticleComponentProps) {

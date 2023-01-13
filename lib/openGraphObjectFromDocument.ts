@@ -1,4 +1,4 @@
-import {ArticleProps} from 'types'
+import {Article} from 'types'
 
 import {urlForImage} from './sanity'
 
@@ -11,7 +11,7 @@ interface OpenGraphObject {
 }
 
 export default function openGraphObjectFromDocument(
-  document: ArticleProps
+  document: Article
 ): OpenGraphObject {
   // article.mainImage?.image?.asset?._ref
   return {
