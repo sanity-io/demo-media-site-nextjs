@@ -40,6 +40,11 @@ export const productionUrl = definePlugin<{
           url.searchParams.set('slug', slug)
         }
 
+        const brand = document.brand as string
+        if (brand) {
+          url.searchParams.set('brand', brand)
+        }
+
         if (types.has(document._type)) {
           url.searchParams.set('type', document._type)
           return url.toString()

@@ -2,6 +2,7 @@
 export type Config = {
   env: string
   brand: string
+  lifestyleBrand: string
   git: {
     repoOwner?: string
     repoProvider?: string
@@ -24,6 +25,7 @@ export type Config = {
 export const config: Config = {
   env: process.env.NODE_ENV || 'development',
   brand: process.env.NEXT_PUBLIC_BRAND || 'tech',
+  lifestyleBrand: process.env.NEXT_PUBLIC_LIFESTYLE_BRAND || 'lifestyle',
   git: {
     repoOwner: process.env.NEXT_PUBLIC_GIT_REPO_OWNER,
     repoProvider: process.env.NEXT_PUBLIC_GIT_REPO_PROVIDER,

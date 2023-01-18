@@ -78,7 +78,7 @@ const components = {
   types: {
     article: ({value}: {value: Article}) => {
       const {title, slug} = value
-      const url = getUrlForDocumentType('article', slug)
+      const url = getUrlForDocumentType('article', slug, value.brand)
       return (
         <div className="max-w-prose text-black">
           <p className="dark border border-gray-200 border-gray-900 p-4">
@@ -95,6 +95,7 @@ const components = {
     },
     reviewReference: ({value}: {value: ArticlePreviewProps}) => {
       const {title, slug} = value
+      //infer the brand from context
       const url = getUrlForDocumentType('review', slug)
       return (
         <div className="text-black">

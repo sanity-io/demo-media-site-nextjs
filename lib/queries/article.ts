@@ -59,7 +59,7 @@ export const indexQuery = groq`
 
 export const articleQuery = groq`
 {
-  "article": *[_type == "article" && slug.current == $slug] | order(_updatedAt desc) [0] {
+  "article": *[_type == "article" && slug.current == $slug && brand == $brand] | order(_updatedAt desc) [0] {
     ${articleContentFields}
     ${articleFields}
   },
@@ -70,11 +70,14 @@ export const articleQuery = groq`
 }`
 
 export const articleSlugsQuery = groq`
-*[_type == "article" && defined(slug.current)][].slug.current
+*[_type == "article" && defined(slug.current)][]{
+  brand,
+  "slug": slug.current,
+}
 `
 
 export const articleBySlugQuery = groq`
-*[_type == "article" && slug.current == $slug][0] {
+*[_type == "article" && slug.current == $slug && brand == $brand][0] {
   ${articleFields}
 }
 `

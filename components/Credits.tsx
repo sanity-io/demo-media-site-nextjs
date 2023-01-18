@@ -75,7 +75,11 @@ export function Credits({
                 <span className="italic">by </span>
                 <span className="uppercase">
                   <Link
-                    href={getUrlForDocumentType('person', firstPerson?.slug)}
+                    href={getUrlForDocumentType(
+                      'person',
+                      firstPerson?.slug,
+                      firstPerson?.brand
+                    )}
                   >
                     {firstPerson.name}
                   </Link>
