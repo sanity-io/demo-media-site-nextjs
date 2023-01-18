@@ -70,7 +70,9 @@ export const getStaticProps: GetStaticProps = async ({
 export async function getStaticPaths() {
   const paths = await getClient(false).fetch(personSlugsQuery)
   return {
-    paths: paths.map((slug: string) => ({params: {slug}})),
+    paths: paths.map(({brand, slug}: {brand: string; slug: string}) => ({
+      params: {slug, brand},
+    })),
     fallback: true,
   }
 }

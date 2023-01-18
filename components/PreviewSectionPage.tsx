@@ -3,13 +3,18 @@ import * as React from 'react'
 
 import {sectionBySlugQuery} from '../lib/queries'
 import {usePreview} from '../lib/sanity.preview'
-import {getBrandName} from '../utils/brand'
 import SectionPage from './SectionPage'
 
-export default function PreviewSectionPage({slug}: {slug: string}) {
+export default function PreviewSectionPage({
+  slug,
+  brand,
+}: {
+  slug: string
+  brand: string
+}) {
   const section = usePreview(null, sectionBySlugQuery, {
     slug,
-    brand: getBrandName(),
+    brand,
   })
   return <SectionPage section={section} />
 }

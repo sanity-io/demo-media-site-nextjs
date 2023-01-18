@@ -6,6 +6,7 @@ export const sectionFields = groq`
   _id,
   _type,
   name,
+  brand,
   "slug": slug.current,
 `
 
@@ -22,5 +23,8 @@ export const sectionBySlugQuery = groq`*[_type == "section" && slug.current == $
 }`
 
 export const sectionSlugsQuery = groq`
-*[_type == "section" && defined(slug.current)][].slug.current
+*[_type == "section" && defined(slug.current)][]{
+  "slug": slug.current,
+  brand
+}
 `

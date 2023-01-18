@@ -11,14 +11,13 @@ import Title from '../../../components/Title'
 import {sectionBySlugQuery, sectionSlugsQuery} from '../../../lib/queries'
 import {getClient, overlayDrafts} from '../../../lib/sanity.server'
 import {Article} from '../../../types'
-import {getBrandName} from '../../../utils/brand'
 
 const PreviewSectionPage = lazy(
   () => import('../../../components/PreviewSectionPage')
 )
 
 interface Props {
-  data: {articles: Article[]; name: string; slug?: string}
+  data: {articles: Article[]; name: string; slug?: string; brand?: string}
   preview: any
 }
 
@@ -27,6 +26,7 @@ export default function Section(props: Props) {
   const router = useRouter()
 
   const slug = data?.slug
+  const brand = data?.brand ?? 'tech'
 
   if (!router.isFallback && !slug) {
     return <ErrorPage statusCode={404} />
@@ -39,7 +39,7 @@ export default function Section(props: Props) {
   if (preview && slug) {
     return (
       <PreviewSuspense fallback={<SectionPage section={data} />}>
-        <PreviewSectionPage slug={slug} />
+        <PreviewSectionPage slug={slug} brand={brand} />
       </PreviewSuspense>
     )
   }
@@ -53,7 +53,7 @@ export const getStaticProps: GetStaticProps = async ({
 }) => {
   const section = await getClient(preview).fetch(sectionBySlugQuery, {
     slug: params?.slug,
-    brand: getBrandName(),
+    brand: params?.brand,
   })
   return {
     props: {
@@ -71,7 +71,9 @@ export const getStaticProps: GetStaticProps = async ({
 export async function getStaticPaths() {
   const paths = await getClient(false).fetch(sectionSlugsQuery)
   return {
-    paths: paths.map((slug: string) => ({params: {slug}})),
+    paths: paths.map(({brand, slug}: {brand: string; slug: string}) => ({
+      params: {slug, brand},
+    })),
     fallback: true,
   }
 }
