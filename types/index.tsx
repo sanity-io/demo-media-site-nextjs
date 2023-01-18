@@ -7,6 +7,7 @@ export interface Author {
   bio: Block[]
   role: string
   articles?: Article[]
+  brand?: 'tech' | 'lifestyle'
 }
 
 export interface Section {
@@ -14,6 +15,7 @@ export interface Section {
   name: string
   slug?: string
   articles?: Article[]
+  brand?: 'tech' | 'lifestyle'
 }
 
 export interface Article {

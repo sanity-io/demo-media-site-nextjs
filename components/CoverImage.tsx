@@ -12,6 +12,7 @@ interface CoverImageProps {
   wrapperClassName?: string
   aspectClass?: string
   slug?: string
+  brand?: string
   image?: {
     alt?: string
     image: any
@@ -25,6 +26,7 @@ export default function CoverImage(props: CoverImageProps) {
   const {
     title,
     slug,
+    brand,
     image: source,
     priority,
     className,
@@ -60,7 +62,10 @@ export default function CoverImage(props: CoverImageProps) {
   return (
     <div className={cn(wrapperClassName, 'sm:mx-0')}>
       {slug ? (
-        <Link href={getUrlForDocumentType('article', slug)} aria-label={title}>
+        <Link
+          href={getUrlForDocumentType('article', slug, brand)}
+          aria-label={title}
+        >
           {image}
         </Link>
       ) : (

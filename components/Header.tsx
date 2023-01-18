@@ -145,7 +145,11 @@ function SectionLinks({sections}: SectionLinkProps) {
           section && section._id && section.slug ? (
             <Link
               key={section._id}
-              href={getUrlForDocumentType('section', section.slug)}
+              href={getUrlForDocumentType(
+                'section',
+                section.slug,
+                section.brand
+              )}
               data-after=" ● "
               className="after:inline after:content-[attr(data-after)] last:after:hidden hover:text-blue-500"
             >

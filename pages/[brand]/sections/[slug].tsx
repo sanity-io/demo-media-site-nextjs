@@ -10,18 +10,18 @@ import SectionPage from '../../../components/SectionPage'
 import Title from '../../../components/Title'
 import {sectionBySlugQuery, sectionSlugsQuery} from '../../../lib/queries'
 import {getClient, overlayDrafts} from '../../../lib/sanity.server'
-import {Article} from '../../../types'
+import {Section} from '../../../types'
 
 const PreviewSectionPage = lazy(
   () => import('../../../components/PreviewSectionPage')
 )
 
 interface Props {
-  data: {articles: Article[]; name: string; slug?: string; brand?: string}
+  data: Section
   preview: any
 }
 
-export default function Section(props: Props) {
+export default function SectionRoute(props: Props) {
   const {data, preview} = props
   const router = useRouter()
 
