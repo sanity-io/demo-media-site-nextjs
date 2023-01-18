@@ -11,12 +11,14 @@ function StorySection({
   columns = 4,
   sectionType,
   brandName,
+  token,
 }: {
   articles?: (Article | Review)[]
   title?: string
   columns?: number
   sectionType?: 'featured' | 'normal'
   brandName?: string
+  token?: string
 }) {
   const isLifestyleBrand = brandName === BRAND_LIFESTYLE_NAME || isLifestyle()
   // Sorry for the mess, but this was the only way I could get the correct borders to work in all breakpoints, in light and dark mode :grimacing:
@@ -113,9 +115,11 @@ function StorySection({
 export default function MoreStories({
   articles,
   brandName,
+  token,
 }: {
   articles: (Article | Review)[]
   brandName?: string
+  token?: string
 }) {
   const {topArticles, restArticles} = useHomepageArticles(articles, brandName)
   const isLifestyleBrand = brandName === BRAND_LIFESTYLE_NAME || isLifestyle()
@@ -129,6 +133,7 @@ export default function MoreStories({
               articles={topArticles}
               sectionType="featured"
               brandName={brandName}
+              token={token}
             />
           </>
         )}
@@ -140,6 +145,7 @@ export default function MoreStories({
               columns={3}
               sectionType="normal"
               brandName={brandName}
+              token={token}
             />
           </>
         )}
