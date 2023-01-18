@@ -16,7 +16,7 @@ export const runtimeConfig: PageConfig = {runtime: 'nodejs'}
 function redirectToPreview(
   res: NextApiResponse<string | void>,
   previewData: {token?: string},
-  Location: '/' | `${string}/${string}/${string}`
+  Location: `/${string}` | `${string}/${string}/${string}`
 ): void {
   // Enable Preview Mode by setting the cookies
   res.setPreviewData(previewData)
@@ -56,17 +56,18 @@ const preview: NextApiHandler = async (req, res): Promise<void> => {
     previewData.token = readToken
   }
 
+  const slug = req.query.slug
+  const brand = req.query.brand ?? 'tech'
+
   // If no slug is provided open preview mode on the frontpage
   // add brand logic here
-  if (!req.query.slug) {
-    return redirectToPreview(res, previewData, '/')
+  if (!slug) {
+    return redirectToPreview(res, previewData, `/${brand}`)
   }
 
   // Check if content with given slug exists
   let content = {slug: ''}
   let subpath = ''
-  const slug = req.query.slug
-  const brand = req.query.brand ?? 'tech'
 
   //get document type
   const client = _client.withConfig({useCdn: false, token: readToken})
