@@ -16,7 +16,7 @@ export const runtimeConfig: PageConfig = {runtime: 'nodejs'}
 function redirectToPreview(
   res: NextApiResponse<string | void>,
   previewData: {token?: string},
-  Location: '/' | `/${string}/${string}`
+  Location: '/' | `${string}/${string}/${string}`
 ): void {
   // Enable Preview Mode by setting the cookies
   res.setPreviewData(previewData)
@@ -65,9 +65,8 @@ const preview: NextApiHandler = async (req, res): Promise<void> => {
   // Check if content with given slug exists
   let content = {slug: ''}
   let subpath = ''
-  const slug =
-    req.query.slug &&
-    (Array.isArray(req.query.slug) ? req.query.slug[0] : req.query.slug)
+  const slug = req.query.slug
+  const brand = req.query.brand ?? 'tech'
 
   //get document type
   const client = _client.withConfig({useCdn: false, token: readToken})
@@ -80,12 +79,14 @@ const preview: NextApiHandler = async (req, res): Promise<void> => {
       subpath = 'articles'
       content = await client.fetch(articleBySlugQuery, {
         slug,
+        brand,
       })
       break
     case 'section':
       subpath = 'sections'
       content = await client.fetch(sectionBySlugQuery, {
         slug,
+        brand,
       })
       break
     case 'person':
@@ -107,7 +108,11 @@ const preview: NextApiHandler = async (req, res): Promise<void> => {
 
   // Redirect to the path from the fetched post
   // We don't redirect to req.query.slug as that might lead to open redirect vulnerabilities
-  return redirectToPreview(res, previewData, `/${subpath}/${content.slug}`)
+  return redirectToPreview(
+    res,
+    previewData,
+    `/${brand}/${subpath}/${content.slug}`
+  )
 }
 
 export default preview

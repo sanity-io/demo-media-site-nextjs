@@ -6,15 +6,15 @@ import {PreviewSuspense} from 'next-sanity/preview'
 import {lazy} from 'react'
 import * as React from 'react'
 
-import SectionPage from '../../components/SectionPage'
-import Title from '../../components/Title'
-import {sectionBySlugQuery, sectionSlugsQuery} from '../../lib/queries'
-import {getClient, overlayDrafts} from '../../lib/sanity.server'
-import {Article} from '../../types'
-import {getBrandName} from '../../utils/brand'
+import SectionPage from '../../../components/SectionPage'
+import Title from '../../../components/Title'
+import {sectionBySlugQuery, sectionSlugsQuery} from '../../../lib/queries'
+import {getClient, overlayDrafts} from '../../../lib/sanity.server'
+import {Article} from '../../../types'
+import {getBrandName} from '../../../utils/brand'
 
 const PreviewSectionPage = lazy(
-  () => import('../../components/PreviewSectionPage')
+  () => import('../../../components/PreviewSectionPage')
 )
 
 interface Props {

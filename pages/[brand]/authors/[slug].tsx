@@ -6,14 +6,14 @@ import {PreviewSuspense} from 'next-sanity/preview'
 import {lazy} from 'react'
 import * as React from 'react'
 
-import AuthorPage from '../../components/AuthorPage'
-import Title from '../../components/Title'
-import {personBySlugQuery, personSlugsQuery} from '../../lib/queries'
-import {getClient, overlayDrafts} from '../../lib/sanity.server'
-import {Author} from '../../types'
+import AuthorPage from '../../../components/AuthorPage'
+import Title from '../../../components/Title'
+import {personBySlugQuery, personSlugsQuery} from '../../../lib/queries'
+import {getClient, overlayDrafts} from '../../../lib/sanity.server'
+import {Author} from '../../../types'
 
 const PreviewAuthorPage = lazy(
-  () => import('../../components/PreviewAuthorPage')
+  () => import('../../../components/PreviewAuthorPage')
 )
 
 interface Props {
