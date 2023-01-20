@@ -10,7 +10,7 @@ import {suspend} from 'suspend-react'
 
 type Props = {
   document: {
-    displayed: SanityDocumentLike & {slug?: SlugValue}
+    displayed: SanityDocumentLike & {slug?: SlugValue; brand?: string}
   }
 }
 
@@ -20,6 +20,7 @@ const fetchSecret = Symbol('preview.secret')
 export const PreviewPane = memo(function PreviewPane({document}: Props) {
   const {apiVersion, previewSecretId} = config.sanity
   const slug = document.displayed.slug?.current ?? ''
+  const brand = document.displayed.brand
 
   const client = useClient({apiVersion: `${apiVersion}`})
 
@@ -31,6 +32,10 @@ export const PreviewPane = memo(function PreviewPane({document}: Props) {
   )
 
   const url = new URL('/api/preview', location.origin)
+  if (brand) {
+    url.searchParams.set('brand', brand)
+  }
+
   url.searchParams.set('slug', slug)
   if (secret) {
     url.searchParams.set('secret', secret)
