@@ -24,5 +24,8 @@ export const personBySlugQuery = groq`*[_type == "person" && slug.current == $sl
 }`
 
 export const personSlugsQuery = groq`
-*[_type == "person" && defined(slug.current)][].slug.current
+*[_type == "person" && defined(slug.current)][]{
+  "slug": slug.current,
+  brand
+}
 `

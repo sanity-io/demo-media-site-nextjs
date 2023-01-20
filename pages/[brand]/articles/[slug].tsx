@@ -7,15 +7,15 @@ import {PreviewSuspense} from 'next-sanity/preview'
 import {lazy, ReactElement} from 'react'
 import * as React from 'react'
 
-import ArticlePage from '../../components/ArticlePage'
-import LayoutLifestyle from '../../components/LayoutLifestyle'
-import Title from '../../components/Title'
-import {articleQuery, articleSlugsQuery} from '../../lib/queries'
-import {getClient, overlayDrafts} from '../../lib/sanity.server'
-import {Article} from '../../types'
+import ArticlePage from '../../../components/ArticlePage'
+import LayoutLifestyle from '../../../components/LayoutLifestyle'
+import Title from '../../../components/Title'
+import {articleQuery, articleSlugsQuery} from '../../../lib/queries'
+import {getClient, overlayDrafts} from '../../../lib/sanity.server'
+import {Article} from '../../../types'
 
 const PreviewArticlePage = lazy(
-  () => import('../../components/PreviewArticlePage')
+  () => import('../../../components/PreviewArticlePage')
 )
 
 interface Props {
@@ -29,6 +29,7 @@ export default function ArticleRoute(props: Props) {
   const router = useRouter()
 
   const slug = article?.slug
+  const brand = article?.brand ?? 'tech'
 
   if (!router.isFallback && !slug) {
     return <ErrorPage statusCode={404} />
@@ -41,7 +42,11 @@ export default function ArticleRoute(props: Props) {
   if (slug && previewData?.token) {
     return (
       <PreviewSuspense fallback={<ArticlePage article={article} />}>
-        <PreviewArticlePage slug={slug} token={previewData.token} />
+        <PreviewArticlePage
+          slug={slug}
+          brand={brand}
+          token={previewData.token}
+        />
       </PreviewSuspense>
     )
   }
@@ -56,6 +61,7 @@ export const getStaticProps: GetStaticProps = async ({
 }) => {
   const {article, moreArticles} = await getClient(preview).fetch(articleQuery, {
     slug: params?.slug,
+    brand: params?.brand,
   })
 
   return {
@@ -74,7 +80,9 @@ export const getStaticProps: GetStaticProps = async ({
 export async function getStaticPaths() {
   const paths = await getClient(false).fetch(articleSlugsQuery)
   return {
-    paths: paths.map((slug: string) => ({params: {slug}})),
+    paths: paths.map(({brand, slug}: {brand: string; slug: string}) => ({
+      params: {slug, brand},
+    })),
     fallback: true,
   }
 }

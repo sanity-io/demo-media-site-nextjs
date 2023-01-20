@@ -1,16 +1,20 @@
-export const getUrlForDocumentType = (type: string, slug?: string): string => {
+export const getUrlForDocumentType = (
+  type: string,
+  slug?: string,
+  brand?: string
+): string => {
   if (!slug) {
     return '/'
   }
 
   switch (type) {
     case 'article':
-      return `/articles/${slug}`
+      return `/${brand ?? 'tech'}/articles/${slug}`
     case 'section':
-      return `/sections/${slug}`
+      return `/${brand ?? 'tech'}/sections/${slug}`
     case 'person':
-      return `/authors/${slug}`
+      return `/${brand ?? 'tech'}/authors/${slug}`
     default:
-      return '/'
+      return `/${brand ?? 'tech'}`
   }
 }
