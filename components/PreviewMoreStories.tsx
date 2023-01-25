@@ -3,12 +3,15 @@ import * as React from 'react'
 
 import {indexQuery} from '../lib/queries'
 import {usePreview} from '../lib/sanity.preview'
-import {getBrandName} from '../utils/brand'
 import MoreStories from './MoreStories'
 
-export default function PreviewMoreStories({brandName}: {brandName: string}) {
-  const brand = brandName || getBrandName()
-  const allArticles = usePreview(null, indexQuery, {brand})
+interface Props {
+  token: string
+  brand: string
+}
 
-  return <MoreStories articles={allArticles} brandName={brand} />
+export default function PreviewMoreStories({token, brand}: Props) {
+  const allArticles = usePreview(token, indexQuery, {brand})
+
+  return <MoreStories articles={allArticles} brandName={brand} token={token} />
 }

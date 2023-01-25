@@ -1,46 +1,51 @@
+import ArticleIndex from 'components/ArticleIndex'
+import {ArticleIndexLifestyle} from 'components/ArticleIndexLifestyle'
 import Container from 'components/Container'
 import Layout from 'components/Layout'
 import LayoutLifestyle from 'components/LayoutLifestyle'
-import MoreStories from 'components/MoreStories'
 import {config} from 'lib/config'
 import {indexQuery} from 'lib/queries'
 import {getClient, overlayDrafts} from 'lib/sanity.server'
 import {GetStaticPaths, GetStaticProps} from 'next'
+// import {PreviewSuspense} from 'next-sanity/preview'
 import {NextSeo} from 'next-seo'
 import * as React from 'react'
 import {Article, Review} from 'types'
-import {isLifestyle} from 'utils/brand'
 
 interface IndexProps {
-  allArticles: (Article | Review)[]
-  preview: boolean
-  brand?: string
+  data: {
+    allArticles: (Article | Review)[]
+    brand: string
+  }
+  previewData?: {token?: string}
 }
-export default function Index({allArticles, preview, brand}: IndexProps) {
-  const metadata = isLifestyle()
-    ? {
-        title: 'Latest Lifestyle News, Trends & Tips | STREETREADY',
-        description:
-          'STREETREADY delivers the biggest moments, the hottest trends, and the best tips in entertainment, fashion, beauty, fitness, and food and the ability to shop for it all in one place.',
-      }
-    : {
-        title: 'Latest Tech News',
-      }
+export default function Index({
+  data: {allArticles, brand},
+  previewData,
+}: IndexProps) {
+  const metadata =
+    brand === config.lifestyleBrand
+      ? {
+          title: 'Latest Lifestyle News, Trends & Tips | STREETREADY',
+          description:
+            'STREETREADY delivers the biggest moments, the hottest trends, and the best tips in entertainment, fashion, beauty, fitness, and food and the ability to shop for it all in one place.',
+        }
+      : {
+          title: 'Latest Tech News',
+        }
 
   return (
     <>
       <NextSeo title={metadata.title} description={metadata?.description} />
       <Container>
-        <div className="">
-          {/* live preview commented out here for demo day purposes, please do not uncomment!! */}
-          {/* {preview ? (
-            <PreviewSuspense fallback="Loading...">
-              <PreviewMoreStories brandName={brand} />
-            </PreviewSuspense>
-          ) : ( */}
-          <MoreStories articles={allArticles} brandName={brand} />
-          {/* )} */}
-        </div>
+        {brand === config.lifestyleBrand ? (
+          <ArticleIndexLifestyle
+            articles={allArticles}
+            token={previewData?.token}
+          />
+        ) : (
+          <ArticleIndex articles={allArticles} token={previewData?.token} />
+        )}
       </Container>
     </>
   )
@@ -49,18 +54,23 @@ export default function Index({allArticles, preview, brand}: IndexProps) {
 export const getStaticProps: GetStaticProps = async ({
   params,
   preview = false,
+  previewData = {},
 }) => {
-  /* check if the project id has been defined by fetching the vercel envs */
   if (config.sanity.projectId) {
-    const allArticles = overlayDrafts(
-      await getClient(preview).fetch(indexQuery, {
-        brand: params?.brand ?? 'tech',
-      })
-    )
+    const brand = params?.brand ?? 'tech'
+    const fetchedArticles = await getClient(preview).fetch(indexQuery, {brand})
+    const allArticles = overlayDrafts(fetchedArticles)
 
     return {
-      props: {allArticles, preview, brand: params?.brand},
-      // If webhooks isn't setup then attempt to re-generate in 1 minute intervals
+      props: {
+        previewData,
+        preview,
+        data: {
+          allArticles,
+          brand,
+        },
+        // If webhooks isn't setup then attempt to re-generate in 1 minute intervals
+      },
       revalidate: config.revalidateSecret ? undefined : 60,
     }
   }
@@ -71,6 +81,7 @@ export const getStaticProps: GetStaticProps = async ({
     revalidate: undefined,
   }
 }
+
 Index.getLayout = function getLayout(page: React.ReactElement) {
   const {preview, brand} = page?.props
   if (brand == 'lifestyle') {

@@ -20,7 +20,7 @@ const PreviewArticlePage = lazy(
 
 interface Props {
   data: {article: Article; moreArticles: any}
-  previewData: {token?: string}
+  previewData?: {token?: string}
 }
 
 export default function ArticleRoute(props: Props) {

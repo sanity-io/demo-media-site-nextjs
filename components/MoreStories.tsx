@@ -2,7 +2,7 @@ import React, {useMemo} from 'react'
 
 import {Article, isArticle, Review} from '../types'
 import {BRAND_LIFESTYLE_NAME, isLifestyle} from '../utils/brand'
-import {useHomepageArticles} from '../utils/useHomepageArticles'
+import {useSplitLifestyleArticles} from '../utils/useSplitLifestyleArticles'
 import ArticlePreview from './ArticlePreview'
 
 function StorySection({
@@ -121,7 +121,7 @@ export default function MoreStories({
   brandName?: string
   token?: string
 }) {
-  const {topArticles, restArticles} = useHomepageArticles(articles, brandName)
+  const {topArticles, restArticles} = useSplitLifestyleArticles(articles)
   const isLifestyleBrand = brandName === BRAND_LIFESTYLE_NAME || isLifestyle()
 
   if (isLifestyleBrand) {
