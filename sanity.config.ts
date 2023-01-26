@@ -10,7 +10,6 @@ import {productionUrl} from 'plugins/productionUrl'
 import {defineConfig, definePlugin} from 'sanity'
 import {deskTool} from 'sanity/desk'
 import {unsplashImageAsset} from 'sanity-plugin-asset-source-unsplash'
-import {workflow} from 'sanity-plugin-workflow'
 
 import {
   LifestyleLogo,
@@ -60,13 +59,7 @@ const defaultConfig = (type: string) => {
   }
 
   if (type === 'tech') {
-    const techPlugins = [
-      workflow({
-        schemaTypes: ['article'],
-      }),
-      scheduledPublishing(),
-      newsletterPlugin(),
-    ]
+    const techPlugins = [scheduledPublishing(), newsletterPlugin()]
     techPlugins.forEach((plugin) => plugins.push(plugin))
   }
 
