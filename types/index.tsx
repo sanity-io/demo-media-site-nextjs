@@ -1,4 +1,6 @@
+import {SanityAsset} from '@sanity/image-url/lib/types/types'
 import {Block, Image} from 'sanity'
+import {CrossDatasetReferenceValue} from 'sanity'
 
 export interface Author {
   name: string
@@ -40,7 +42,13 @@ export interface Article {
 
 export type Review = Pick<
   Article,
-  'title' | 'mainImage' | 'intro' | 'isHighlighted' | 'slug' | 'content'
+  | 'title'
+  | 'mainImage'
+  | 'intro'
+  | 'isHighlighted'
+  | 'slug'
+  | 'content'
+  | 'sections'
 > & {_type: 'review'; soldOut?: boolean}
 
 export interface MainImage {
@@ -67,3 +75,8 @@ export type BrandSpecificProps = {
 
 export const isArticle = (article: Article | Review): article is Article =>
   article._type === 'article'
+
+export type CrossDatasetSource = {
+  _type: 'image'
+  asset: CrossDatasetReferenceValue & SanityAsset
+}

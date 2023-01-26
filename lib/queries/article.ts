@@ -5,23 +5,19 @@ export const articleContentFields = groq`
     _type == 'articleReference' => @->{_type, _id, title, "slug": slug.current},
     _type != 'articleReference' => @,
     _type == 'podcastReference' => @->{_type, _id, "url": podcastEpisode.url },
-    _type == 'reviewReference'=> {
-      "_type": @._type,
-      "title": titleOverride,
-      "slug": @.review->slug.current
-    }
   },        
 `
 
 export const articleFields = groq`
   _id,
-  _rev,
+  _type,
   title,
   date,
   intro,
   brand,
   "summary": intro,
-  mainImage, 
+  // mainImage->{..., "asset": asset->},
+  mainImage,
   "date": _updatedAt,
   "slug": slug.current,
   "people": people[]{ role, ...person->{name, image, bio, 'slug': slug.current} },
@@ -32,7 +28,7 @@ export const settingsQuery = groq`*[_type == "settings"][0]{title}`
 
 export const indexQuery = groq`
 {
-  "featuredArticles": *[_type == 'siteSettings' && brand == $brand].featured[defined(_ref) || defined(review._ref)]{
+  "featuredArticles": *[_type == 'siteSettings' && brand == $brand][0].featured[defined(_ref) || defined(review._ref)]{
     _type == 'articleReference' => @->,
     _type == 'reviewReference'=> {
       ...@.review->,
@@ -79,5 +75,12 @@ export const articleSlugsQuery = groq`
 export const articleBySlugQuery = groq`
 *[_type == "article" && slug.current == $slug && brand == $brand][0] {
   ${articleFields}
+}
+`
+
+export const reviewQuery = groq`
+*[_type == "review" && slug.current == $slug][0] {
+  ${articleFields}
+  // mainImage->{..., image{..., asset->{..., '_dataset': 'reviews'}}},
 }
 `

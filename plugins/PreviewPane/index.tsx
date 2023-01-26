@@ -14,6 +14,14 @@ type Props = {
   }
 }
 
+interface IframeOptions {
+  url?: string
+  reload: {
+    button?: boolean
+    revision?: boolean | number
+  }
+}
+
 // Used as a cache key that doesn't risk collision or getting affected by other components that might be using `suspend-react`
 const fetchSecret = Symbol('preview.secret')
 
@@ -41,11 +49,15 @@ export const PreviewPane = memo(function PreviewPane({document}: Props) {
     url.searchParams.set('secret', secret)
   }
 
-  const options = {
+  const options: IframeOptions = {
     url: url.toString(),
     reload: {
       button: true,
     },
+  }
+
+  if (document.displayed._type == 'siteSettings') {
+    options.reload.revision = true
   }
 
   //@ts-expect-error "reload: false" does not work as expected

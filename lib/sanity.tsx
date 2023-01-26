@@ -1,13 +1,8 @@
 import createImageUrlBuilder from '@sanity/image-url'
 import {SanityAsset} from '@sanity/image-url/lib/types/types'
-import {CrossDatasetReferenceValue} from 'sanity'
+import {CrossDatasetSource} from 'types'
 
 import {config, reviewConfig} from './config'
-
-type CrossDatasetSource = {
-  _type: 'image'
-  asset: CrossDatasetReferenceValue & SanityAsset
-}
 
 export const imageBuilder = createImageUrlBuilder({
   projectId: config.sanity.projectId,

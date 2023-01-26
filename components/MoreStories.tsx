@@ -2,7 +2,7 @@ import React, {useMemo} from 'react'
 
 import {Article, isArticle, Review} from '../types'
 import {BRAND_LIFESTYLE_NAME, isLifestyle} from '../utils/brand'
-import {useHomepageArticles} from '../utils/useHomepageArticles'
+import {useSplitLifestyleArticles} from '../utils/useSplitLifestyleArticles'
 import ArticlePreview from './ArticlePreview'
 
 function StorySection({
@@ -11,12 +11,14 @@ function StorySection({
   columns = 4,
   sectionType,
   brandName,
+  token,
 }: {
   articles?: (Article | Review)[]
   title?: string
   columns?: number
   sectionType?: 'featured' | 'normal'
   brandName?: string
+  token?: string
 }) {
   const isLifestyleBrand = brandName === BRAND_LIFESTYLE_NAME || isLifestyle()
   // Sorry for the mess, but this was the only way I could get the correct borders to work in all breakpoints, in light and dark mode :grimacing:
@@ -113,11 +115,13 @@ function StorySection({
 export default function MoreStories({
   articles,
   brandName,
+  token,
 }: {
   articles: (Article | Review)[]
   brandName?: string
+  token?: string
 }) {
-  const {topArticles, restArticles} = useHomepageArticles(articles, brandName)
+  const {topArticles, restArticles} = useSplitLifestyleArticles(articles)
   const isLifestyleBrand = brandName === BRAND_LIFESTYLE_NAME || isLifestyle()
 
   if (isLifestyleBrand) {
@@ -129,6 +133,7 @@ export default function MoreStories({
               articles={topArticles}
               sectionType="featured"
               brandName={brandName}
+              token={token}
             />
           </>
         )}
@@ -140,6 +145,7 @@ export default function MoreStories({
               columns={3}
               sectionType="normal"
               brandName={brandName}
+              token={token}
             />
           </>
         )}
