@@ -1,7 +1,7 @@
 'use client'
 import {reviewConfig} from 'lib/config'
 import * as React from 'react'
-import {Review} from 'types'
+import {Review, Section} from 'types'
 
 import {reviewQuery} from '../lib/queries'
 import {useReviewPreview} from '../lib/sanity.preview'
@@ -13,6 +13,8 @@ interface Props {
   brandName?: string
   sectionType?: 'featured' | 'normal'
   isHighlighted?: boolean
+  title?: string
+  sections?: Section[]
 }
 
 /* This is only used for index pages.
@@ -26,6 +28,8 @@ export function PreviewReviewPreview({
   token,
   sectionType,
   isHighlighted,
+  title,
+  sections,
 }: Props) {
   const review: Review = useReviewPreview(token, reviewQuery, {
     slug,
@@ -40,6 +44,8 @@ export function PreviewReviewPreview({
     brandName,
     sectionType,
     isHighlighted,
+    title: title || review.title,
+    sections,
   }
 
   return <ArticlePreview {...props} />

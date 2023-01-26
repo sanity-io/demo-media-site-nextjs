@@ -42,7 +42,13 @@ export interface Article {
 
 export type Review = Pick<
   Article,
-  'title' | 'mainImage' | 'intro' | 'isHighlighted' | 'slug' | 'content'
+  | 'title'
+  | 'mainImage'
+  | 'intro'
+  | 'isHighlighted'
+  | 'slug'
+  | 'content'
+  | 'sections'
 > & {_type: 'review'; soldOut?: boolean}
 
 export interface MainImage {

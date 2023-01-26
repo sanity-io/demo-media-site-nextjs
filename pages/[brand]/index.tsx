@@ -19,12 +19,9 @@ interface IndexProps {
   }
   previewData?: {token?: string}
 }
-export default function Index({
-  data: {allArticles, brand},
-  previewData,
-}: IndexProps) {
+export default function Index({data, previewData}: IndexProps) {
   const metadata =
-    brand === config.lifestyleBrand
+    data?.brand === config.lifestyleBrand
       ? {
           title: 'Latest Lifestyle News, Trends & Tips | STREETREADY',
           description:
@@ -38,13 +35,16 @@ export default function Index({
     <>
       <NextSeo title={metadata.title} description={metadata?.description} />
       <Container>
-        {brand === config.lifestyleBrand ? (
+        {data?.brand === config.lifestyleBrand ? (
           <ArticleIndexLifestyle
-            articles={allArticles}
+            articles={data?.allArticles}
             token={previewData?.token}
           />
         ) : (
-          <ArticleIndex articles={allArticles} token={previewData?.token} />
+          <ArticleIndex
+            articles={data?.allArticles}
+            token={previewData?.token}
+          />
         )}
       </Container>
     </>

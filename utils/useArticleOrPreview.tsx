@@ -33,6 +33,9 @@ export const useArticleOrPreview = (
               brandName={brandName}
               sectionType={props.sectionType}
               isHighlighted={props.isHighlighted}
+              //we use overrides, so keep this here
+              title={props.title}
+              sections={props.sections}
             />
           ) : (
             <PreviewArticlePreview
