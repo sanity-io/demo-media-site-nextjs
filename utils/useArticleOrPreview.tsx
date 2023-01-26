@@ -1,5 +1,6 @@
 import ArticlePreview from 'components/ArticlePreview'
-import PreviewArticlePreview from 'components/PreviewArticlePreview'
+import {PreviewArticlePreview} from 'components/PreviewArticlePreview'
+import {PreviewReviewPreview} from 'components/PreviewReviewPreview'
 import {PreviewSuspense} from 'next-sanity/preview'
 import React, {useMemo} from 'react'
 
@@ -25,11 +26,15 @@ export const useArticleOrPreview = (
           fallback={<ArticlePreview {...props} />}
           key={props.slug}
         >
-          <PreviewArticlePreview
-            slug={props.slug}
-            token={token}
-            brandName={brandName}
-          />
+          {props._type === 'review' ? (
+            <PreviewReviewPreview slug={props.slug} token={token} />
+          ) : (
+            <PreviewArticlePreview
+              slug={props.slug}
+              token={token}
+              brandName={brandName}
+            />
+          )}
         </PreviewSuspense>
       ))
     }

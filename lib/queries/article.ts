@@ -10,13 +10,14 @@ export const articleContentFields = groq`
 
 export const articleFields = groq`
   _id,
-  _rev,
+  _type,
   title,
   date,
   intro,
   brand,
   "summary": intro,
-  mainImage, 
+  // mainImage->{..., "asset": asset->},
+  mainImage,
   "date": _updatedAt,
   "slug": slug.current,
   "people": people[]{ role, ...person->{name, image, bio, 'slug': slug.current} },
@@ -74,5 +75,12 @@ export const articleSlugsQuery = groq`
 export const articleBySlugQuery = groq`
 *[_type == "article" && slug.current == $slug && brand == $brand][0] {
   ${articleFields}
+}
+`
+
+export const reviewQuery = groq`
+*[_type == "review" && slug.current == $slug][0] {
+  ${articleFields}
+  // mainImage->{..., image{..., asset->{..., '_dataset': 'reviews'}}},
 }
 `

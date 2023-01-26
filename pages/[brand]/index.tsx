@@ -59,7 +59,7 @@ export const getStaticProps: GetStaticProps = async ({
   if (config.sanity.projectId) {
     const brand = params?.brand ?? 'tech'
     const fetchedArticles = await getClient(preview).fetch(indexQuery, {brand})
-    const allArticles = overlayDrafts(fetchedArticles)
+    const allArticles = overlayDrafts(fetchedArticles) ?? []
 
     return {
       props: {
