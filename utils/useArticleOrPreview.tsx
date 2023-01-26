@@ -27,12 +27,20 @@ export const useArticleOrPreview = (
           key={props.slug}
         >
           {props._type === 'review' ? (
-            <PreviewReviewPreview slug={props.slug} token={token} />
+            <PreviewReviewPreview
+              slug={props.slug}
+              token={token}
+              brandName={brandName}
+              sectionType={props.sectionType}
+              isHighlighted={props.isHighlighted}
+            />
           ) : (
             <PreviewArticlePreview
               slug={props.slug}
               token={token}
               brandName={brandName}
+              sectionType={props.sectionType}
+              isHighlighted={props.isHighlighted}
             />
           )}
         </PreviewSuspense>

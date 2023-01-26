@@ -10,6 +10,9 @@ import ArticlePreview from './ArticlePreview'
 interface Props {
   token: string
   slug?: string
+  brandName?: string
+  sectionType?: 'featured' | 'normal'
+  isHighlighted?: boolean
 }
 
 /* This is only used for index pages.
@@ -17,7 +20,13 @@ interface Props {
  * is so we can preview content from different datasets!
  * Take this approach with a grain of salt, we haven't tested it at scale.
  */
-export function PreviewReviewPreview({slug, token}: Props) {
+export function PreviewReviewPreview({
+  brandName,
+  slug,
+  token,
+  sectionType,
+  isHighlighted,
+}: Props) {
   const review: Review = useReviewPreview(token, reviewQuery, {
     slug,
   })
@@ -26,5 +35,12 @@ export function PreviewReviewPreview({slug, token}: Props) {
   //@ts-ignore
   review.mainImage.image.asset._dataset = reviewConfig.sanity.dataset
 
-  return <ArticlePreview {...review} />
+  const props = {
+    ...review,
+    brandName,
+    sectionType,
+    isHighlighted,
+  }
+
+  return <ArticlePreview {...props} />
 }

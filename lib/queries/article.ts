@@ -28,7 +28,7 @@ export const settingsQuery = groq`*[_type == "settings"][0]{title}`
 
 export const indexQuery = groq`
 {
-  "featuredArticles": *[_type == 'siteSettings' && brand == 'tech'][0].featured[defined(_ref) || defined(review._ref)]{
+  "featuredArticles": *[_type == 'siteSettings' && brand == $brand][0].featured[defined(_ref) || defined(review._ref)]{
     _type == 'articleReference' => @->,
     _type == 'reviewReference'=> {
       ...@.review->,

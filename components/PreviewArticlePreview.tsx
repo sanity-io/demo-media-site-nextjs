@@ -10,6 +10,8 @@ interface Props {
   brandName?: string
   token: string
   slug?: string
+  sectionType?: 'featured' | 'normal'
+  isHighlighted?: boolean
 }
 
 /* This is only used for index pages.
@@ -17,11 +19,24 @@ interface Props {
  * is so we can preview content from different datasets!
  * Take this approach with a grain of salt, we haven't tested it at scale.
  */
-export function PreviewArticlePreview({brandName, slug, token}: Props) {
+export function PreviewArticlePreview({
+  brandName,
+  slug,
+  token,
+  sectionType,
+  isHighlighted,
+}: Props) {
   const articleBody: Article = usePreview(token, articleQuery, {
     slug,
     brand: brandName,
   })?.article
 
-  return <ArticlePreview {...articleBody} />
+  const props = {
+    ...articleBody,
+    brandName,
+    sectionType,
+    isHighlighted,
+  }
+
+  return <ArticlePreview {...props} />
 }
