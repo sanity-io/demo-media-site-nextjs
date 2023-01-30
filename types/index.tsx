@@ -1,12 +1,12 @@
 import {SanityAsset} from '@sanity/image-url/lib/types/types'
-import {Block, Image} from 'sanity'
+import {Image, PortableTextBlock} from 'sanity'
 import {CrossDatasetReferenceValue} from 'sanity'
 
 export interface Author {
   name: string
   slug?: string
   image: Image
-  bio: Block[]
+  bio: PortableTextBlock[]
   role: string
   articles?: Article[]
   brand?: 'tech' | 'lifestyle'
@@ -26,7 +26,7 @@ export interface Article {
   title: string
   mainImage?: MainImage
   date?: string
-  intro?: Block[]
+  intro?: PortableTextBlock[]
   people?: Author[]
   sections?: Section[]
   slug?: string
@@ -35,7 +35,7 @@ export interface Article {
     title: string
     mainImage: MainImage
   }[]
-  content?: Block[]
+  content?: PortableTextBlock[]
   isHighlighted?: boolean
   brand?: 'tech' | 'lifestyle'
 }

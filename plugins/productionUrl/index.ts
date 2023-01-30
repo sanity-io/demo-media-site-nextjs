@@ -3,7 +3,7 @@
  * other actions like "Review changes" and "Inspect"
  */
 
-import {type Slug, definePlugin} from 'sanity'
+import {definePlugin, type Slug} from 'sanity'
 
 import {getSecret} from './utils'
 
