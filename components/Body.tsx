@@ -15,7 +15,7 @@ import * as React from 'react'
 import {logError} from 'utils/logError'
 
 import {urlForImage} from '../lib/sanity'
-import {Article, ArticlePreviewProps, MainImage} from '../types'
+import {Article, MainImage} from '../types'
 import {BRAND_LIFESTYLE_NAME, getBrandName} from '../utils/brand'
 import {getUrlForDocumentType} from '../utils/routing'
 import {Credits, PeopleList, usePeople} from './Credits'
@@ -38,7 +38,7 @@ const BodyImage = React.memo(function BodyImage({
   const separator =
     caption && photographers && photographers.length > 0 && ' ● '
 
-  if (!image) {
+  if (!image || !image?.asset) {
     return <div />
   }
 
@@ -92,21 +92,6 @@ const components = {
     },
     mainImage: ({value}: {value: MainImage}) => {
       return <BodyImage {...value} />
-    },
-    reviewReference: ({value}: {value: ArticlePreviewProps}) => {
-      const {title, slug} = value
-      //infer the brand from context
-      const url = getUrlForDocumentType('review', slug)
-      return (
-        <div className="text-black">
-          <p className="dark border border-gray-200 border-gray-900 p-4">
-            <span className="font-bold">Read more:</span>{' '}
-            <Link href={url} className="no-underline hover:underline">
-              {title}
-            </Link>
-          </p>
-        </div>
-      )
     },
     podcast: ({value}: {value: MediaNode}) => {
       const {url} = value
