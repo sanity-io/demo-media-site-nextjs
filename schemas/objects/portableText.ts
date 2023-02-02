@@ -57,7 +57,6 @@ export default defineType({
     defineArrayMember({type: 'articleReference', title: 'Article'}),
     defineArrayMember({type: 'articleReferences', title: 'Articles'}),
     defineArrayMember({type: 'podcastReference', title: 'Podcast'}),
-    defineArrayMember({type: 'reviewReference', title: 'Review'}),
     defineArrayMember({type: 'mainImage'}),
     defineArrayMember({type: 'video'}),
   ],
