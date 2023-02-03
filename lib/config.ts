@@ -32,7 +32,7 @@ export const config: Config = {
     repoSlug: process.env.NEXT_PUBLIC_GIT_REPO_SLUG,
   },
   sanity: {
-    projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || '',
+    projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'ejk8qe4e',
     dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
     apiVersion: '2022-03-13',
     projectTitle: process.env.NEXT_PUBLIC_SANITY_PROJECT_TITLE,

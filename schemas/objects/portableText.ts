@@ -1,7 +1,7 @@
 import {FiFeather} from 'react-icons/fi'
 import {defineArrayMember, defineType} from 'sanity'
 
-export default defineType({
+export const rawPortableTextObj = {
   name: 'portableText',
   type: 'array',
   title: 'Content',
@@ -55,10 +55,12 @@ export default defineType({
       },
     }),
     defineArrayMember({type: 'articleReference', title: 'Article'}),
-    defineArrayMember({type: 'articleReferences', title: 'Articles'}),
     defineArrayMember({type: 'podcastReference', title: 'Podcast'}),
-    defineArrayMember({type: 'reviewReference', title: 'Review'}),
     defineArrayMember({type: 'mainImage'}),
     defineArrayMember({type: 'video'}),
   ],
-})
+}
+
+//by default, we export this as a top-level object type
+//but we can also use the object for contexts where we want more/different blocks
+export default defineType(rawPortableTextObj)
