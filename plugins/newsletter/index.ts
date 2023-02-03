@@ -18,4 +18,4 @@ export default definePlugin({
   },
 })
 
-export * from './components/Preview'
+export * from './components/NewsletterPreview'
