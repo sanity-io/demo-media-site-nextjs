@@ -1,6 +1,8 @@
 import {FiMail} from 'react-icons/fi'
 import {defineField, defineType} from 'sanity'
 
+import {getVariablePortableText} from './helpers/getVariablePortableText'
+
 export default defineType({
   name: 'newsletter',
   title: 'Newsletter',
@@ -27,9 +29,7 @@ export default defineType({
       type: 'minimalPortableText',
     }),
     defineField({
-      name: 'content',
-      title: 'Content',
-      type: 'portableText',
+      ...getVariablePortableText('newsletter', 'content'),
       options: {
         showSyncButton: true,
       },

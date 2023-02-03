@@ -51,7 +51,7 @@ export const schemaTypes = (
     podcast,
     section,
     siteSettings,
-  ].map((def: SchemaTypeDefinition) => {
+  ].map((def: SchemaTypeDefinition<any>) => {
     if (schemaTypesToFilterBrandOn.includes(def?.name)) {
       return {
         ...def,

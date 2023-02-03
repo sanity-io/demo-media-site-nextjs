@@ -1,1 +1,1 @@
-export * from './input-wrappers'
+export * from './InputWrappers'

@@ -4,7 +4,7 @@
 
 import {scheduledPublishing} from '@sanity/scheduled-publishing'
 import {visionTool} from '@sanity/vision'
-import {theme} from 'https://themer.sanity.build/api/hues?preset=tw-cyan&primary=b595f9'
+// import {theme} from 'https://themer.sanity.build/api/hues?preset=tw-cyan&primary=b595f9'
 import {config, reviewConfig} from 'lib/config'
 import {productionUrl} from 'plugins/productionUrl'
 import {defineConfig, definePlugin} from 'sanity'
@@ -94,7 +94,7 @@ export default defineConfig([
     projectId: config.sanity.projectId,
     dataset: config.sanity.dataset,
     title: config.sanity.projectTitle || 'Lifestyle',
-    theme,
+    // theme,
     plugins: [defaultConfig('lifestyle')],
     icon: LifestyleWorkspaceLogo,
     studio: {
@@ -109,7 +109,7 @@ export default defineConfig([
     projectId: reviewConfig.sanity.projectId,
     dataset: reviewConfig.sanity.dataset || 'reviews',
     title: reviewConfig.sanity.projectTitle || 'Reviews',
-    theme,
+    // theme,
     plugins: [defaultConfig('reviews')],
     icon: ReviewsWorkspaceLogo,
     studio: {
