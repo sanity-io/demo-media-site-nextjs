@@ -19,8 +19,13 @@ import {
   TechLogo,
   TechWorkspaceLogo,
 } from './logo'
-import {mediaConfigPlugin, structure} from './plugins/config'
+import {mediaConfigPlugin} from './plugins/config'
 import defaultDocumentNode from './plugins/config/defaultDocumentNode'
+import {
+  lifestyleStructure,
+  reviewStructure,
+  techStructure,
+} from './plugins/config/structure'
 import newsletterPlugin from './plugins/newsletter'
 import variations from './plugins/variations'
 import {schemaTemplates, schemaTypes} from './schemas'
@@ -35,10 +40,6 @@ const basePaths = {
 
 const defaultConfig = (type: string) => {
   const plugins = [
-    deskTool({
-      structure: (S, context) => structure(S, context, type),
-      defaultDocumentNode,
-    }),
     visionTool({
       defaultApiVersion: '2022-11-11',
     }),
@@ -49,14 +50,12 @@ const defaultConfig = (type: string) => {
     }),
   ]
 
-  if (type !== 'reviews') {
-    const minimumUserPlugins = [
-      mediaConfigPlugin(),
-      unsplashImageAsset(),
-      variations(),
-    ]
-    minimumUserPlugins.forEach((plugin) => plugins.push(plugin))
-  }
+  const minimumUserPlugins = [
+    mediaConfigPlugin(),
+    unsplashImageAsset(),
+    variations(),
+  ]
+  minimumUserPlugins.forEach((plugin) => plugins.push(plugin))
 
   if (type === 'tech') {
     const techPlugins = [scheduledPublishing(), newsletterPlugin()]
@@ -80,7 +79,13 @@ export default defineConfig([
     projectId: config.sanity.projectId,
     dataset: config.sanity.dataset,
     title: config.sanity.projectTitle || 'Technology',
-    plugins: [defaultConfig('tech')],
+    plugins: [
+      deskTool({
+        structure: techStructure,
+        defaultDocumentNode,
+      }),
+      defaultConfig('tech'),
+    ],
     icon: TechWorkspaceLogo,
     studio: {
       components: {
@@ -95,7 +100,13 @@ export default defineConfig([
     dataset: config.sanity.dataset,
     title: config.sanity.projectTitle || 'Lifestyle',
     theme,
-    plugins: [defaultConfig('lifestyle')],
+    plugins: [
+      deskTool({
+        structure: lifestyleStructure,
+        defaultDocumentNode,
+      }),
+      defaultConfig('lifestyle'),
+    ],
     icon: LifestyleWorkspaceLogo,
     studio: {
       components: {
@@ -110,7 +121,7 @@ export default defineConfig([
     dataset: reviewConfig.sanity.dataset || 'reviews',
     title: reviewConfig.sanity.projectTitle || 'Reviews',
     theme,
-    plugins: [defaultConfig('reviews')],
+    plugins: [deskTool({structure: reviewStructure}), defaultConfig('reviews')],
     icon: ReviewsWorkspaceLogo,
     studio: {
       components: {
