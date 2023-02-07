@@ -1,3 +1,4 @@
+import {Role} from 'sanity'
 import {StructureResolver} from 'sanity/desk'
 import article from 'schemas/article'
 import newsletter from 'schemas/newsletter'
@@ -7,17 +8,46 @@ import section from 'schemas/section'
 
 import {createSchemaItemForBrand, createSiteSettingsNodeForBrand} from './utils'
 
-export const techStructure: StructureResolver = (S) =>
-  S.list()
+export const techStructure: StructureResolver = (S, context) => {
+  const {currentUser} = context
+  const roles = currentUser?.roles || []
+  const isAdmin = !!roles.find((role: Role) => role.name === 'administrator')
+
+  const adminItems = [
+    createSiteSettingsNodeForBrand(S, 'tech'),
+    S.divider(),
+    createSchemaItemForBrand(S, article, 'tech'),
+    createSchemaItemForBrand(S, newsletter, 'tech'),
+    createSchemaItemForBrand(S, podcast, 'tech'),
+    S.divider(),
+    createSchemaItemForBrand(S, person, 'tech'),
+    createSchemaItemForBrand(S, section, 'tech'),
+  ]
+
+  const contributorItems = [
+    createSchemaItemForBrand(S, article, 'tech'),
+    S.divider(),
+    createSchemaItemForBrand(S, person, 'tech'),
+    createSchemaItemForBrand(S, section, 'tech'),
+  ]
+
+  return S.list()
     .id('tech-root')
     .title('Tech content')
-    .items([
-      createSiteSettingsNodeForBrand(S, 'tech'),
-      S.divider(),
-      createSchemaItemForBrand(S, article, 'tech'),
-      createSchemaItemForBrand(S, newsletter, 'tech'),
-      createSchemaItemForBrand(S, podcast, 'tech'),
-      S.divider(),
-      createSchemaItemForBrand(S, person, 'tech'),
-      createSchemaItemForBrand(S, section, 'tech'),
-    ])
+    .items(isAdmin ? adminItems : contributorItems)
+}
+
+// export const techStructure: StructureResolver = (S, context) =>
+//   S.list()
+//     .id('tech-root')
+//     .title('Tech content')
+//     .items([
+//       createSiteSettingsNodeForBrand(S, 'tech'),
+//       S.divider(),
+//       createSchemaItemForBrand(S, article, 'tech'),
+//       createSchemaItemForBrand(S, newsletter, 'tech'),
+//       createSchemaItemForBrand(S, podcast, 'tech'),
+//       S.divider(),
+//       createSchemaItemForBrand(S, person, 'tech'),
+//       createSchemaItemForBrand(S, section, 'tech'),
+//     ])

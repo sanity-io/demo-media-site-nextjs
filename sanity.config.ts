@@ -2,12 +2,13 @@
  * This config is used to set up Sanity Studio that's mounted on the `/pages/studio/[[...index]].tsx` route
  */
 
+import sanityClient from '@sanity/client'
 import {scheduledPublishing} from '@sanity/scheduled-publishing'
 import {visionTool} from '@sanity/vision'
 import {theme} from 'https://themer.sanity.build/api/hues?preset=tw-cyan&primary=b595f9'
 import {config, reviewConfig} from 'lib/config'
 import {productionUrl} from 'plugins/productionUrl'
-import {defineConfig, definePlugin} from 'sanity'
+import {defineConfig, definePlugin, WorkspaceOptions} from 'sanity'
 import {deskTool} from 'sanity/desk'
 import {unsplashImageAsset} from 'sanity-plugin-asset-source-unsplash'
 
@@ -72,61 +73,82 @@ const defaultConfig = (type: string) => {
   })()
 }
 
-export default defineConfig([
-  {
-    basePath: basePaths.tech,
-    name: 'tech',
-    projectId: config.sanity.projectId,
-    dataset: config.sanity.dataset,
-    title: config.sanity.projectTitle || 'Technology',
-    plugins: [
-      deskTool({
-        structure: techStructure,
-        defaultDocumentNode,
-      }),
-      defaultConfig('tech'),
-    ],
-    icon: TechWorkspaceLogo,
-    studio: {
-      components: {
-        logo: TechLogo,
-      },
+//create Sanity client from config
+const client = sanityClient({
+  projectId: config.sanity.projectId,
+  dataset: config.sanity.dataset,
+  useCdn: false,
+})
+
+let studioConfig: WorkspaceOptions | WorkspaceOptions[] = {
+  basePath: basePaths.tech,
+  name: 'tech',
+  projectId: config.sanity.projectId,
+  dataset: config.sanity.dataset,
+  title: config.sanity.projectTitle || 'Technology',
+  plugins: [
+    deskTool({
+      structure: techStructure,
+      defaultDocumentNode,
+    }),
+    defaultConfig('tech'),
+  ],
+  icon: TechWorkspaceLogo,
+  studio: {
+    components: {
+      logo: TechLogo,
     },
   },
-  {
-    name: 'lifestyle',
-    basePath: basePaths.lifestyle,
-    projectId: config.sanity.projectId,
-    dataset: config.sanity.dataset,
-    title: config.sanity.projectTitle || 'Lifestyle',
-    theme,
-    plugins: [
-      deskTool({
-        structure: lifestyleStructure,
-        defaultDocumentNode,
-      }),
-      defaultConfig('lifestyle'),
-    ],
-    icon: LifestyleWorkspaceLogo,
-    studio: {
-      components: {
-        logo: LifestyleLogo,
+}
+
+const currentUser = await client.request({
+  uri: '/users/me',
+  withCredentials: true,
+})
+
+if (currentUser?.role === 'administrator') {
+  studioConfig = [
+    studioConfig,
+    {
+      name: 'lifestyle',
+      basePath: basePaths.lifestyle,
+      projectId: config.sanity.projectId,
+      dataset: config.sanity.dataset,
+      title: config.sanity.projectTitle || 'Lifestyle',
+      theme,
+      plugins: [
+        deskTool({
+          structure: lifestyleStructure,
+          defaultDocumentNode,
+        }),
+        defaultConfig('lifestyle'),
+      ],
+      icon: LifestyleWorkspaceLogo,
+      studio: {
+        components: {
+          logo: LifestyleLogo,
+        },
       },
     },
-  },
-  {
-    name: 'reviews',
-    basePath: basePaths.reviews,
-    projectId: reviewConfig.sanity.projectId,
-    dataset: reviewConfig.sanity.dataset || 'reviews',
-    title: reviewConfig.sanity.projectTitle || 'Reviews',
-    theme,
-    plugins: [deskTool({structure: reviewStructure}), defaultConfig('reviews')],
-    icon: ReviewsWorkspaceLogo,
-    studio: {
-      components: {
-        logo: ReviewsLogo,
+    {
+      name: 'reviews',
+      basePath: basePaths.reviews,
+      projectId: reviewConfig.sanity.projectId,
+      dataset: reviewConfig.sanity.dataset || 'reviews',
+      title: reviewConfig.sanity.projectTitle || 'Reviews',
+      theme,
+      plugins: [
+        deskTool({structure: reviewStructure}),
+        defaultConfig('reviews'),
+      ],
+      icon: ReviewsWorkspaceLogo,
+      studio: {
+        components: {
+          logo: ReviewsLogo,
+        },
       },
     },
-  },
-])
+  ]
+}
+
+export default defineConfig(studioConfig)
