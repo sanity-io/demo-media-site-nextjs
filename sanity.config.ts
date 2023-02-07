@@ -106,7 +106,7 @@ const currentUser = await client.request({
   withCredentials: true,
 })
 
-if (currentUser?.role === 'administrator') {
+if (currentUser?.role === 'administrator' || currentUser?.role === 'editor') {
   studioConfig = [
     studioConfig,
     {

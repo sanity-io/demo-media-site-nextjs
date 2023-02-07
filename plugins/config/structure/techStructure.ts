@@ -11,7 +11,10 @@ import {createSchemaItemForBrand, createSiteSettingsNodeForBrand} from './utils'
 export const techStructure: StructureResolver = (S, context) => {
   const {currentUser} = context
   const roles = currentUser?.roles || []
-  const isAdmin = !!roles.find((role: Role) => role.name === 'administrator')
+  //don't block out editors from the real life project! :)
+  const isAdmin = !!roles.find(
+    (role: Role) => role.name === 'administrator' || role.name === 'editor'
+  )
 
   const adminItems = [
     createSiteSettingsNodeForBrand(S, 'tech'),
