@@ -36,18 +36,3 @@ export const techStructure: StructureResolver = (S, context) => {
     .title('Tech content')
     .items(isAdmin ? adminItems : contributorItems)
 }
-
-// export const techStructure: StructureResolver = (S, context) =>
-//   S.list()
-//     .id('tech-root')
-//     .title('Tech content')
-//     .items([
-//       createSiteSettingsNodeForBrand(S, 'tech'),
-//       S.divider(),
-//       createSchemaItemForBrand(S, article, 'tech'),
-//       createSchemaItemForBrand(S, newsletter, 'tech'),
-//       createSchemaItemForBrand(S, podcast, 'tech'),
-//       S.divider(),
-//       createSchemaItemForBrand(S, person, 'tech'),
-//       createSchemaItemForBrand(S, section, 'tech'),
-//     ])
