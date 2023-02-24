@@ -110,7 +110,8 @@ export function Credits({
 export const PeopleList = ({people}: {people: Article['people']}) => {
   return (
     <>
-      {people?.length &&
+      {people &&
+        people?.length &&
         people.map((person) => (
           <span
             key={person.name}

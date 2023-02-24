@@ -15,9 +15,9 @@ type Props = {
 }
 
 interface IframeOptions {
-  url?: string
+  url: string
   reload: {
-    button?: boolean
+    button: boolean
     revision?: boolean | number
   }
 }
@@ -53,6 +53,7 @@ export const PreviewPane = memo(function PreviewPane({document}: Props) {
     url: url.toString(),
     reload: {
       button: true,
+      // revision: false
     },
   }
 
@@ -60,6 +61,18 @@ export const PreviewPane = memo(function PreviewPane({document}: Props) {
     options.reload.revision = true
   }
 
-  //@ts-expect-error "reload: false" does not work as expected
-  return <Iframe options={options} document={document} />
+  return (
+    <div
+      style={{
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      {/* @ts-expect-error -- revision: false does not work as expected */}
+      <Iframe options={options} document={document} />
+    </div>
+  )
 })

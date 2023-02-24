@@ -1,6 +1,8 @@
 import {FiFeather} from 'react-icons/fi'
 import {defineArrayMember, defineField, defineType} from 'sanity'
 
+import {referenceBrandFilter} from './helpers/referenceBrandFilter'
+
 export default defineType({
   name: 'article',
   title: 'Article',
@@ -32,7 +34,15 @@ export default defineType({
     defineField({
       name: 'sections',
       type: 'array',
-      of: [{type: 'reference', to: [{type: 'section'}]}],
+      of: [
+        {
+          type: 'reference',
+          to: [{type: 'section'}],
+          options: {
+            filter: referenceBrandFilter,
+          },
+        },
+      ],
     }),
     defineField({
       name: 'intro',

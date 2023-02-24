@@ -134,11 +134,11 @@ export default function Body({
           : 'm-auto max-w-5xl p-4 md:p-5 lg:p-6'
       }
     >
-      {people && <Credits date={date} brandName={brandName} />}
+      {people && people.length && <Credits date={date} brandName={brandName} />}
 
       <div
         className={
-          'font-merriweather prose max-w-none font-serif text-lg leading-relaxed dark:prose-invert md:prose-lg md:text-xl md:leading-relaxed lg:prose-xl'
+          'font-merriweather prose max-w-none font-serif text-lg leading-relaxed dark:prose-invert md:prose-lg lg:prose-xl md:text-xl md:leading-relaxed'
         }
       >
         <PortableText

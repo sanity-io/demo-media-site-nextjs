@@ -21,7 +21,7 @@ import review from './review'
 import section from './section'
 import siteSettings from './siteSettings'
 
-const schemaTypesToFilterBrandOn = ['articleReference', 'person']
+const schemaTypesToFilterBrandOn = ['articleReference', 'person', 'section']
 
 export const schemaTypes = (
   prev: SchemaTypeDefinition[],

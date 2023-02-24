@@ -1,4 +1,5 @@
 import {defineField, defineType} from 'sanity'
+import {referenceBrandFilter} from 'schemas/helpers/referenceBrandFilter'
 
 export default defineType({
   name: 'contentRole',
@@ -21,6 +22,9 @@ export default defineType({
       name: 'person',
       type: 'reference',
       to: [{type: 'person'}],
+      options: {
+        filter: referenceBrandFilter,
+      },
     }),
   ],
   preview: {
