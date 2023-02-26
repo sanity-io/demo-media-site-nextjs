@@ -134,7 +134,7 @@ export default function Body({
           : 'm-auto max-w-5xl p-4 md:p-5 lg:p-6'
       }
     >
-      {people && <Credits date={date} brandName={brandName} />}
+      {people && people.length && <Credits date={date} brandName={brandName} />}
 
       <div
         className={
