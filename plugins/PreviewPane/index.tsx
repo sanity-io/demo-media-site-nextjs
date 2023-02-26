@@ -66,9 +66,6 @@ export const PreviewPane = memo(function PreviewPane({document}: Props) {
       style={{
         width: '100%',
         height: '100%',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
       }}
     >
       {/* @ts-expect-error -- revision: false does not work as expected */}

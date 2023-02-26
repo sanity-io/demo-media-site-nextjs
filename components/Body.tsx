@@ -138,7 +138,7 @@ export default function Body({
 
       <div
         className={
-          'font-merriweather prose max-w-none font-serif text-lg leading-relaxed dark:prose-invert md:prose-lg lg:prose-xl md:text-xl md:leading-relaxed'
+          'font-merriweather prose max-w-none font-serif text-lg leading-relaxed dark:prose-invert md:prose-lg md:text-xl md:leading-relaxed lg:prose-xl'
         }
       >
         <PortableText
