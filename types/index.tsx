@@ -1,4 +1,4 @@
-import {SanityAsset} from '@sanity/image-url/lib/types/types'
+import {SanityImageAssetDocument} from '@sanity/client'
 import {Image, PortableTextBlock} from 'sanity'
 import {CrossDatasetReferenceValue} from 'sanity'
 
@@ -52,7 +52,11 @@ export type Review = Pick<
 > & {_type: 'review'; soldOut?: boolean}
 
 export interface MainImage {
-  image: any
+  image: {
+    asset: {
+      _ref: string
+    }
+  }
   alt: string
   caption: string
 }
@@ -78,5 +82,5 @@ export const isArticle = (article: Article | Review): article is Article =>
 
 export type CrossDatasetSource = {
   _type: 'image'
-  asset: CrossDatasetReferenceValue & SanityAsset
+  asset: CrossDatasetReferenceValue & SanityImageAssetDocument
 }

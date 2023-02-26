@@ -38,7 +38,7 @@ export default function Header(props: HeaderProps & BrandSpecificProps) {
           </div>
         )}
       </div>
-      {mainImage && (
+      {mainImage && mainImage.image && mainImage.image.asset?._ref && (
         <MainCoverImage
           title={title}
           mainImage={mainImage}
