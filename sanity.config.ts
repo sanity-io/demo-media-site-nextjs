@@ -11,7 +11,6 @@ import {productionUrl} from 'plugins/productionUrl'
 import {defineConfig, definePlugin, WorkspaceOptions} from 'sanity'
 import {deskTool} from 'sanity/desk'
 import {unsplashImageAsset} from 'sanity-plugin-asset-source-unsplash'
-import {muxInput} from 'sanity-plugin-mux-input'
 
 import {
   LifestyleLogo,
@@ -31,6 +30,7 @@ import {
 import newsletterPlugin from './plugins/newsletter'
 import variations from './plugins/variations'
 import {schemaTemplates, schemaTypes} from './schemas'
+import TranscribedVideo from 'plugins/TranscribedVideo'
 
 //https://github.com/sanity-io/next-sanity#the-usebackgroundcolorsfromtheme-usebasepath-useconfigwithbasepath-and-usetextfontfamilyfromtheme-hooks-are-removed
 //as useBasePath is removed, we need to manually set the base path for each studio
@@ -56,12 +56,12 @@ const defaultConfig = (type: string) => {
     mediaConfigPlugin(),
     unsplashImageAsset(),
     variations(),
-    muxInput(),
   ]
+
   minimumUserPlugins.forEach((plugin) => plugins.push(plugin))
 
   if (type === 'tech') {
-    const techPlugins = [scheduledPublishing(), newsletterPlugin()]
+    const techPlugins = [scheduledPublishing(), newsletterPlugin(), TranscribedVideo()]
     techPlugins.forEach((plugin) => plugins.push(plugin))
   }
 

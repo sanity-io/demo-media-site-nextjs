@@ -15,8 +15,6 @@ import podcastReference from './objects/podcastReference'
 import portableText from './objects/portableText'
 import reviewReference from './objects/reviewReference'
 import seo from './objects/seo'
-import timestamp from './objects/timestamp'
-import transcribedMuxVideo from './objects/transcribedMuxVideo'
 import person from './person'
 import podcast from './podcast'
 import review from './review'
@@ -45,8 +43,6 @@ export const schemaTypes = (
     reviewReference,
     externalVideo,
     brand,
-    transcribedMuxVideo,
-    timestamp,
 
     // Document types
     article,

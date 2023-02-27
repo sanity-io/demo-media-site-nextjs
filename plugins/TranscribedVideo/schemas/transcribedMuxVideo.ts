@@ -1,12 +1,12 @@
 import {defineField, defineType} from 'sanity'
-// import { TranscribedMuxVideo } from '../components'
-// import { ArrayWithInlineEdit } from '../components/ArrayWithInlineEdit'
+import { TranscribedMuxVideo } from '../components'
+import { ArrayWithInlineEdit } from '../components/ArrayWithInlineEdit'
 
 export default defineType({
   name: 'transcribedMuxVideo',
   title: 'Transcribed Mux Video',
   type: 'object',
-  // components: {input: TranscribedMuxVideo},
+  components: {input: TranscribedMuxVideo},
   fields: [
     defineField({
       name: 'video',
