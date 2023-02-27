@@ -8,6 +8,7 @@ import {visionTool} from '@sanity/vision'
 import {theme} from 'https://themer.sanity.build/api/hues?preset=tw-cyan&primary=b595f9'
 import {config, reviewConfig} from 'lib/config'
 import {productionUrl} from 'plugins/productionUrl'
+import TranscribedVideo from 'plugins/TranscribedVideo'
 import {defineConfig, definePlugin, WorkspaceOptions} from 'sanity'
 import {deskTool} from 'sanity/desk'
 import {unsplashImageAsset} from 'sanity-plugin-asset-source-unsplash'
@@ -30,7 +31,6 @@ import {
 import newsletterPlugin from './plugins/newsletter'
 import variations from './plugins/variations'
 import {schemaTemplates, schemaTypes} from './schemas'
-import TranscribedVideo from 'plugins/TranscribedVideo'
 
 //https://github.com/sanity-io/next-sanity#the-usebackgroundcolorsfromtheme-usebasepath-useconfigwithbasepath-and-usetextfontfamilyfromtheme-hooks-are-removed
 //as useBasePath is removed, we need to manually set the base path for each studio
@@ -56,12 +56,13 @@ const defaultConfig = (type: string) => {
     mediaConfigPlugin(),
     unsplashImageAsset(),
     variations(),
+    TranscribedVideo(),
   ]
 
   minimumUserPlugins.forEach((plugin) => plugins.push(plugin))
 
   if (type === 'tech') {
-    const techPlugins = [scheduledPublishing(), newsletterPlugin(), TranscribedVideo()]
+    const techPlugins = [scheduledPublishing(), newsletterPlugin()]
     techPlugins.forEach((plugin) => plugins.push(plugin))
   }
 

@@ -1,7 +1,7 @@
 import MuxPlayer from '@mux/mux-player-react'
-import { ChangeEvent, useCallback, useEffect, useState } from 'react'
-import { ObjectInputProps, ObjectMember, SanityDocument, useClient } from 'sanity'
-import { ObjectInput } from 'sanity/form'
+import {ChangeEvent, useCallback, useEffect, useState} from 'react'
+import {ObjectInputProps, ObjectMember, SanityDocument, useClient} from 'sanity'
+import {ObjectInput} from 'sanity'
 
 type PlayerProps = {
   defaultProps: ObjectInputProps
@@ -18,45 +18,53 @@ type PlayerProps = {
 //Currently, Mux input will throw errors if placed back into the DOM
 //Try using visibility rules or incorporating the Mux input buttons into the Video player
 export const Player = (props: PlayerProps) => {
-  const [videoAssetDoc, setVideoAssetDoc] = useState<SanityDocument | null>(null)
+  const [videoAssetDoc, setVideoAssetDoc] = useState<SanityDocument | null>(
+    null
+  )
 
   //@ts-expect-error
   const videoAssetId = props.videoFieldMember?.field?.value?.asset?._ref
 
-  const client = useClient({apiVersion: "2021-06-07"})
+  const client = useClient({apiVersion: '2021-06-07'})
 
   useEffect(() => {
     const fetchVideoAsset = async () => {
-      client.fetch(`*[_id == $id][0]`, { id: videoAssetId }).then((videoAssetDoc) => {
-        setVideoAssetDoc(videoAssetDoc)
-      })
+      client
+        .fetch(`*[_id == $id][0]`, {id: videoAssetId})
+        .then((videoAssetDoc) => {
+          setVideoAssetDoc(videoAssetDoc)
+        })
     }
     fetchVideoAsset()
   }, [videoAssetId, client])
 
-
   const player = useCallback(() => {
     if (videoAssetId && !props.useInputComponent) {
-      return <MuxPlayer
-        streamType='on-demand'
-        playbackId={videoAssetDoc?.playbackId as string}
-        //@ts-ignore
-        onTimeUpdate={props.onTimeUpdate}
-        onPlay={props.onPlay}
-        onPlaying={props.onPlaying}
-        onPause={props.onPause}
-        onEnded={props.onEnded}
-        metadata={{
-          //@ts-expect-error
-          id: videoAssetDoc?.data?._id,
-        }}
-      />
-    }
-    else  {
-      return <ObjectInput {...props.defaultProps} members={[props.videoFieldMember]} />
-    }
+      return (
+        <MuxPlayer
+          streamType="on-demand"
+          playbackId={videoAssetDoc?.playbackId as string}
+          //@ts-ignore
+          onTimeUpdate={props.onTimeUpdate}
+          onPlay={props.onPlay}
+          onPlaying={props.onPlaying}
+          onPause={props.onPause}
+          onEnded={props.onEnded}
+          metadata={{
+            //@ts-expect-error
+            id: videoAssetDoc?.data?._id,
+          }}
+        />
+      )
+    } 
+      return (
+        <ObjectInput
+          {...props.defaultProps}
+          members={[props.videoFieldMember]}
+        />
+      )
+    
   }, [videoAssetDoc, props])
 
   return player()
-
 }

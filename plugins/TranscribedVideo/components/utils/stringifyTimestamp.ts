@@ -1,9 +1,7 @@
 const padLeft = (value: number, length = 2): string =>
   value.toString().padStart(length, '0')
 
-export function stringifyTimestamp(
-  timestamp: number,
-) {
+export function stringifyTimestamp(timestamp: number) {
   const date = new Date(0, 0, 0, 0, 0, 0, timestamp)
 
   const hours = date.getHours()
@@ -13,7 +11,7 @@ export function stringifyTimestamp(
     timestamp - (hours * 3600000 + minutes * 60000 + seconds * 1000)
   )
 
-  return `${padLeft(hours)}:${padLeft(minutes)}:${padLeft(seconds)}${
-    ','
-  }${padLeft(ms, 3)}`
+  return `${padLeft(hours)}:${padLeft(minutes)}:${padLeft(
+    seconds
+  )}${','}${padLeft(ms, 3)}`
 }
