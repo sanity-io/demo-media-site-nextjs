@@ -11,6 +11,7 @@ import {productionUrl} from 'plugins/productionUrl'
 import {defineConfig, definePlugin, WorkspaceOptions} from 'sanity'
 import {deskTool} from 'sanity/desk'
 import {unsplashImageAsset} from 'sanity-plugin-asset-source-unsplash'
+import {muxInput} from 'sanity-plugin-mux-input'
 
 import {
   LifestyleLogo,
@@ -55,6 +56,7 @@ const defaultConfig = (type: string) => {
     mediaConfigPlugin(),
     unsplashImageAsset(),
     variations(),
+    muxInput(),
   ]
   minimumUserPlugins.forEach((plugin) => plugins.push(plugin))
 

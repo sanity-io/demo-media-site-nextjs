@@ -4,16 +4,16 @@ import ReactPlayer from 'react-player'
 import {defineType, PreviewProps} from 'sanity'
 
 export default defineType({
-  name: 'video',
+  name: 'externalVideo',
+  title: 'External Video',
   type: 'object',
   icon: FiVideo,
-  title: 'Video',
   fields: [
     {
       name: 'url',
       type: 'url',
       title: 'Media URL',
-      description: `Accepts: YouTube, Facebook, Twitch, SoundCloud, Streamable, Vimeo, Wistia, Mixcloud, DailyMotion and Kaltura`,
+      description: `Accepts: YouTube, Facebook, Twitch, SoundCloud, and Vimeo`,
       validation: (Rule) => Rule.required(),
     },
   ],
