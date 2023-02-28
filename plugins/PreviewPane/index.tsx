@@ -30,7 +30,7 @@ export const PreviewPane = memo(function PreviewPane({document}: Props) {
   const slug = document.displayed.slug?.current ?? ''
   const brand = document.displayed.brand
 
-  const client = useClient({apiVersion: `${apiVersion}`})
+  const client = useClient({apiVersion})
 
   const secret = suspend(
     () => getSecret(client, previewSecretId, true),
