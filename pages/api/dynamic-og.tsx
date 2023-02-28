@@ -5,7 +5,7 @@ import * as React from 'react'
 import {getClient} from '../../lib/sanity.server'
 
 export const config = {
-  runtime: 'experimental-edge',
+  runtime: 'edge',
 }
 
 export default async function handler(req: NextRequest) {
@@ -29,8 +29,8 @@ export default async function handler(req: NextRequest) {
   }
 
   const doc = await getClient(false).fetch(
-    `*[_type == "${type}" && _id == $id][0]`,
-    {id}
+    `*[_type == $type && _id == $id][0]`,
+    {id, type}
   )
 
   if (type === 'article') {
