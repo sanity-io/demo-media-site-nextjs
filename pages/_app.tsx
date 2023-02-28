@@ -2,7 +2,7 @@ import '../styles/index.css'
 
 import type {NextPage} from 'next'
 import type {AppProps} from 'next/app'
-import { useRouter } from 'next/router'
+import {useRouter} from 'next/router'
 import {DefaultSeo} from 'next-seo'
 import Home from 'pages'
 import type {ReactElement, ReactNode} from 'react'
@@ -24,8 +24,8 @@ type AppPropsWithLayout = AppProps & {
 function MyApp({Component, pageProps}: AppPropsWithLayout) {
   // Don't wrap the index page in a brand-specific layout
   const router = useRouter()
-  
-  if (router.asPath === "/") {
+
+  if (router.asPath === '/') {
     return <Home {...pageProps} />
   }
 

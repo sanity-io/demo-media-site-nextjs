@@ -47,7 +47,9 @@ const preview: NextApiHandler = async (req, res): Promise<void> => {
         `
       )
     }
+
     const client = _client.withConfig({useCdn: false, token: readToken})
+    // @ts-ignore
     const secret = await getSecret(client, previewSecretId)
     if (req.query.secret !== secret) {
       return res.status(401).send('Invalid secret')

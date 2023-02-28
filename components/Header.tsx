@@ -97,7 +97,7 @@ function MainCoverImage({
       <Figure
         caption={
           (mainImage?.caption || hasPhotographers) && (
-            <span className="font-sans">
+            <span className="block py-2 px-4 font-sans">
               {mainImage.caption}
               {separator}
               {hasPhotographers && (
@@ -110,8 +110,8 @@ function MainCoverImage({
         }
         className={
           brandName === BRAND_LIFESTYLE_NAME
-            ? 'm-auto max-w-xl p-2'
-            : 'm-auto max-w-5xl p-2'
+            ? 'm-auto max-w-xl py-2'
+            : 'm-auto max-w-5xl py-2'
         }
         img={
           <Image

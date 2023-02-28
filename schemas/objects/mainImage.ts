@@ -29,11 +29,17 @@ export default defineType({
       name: 'alt',
       type: 'string',
       validation: (Rule) =>
-        Rule.custom((value, {parent}) => {
-          // Only required if an image is present
-          if (!parent?.image) return true
+        Rule.custom((value, context) => {
+          const {parent} = context as any
 
-          return value ? true : 'Alternative text is helpful for accessibility and SEO'
+          // Alt text only required if an image is set in the parent
+          if (!parent?.image) {
+            return true
+          }
+
+          return value
+            ? true
+            : 'Alternative text is helpful for accessibility and SEO'
         }),
       hidden: ({parent}) => !parent?.image,
       fieldset: 'text',
