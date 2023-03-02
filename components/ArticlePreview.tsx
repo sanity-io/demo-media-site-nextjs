@@ -192,7 +192,7 @@ export default function ArticlePreview({
           >
             {date && <Date dateString={date} />}
           </span>
-          <PeopleList people={people} />
+          {people && people?.length > 0 ? <PeopleList people={people} /> : null}
         </div>
       </div>
     </div>

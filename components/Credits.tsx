@@ -96,7 +96,7 @@ export function Credits({
     <div className="mt-4 mb-4 max-w-2xl border-b border-gray-200 pb-3 text-sm dark:border-gray-900 sm:text-lg md:mt-auto md:pb-4 md:text-xl">
       {date && (
         <span
-          data-after=" ● "
+          data-after={people && people.length > 0 ? ' ● ' : undefined}
           className="after:inline after:content-[attr(data-after)]"
         >
           <Date dateString={date} />
@@ -111,7 +111,7 @@ export const PeopleList = ({people}: {people: Article['people']}) => {
   return (
     <>
       {people &&
-        people?.length &&
+        people?.length > 0 &&
         people.map((person) => (
           <span
             key={person.name}

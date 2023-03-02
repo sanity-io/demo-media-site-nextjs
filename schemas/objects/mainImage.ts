@@ -28,10 +28,28 @@ export default defineType({
     defineField({
       name: 'alt',
       type: 'string',
-      validation: (Rule) => Rule.required(),
+      validation: (Rule) =>
+        Rule.custom((value, context) => {
+          const {parent} = context as any
+
+          // Alt text only required if an image is set in the parent
+          if (!parent?.image) {
+            return true
+          }
+
+          return value
+            ? true
+            : 'Alternative text is helpful for accessibility and SEO'
+        }),
+      hidden: ({parent}) => !parent?.image,
       fieldset: 'text',
     }),
-    defineField({name: 'caption', type: 'string', fieldset: 'text'}),
+    defineField({
+      name: 'caption',
+      type: 'string',
+      hidden: ({parent}) => !parent?.image,
+      fieldset: 'text',
+    }),
   ],
   preview: {
     select: {

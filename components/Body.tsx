@@ -81,7 +81,7 @@ const components = {
       const url = getUrlForDocumentType('article', slug, value.brand)
       return (
         <div className="max-w-prose text-black">
-          <p className="dark border border-gray-200 border-gray-900 p-4">
+          <p className="dark border border-gray-200 p-4 dark:border-gray-900">
             <span className="font-bold">Read more:</span>{' '}
             <Link href={url} className="no-underline hover:underline">
               {title}
@@ -104,8 +104,8 @@ const components = {
     video: ({value}: {value: MediaNode}) => {
       const {url} = value
       return (
-        <div>
-          <ReactPlayer url={url} />
+        <div className="-mx-4 aspect-video lg:-mx-6">
+          <ReactPlayer url={url} width="100%" height="100%" />
         </div>
       )
     },
@@ -138,7 +138,7 @@ export default function Body({
 
       <div
         className={
-          'font-merriweather prose max-w-none font-serif text-lg leading-relaxed dark:prose-invert md:prose-lg md:text-xl md:leading-relaxed lg:prose-xl'
+          'font-merriweather prose max-w-none font-serif text-lg leading-relaxed dark:prose-invert md:prose-lg lg:prose-xl md:text-xl md:leading-relaxed'
         }
       >
         <PortableText

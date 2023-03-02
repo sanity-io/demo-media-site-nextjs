@@ -2,7 +2,9 @@ import '../styles/index.css'
 
 import type {NextPage} from 'next'
 import type {AppProps} from 'next/app'
+import {useRouter} from 'next/router'
 import {DefaultSeo} from 'next-seo'
+import Home from 'pages'
 import type {ReactElement, ReactNode} from 'react'
 import * as React from 'react'
 
@@ -20,6 +22,13 @@ type AppPropsWithLayout = AppProps & {
 }
 
 function MyApp({Component, pageProps}: AppPropsWithLayout) {
+  // Don't wrap the index page in a brand-specific layout
+  const router = useRouter()
+
+  if (router.asPath === '/') {
+    return <Home {...pageProps} />
+  }
+
   const Layout = getBrandName() === 'lifestyle' ? LayoutLifestyle : LayoutTech
   // Use the layout defined at the page level, if available
   const getLayout =

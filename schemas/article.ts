@@ -19,7 +19,10 @@ export default defineType({
       title: 'Slug',
       type: 'slug',
       options: {source: 'title'},
-      validation: (Rule) => Rule.required(),
+      validation: (Rule) =>
+        Rule.required().error(
+          `A slug is required to generate a page on the website`
+        ),
     }),
     defineField({
       type: 'mainImage',

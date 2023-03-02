@@ -2,7 +2,7 @@
  * This config is used to set up Sanity Studio that's mounted on the `/pages/studio/[[...index]].tsx` route
  */
 
-import sanityClient from '@sanity/client'
+import {createClient} from '@sanity/client'
 import {scheduledPublishing} from '@sanity/scheduled-publishing'
 import {visionTool} from '@sanity/vision'
 import {theme} from 'https://themer.sanity.build/api/hues?preset=tw-cyan&primary=b595f9'
@@ -73,10 +73,11 @@ const defaultConfig = (type: string) => {
   })()
 }
 
-//create Sanity client from config
-const client = sanityClient({
+// create Sanity client from config
+const client = createClient({
   projectId: config.sanity.projectId,
   dataset: config.sanity.dataset,
+  apiVersion: config.sanity.apiVersion,
   useCdn: false,
 })
 
