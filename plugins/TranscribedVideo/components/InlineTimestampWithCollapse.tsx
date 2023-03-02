@@ -1,21 +1,32 @@
 import {Card, Stack} from '@sanity/ui'
-import React, { useState } from 'react'
+import React, {useCallback, useState} from 'react'
 import {ObjectItem, ObjectItemProps} from 'sanity'
 
-export const InlineTimestampWithCollapse = (props: ObjectItemProps<ObjectItem>) => {
+export const InlineTimestampWithCollapse = (
+  props: ObjectItemProps<ObjectItem>
+) => {
   const {inputProps, renderDefault, collapsed, onExpand, onCollapse} = props
   const {members, renderInput, value} = inputProps
   const [isCollapsed, setIsCollapsed] = useState(collapsed)
-  const handleCollapse = () => {
+  const handleCollapse = useCallback(() => {
     setIsCollapsed(true)
     onCollapse()
-  }
+  }, [onCollapse, setIsCollapsed])
 
-  const handleExpand = () => {
+  const handleExpand = useCallback(() => {
     setIsCollapsed(false)
     onExpand()
-  }
+  }, [onExpand, setIsCollapsed])
+
   const onOpen = () => handleExpand()
+
+  const handleClick = useCallback(() => {
+    if (isCollapsed) {
+      handleExpand()
+    } else {
+      handleCollapse()
+    }
+  }, [isCollapsed, handleCollapse, handleExpand])
 
   const inlineProps = {
     ...inputProps,
@@ -23,25 +34,12 @@ export const InlineTimestampWithCollapse = (props: ObjectItemProps<ObjectItem>) 
   }
   return (
     <Stack space={2} key={value?._key || 'content'}>
-      <Card
-        onClick={() => {
-          if (collapsed) {
-            handleExpand()
-          } else {
-            handleCollapse()
-          }
-        }}
-      >
-
-        {renderDefault({...props, onOpen})}
+      <Card onClick={handleClick}>{renderDefault({...props, onOpen})}</Card>
+      {!isCollapsed && (
+        <Card paddingX={5} paddingBottom={5}>
+          {renderInput(inlineProps)}
         </Card>
-      {
-        !isCollapsed && (
-          <Card paddingX={5} paddingBottom={5}>
-            {renderInput(inlineProps)}
-          </Card>
-        )
-      }
+      )}
     </Stack>
   )
 }

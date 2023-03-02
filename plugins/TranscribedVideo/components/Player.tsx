@@ -49,9 +49,7 @@ export const Player = (props: PlayerProps) => {
         />
       )
     }
-    return (
-      <ObjectInput {...props} members={[props.member]} />
-    )
+    return <ObjectInput {...props} members={[props.member]} />
   }, [videoAssetDoc, props, videoAssetId])
 
   return player()

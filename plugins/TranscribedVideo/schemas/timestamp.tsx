@@ -1,9 +1,8 @@
-// import React from 'react'
+import React from 'react'
 import {defineField, defineType} from 'sanity'
-import { CollapsibleInlineTimestampInArray } from '../components/CollapsibleInlineTimestampInArray'
 
-import {InlineTimestamp} from '../components/InlineTimestamp'
-import { InlineTimestampWithCollapse } from '../components/InlineTimestampWithCollapse'
+// import {InlineTimestamp} from '../components/InlineTimestamp'
+import {InlineTimestampWithCollapse} from '../components/InlineTimestampWithCollapse'
 
 export default defineType({
   name: 'timestamp',
@@ -14,7 +13,6 @@ export default defineType({
   },
   // components: {item: (props) => <InlineTimestamp {...props} />},
   components: {item: (props) => <InlineTimestampWithCollapse {...props} />},
-  // components: {item: (props) => <CollapsibleInlineTimestampInArray {...props} />},
   fields: [
     defineField({
       name: 'text',

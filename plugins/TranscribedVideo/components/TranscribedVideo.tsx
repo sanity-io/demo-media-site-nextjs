@@ -10,7 +10,8 @@ import {
   ObjectMember,
   ObjectSchemaType,
 } from 'sanity'
-import { Player } from './Player'
+
+import {Player} from './Player'
 
 type FieldMemberOverload = FieldMember<
   BaseFormNode<ArraySchemaType, ObjectSchemaType>
@@ -20,7 +21,6 @@ export const TranscribedVideo = (props: ObjectInputProps) => {
   const {members} = props
   return (
     <Stack>
-      {/* v0 -- render default */}
       {members.map((member: ObjectMember) => {
         if (member.key === 'field-transcript') {
           return (
@@ -30,10 +30,14 @@ export const TranscribedVideo = (props: ObjectInputProps) => {
               key={member.key}
             />
           )
-        } 
-        else if (member.key === 'field-video') {
+        } else if (member.key === 'field-video') {
           return (
-            <Player {...props} member={member} key={member.key} useInputComponent={false} />
+            <Player
+              {...props}
+              member={member}
+              key={member.key}
+              useInputComponent={false}
+            />
           )
         }
         return (

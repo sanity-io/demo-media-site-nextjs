@@ -1,12 +1,10 @@
-import { useCallback, useMemo, useState } from 'react'
-import { ArrayOfObjectsInput, ArrayOfObjectsInputMembers, ArrayOfObjectsInputProps, ArrayOfObjectsMember, useFormBuilder} from 'sanity'
-import { parseTimestamp } from './utils/parseTimestamp'
-import { Stack, Flex, Inline, Button, Card } from '@sanity/ui'
-import {
-  CollapseIcon,
-  ExpandIcon,
-} from '@sanity/icons'
-import { InlineTimestampWithCollapse } from './InlineTimestampWithCollapse'
+import {CollapseIcon, ExpandIcon} from '@sanity/icons'
+import {Button, Card, Flex, Inline, Stack} from '@sanity/ui'
+import React from 'react'
+import {useCallback, useMemo, useState} from 'react'
+import {ArrayOfObjectsInputProps, ArrayOfObjectsMember} from 'sanity'
+
+import {parseTimestamp} from './utils/parseTimestamp'
 
 type TranscriptProps = ArrayOfObjectsInputProps & {
   currTime: number
@@ -18,62 +16,57 @@ type SimpleTimestamp = {
   stop: number | null
 }
 
-type TimeTrackingArrayInputProps = ArrayOfObjectsInputProps & {
-  showAll?: boolean
-  toggleShowAll?: () => void
-}
-
-
 export const Transcript = (props: TranscriptProps) => {
   const [showAll, setShowAll] = useState(false)
-  const {currTime, members, elementProps, renderDefault} = props
+  const {currTime, members, elementProps, renderInput} = props
 
   // //convert to numbers for easy processing
   const timestamps: SimpleTimestamp[] = useMemo(() => {
     return members.map((member) => {
       //@ts-expect-error -- "item" not expected on member
       const timeRange = member?.item?.value?.timeRange
-      return ({
+      return {
         start: parseTimestamp(timeRange?.start) || null,
         stop: parseTimestamp(timeRange?.stop) || null,
-      })
+      }
     })
   }, [members])
 
   const filteredItems = useMemo(() => {
-    if (showAll) { return members }
-    return timestamps.reduce((acc: ArrayOfObjectsMember[], item, i) => {
-      //just do a buffer of 5 seconds
-      if (item.start === null) { return acc }
-      const is5SecondsBefore = item.start >= currTime - 5000
-      const is5SecondsAfter = item.start <= currTime + 5000
-      if (is5SecondsBefore && is5SecondsAfter) {
-        return [...acc, members[i]]
-      } else {
+    if (showAll) {
+      return members
+    }
+    return timestamps
+      .reduce((acc: ArrayOfObjectsMember[], item, i) => {
+        //just do a buffer of 5 seconds
+        if (item.start === null) {
+          return acc
+        }
+        const is5SecondsBefore = item.start >= currTime - 5000
+        const is5SecondsAfter = item.start <= currTime + 5000
+        if (is5SecondsBefore && is5SecondsAfter) {
+          return [...acc, members[i]]
+        }
         return acc
-      }
-    }, [])
-    .map((member: ArrayOfObjectsMember) => {
-      //@ts-expect-error -- "item" not expected on member
-      const timeRange = member?.item?.value?.timeRange
-      const isCurrent = (
-        parseTimestamp(timeRange?.start) <= currTime &&
-        parseTimestamp(timeRange?.stop) >= currTime
-      )
+      }, [])
+      .map((member: ArrayOfObjectsMember) => {
+        //@ts-expect-error -- "item" not expected on member
+        const timeRange = member?.item?.value?.timeRange
+        const isCurrent =
+          parseTimestamp(timeRange?.start) <= currTime &&
+          parseTimestamp(timeRange?.stop) >= currTime
 
-      //ensure non-current items can be opened
-      if (!isCurrent) {
+        //ensure non-current items can be opened
+        if (!isCurrent) {
+          return {
+            ...member,
+          }
+        }
         return {
           ...member,
+          collapsed: false,
         }
-      } else {
-        return {
-          ...member,
-          collapsed: false
-        }
-      }
-    })
-
+      })
   }, [timestamps, currTime, members, showAll])
 
   const toggleShowAll = useCallback(() => {
@@ -83,7 +76,7 @@ export const Transcript = (props: TranscriptProps) => {
   const membersToShow = useMemo(() => {
     return showAll ? members : filteredItems
   }, [showAll, members, filteredItems])
-  
+
   return (
     <Stack space={1}>
       <Flex justify="flex-end">
@@ -99,26 +92,13 @@ export const Transcript = (props: TranscriptProps) => {
           />
         </Inline>
       </Flex>
-      <Card
-        radius={1}
-        border
-        tabIndex={0}
-        marginY={1}
-        {...elementProps}
-      >
-        {
-        renderDefault({
+      <Card radius={1} border tabIndex={0} marginY={1} {...elementProps}>
+        {renderInput({
           ...props,
+          //@ts-ignore I should learn the overload of this
           members: membersToShow,
-          renderItem: (itemProps) => {console.log('itemProps', itemProps); return <div/>}})}
-        {/* <ArrayOfObjectsInputMembers
-          {...props}
-          members={membersToShow}
-          renderItem={(itemProps) => {
-        /> */}
+        })}
       </Card>
     </Stack>
   )
 }
-
-// const TimeTrackingArray

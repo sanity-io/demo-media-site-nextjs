@@ -1,16 +1,16 @@
 import {PresentationIcon} from '@sanity/icons'
 import {defineField, defineType} from 'sanity'
 
-import {TranscribedVideo} from '../components'
-import { TranscribedVideoWithTimeTracking } from '../components/TranscribedVideoWithTimeTracking'
+// import {TranscribedVideo} from '../components'
+import {TranscribedVideoWithTimeTracking} from '../components/TranscribedVideoWithTimeTracking'
 
 export default defineType({
   name: 'transcribedVideo',
   title: 'Transcribed Video',
   type: 'object',
   icon: PresentationIcon,
-  components: {input: TranscribedVideo},
-  // components: {input: TranscribedVideoWithTimeTracking},
+  // components: {input: TranscribedVideo},
+  components: {input: TranscribedVideoWithTimeTracking},
   fields: [
     defineField({
       name: 'title',
