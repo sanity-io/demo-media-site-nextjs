@@ -334,6 +334,5 @@ client
           },
         },
       ],
-      video: 'https://youtu.be/6An65lF8yRU',
     })
   })

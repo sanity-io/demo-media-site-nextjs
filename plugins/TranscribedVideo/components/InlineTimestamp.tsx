@@ -5,6 +5,7 @@ import {ObjectItem, ObjectItemProps} from 'sanity'
 export const InlineTimestamp = (props: ObjectItemProps<ObjectItem>) => {
   const {inputProps, renderDefault} = props
   const {members, renderInput, value} = inputProps
+  console.log('props', props)
 
   const inlineProps = {
     ...inputProps,

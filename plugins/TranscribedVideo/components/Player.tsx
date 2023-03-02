@@ -4,15 +4,10 @@ import {ChangeEvent, useCallback, useEffect, useState} from 'react'
 import {ObjectInputProps, ObjectMember, SanityDocument, useClient} from 'sanity'
 import {ObjectInput} from 'sanity'
 
-type PlayerProps = {
-  defaultProps: ObjectInputProps
-  videoFieldMember: ObjectMember
+type PlayerProps = ObjectInputProps & {
+  member: ObjectMember
   useInputComponent: boolean
-  onTimeUpdate: (e: ChangeEvent<HTMLVideoElement>) => void
-  onPlay: (e: Event) => void
-  onPlaying: (e: Event) => void
-  onPause: (e: Event) => void
-  onEnded: (e: Event) => void
+  onTimeUpdate?: (e: ChangeEvent<HTMLVideoElement>) => void
 }
 
 //ITWBNI a user could switch back to the Mux Input to be able to change the referenced video asset or upload a new one.
@@ -24,7 +19,7 @@ export const Player = (props: PlayerProps) => {
   )
 
   //@ts-expect-error
-  const videoAssetId = props.videoFieldMember?.field?.value?.asset?._ref
+  const videoAssetId = props.member?.field?.value?.asset?._ref
 
   const client = useClient({apiVersion: '2021-06-07'})
 
@@ -47,10 +42,6 @@ export const Player = (props: PlayerProps) => {
           playbackId={videoAssetDoc?.playbackId as string}
           //@ts-ignore
           onTimeUpdate={props.onTimeUpdate}
-          onPlay={props.onPlay}
-          onPlaying={props.onPlaying}
-          onPause={props.onPause}
-          onEnded={props.onEnded}
           metadata={{
             //@ts-expect-error
             id: videoAssetDoc?.data?._id,
@@ -59,7 +50,7 @@ export const Player = (props: PlayerProps) => {
       )
     }
     return (
-      <ObjectInput {...props.defaultProps} members={[props.videoFieldMember]} />
+      <ObjectInput {...props} members={[props.member]} />
     )
   }, [videoAssetDoc, props, videoAssetId])
 
