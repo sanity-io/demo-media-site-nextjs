@@ -1,3 +1,1 @@
-export * from './TranscribedMuxVideo'
-export * from './Transcript'
-// export * from './ArrayWithInlineEdit'
+export * from './TranscribedVideo'

@@ -1,8 +1,8 @@
 import {SchemaTypeDefinition} from 'sanity'
 
 import timestamp from './timestamp'
-import transcribedMuxVideo from './transcribedMuxVideo'
+import transcribedVideo from './transcribedVideo'
 
 export const schemaTypes = (
   prev: SchemaTypeDefinition[]
-): SchemaTypeDefinition[] => [...prev, timestamp, transcribedMuxVideo]
+): SchemaTypeDefinition[] => [...prev, timestamp, transcribedVideo]

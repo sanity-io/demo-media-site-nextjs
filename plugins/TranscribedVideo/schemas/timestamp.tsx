@@ -1,4 +1,7 @@
+// import React from 'react'
 import {defineField, defineType} from 'sanity'
+
+// import {InlineTimestamp} from '../components/InlineTimestamp'
 
 export default defineType({
   name: 'timestamp',
@@ -7,6 +10,7 @@ export default defineType({
   options: {
     collapsed: true,
   },
+  // components: {item: (props) => <InlineTimestamp {...props} />},
   fields: [
     defineField({
       name: 'text',

@@ -1,7 +1,7 @@
 const padLeft = (value: number, length = 2): string =>
   value.toString().padStart(length, '0')
 
-export function stringifyTimestamp(timestamp: number) {
+export function stringifyTimestamp(timestamp: number): string {
   const date = new Date(0, 0, 0, 0, 0, 0, timestamp)
 
   const hours = date.getHours()

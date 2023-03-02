@@ -1,4 +1,5 @@
 import MuxPlayer from '@mux/mux-player-react'
+import React from 'react'
 import {ChangeEvent, useCallback, useEffect, useState} from 'react'
 import {ObjectInputProps, ObjectMember, SanityDocument, useClient} from 'sanity'
 import {ObjectInput} from 'sanity'
@@ -14,8 +15,8 @@ type PlayerProps = {
   onEnded: (e: Event) => void
 }
 
-//TODO: ITWBNI a user could switch back to the Mux Input to be able to change the referenced video asset or upload a new one.
-//Currently, Mux input will throw errors if placed back into the DOM
+//ITWBNI a user could switch back to the Mux Input to be able to change the referenced video asset or upload a new one.
+//Currently, Mux input:31 will throw errors if placed back into the DOM
 //Try using visibility rules or incorporating the Mux input buttons into the Video player
 export const Player = (props: PlayerProps) => {
   const [videoAssetDoc, setVideoAssetDoc] = useState<SanityDocument | null>(
@@ -28,11 +29,11 @@ export const Player = (props: PlayerProps) => {
   const client = useClient({apiVersion: '2021-06-07'})
 
   useEffect(() => {
-    const fetchVideoAsset = async () => {
+    const fetchVideoAsset = () => {
       client
         .fetch(`*[_id == $id][0]`, {id: videoAssetId})
-        .then((videoAssetDoc) => {
-          setVideoAssetDoc(videoAssetDoc)
+        .then((fetchedVideoAssetDoc) => {
+          setVideoAssetDoc(fetchedVideoAssetDoc)
         })
     }
     fetchVideoAsset()
@@ -56,15 +57,11 @@ export const Player = (props: PlayerProps) => {
           }}
         />
       )
-    } 
-      return (
-        <ObjectInput
-          {...props.defaultProps}
-          members={[props.videoFieldMember]}
-        />
-      )
-    
-  }, [videoAssetDoc, props])
+    }
+    return (
+      <ObjectInput {...props.defaultProps} members={[props.videoFieldMember]} />
+    )
+  }, [videoAssetDoc, props, videoAssetId])
 
   return player()
 }

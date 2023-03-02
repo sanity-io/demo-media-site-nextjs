@@ -5,7 +5,6 @@ import newsletter from 'schemas/newsletter'
 import person from 'schemas/person'
 import podcast from 'schemas/podcast'
 import section from 'schemas/section'
-import video from 'schemas/video'
 
 import {createSchemaItemForBrand, createSiteSettingsNodeForBrand} from './utils'
 
@@ -23,7 +22,7 @@ export const techStructure: StructureResolver = (S, context) => {
     createSchemaItemForBrand(S, article, 'tech'),
     createSchemaItemForBrand(S, newsletter, 'tech'),
     createSchemaItemForBrand(S, podcast, 'tech'),
-    createSchemaItemForBrand(S, video, 'tech'),
+    S.documentTypeListItem('transcribedVideo').title('Video'),
     S.divider(),
     createSchemaItemForBrand(S, person, 'tech'),
     createSchemaItemForBrand(S, section, 'tech'),
