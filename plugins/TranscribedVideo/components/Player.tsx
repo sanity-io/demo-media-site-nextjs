@@ -1,0 +1,56 @@
+import MuxPlayer from '@mux/mux-player-react'
+import React from 'react'
+import {ChangeEvent, useCallback, useEffect, useState} from 'react'
+import {ObjectInputProps, ObjectMember, SanityDocument, useClient} from 'sanity'
+import {ObjectInput} from 'sanity'
+
+type PlayerProps = ObjectInputProps & {
+  member: ObjectMember
+  useInputComponent: boolean
+  onTimeUpdate?: (e: ChangeEvent<HTMLVideoElement>) => void
+}
+
+//ITWBNI a user could switch back to the Mux Input to be able to change the referenced video asset or upload a new one.
+//Currently, Mux input:31 will throw errors if placed back into the DOM
+//Try using visibility rules or incorporating the Mux input buttons into the Video player
+export const Player = (props: PlayerProps) => {
+  const [videoAssetDoc, setVideoAssetDoc] = useState<SanityDocument | null>(
+    null
+  )
+
+  //@ts-expect-error
+  const videoAssetId = props.member?.field?.value?.asset?._ref
+
+  const client = useClient({apiVersion: '2021-06-07'})
+
+  useEffect(() => {
+    const fetchVideoAsset = () => {
+      client
+        .fetch(`*[_id == $id][0]`, {id: videoAssetId})
+        .then((fetchedVideoAssetDoc) => {
+          setVideoAssetDoc(fetchedVideoAssetDoc)
+        })
+    }
+    fetchVideoAsset()
+  }, [videoAssetId, client])
+
+  const player = useCallback(() => {
+    if (videoAssetId && !props.useInputComponent) {
+      return (
+        <MuxPlayer
+          streamType="on-demand"
+          playbackId={videoAssetDoc?.playbackId as string}
+          //@ts-ignore
+          onTimeUpdate={props.onTimeUpdate}
+          metadata={{
+            //@ts-expect-error
+            id: videoAssetDoc?.data?._id,
+          }}
+        />
+      )
+    }
+    return <ObjectInput {...props} members={[props.member]} />
+  }, [videoAssetDoc, props, videoAssetId])
+
+  return player()
+}

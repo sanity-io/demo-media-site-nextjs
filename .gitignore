@@ -48,3 +48,5 @@ studio/.env.development
 
 #sanity
 .sanity*
+#helper scripts
+createVideo.ts

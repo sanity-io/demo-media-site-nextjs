@@ -8,6 +8,7 @@ import {visionTool} from '@sanity/vision'
 import {theme} from 'https://themer.sanity.build/api/hues?preset=tw-cyan&primary=b595f9'
 import {config, reviewConfig} from 'lib/config'
 import {productionUrl} from 'plugins/productionUrl'
+import TranscribedVideo from 'plugins/TranscribedVideo'
 import {defineConfig, definePlugin, WorkspaceOptions} from 'sanity'
 import {deskTool} from 'sanity/desk'
 import {unsplashImageAsset} from 'sanity-plugin-asset-source-unsplash'
@@ -55,7 +56,9 @@ const defaultConfig = (type: string) => {
     mediaConfigPlugin(),
     unsplashImageAsset(),
     variations(),
+    TranscribedVideo(),
   ]
+
   minimumUserPlugins.forEach((plugin) => plugins.push(plugin))
 
   if (type === 'tech') {

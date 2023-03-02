@@ -22,6 +22,7 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
+    "@mux/mux-player-react": "^1.8.0",
     "@portabletext/react": "^2.0.1",
     "@portabletext/to-html": "^1.0.4",
     "@sanity/client": "^4.0.1",
@@ -51,6 +52,7 @@
     "sanity-plugin-documents-pane": "^2.0.1",
     "sanity-plugin-iframe-pane": "^2.1.1",
     "sanity-plugin-media": "^2.0.4",
+    "sanity-plugin-mux-input": "^2.0.11",
     "seedrandom": "^3.0.5",
     "styled-components": "^5.3.6",
     "twig": "^1.15.4"

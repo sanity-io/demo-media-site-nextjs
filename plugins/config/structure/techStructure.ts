@@ -22,6 +22,7 @@ export const techStructure: StructureResolver = (S, context) => {
     createSchemaItemForBrand(S, article, 'tech'),
     createSchemaItemForBrand(S, newsletter, 'tech'),
     createSchemaItemForBrand(S, podcast, 'tech'),
+    S.documentTypeListItem('transcribedVideo').title('Video'),
     S.divider(),
     createSchemaItemForBrand(S, person, 'tech'),
     createSchemaItemForBrand(S, section, 'tech'),
