@@ -2,7 +2,8 @@ import React from 'react'
 import {defineField, defineType} from 'sanity'
 
 // import {InlineTimestamp} from '../components/InlineTimestamp'
-import {InlineTimestampWithCollapse} from '../components/InlineTimestampWithCollapse'
+// import {InlineTimestampWithCollapse} from '../components/InlineTimestampWithCollapse'
+import {ClickableInlineTimestampWithCollapse} from '../components/ClickableInlineTimestampWithCollapse'
 
 export default defineType({
   name: 'timestamp',
@@ -12,7 +13,9 @@ export default defineType({
     collapsed: true,
   },
   // components: {item: (props) => <InlineTimestamp {...props} />},
-  components: {item: (props) => <InlineTimestampWithCollapse {...props} />},
+  components: {
+    item: (props) => <ClickableInlineTimestampWithCollapse {...props} />,
+  },
   fields: [
     defineField({
       name: 'text',
@@ -26,6 +29,7 @@ export default defineType({
       type: 'object',
       options: {
         collapsible: true,
+        collapsed: true,
         columns: 2,
       },
       fields: [
