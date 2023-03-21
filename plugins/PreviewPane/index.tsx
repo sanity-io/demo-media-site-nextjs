@@ -14,10 +14,14 @@ type Props = {
   document: {
     displayed: SanityDocument & BrandSlugDocument
   }
+  fetch?: boolean
 }
 
-export const PreviewPane = memo(function PreviewPane({document}: Props) {
-  const url = useBuildPreviewUrl(document)
+export const PreviewPane = memo(function PreviewPane({document, fetch}: Props) {
+  let url = useBuildPreviewUrl(document)
+  if (fetch) {
+    url = `${url}&fetch=true`
+  }
   const options: IframeOptions = {
     url,
     /* @ts-expect-error -- revision: false does not work as expected */

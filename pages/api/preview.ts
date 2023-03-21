@@ -109,6 +109,23 @@ const preview: NextApiHandler = async (req, res): Promise<void> => {
     })
   }
 
+  if (req.query.fetch === 'true') {
+    const proto =
+      //eslint-disable-next-line no-process-env
+      process.env.NODE_ENV === 'development' ? `http://` : `https://`
+    const host = req.headers.host
+    const pathname = `/${brand}/${subpath}/${content.slug}`
+    const absoluteUrl = new URL(`${proto}${host}${pathname}`).toString()
+
+    const previewHtml = await fetch(absoluteUrl, {
+      credentials: `include`,
+      headers: {Cookie: req.headers.cookie || ''},
+    })
+      .then((previewRes) => previewRes.text())
+      .catch((err) => console.error(err))
+    return res.send(previewHtml)
+  }
+
   // Redirect to the path from the fetched post
   // We don't redirect to req.query.slug as that might lead to open redirect vulnerabilities
   return redirectToPreview(

@@ -1,8 +1,10 @@
 /* eslint-disable no-process-env */
 /** @type {import('next').NextConfig} */
 module.exports = {
-  experimental: {urlImports: ['https://themer.sanity.build/']},
-
+  experimental: {
+    urlImports: ['https://themer.sanity.build/'],
+    esmExternals: 'loose',
+  },
   images: {
     remotePatterns: [
       {hostname: 'cdn.sanity.io'},
