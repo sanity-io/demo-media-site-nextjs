@@ -32,7 +32,7 @@ function StorySection({
     return (
       <section className="max-w-6xl md:mx-3 lg:mx-auto">
         {title && (
-          <h2 className="mx-auto pt-6 pb-4 text-center text-xl font-extrabold leading-none tracking-tight sm:text-2xl md:p-5 md:py-6 lg:px-6 lg:pt-7">
+          <h2 className="mx-auto pb-4 pt-6 text-center text-xl font-extrabold leading-none tracking-tight sm:text-2xl md:p-5 md:py-6 lg:px-6 lg:pt-7">
             <span className="inline text-green-200">●</span> {title}
           </h2>
         )}
@@ -77,7 +77,7 @@ function StorySection({
     <section className="max-w-5xl md:mx-3 lg:mx-auto">
       <h2 className="sr-only">Articles</h2>
       <div className="font-merriweather container mx-auto">
-        <div className="divide-y divide-gray-200 rounded border-t border-b border-gray-200 dark:divide-gray-900 dark:border-gray-900 md:border">
+        <div className="divide-y divide-gray-200 rounded border-b border-t border-gray-200 dark:divide-gray-900 dark:border-gray-900 md:border">
           {articles?.map((article) => {
             const baseProps = {
               title: article?.title,
@@ -157,7 +157,7 @@ export default function MoreStories({
     <section className="mb-6 max-w-6xl first:mt-5 first:sm:mt-6 md:mx-3 lg:mx-auto">
       <h2 className="sr-only">Articles</h2>
       <div className="font-merriweather container mx-auto">
-        <div className="divide-y divide-gray-200 border-gray-200 dark:divide-gray-900 dark:border-gray-900 sm:rounded sm:border-t sm:border-b md:border">
+        <div className="divide-y divide-gray-200 border-gray-200 dark:divide-gray-900 dark:border-gray-900 sm:rounded sm:border-b sm:border-t md:border">
           {articles?.map((article) => {
             const baseProps = {
               title: article?.title,

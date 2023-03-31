@@ -14,7 +14,7 @@ export default function Alert({preview}: {preview: boolean}) {
         className={cn(!isLifestyleBrand && 'border-b', {
           'border-accent-7 bg-accent-7 pointer-events-auto bg-black text-white':
             preview,
-          'mx-auto mb-6 flex max-w-lg rounded-md bg-purple-300 py-1 px-3 text-white dark:text-white':
+          'mx-auto mb-6 flex max-w-lg rounded-md bg-purple-300 px-3 py-1 text-white dark:text-white':
             isLifestyleBrand && preview,
           hidden: !preview,
         })}

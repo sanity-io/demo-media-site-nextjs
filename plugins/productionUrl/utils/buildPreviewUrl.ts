@@ -7,11 +7,13 @@ import {BrandSlugDocument} from 'types'
 interface BuildPreviewUrlOptions {
   document: BrandSlugDocument | SanityDocumentLike
   secret?: string | null
+  fetch?: boolean
 }
 
 export const buildPreviewUrl = ({
   document,
   secret,
+  fetch = false,
 }: BuildPreviewUrlOptions): string => {
   const url = new URL('/api/preview', location.origin)
   if (secret) {
@@ -26,6 +28,10 @@ export const buildPreviewUrl = ({
 
   if (brand) {
     url.searchParams.set('brand', brand)
+  }
+
+  if (fetch) {
+    url.searchParams.set('fetch', 'true')
   }
 
   return url.toString()

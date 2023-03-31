@@ -93,7 +93,7 @@ export function Credits({
   }
 
   return (
-    <div className="mt-4 mb-4 max-w-2xl border-b border-gray-200 pb-3 text-sm dark:border-gray-900 sm:text-lg md:mt-auto md:pb-4 md:text-xl">
+    <div className="mb-4 mt-4 max-w-2xl border-b border-gray-200 pb-3 text-sm dark:border-gray-900 sm:text-lg md:mt-auto md:pb-4 md:text-xl">
       {date && (
         <span
           data-after={people && people.length > 0 ? ' ● ' : undefined}

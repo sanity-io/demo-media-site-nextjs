@@ -1,11 +1,14 @@
 import {config} from 'lib/config'
+import dynamic from 'next/dynamic'
 import {PreviewPane} from 'plugins/PreviewPane'
 import {buildPreviewUrl, getSecret} from 'plugins/productionUrl'
 import React from 'react'
 import {DefaultDocumentNodeResolver} from 'sanity/desk'
 import DocumentsPane from 'sanity-plugin-documents-pane'
-import {SEOPane} from 'sanity-plugin-seo-pane'
-import {BrandSlugDocument} from 'types'
+const SEOPane = dynamic(
+  () => import('sanity-plugin-seo-pane').then((mod) => mod.SEOPane),
+  {ssr: false}
+)
 
 import {NewsletterPreview} from '../newsletter'
 
@@ -13,8 +16,9 @@ const defaultDocumentNode: DefaultDocumentNodeResolver = (
   S,
   {schemaType, getClient}
 ) => {
-  const articleReferenceTypes = ['person', 'section']
   const previewTypes = ['article', 'person', 'section', 'siteSettings']
+  const articleReferenceTypes = ['person', 'section']
+  const seoTypes = ['article']
   const views = []
   const {apiVersion, previewSecretId} = config.sanity
 
@@ -22,17 +26,7 @@ const defaultDocumentNode: DefaultDocumentNodeResolver = (
     views.push(
       S.view
         .component(({document}) => <PreviewPane document={document} />)
-        .title('Preview'),
-      S.view.component(SEOPane).options({
-        // Retrieve the keywords and synonyms at the given dot-notated strings
-        keywords: `seo.keywords`,
-        synonyms: `seo.synonyms`,
-        url: async (document: BrandSlugDocument) => {
-          const client = getClient({apiVersion})
-          const secret = await getSecret(client, previewSecretId)
-          return buildPreviewUrl({document, secret})
-        },
-      })
+        .title('Preview')
     )
   }
 
@@ -45,6 +39,28 @@ const defaultDocumentNode: DefaultDocumentNodeResolver = (
           params: {id: `_id`},
         })
         .title('Related Content')
+    )
+  }
+
+  if (seoTypes.includes(schemaType)) {
+    views.push(
+      S.view
+        .component(({document}) => (
+          <SEOPane
+            options={{
+              keywords: `seo.keywords`,
+              synonyms: `seo.synonyms`,
+              //@ts-ignore
+              url: async () => {
+                const client = getClient({apiVersion})
+                const secret = await getSecret(client, previewSecretId)
+                return buildPreviewUrl({document, secret, fetch: true})
+              },
+            }}
+            document={document}
+          />
+        ))
+        .title('SEO')
     )
   }
 

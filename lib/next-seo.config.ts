@@ -14,13 +14,13 @@ const envBasedConfig = isLifestyle()
       },
     }
   : {
-      titleTemplate: '%s - Media',
-      defaultTitle: 'Media',
+      titleTemplate: '%s - Tech',
+      defaultTitle: 'Tech',
       openGraph: {
         type: 'website',
         locale: 'en',
         url: 'https://www.url.ie/',
-        siteName: 'Media',
+        siteName: 'Tech',
       },
     }
 

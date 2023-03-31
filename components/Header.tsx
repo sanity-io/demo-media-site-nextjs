@@ -97,7 +97,7 @@ function MainCoverImage({
       <Figure
         caption={
           (mainImage?.caption || hasPhotographers) && (
-            <span className="block py-2 px-4 font-sans">
+            <span className="block px-4 py-2 font-sans">
               {mainImage.caption}
               {separator}
               {hasPhotographers && (

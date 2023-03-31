@@ -15,7 +15,7 @@ export default function ArticleIndex({
     <section className="mb-6 max-w-6xl first:mt-5 first:sm:mt-6 md:mx-3 lg:mx-auto">
       <h2 className="sr-only">Articles</h2>
       <div className="font-merriweather container mx-auto">
-        <div className="divide-y divide-gray-200 border-gray-200 dark:divide-gray-900 dark:border-gray-900 sm:rounded sm:border-t sm:border-b md:border">
+        <div className="divide-y divide-gray-200 border-gray-200 dark:divide-gray-900 dark:border-gray-900 sm:rounded sm:border-b sm:border-t md:border">
           {displayedArticles}
         </div>
       </div>

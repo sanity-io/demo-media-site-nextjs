@@ -180,7 +180,7 @@ export default function ArticlePreview({
         </h1>
 
         {intro && (
-          <div className="mt-3 mb-4 font-serif text-lg leading-snug">
+          <div className="mb-4 mt-3 font-serif text-lg leading-snug">
             <PortableText value={intro} />
           </div>
         )}
