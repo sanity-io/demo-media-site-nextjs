@@ -1,5 +1,5 @@
-import {SanityImageAssetDocument} from '@sanity/client'
-import {Image, PortableTextBlock} from 'sanity'
+import {SanityDocument, SanityImageAssetDocument} from '@sanity/client'
+import {Image, PortableTextBlock, Slug} from 'sanity'
 import {CrossDatasetReferenceValue} from 'sanity'
 
 export interface Author {
@@ -84,3 +84,8 @@ export type CrossDatasetSource = {
   _type: 'image'
   asset: CrossDatasetReferenceValue & SanityImageAssetDocument
 }
+
+export type BrandSlugDocument = {
+  slug?: Slug
+} & BrandSpecificProps &
+  SanityDocument

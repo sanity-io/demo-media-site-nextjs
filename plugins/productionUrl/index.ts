@@ -3,9 +3,10 @@
  * other actions like "Review changes" and "Inspect"
  */
 
-import {definePlugin, type Slug} from 'sanity'
+import {definePlugin} from 'sanity'
 
-import {getSecret} from './utils'
+import {getSecret, useBuildPreviewUrl} from './utils'
+import {buildPreviewUrl} from './utils/buildPreviewUrl'
 
 export const productionUrl = definePlugin<{
   previewSecretId: `${string}.${string}`
@@ -28,31 +29,15 @@ export const productionUrl = definePlugin<{
     name: 'productionUrl',
     document: {
       productionUrl: async (prev, {document, getClient}) => {
-        const url = new URL('/api/preview', location.origin)
-
         const client = getClient({apiVersion})
-        // @ts-ignore
         const secret = await getSecret(client, previewSecretId, true)
-        if (secret) {
-          url.searchParams.set('secret', secret)
+        if (secret && types.has(document._type)) {
+          return buildPreviewUrl({document, secret})
         }
-        const slug = (document.slug as Slug)?.current
-        if (slug) {
-          url.searchParams.set('slug', slug)
-        }
-
-        const brand = document.brand as string
-        if (brand) {
-          url.searchParams.set('brand', brand)
-        }
-
-        if (types.has(document._type)) {
-          url.searchParams.set('type', document._type)
-          return url.toString()
-        }
-
         return prev
       },
     },
   }
 })
+
+export {buildPreviewUrl, getSecret, useBuildPreviewUrl}

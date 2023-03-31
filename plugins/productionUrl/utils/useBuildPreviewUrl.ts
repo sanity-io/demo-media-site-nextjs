@@ -1,23 +1,16 @@
 import {config} from 'lib/config'
 import {getSecret} from 'plugins/productionUrl/utils'
-import {SanityDocument, Slug, useClient} from 'sanity'
+import {useClient} from 'sanity'
 import {suspend} from 'suspend-react'
+import {BrandSlugDocument} from 'types'
 
-type BrandSlugDocument = {
-  brand: string
-  slug: Slug
-}
-type PaneDocument = {
-  displayed: SanityDocument & BrandSlugDocument
-}
+import {buildPreviewUrl} from './buildPreviewUrl'
 
 // Used as a cache key that doesn't risk collision or getting affected by other components that might be using `suspend-react`
 const fetchSecret = Symbol('preview.secret')
 
-export const useBuildPreviewUrl = (document: PaneDocument): string => {
+export const useBuildPreviewUrl = (document: BrandSlugDocument): string => {
   const {apiVersion, previewSecretId} = config.sanity
-  const slug = document.displayed.slug?.current ?? ''
-  const brand = document.displayed.brand
 
   const client = useClient({apiVersion})
 
@@ -29,14 +22,5 @@ export const useBuildPreviewUrl = (document: PaneDocument): string => {
     {lifespan: 60000}
   )
 
-  const url = new URL('/api/preview', location.origin)
-  if (brand) {
-    url.searchParams.set('brand', brand)
-  }
-
-  url.searchParams.set('slug', slug)
-  if (secret) {
-    url.searchParams.set('secret', secret)
-  }
-  return url.toString()
+  return buildPreviewUrl({document, secret})
 }

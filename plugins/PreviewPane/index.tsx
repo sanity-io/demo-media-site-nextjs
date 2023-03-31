@@ -1,27 +1,21 @@
 /**
  * This component is responsible for rendering previews of pages in the studio.
  */
+import {useBuildPreviewUrl} from 'plugins/productionUrl'
 import React, {memo} from 'react'
-import {SanityDocument, Slug} from 'sanity'
 import Iframe, {IframeOptions} from 'sanity-plugin-iframe-pane'
-import {useBuildPreviewUrl} from 'utils/buildPreviewUrl'
+import {BrandSlugDocument} from 'types'
 
-type BrandSlugDocument = {
-  brand: string
-  slug: Slug
-}
 type Props = {
   document: {
-    displayed: SanityDocument & BrandSlugDocument
+    displayed: BrandSlugDocument
   }
   fetch?: boolean
 }
 
 export const PreviewPane = memo(function PreviewPane({document, fetch}: Props) {
-  let url = useBuildPreviewUrl(document)
-  if (fetch) {
-    url = `${url}&fetch=true`
-  }
+  const url = useBuildPreviewUrl(document.displayed)
+
   const options: IframeOptions = {
     url,
     /* @ts-expect-error -- revision: false does not work as expected */
