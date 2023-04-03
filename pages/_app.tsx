@@ -11,7 +11,6 @@ import * as React from 'react'
 import LayoutTech from '../components/Layout'
 import LayoutLifestyle from '../components/LayoutLifestyle'
 import seoConfig from '../lib/next-seo.config'
-import {getBrandName} from '../utils/brand'
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
@@ -29,22 +28,22 @@ function MyApp({Component, pageProps}: AppPropsWithLayout) {
     return <Home {...pageProps} />
   }
 
-  const Layout = getBrandName() === 'lifestyle' ? LayoutLifestyle : LayoutTech
+  const brand = pageProps?.data?.brand || pageProps?.brand
+  const Layout = brand === 'lifestyle' ? LayoutLifestyle : LayoutTech
   // Use the layout defined at the page level, if available
-  const getLayout =
-    Component.getLayout ??
-    ((page) => (
-      <>
-        <DefaultSeo {...seoConfig} />
-        <Layout preview={pageProps.preview}>
-          {/* @ts-ignore */}
-          {page}
-        </Layout>
-      </>
-    ))
+  const pageWithLayout = (page: ReactElement) => {
+    if (Component.getLayout) {
+      return Component.getLayout(page)
+    }
+    return <Layout preview={pageProps.preview}>{page}</Layout>
+  }
 
-  // @ts-ignore
-  return getLayout(<Component {...pageProps} />)
+  return (
+    <>
+      <DefaultSeo {...seoConfig(brand)} />
+      {pageWithLayout(<Component {...pageProps} />)}
+    </>
+  )
 }
 
 export default MyApp

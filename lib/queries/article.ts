@@ -16,7 +16,7 @@ export const articleFields = groq`
   intro,
   brand,
   "summary": intro,
-  // mainImage->{..., "asset": asset->},
+  seo,
   mainImage,
   "date": _updatedAt,
   "slug": slug.current,

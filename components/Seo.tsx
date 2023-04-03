@@ -12,7 +12,7 @@ const createCanonicalUrl = (doc: SEODocumentType) => {
       ? 'https://demo-media-site-nextjs.sanity.build'
       : 'http://localhost:3000'
   const {_type, brand, slug} = doc
-  return url + getUrlForDocumentType(_type, brand, slug)
+  return url + getUrlForDocumentType(_type, slug, brand)
 }
 
 const createOpenGraphObject = (

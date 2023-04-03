@@ -8,6 +8,8 @@ export const personFields = groq`
   name,
   bio,
   isStaff,
+  seo,
+  brand,
   "slug": slug.current,
 `
 

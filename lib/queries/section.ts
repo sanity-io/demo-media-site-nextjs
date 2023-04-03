@@ -7,6 +7,7 @@ export const sectionFields = groq`
   _type,
   name,
   brand,
+  seo,
   "slug": slug.current,
 `
 

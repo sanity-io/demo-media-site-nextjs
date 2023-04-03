@@ -1,32 +1,31 @@
 import {DefaultSeoProps} from 'next-seo'
 
-import {isLifestyle} from '../utils/brand'
+const envBasedConfig = (brand: string | undefined) =>
+  brand === 'lifestyle'
+    ? {
+        titleTemplate: '%s | Lifestyle',
+        defaultTitle: 'Lifestyle',
+        openGraph: {
+          type: 'website',
+          locale: 'en',
+          url: 'https://www.url.ie/',
+          siteName: 'Lifestyle',
+        },
+      }
+    : {
+        titleTemplate: '%s | Tech',
+        defaultTitle: 'Tech',
+        openGraph: {
+          type: 'website',
+          locale: 'en',
+          url: 'https://www.url.ie/',
+          siteName: 'Tech',
+        },
+      }
 
-const envBasedConfig = isLifestyle()
-  ? {
-      titleTemplate: '%s | Lifestyle',
-      defaultTitle: 'Lifestyle',
-      openGraph: {
-        type: 'website',
-        locale: 'en',
-        url: 'https://www.url.ie/',
-        siteName: 'Lifestyle',
-      },
-    }
-  : {
-      titleTemplate: '%s | Tech',
-      defaultTitle: 'Tech',
-      openGraph: {
-        type: 'website',
-        locale: 'en',
-        url: 'https://www.url.ie/',
-        siteName: 'Tech',
-      },
-    }
-
-const config: DefaultSeoProps = {
+const config = (brand: string): DefaultSeoProps => ({
   dangerouslySetAllPagesToNoIndex: true,
-  ...envBasedConfig,
+  ...envBasedConfig(brand),
   description: 'A demo of the Sanity.io editorial workflow',
   additionalLinkTags: [
     {
@@ -77,6 +76,6 @@ const config: DefaultSeoProps = {
       content: '#000',
     },
   ],
-}
+})
 
 export default config
