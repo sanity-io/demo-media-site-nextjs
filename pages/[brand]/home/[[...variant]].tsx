@@ -9,7 +9,6 @@ import {GetStaticPaths, GetStaticProps} from 'next'
 import {NextSeo} from 'next-seo'
 import * as React from 'react'
 import {Article, Review} from 'types'
-import {getBrandName, isLifestyle} from 'utils/brand'
 
 interface IndexProps {
   allArticles: (Article | Review)[]
@@ -17,15 +16,16 @@ interface IndexProps {
   brand?: string
 }
 export default function Index({allArticles, preview, brand}: IndexProps) {
-  const metadata = isLifestyle()
-    ? {
-        title: 'Latest Lifestyle News, Trends & Tips | STREETREADY',
-        description:
-          'STREETREADY delivers the biggest moments, the hottest trends, and the best tips in entertainment, fashion, beauty, fitness, and food and the ability to shop for it all in one place.',
-      }
-    : {
-        title: 'Latest Tech News',
-      }
+  const metadata =
+    brand === config.lifestyleBrand
+      ? {
+          title: 'Latest Lifestyle News, Trends & Tips | STREETREADY',
+          description:
+            'STREETREADY delivers the biggest moments, the hottest trends, and the best tips in entertainment, fashion, beauty, fitness, and food and the ability to shop for it all in one place.',
+        }
+      : {
+          title: 'Latest Tech News',
+        }
 
   return (
     <>
@@ -71,8 +71,7 @@ export const getStaticProps: GetStaticProps = async ({
         return prev
       }, {})
 
-    //REALLY hacky for preview for product day
-    const brand = variantMap.brand ?? getBrandName()
+    const brand = params?.brand || 'tech'
 
     const rawArticles = overlayDrafts(
       await getClient(preview).fetch(indexQuery, {brand})
@@ -112,8 +111,8 @@ export const getStaticProps: GetStaticProps = async ({
 }
 
 Index.getLayout = function getLayout(page: React.ReactElement) {
-  const {preview, brand} = page?.props
-  if (brand == 'lifestyle') {
+  const {preview, data} = page?.props
+  if (data?.brand == 'lifestyle') {
     return <LayoutLifestyle preview={preview}>{page}</LayoutLifestyle>
   }
   return <Layout preview={preview}>{page}</Layout>

@@ -1,4 +1,5 @@
 import {PortableText} from '@portabletext/react'
+import {config} from 'lib/config'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
@@ -6,7 +7,6 @@ import {logError} from 'utils/logError'
 
 import {urlForImage} from '../lib/sanity'
 import {Article, BrandSpecificProps, MainImage} from '../types'
-import {BRAND_LIFESTYLE_NAME, getBrandName} from '../utils/brand'
 import {getUrlForDocumentType} from '../utils/routing'
 import {PeopleList, usePeople} from './Credits'
 import {Figure} from './Figure'
@@ -15,9 +15,8 @@ type HeaderProps = Pick<Article, 'title' | 'mainImage' | 'sections' | 'intro'>
 
 export default function Header(props: HeaderProps & BrandSpecificProps) {
   const {title, mainImage, intro, sections, brand} = props
-  const brandName = brand || getBrandName()
 
-  if (brandName === BRAND_LIFESTYLE_NAME) {
+  if (brand === config.lifestyleBrand) {
     return <HeaderLifestyle {...props} />
   }
 
@@ -44,7 +43,7 @@ export default function Header(props: HeaderProps & BrandSpecificProps) {
           mainImage={mainImage}
           width={2000}
           height={1000}
-          brandName={brandName}
+          brandName={brand}
         />
       )}
     </>
@@ -109,14 +108,14 @@ function MainCoverImage({
           )
         }
         className={
-          brandName === BRAND_LIFESTYLE_NAME
+          brandName === config.lifestyleBrand
             ? 'm-auto max-w-xl py-2'
             : 'm-auto max-w-5xl py-2'
         }
         img={
           <Image
             className={
-              brandName === BRAND_LIFESTYLE_NAME
+              brandName === config.lifestyleBrand
                 ? 'block aspect-square'
                 : 'block aspect-[4/2]'
             }

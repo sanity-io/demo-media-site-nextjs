@@ -1,10 +1,10 @@
 import {PortableText} from '@portabletext/react'
 import cn from 'classnames'
+import {config} from 'lib/config'
 import Link from 'next/link'
 import * as React from 'react'
 
 import {ArticlePreviewProps} from '../types'
-import {BRAND_LIFESTYLE_NAME, isLifestyle} from '../utils/brand'
 import {getUrlForDocumentType} from '../utils/routing'
 import {useRandom} from '../utils/useRandom'
 import CoverImage from './CoverImage'
@@ -56,7 +56,7 @@ export default function ArticlePreview({
 }: ArticlePreviewProps & {brandName?: string}) {
   let category = useRandom(CATS)
   category = sections?.[0]?.name || category
-  const isLifestyleBrand = brandName === BRAND_LIFESTYLE_NAME || isLifestyle()
+  const isLifestyleBrand = brandName === config.lifestyleBrand
 
   if (isLifestyleBrand) {
     const firstPerson = people?.[0] || {name: '', slug: ''}

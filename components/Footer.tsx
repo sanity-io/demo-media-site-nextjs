@@ -1,16 +1,13 @@
+import {config} from 'lib/config'
 import Link from 'next/link'
 import {useRouter} from 'next/router'
 import * as React from 'react'
 
-import {BRAND_LIFESTYLE_NAME, getBrandName} from '../utils/brand'
-
-const brandName = getBrandName()
-
-export default function Footer() {
+export default function Footer({brandName}: {brandName: string}) {
   const router = useRouter()
   const isLandingPage = router.pathname === '/'
 
-  if (brandName === BRAND_LIFESTYLE_NAME) {
+  if (brandName === config.lifestyleBrand) {
     return (
       <div
         className={`${

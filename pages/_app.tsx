@@ -29,6 +29,7 @@ function MyApp({Component, pageProps}: AppPropsWithLayout) {
   }
 
   const brand = pageProps?.data?.brand || pageProps?.brand
+
   const Layout = brand === 'lifestyle' ? LayoutLifestyle : LayoutTech
   // Use the layout defined at the page level, if available
   const pageWithLayout = (page: ReactElement) => {

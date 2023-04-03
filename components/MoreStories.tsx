@@ -1,7 +1,7 @@
+import {config} from 'lib/config'
 import React, {useMemo} from 'react'
 
 import {Article, isArticle, Review} from '../types'
-import {BRAND_LIFESTYLE_NAME, isLifestyle} from '../utils/brand'
 import {useSplitLifestyleArticles} from '../utils/useSplitLifestyleArticles'
 import ArticlePreview from './ArticlePreview'
 
@@ -20,7 +20,7 @@ function StorySection({
   brandName?: string
   token?: string
 }) {
-  const isLifestyleBrand = brandName === BRAND_LIFESTYLE_NAME || isLifestyle()
+  const isLifestyleBrand = brandName === config.lifestyleBrand
   // Sorry for the mess, but this was the only way I could get the correct borders to work in all breakpoints, in light and dark mode :grimacing:
   const gridClass = useMemo(() => {
     return sectionType === 'featured'
@@ -122,7 +122,7 @@ export default function MoreStories({
   token?: string
 }) {
   const {topArticles, restArticles} = useSplitLifestyleArticles(articles)
-  const isLifestyleBrand = brandName === BRAND_LIFESTYLE_NAME || isLifestyle()
+  const isLifestyleBrand = brandName === config.lifestyleBrand
 
   if (isLifestyleBrand) {
     return (

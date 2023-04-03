@@ -1,8 +1,7 @@
 /**
  * Logic to fetch the available experiments and determine which to show to a user
  */
-import {NextMiddleware, NextResponse} from 'next/server'
-import {getBrandName} from 'utils/brand'
+import {NextMiddleware, NextRequest, NextResponse} from 'next/server'
 
 import {config} from './config'
 
@@ -24,25 +23,27 @@ interface Article {
 
 const urlQuery = encodeURIComponent(query)
 
-const queryUrl = new URL(
-  `https://${projectId}.apicdn.sanity.io/v${apiVersion}/data/query/${dataset}?query=${urlQuery}&$brand="${getBrandName()}"`
-)
+const queryUrl = (brand: string) =>
+  new URL(
+    `https://${projectId}.apicdn.sanity.io/v${apiVersion}/data/query/${dataset}?query=${urlQuery}&$brand="${brand}"`
+  )
 
 // NOTE this calls the APICDN for every view of the homepage
 // Although Netlify has a way to rewrite HTML in edge middleware, and thus not call the API for every page view,
 // Vercel does not have such a capability, so we have to do this on every page view for now.
-const fetchArticles = async () => {
-  const response = await fetch(queryUrl)
+const fetchArticles = async (brand: string) => {
+  const response = await fetch(queryUrl(brand))
   const {result} = (await response.json()) as {result: Article[]}
   return result
 }
 
-export const homeMiddleware: NextMiddleware = async (request) => {
+export const homeMiddleware: NextMiddleware = async (request: NextRequest) => {
   const currentExperiments = JSON.parse(
     request.cookies.get('homeContent')?.value || '{}'
   )
+  const brand = request.nextUrl.pathname.split('/')[1]
 
-  const articles = await fetchArticles()
+  const articles = await fetchArticles(brand)
 
   const newExperiments = {}
 
@@ -73,7 +74,9 @@ export const homeMiddleware: NextMiddleware = async (request) => {
 
   // console.log('newExperiments', newExperiments)
 
-  const response = NextResponse.rewrite(new URL(`/home/${path}`, request.url))
+  const response = NextResponse.rewrite(
+    new URL(`/${brand}/home/${path}`, request.url)
+  )
 
   const newExperimentsHeaderValue = JSON.stringify(newExperiments)
   // console.log('header', newExperimentsHeaderValue)

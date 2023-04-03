@@ -4,7 +4,7 @@ import Alert from './Alert'
 import Footer from './Footer'
 import Navbar from './Navbar'
 
-export default function Layout({
+export default function LayoutTech({
   preview,
   children,
 }: {
@@ -18,7 +18,7 @@ export default function Layout({
         {preview && <Alert preview={preview} />}
         <main>{children}</main>
       </div>
-      <Footer />
+      <Footer brandName="tech" />
     </>
   )
 }
