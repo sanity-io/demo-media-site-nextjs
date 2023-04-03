@@ -1,20 +1,61 @@
+import {config} from 'lib/config'
+import dynamic from 'next/dynamic'
 import {PreviewPane} from 'plugins/PreviewPane'
+import {buildPreviewUrl, getSecret} from 'plugins/productionUrl'
 import React from 'react'
 import {DefaultDocumentNodeResolver} from 'sanity/desk'
 import DocumentsPane from 'sanity-plugin-documents-pane'
+const SEOPane = dynamic(
+  () => import('sanity-plugin-seo-pane').then((mod) => mod.SEOPane),
+  {ssr: false}
+)
+
+import {SanityDocument} from 'sanity'
 
 import {NewsletterPreview} from '../newsletter'
 
-const defaultDocumentNode: DefaultDocumentNodeResolver = (S, {schemaType}) => {
-  const articleReferenceTypes = ['person', 'section']
+const defaultDocumentNode: DefaultDocumentNodeResolver = (
+  S,
+  {schemaType, getClient}
+) => {
   const previewTypes = ['article', 'person', 'section', 'siteSettings']
+  const articleReferenceTypes = ['person', 'section']
   const views = []
+  const {apiVersion, previewSecretId} = config.sanity
 
   if (previewTypes.includes(schemaType)) {
     views.push(
       S.view
         .component(({document}) => <PreviewPane document={document} />)
         .title('Preview')
+    )
+
+    views.push(
+      S.view
+        .component(({document}) => {
+          const displayed: SanityDocument = document.displayed
+          return (
+            <SEOPane
+              options={{
+                keywords: `seo.keywords`,
+                synonyms: `seo.synonyms`,
+                //@ts-ignore
+                url: async () => {
+                  const client = getClient({apiVersion})
+                  const secret = await getSecret(client, previewSecretId)
+                  const url = buildPreviewUrl({
+                    document: displayed,
+                    secret,
+                    fetch: true,
+                  })
+                  return url
+                },
+              }}
+              document={document}
+            />
+          )
+        })
+        .title('SEO')
     )
   }
 

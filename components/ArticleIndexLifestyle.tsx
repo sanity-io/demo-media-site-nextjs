@@ -30,7 +30,7 @@ function StorySection({
   return (
     <section className="max-w-6xl md:mx-3 lg:mx-auto">
       {title && (
-        <h2 className="mx-auto pt-6 pb-4 text-center text-xl font-extrabold leading-none tracking-tight sm:text-2xl md:p-5 md:py-6 lg:px-6 lg:pt-7">
+        <h2 className="mx-auto pb-4 pt-6 text-center text-xl font-extrabold leading-none tracking-tight sm:text-2xl md:p-5 md:py-6 lg:px-6 lg:pt-7">
           <span className="inline text-green-200">●</span> {title}
         </h2>
       )}

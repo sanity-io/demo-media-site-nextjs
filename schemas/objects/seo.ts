@@ -10,11 +10,13 @@ export default defineType({
       name: 'title',
       title: 'SEO Title',
       type: 'string',
+      description: 'Overrides the default title',
     }),
     defineField({
       name: 'description',
       title: 'SEO Description',
       type: 'string',
+      description: 'Overrides the summary or description',
     }),
     defineField({
       name: 'image',

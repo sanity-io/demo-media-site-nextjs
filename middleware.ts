@@ -21,5 +21,5 @@ export const middleware: NextMiddleware = async (request, event) => {
 
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: '/',
+  matcher: [],
 }

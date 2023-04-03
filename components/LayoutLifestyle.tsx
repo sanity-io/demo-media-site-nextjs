@@ -18,7 +18,7 @@ export default function Layout({
         {preview && <Alert preview={preview} />}
         <main>{children}</main>
       </div>
-      <Footer />
+      <Footer brandName="lifestyle" />
     </>
   )
 }

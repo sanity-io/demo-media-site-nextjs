@@ -2,9 +2,9 @@ export const getUrlForDocumentType = (
   type: string,
   slug?: string,
   brand?: string
-): string => {
+): `/${string}` | `${string}/${string}/${string}` => {
   if (!slug) {
-    return '/'
+    return `/${brand ?? 'tech'}`
   }
 
   switch (type) {

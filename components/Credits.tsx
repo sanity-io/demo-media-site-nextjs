@@ -1,10 +1,10 @@
+import {config} from 'lib/config'
 import Image from 'next/image'
 import Link from 'next/link'
 import React, {createContext, useContext} from 'react'
 
 import {urlForImage} from '../lib/sanity'
 import {Article} from '../types'
-import {BRAND_LIFESTYLE_NAME} from '../utils/brand'
 import {getUrlForDocumentType} from '../utils/routing'
 import Date from './Date'
 
@@ -42,7 +42,7 @@ export function Credits({
   brandName?: string
 }) {
   const people = usePeople(role)
-  const isLifestyle = brandName === BRAND_LIFESTYLE_NAME
+  const isLifestyle = brandName === config.lifestyleBrand
   if (isLifestyle && people) {
     const [firstPerson] = people
 
@@ -93,7 +93,7 @@ export function Credits({
   }
 
   return (
-    <div className="mt-4 mb-4 max-w-2xl border-b border-gray-200 pb-3 text-sm dark:border-gray-900 sm:text-lg md:mt-auto md:pb-4 md:text-xl">
+    <div className="mb-4 mt-4 max-w-2xl border-b border-gray-200 pb-3 text-sm dark:border-gray-900 sm:text-lg md:mt-auto md:pb-4 md:text-xl">
       {date && (
         <span
           data-after={people && people.length > 0 ? ' ● ' : undefined}

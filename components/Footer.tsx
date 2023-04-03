@@ -1,16 +1,13 @@
+import {config} from 'lib/config'
 import Link from 'next/link'
 import {useRouter} from 'next/router'
 import * as React from 'react'
 
-import {BRAND_LIFESTYLE_NAME, getBrandName} from '../utils/brand'
-
-const brandName = getBrandName()
-
-export default function Footer() {
+export default function Footer({brandName}: {brandName: string}) {
   const router = useRouter()
   const isLandingPage = router.pathname === '/'
 
-  if (brandName === BRAND_LIFESTYLE_NAME) {
+  if (brandName === config.lifestyleBrand) {
     return (
       <div
         className={`${
@@ -18,7 +15,7 @@ export default function Footer() {
         }`}
       >
         <div
-          className={`mx-auto flex max-w-5xl flex-col p-4 text-2xl font-extrabold leading-none tracking-tight sm:text-3xl sm:text-2xl md:p-5 lg:px-6`}
+          className={`mx-auto flex max-w-5xl flex-col p-4 text-2xl font-extrabold leading-none tracking-tight sm:text-2xl sm:text-3xl md:p-5 lg:px-6`}
         >
           <Link className="mx-auto hover:text-purple-300" href="/">
             <span className="text-purple-300">●</span> Reach

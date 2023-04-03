@@ -8,6 +8,7 @@
  *
  */
 import {PortableText} from '@portabletext/react'
+import {config} from 'lib/config'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -16,7 +17,6 @@ import {logError} from 'utils/logError'
 
 import {urlForImage} from '../lib/sanity'
 import {Article, MainImage} from '../types'
-import {BRAND_LIFESTYLE_NAME, getBrandName} from '../utils/brand'
 import {getUrlForDocumentType} from '../utils/routing'
 import {Credits, PeopleList, usePeople} from './Credits'
 import {Figure} from './Figure'
@@ -123,8 +123,7 @@ export default function Body({
   people?: any
   brand?: 'tech' | 'lifestyle'
 }) {
-  const brandName = brand || getBrandName()
-  const isLifestyle = brandName === BRAND_LIFESTYLE_NAME
+  const isLifestyle = brand === config.lifestyleBrand
 
   return (
     <div
@@ -134,7 +133,7 @@ export default function Body({
           : 'm-auto max-w-5xl p-4 md:p-5 lg:p-6'
       }
     >
-      {people && people.length && <Credits date={date} brandName={brandName} />}
+      {people && people.length && <Credits date={date} brandName={brand} />}
 
       <div
         className={

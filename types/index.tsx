@@ -1,26 +1,53 @@
-import {SanityImageAssetDocument} from '@sanity/client'
-import {Image, PortableTextBlock} from 'sanity'
+import {SanityDocument, SanityImageAssetDocument} from '@sanity/client'
+import {Image, PortableTextBlock, Slug} from 'sanity'
 import {CrossDatasetReferenceValue} from 'sanity'
 
-export interface Author {
+export type BrandSpecificProps = {
+  brand?: 'tech' | 'lifestyle'
+}
+
+export interface MainImage {
+  image: {
+    asset: {
+      _ref: string
+    }
+  }
+  alt: string
+  caption: string
+}
+
+export type SeoProps = {
+  seo?: {
+    title?: string
+    description?: string
+    keywords?: string[]
+    synonyms?: string[]
+    image?: Image
+  }
+}
+
+export type Author = {
   name: string
+  _type: 'person'
   slug?: string
   image: Image
   bio: PortableTextBlock[]
   role: string
   articles?: Article[]
-  brand?: 'tech' | 'lifestyle'
-}
+} & BrandSpecificProps &
+  SeoProps
 
-export interface Section {
+export type Section = {
   _id?: string
+  _type: 'section'
   name: string
   slug?: string
   articles?: Article[]
   brand?: 'tech' | 'lifestyle'
-}
+} & BrandSpecificProps &
+  SeoProps
 
-export interface Article {
+export type Article = {
   _id: string
   _type: 'article'
   title: string
@@ -37,8 +64,8 @@ export interface Article {
   }[]
   content?: PortableTextBlock[]
   isHighlighted?: boolean
-  brand?: 'tech' | 'lifestyle'
-}
+} & BrandSpecificProps &
+  SeoProps
 
 export type Review = Pick<
   Article,
@@ -50,16 +77,6 @@ export type Review = Pick<
   | 'content'
   | 'sections'
 > & {_type: 'review'; soldOut?: boolean}
-
-export interface MainImage {
-  image: {
-    asset: {
-      _ref: string
-    }
-  }
-  alt: string
-  caption: string
-}
 
 export type ArticlePreviewProps = Pick<
   Article,
@@ -73,14 +90,19 @@ export type ArticlePreviewProps = Pick<
   | 'slug'
 > & {sectionType?: 'featured' | 'normal'}
 
-export type BrandSpecificProps = {
-  brand?: 'tech' | 'lifestyle'
-}
-
-export const isArticle = (article: Article | Review): article is Article =>
+export const isArticle = (article: any): article is Article =>
   article._type === 'article'
 
 export type CrossDatasetSource = {
   _type: 'image'
   asset: CrossDatasetReferenceValue & SanityImageAssetDocument
 }
+
+export type BrandSlugDocument = {
+  slug?: Slug
+} & BrandSpecificProps &
+  SanityDocument
+
+export type SEODocumentType = Article | Author | Section
+
+export const isAuthor = (doc: any): doc is Author => doc._type === 'person'

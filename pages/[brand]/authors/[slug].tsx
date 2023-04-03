@@ -3,10 +3,12 @@ import {GetStaticProps} from 'next'
 import ErrorPage from 'next/error'
 import {useRouter} from 'next/router'
 import {PreviewSuspense} from 'next-sanity/preview'
-import {lazy} from 'react'
-import * as React from 'react'
+import {lazy, ReactElement} from 'react'
+import React from 'react'
 
 import AuthorPage from '../../../components/AuthorPage'
+import Layout from '../../../components/Layout'
+import LayoutLifestyle from '../../../components/LayoutLifestyle'
 import Title from '../../../components/Title'
 import {personBySlugQuery, personSlugsQuery} from '../../../lib/queries'
 import {getClient, overlayDrafts} from '../../../lib/sanity.server'
@@ -75,4 +77,12 @@ export async function getStaticPaths() {
     })),
     fallback: true,
   }
+}
+
+AuthorRoute.getLayout = function getLayout(page: ReactElement) {
+  const {data, preview} = page?.props
+  if (data?.brand == 'lifestyle') {
+    return <LayoutLifestyle preview={preview}>{page}</LayoutLifestyle>
+  }
+  return <Layout preview={preview}>{page}</Layout>
 }

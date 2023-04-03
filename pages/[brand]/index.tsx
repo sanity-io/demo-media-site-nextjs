@@ -83,8 +83,8 @@ export const getStaticProps: GetStaticProps = async ({
 }
 
 Index.getLayout = function getLayout(page: React.ReactElement) {
-  const {preview, brand} = page?.props
-  if (brand == 'lifestyle') {
+  const {preview, data} = page?.props
+  if (data?.brand == config.lifestyleBrand) {
     return <LayoutLifestyle preview={preview}>{page}</LayoutLifestyle>
   }
   return <Layout preview={preview}>{page}</Layout>

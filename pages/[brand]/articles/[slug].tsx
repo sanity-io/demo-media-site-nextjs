@@ -89,7 +89,7 @@ export async function getStaticPaths() {
 
 ArticleRoute.getLayout = function getLayout(page: ReactElement) {
   const {data, preview} = page?.props
-  if (data?.article?.brand == 'lifestyle') {
+  if (data?.article?.brand == config.lifestyleBrand) {
     return <LayoutLifestyle preview={preview}>{page}</LayoutLifestyle>
   }
   return <Layout preview={preview}>{page}</Layout>

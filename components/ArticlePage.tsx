@@ -1,24 +1,20 @@
-import {NextSeo} from 'next-seo'
 import * as React from 'react'
 
-import openGraphObjectFromDocument from '../lib/openGraphObjectFromDocument'
 import {Article} from '../types'
 import Body from './Body'
 import Container from './Container'
 import {PeopleProvider} from './Credits'
 import Header from './Header'
+import {Seo} from './Seo'
 
-interface ArticleComponentProps {
+interface ArticlePageProps {
   article?: Article
 }
 
-export default function ArticlePage({article}: ArticleComponentProps) {
+export default function ArticlePage({article}: ArticlePageProps) {
   return (
     <Container>
-      <NextSeo
-        title={article?.title}
-        openGraph={article ? openGraphObjectFromDocument(article) : undefined}
-      />
+      {article && <Seo doc={article} />}
       <article className="pb-4 md:pb-6">
         <PeopleProvider people={article?.people ?? []}>
           <Header
