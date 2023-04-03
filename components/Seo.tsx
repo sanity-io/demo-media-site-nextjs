@@ -35,7 +35,7 @@ const createOpenGraphObject = (
     })
   }
 
-  if (isArticle(document) && document.mainImage) {
+  if (isArticle(document) && document?.mainImage?.image?.asset?._ref) {
     images.push({
       url: urlForImage(document.mainImage.image)
         .width(1200)
@@ -45,7 +45,7 @@ const createOpenGraphObject = (
     })
   }
 
-  if (isAuthor(document) && document.image) {
+  if (isAuthor(document) && document.image?.asset?._ref) {
     images.push({
       url: urlForImage(document.image)
         .width(1200)
