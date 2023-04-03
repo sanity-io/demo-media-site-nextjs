@@ -10,6 +10,8 @@ const SEOPane = dynamic(
   {ssr: false}
 )
 
+import {SanityDocument} from 'sanity'
+
 import {NewsletterPreview} from '../newsletter'
 
 const defaultDocumentNode: DefaultDocumentNodeResolver = (
@@ -18,7 +20,6 @@ const defaultDocumentNode: DefaultDocumentNodeResolver = (
 ) => {
   const previewTypes = ['article', 'person', 'section', 'siteSettings']
   const articleReferenceTypes = ['person', 'section']
-  const seoTypes = ['article']
   const views = []
   const {apiVersion, previewSecretId} = config.sanity
 
@@ -27,6 +28,34 @@ const defaultDocumentNode: DefaultDocumentNodeResolver = (
       S.view
         .component(({document}) => <PreviewPane document={document} />)
         .title('Preview')
+    )
+
+    views.push(
+      S.view
+        .component(({document}) => {
+          const displayed: SanityDocument = document.displayed
+          return (
+            <SEOPane
+              options={{
+                keywords: `seo.keywords`,
+                synonyms: `seo.synonyms`,
+                //@ts-ignore
+                url: async () => {
+                  const client = getClient({apiVersion})
+                  const secret = await getSecret(client, previewSecretId)
+                  const url = buildPreviewUrl({
+                    document: displayed,
+                    secret,
+                    fetch: true,
+                  })
+                  return url
+                },
+              }}
+              document={document}
+            />
+          )
+        })
+        .title('SEO')
     )
   }
 
@@ -39,28 +68,6 @@ const defaultDocumentNode: DefaultDocumentNodeResolver = (
           params: {id: `_id`},
         })
         .title('Related Content')
-    )
-  }
-
-  if (seoTypes.includes(schemaType)) {
-    views.push(
-      S.view
-        .component(({document}) => (
-          <SEOPane
-            options={{
-              keywords: `seo.keywords`,
-              synonyms: `seo.synonyms`,
-              //@ts-ignore
-              url: async () => {
-                const client = getClient({apiVersion})
-                const secret = await getSecret(client, previewSecretId)
-                return buildPreviewUrl({document, secret, fetch: true})
-              },
-            }}
-            document={document}
-          />
-        ))
-        .title('SEO')
     )
   }
 

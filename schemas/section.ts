@@ -20,6 +20,7 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({type: 'brand', name: 'brand'}),
+    defineField({type: 'seo', name: 'seo'}),
   ],
   preview: {
     select: {

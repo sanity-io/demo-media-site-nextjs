@@ -4,7 +4,7 @@ import {isLifestyle} from '../utils/brand'
 
 const envBasedConfig = isLifestyle()
   ? {
-      titleTemplate: '%s - Lifestyle',
+      titleTemplate: '%s | Lifestyle',
       defaultTitle: 'Lifestyle',
       openGraph: {
         type: 'website',
@@ -14,7 +14,7 @@ const envBasedConfig = isLifestyle()
       },
     }
   : {
-      titleTemplate: '%s - Tech',
+      titleTemplate: '%s | Tech',
       defaultTitle: 'Tech',
       openGraph: {
         type: 'website',

@@ -2,12 +2,7 @@ import {config} from 'lib/config'
 import {NextApiHandler, NextApiResponse, PageConfig} from 'next'
 import {createClient} from 'next-sanity'
 import {getSecret} from 'plugins/productionUrl/utils'
-
-import {
-  articleBySlugQuery,
-  personBySlugQuery,
-  sectionBySlugQuery,
-} from '../../lib/queries'
+import {getUrlForDocumentType} from 'utils/routing'
 
 // res.setPreviewData only exists in the nodejs runtime, setting the config here allows changing the global runtime
 // option in next.config.mjs without breaking preview mode
@@ -31,6 +26,7 @@ const _client = createClient({projectId, dataset, apiVersion, useCdn})
 
 const preview: NextApiHandler = async (req, res): Promise<void> => {
   const previewData: {token?: string} = {}
+  const client = _client.withConfig({useCdn: false, token: readToken})
 
   if (!req.query.secret) {
     return res.status(401).json({message: 'Invalid secret'})
@@ -48,7 +44,6 @@ const preview: NextApiHandler = async (req, res): Promise<void> => {
       )
     }
 
-    const client = _client.withConfig({useCdn: false, token: readToken})
     // @ts-ignore
     const secret = await getSecret(client, previewSecretId)
     if (req.query.secret !== secret) {
@@ -67,54 +62,23 @@ const preview: NextApiHandler = async (req, res): Promise<void> => {
     return redirectToPreview(res, previewData, `/${brand}`)
   }
 
-  // Check if content with given slug exists
-  let content = {slug: ''}
-  let subpath = ''
-
   //get document type
-  const client = _client.withConfig({useCdn: false, token: readToken})
   const docType = await client.fetch(`*[slug.current == $slug][0]._type`, {
     slug,
   })
+  const pathname = getUrlForDocumentType(
+    docType,
+    slug as string,
+    brand as string
+  )
 
-  switch (docType) {
-    case 'article':
-      subpath = 'articles'
-      content = await client.fetch(articleBySlugQuery, {
-        slug,
-        brand,
-      })
-      break
-    case 'section':
-      subpath = 'sections'
-      content = await client.fetch(sectionBySlugQuery, {
-        slug,
-        brand,
-      })
-      break
-    case 'person':
-      subpath = 'authors'
-      content = await client.fetch(personBySlugQuery, {
-        slug,
-      })
-      break
-    default:
-      break
-  }
-
-  // If the slug doesn't exist prevent preview mode from being enabled
-  if (!content) {
-    return res.status(404).json({
-      message: `No content found for ${req.query.slug} for type ${req.query.type}`,
-    })
-  }
-
-  if (req.query.fetch === 'true') {
+  //SEO preview logic: SEO panel should receive page as HTML string.
+  //we send the "fetch" query param to the preview endpoint to trigger this logic
+  if (req.query.fetch) {
     const proto =
       //eslint-disable-next-line no-process-env
       process.env.NODE_ENV === 'development' ? `http://` : `https://`
     const host = req.headers.host
-    const pathname = `/${brand}/${subpath}/${content.slug}`
     const absoluteUrl = new URL(`${proto}${host}${pathname}`).toString()
 
     const previewHtml = await fetch(absoluteUrl, {
@@ -128,11 +92,7 @@ const preview: NextApiHandler = async (req, res): Promise<void> => {
 
   // Redirect to the path from the fetched post
   // We don't redirect to req.query.slug as that might lead to open redirect vulnerabilities
-  return redirectToPreview(
-    res,
-    previewData,
-    `/${brand}/${subpath}/${content.slug}`
-  )
+  return redirectToPreview(res, previewData, pathname)
 }
 
 export default preview

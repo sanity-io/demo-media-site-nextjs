@@ -34,6 +34,7 @@ export default defineType({
       type: 'boolean',
     }),
     defineField({type: 'brand', name: 'brand'}),
+    defineField({type: 'seo', name: 'seo'}),
   ],
   preview: {
     select: {
