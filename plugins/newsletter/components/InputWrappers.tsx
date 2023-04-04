@@ -8,17 +8,12 @@ import {SyncNewArticlesWrapper} from './SyncNewArticles'
 //   def.type === 'portableText'
 
 export function InputWrappers(props: InputProps) {
-  // console.log(props.schemaType)
-
   if (
     props.schemaType.type?.name === 'document' &&
     props.schemaType.name === 'newsletter'
   ) {
     return <EMSStatusWrapper {...props} />
   }
-
-  // if (isArrayType(props.schemaType)) {
-  // }
 
   if (props.schemaType?.options?.showSyncButton) {
     return <SyncNewArticlesWrapper {...props} />

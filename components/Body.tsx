@@ -20,6 +20,7 @@ import {Article, MainImage} from '../types'
 import {getUrlForDocumentType} from '../utils/routing'
 import {Credits, PeopleList, usePeople} from './Credits'
 import {Figure} from './Figure'
+import {StockInfo} from './StockInfo'
 
 const ReactPlayer = dynamic(() => import('react-player'), {ssr: false})
 
@@ -77,8 +78,8 @@ const components = {
   },
   types: {
     article: ({value}: {value: Article}) => {
-      const {title, slug} = value
-      const url = getUrlForDocumentType('article', slug, value.brand)
+      const {title, slug, brand} = value
+      const url = getUrlForDocumentType('article', slug, brand)
       return (
         <div className="max-w-prose text-black">
           <p className="dark border border-gray-200 p-4 dark:border-gray-900">
@@ -89,6 +90,12 @@ const components = {
           </p>
         </div>
       )
+    },
+    stockInfo: ({value}: {value: {symbol: string}}) => {
+      if (value && value.symbol) {
+        return <StockInfo symbol={value.symbol} />
+      }
+      return null
     },
     mainImage: ({value}: {value: MainImage}) => {
       return <BodyImage {...value} />
