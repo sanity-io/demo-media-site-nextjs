@@ -1,8 +1,8 @@
 import {StructureResolver} from 'sanity/desk'
-import article from 'schemas/article'
-import person from 'schemas/person'
-import section from 'schemas/section'
 
+import article from '../../../schemas/article'
+import person from '../../../schemas/person'
+import section from '../../../schemas/section'
 import {createSchemaItemForBrand, createSiteSettingsNodeForBrand} from './utils'
 
 export const lifestyleStructure: StructureResolver = (S) =>

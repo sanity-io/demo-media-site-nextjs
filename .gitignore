@@ -48,3 +48,4 @@ studio/.env.development
 
 #sanity
 .sanity*
+dist

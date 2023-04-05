@@ -1,10 +1,10 @@
-import {config} from 'lib/config'
-import {getSecret} from 'plugins/productionUrl/utils'
 import {useClient} from 'sanity'
 import {suspend} from 'suspend-react'
 import {BrandSlugDocument} from 'types'
 
+import {config} from '../../../lib/config'
 import {buildPreviewUrl} from './buildPreviewUrl'
+import {getSecret} from './getSecret'
 
 // Used as a cache key that doesn't risk collision or getting affected by other components that might be using `suspend-react`
 const fetchSecret = Symbol('preview.secret')

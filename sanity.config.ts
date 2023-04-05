@@ -6,12 +6,11 @@ import {createClient} from '@sanity/client'
 import {scheduledPublishing} from '@sanity/scheduled-publishing'
 import {visionTool} from '@sanity/vision'
 import {theme} from 'https://themer.sanity.build/api/hues?preset=tw-cyan&primary=b595f9'
-import {config, reviewConfig} from 'lib/config'
-import {productionUrl} from 'plugins/productionUrl'
 import {defineConfig, definePlugin, WorkspaceOptions} from 'sanity'
 import {deskTool} from 'sanity/desk'
 import {unsplashImageAsset} from 'sanity-plugin-asset-source-unsplash'
 
+import {config, reviewConfig} from './lib/config'
 import {
   LifestyleLogo,
   LifestyleWorkspaceLogo,
@@ -28,6 +27,7 @@ import {
   techStructure,
 } from './plugins/config/structure'
 import newsletterPlugin from './plugins/newsletter'
+import {productionUrl} from './plugins/productionUrl'
 import variations from './plugins/variations'
 import {schemaTemplates, schemaTypes} from './schemas'
 

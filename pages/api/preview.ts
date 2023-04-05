@@ -87,6 +87,13 @@ const preview: NextApiHandler = async (req, res): Promise<void> => {
     })
       .then((previewRes) => previewRes.text())
       .catch((err) => console.error(err))
+    const corsOrigin =
+      //eslint-disable-next-line no-process-env
+      process.env.NODE_ENV === 'development'
+        ? 'http://localhost:3333'
+        : 'https://demo-media-site.sanity.studio'
+    res.setHeader('Access-Control-Allow-Origin', corsOrigin)
+    res.setHeader('Access-Control-Allow-Credentials', 'true')
     return res.send(previewHtml)
   }
 

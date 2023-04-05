@@ -1,8 +1,9 @@
-import {PreviewPane} from 'plugins/PreviewPane'
 import React from 'react'
 import {FiSliders} from 'react-icons/fi'
 import {DocumentDefinition} from 'sanity'
 import {StructureBuilder} from 'sanity/desk'
+
+import {PreviewPane} from '../../PreviewPane'
 
 export const createSiteSettingsNodeForBrand = (
   S: StructureBuilder,
