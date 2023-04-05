@@ -91,7 +91,7 @@ const preview: NextApiHandler = async (req, res): Promise<void> => {
       //eslint-disable-next-line no-process-env
       process.env.NODE_ENV === 'development'
         ? 'http://localhost:3333'
-        : 'https://demo-media-site.sanity.studio'
+        : 'https://demo-media-site-nextjs.sanity.studio'
     res.setHeader('Access-Control-Allow-Origin', corsOrigin)
     res.setHeader('Access-Control-Allow-Credentials', 'true')
     return res.send(previewHtml)

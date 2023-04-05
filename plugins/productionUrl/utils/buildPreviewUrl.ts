@@ -16,11 +16,12 @@ export const buildPreviewUrl = ({
   fetch = false,
 }: BuildPreviewUrlOptions): string => {
   let currLoc = location.origin
-  //for running the studio independently
+  //for running the studio independently -- can clean up later
   if (currLoc.includes('localhost:3333')) {
     currLoc = 'http://localhost:3000'
   } else if (currLoc.includes('sanity.studio')) {
-    currLoc = 'https://demo-media-site-next.js.sanity.build'
+    currLoc =
+      'https://demo-media-site-nextjs-git-refactor-independent-studio-run.sanity.build/'
   }
   const url = new URL('/api/preview', currLoc)
   if (secret) {
