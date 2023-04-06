@@ -90,11 +90,12 @@ const preview: NextApiHandler = async (req, res): Promise<void> => {
     const headers = new Headers()
     headers.append('credentials', 'include')
     headers.append('Cookie', previewHeaderString ?? '')
+    //eslint-disable-next-line no-console
+    console.log('headers', previewHeaderString)
 
     const previewHtml = await fetch(absoluteUrl, {
       credentials: `include`,
       headers,
-      cache: 'no-cache',
     })
       .then((previewRes) => previewRes.text())
       .catch((err) => console.error(err))
@@ -105,8 +106,6 @@ const preview: NextApiHandler = async (req, res): Promise<void> => {
         : 'https://demo-media-site-nextjs.sanity.studio'
     res.setHeader('Access-Control-Allow-Origin', corsOrigin)
     res.setHeader('Access-Control-Allow-Credentials', 'true')
-    //eslint-disable-next-line no-console
-    console.log('previewHtml', previewHtml)
     return res.send(previewHtml)
   }
 
