@@ -104,6 +104,8 @@ const preview: NextApiHandler = async (req, res): Promise<void> => {
         : 'https://demo-media-site-nextjs.sanity.studio'
     res.setHeader('Access-Control-Allow-Origin', corsOrigin)
     res.setHeader('Access-Control-Allow-Credentials', 'true')
+    //eslint-disable-next-line no-console
+    console.log('previewHtml', previewHtml)
     return res.send(previewHtml)
   }
 
