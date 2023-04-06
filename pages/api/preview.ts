@@ -10,11 +10,9 @@ export const runtimeConfig: PageConfig = {runtime: 'nodejs'}
 
 function redirectToPreview(
   res: NextApiResponse<string | void>,
-  previewData: {token?: string},
   Location: `/${string}` | `${string}/${string}/${string}`
 ): void {
   // Enable Preview Mode by setting the cookies
-  res.setPreviewData(previewData)
   // Redirect to a preview capable route
   res.writeHead(307, {Location})
   res.end()
@@ -51,6 +49,7 @@ const preview: NextApiHandler = async (req, res): Promise<void> => {
     }
 
     previewData.token = readToken
+    res.setPreviewData(previewData)
   }
 
   const slug = req.query.slug
@@ -59,7 +58,7 @@ const preview: NextApiHandler = async (req, res): Promise<void> => {
   // If no slug is provided open preview mode on the frontpage
   // add brand logic here
   if (!slug) {
-    return redirectToPreview(res, previewData, `/${brand}`)
+    return redirectToPreview(res, `/${brand}`)
   }
 
   //get document type
@@ -111,7 +110,7 @@ const preview: NextApiHandler = async (req, res): Promise<void> => {
 
   // Redirect to the path from the fetched post
   // We don't redirect to req.query.slug as that might lead to open redirect vulnerabilities
-  return redirectToPreview(res, previewData, pathname)
+  return redirectToPreview(res, pathname)
 }
 
 export default preview
