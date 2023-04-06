@@ -94,6 +94,7 @@ const preview: NextApiHandler = async (req, res): Promise<void> => {
     const previewHtml = await fetch(absoluteUrl, {
       credentials: `include`,
       headers,
+      cache: 'no-cache',
     })
       .then((previewRes) => previewRes.text())
       .catch((err) => console.error(err))
