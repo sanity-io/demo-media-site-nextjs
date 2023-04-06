@@ -81,9 +81,19 @@ const preview: NextApiHandler = async (req, res): Promise<void> => {
     const host = req.headers.host
     const absoluteUrl = new URL(`${proto}${host}${pathname}`).toString()
 
+    // Create preview headers from the setPreviewData above
+    const previewHeader = res.getHeader('Set-Cookie')
+    const previewHeaderString =
+      typeof previewHeader === 'string' || typeof previewHeader === 'number'
+        ? previewHeader.toString()
+        : previewHeader?.join('; ')
+    const headers = new Headers()
+    headers.append('credentials', 'include')
+    headers.append('Cookie', previewHeaderString ?? '')
+
     const previewHtml = await fetch(absoluteUrl, {
       credentials: `include`,
-      headers: {Cookie: req.headers.cookie || ''},
+      headers,
     })
       .then((previewRes) => previewRes.text())
       .catch((err) => console.error(err))
