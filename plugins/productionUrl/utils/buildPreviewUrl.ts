@@ -13,7 +13,6 @@ interface BuildPreviewUrlOptions {
 export const buildPreviewUrl = ({
   document,
   secret,
-  fetch = false,
 }: BuildPreviewUrlOptions): string => {
   let currLoc = location.origin
   //for running the studio independently -- can clean up later
@@ -36,10 +35,6 @@ export const buildPreviewUrl = ({
 
   if (brand) {
     url.searchParams.set('brand', brand)
-  }
-
-  if (fetch) {
-    url.searchParams.set('fetch', 'true')
   }
 
   return url.toString()

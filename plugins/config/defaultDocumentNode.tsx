@@ -47,7 +47,6 @@ const defaultDocumentNode: DefaultDocumentNodeResolver = (
                   const url = buildPreviewUrl({
                     document: displayed,
                     secret,
-                    fetch: true,
                   })
                   return url
                 },
