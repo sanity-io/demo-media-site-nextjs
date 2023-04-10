@@ -63,6 +63,8 @@ export const getStaticProps: GetStaticProps = async ({
     slug: params?.slug,
     brand: params?.brand,
   })
+  //eslint-disable-next-line no-console
+  console.log('preview', preview, previewData)
 
   return {
     props: {

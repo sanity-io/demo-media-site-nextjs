@@ -51,7 +51,7 @@
     "sanity-plugin-documents-pane": "^2.0.1",
     "sanity-plugin-iframe-pane": "^2.1.1",
     "sanity-plugin-media": "^2.0.4",
-    "sanity-plugin-seo-pane": "^2.0.0",
+    "sanity-plugin-seo-pane": "file:.yalc/sanity-plugin-seo-pane",
     "seedrandom": "^3.0.5",
     "styled-components": "^5.3.6",
     "twig": "^1.15.4"

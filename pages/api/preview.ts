@@ -89,8 +89,6 @@ const preview: NextApiHandler = async (req, res): Promise<void> => {
     const headers = new Headers()
     headers.append('credentials', 'include')
     headers.append('Cookie', previewHeaderString ?? '')
-    //eslint-disable-next-line no-console
-    console.log('headers', previewHeaderString)
 
     const previewHtml = await fetch(absoluteUrl, {
       credentials: `include`,
