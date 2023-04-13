@@ -40,7 +40,7 @@ const defaultDocumentNode: DefaultDocumentNodeResolver = (
               options={{
                 keywords: `seo.keywords`,
                 synonyms: `seo.synonyms`,
-                //@ts-ignore
+                //@ts-ignore -- make note to update type to allow Promise
                 url: async () => {
                   const client = getClient({apiVersion})
                   const secret = await getSecret(client, previewSecretId)
