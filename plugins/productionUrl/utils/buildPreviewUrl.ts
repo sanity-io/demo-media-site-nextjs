@@ -14,15 +14,14 @@ export const buildPreviewUrl = ({
   document,
   secret,
 }: BuildPreviewUrlOptions): string => {
-  let currLoc = location.origin
+  let previewLoc = location.origin
   //for running the studio independently -- can clean up later
-  if (currLoc.includes('localhost:3333')) {
-    currLoc = 'http://localhost:3000'
-  } else if (currLoc.includes('sanity.studio')) {
-    currLoc =
-      'https://demo-media-site-nextjs-git-refactor-independent-studio-run.sanity.build/'
+  if (previewLoc.includes('localhost:3333')) {
+    previewLoc = 'http://localhost:3000'
+  } else if (previewLoc.includes('sanity.studio')) {
+    previewLoc = 'https://demo-media-site-nextjs.sanity.build/'
   }
-  const url = new URL('/api/preview', currLoc)
+  const url = new URL('/api/preview', previewLoc)
   if (secret) {
     url.searchParams.set('secret', secret)
   }
