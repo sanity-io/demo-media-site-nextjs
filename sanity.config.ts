@@ -2,10 +2,11 @@
  * This config is used to set up Sanity Studio that's mounted on the `/pages/studio/[[...index]].tsx` route
  */
 
+import {createClient} from '@sanity/client'
 import {scheduledPublishing} from '@sanity/scheduled-publishing'
 import {visionTool} from '@sanity/vision'
 import {theme} from 'https://themer.sanity.build/api/hues?preset=tw-cyan&primary=b595f9'
-import {defineConfig, definePlugin} from 'sanity'
+import {defineConfig, definePlugin, WorkspaceOptions} from 'sanity'
 import {deskTool} from 'sanity/desk'
 import {unsplashImageAsset} from 'sanity-plugin-asset-source-unsplash'
 
@@ -72,7 +73,15 @@ const defaultConfig = (type: string) => {
   })()
 }
 
-const studioConfig = [
+// create Sanity client from config
+const client = createClient({
+  projectId: config.sanity.projectId,
+  dataset: config.sanity.dataset,
+  apiVersion: config.sanity.apiVersion,
+  useCdn: false,
+})
+
+let studioConfig: WorkspaceOptions[] = [
   {
     basePath: basePaths.tech,
     name: 'tech',
@@ -93,42 +102,76 @@ const studioConfig = [
       },
     },
   },
-  {
-    name: 'lifestyle',
-    basePath: basePaths.lifestyle,
-    projectId: config.sanity.projectId,
-    dataset: config.sanity.dataset,
-    title: config.sanity.projectTitle || 'Lifestyle',
-    theme,
-    plugins: [
-      deskTool({
-        structure: lifestyleStructure,
-        defaultDocumentNode,
-      }),
-      defaultConfig('lifestyle'),
-    ],
-    icon: LifestyleWorkspaceLogo,
-    studio: {
-      components: {
-        logo: LifestyleLogo,
-      },
-    },
-  },
-  {
-    name: 'reviews',
-    basePath: basePaths.reviews,
-    projectId: reviewConfig.sanity.projectId,
-    dataset: reviewConfig.sanity.dataset || 'reviews',
-    title: reviewConfig.sanity.projectTitle || 'Reviews',
-    theme,
-    plugins: [deskTool({structure: reviewStructure}), defaultConfig('reviews')],
-    icon: ReviewsWorkspaceLogo,
-    studio: {
-      components: {
-        logo: ReviewsLogo,
-      },
-    },
-  },
 ]
+
+let currentUser = await client.request({
+  uri: '/users/me',
+  withCredentials: true,
+})
+
+//in Safari, currentUser is undefined --
+//we have to get the token from localStorage
+if (!currentUser) {
+  //this is not real, fix later
+  const token = localStorage.getItem('sanity-auth-token')
+  if (token) {
+    const tokenClient = createClient({
+      projectId: config.sanity.projectId,
+      dataset: config.sanity.dataset,
+      apiVersion: config.sanity.apiVersion,
+      useCdn: false,
+      token,
+    })
+    currentUser = await tokenClient.request({
+      uri: '/users/me',
+      withCredentials: true,
+    })
+  }
+}
+
+if (currentUser?.role === 'administrator' || currentUser?.role === 'editor') {
+  studioConfig = [
+    ...studioConfig,
+    {
+      name: 'lifestyle',
+      basePath: basePaths.lifestyle,
+      projectId: config.sanity.projectId,
+      dataset: config.sanity.dataset,
+      title: config.sanity.projectTitle || 'Lifestyle',
+      theme,
+      plugins: [
+        deskTool({
+          structure: lifestyleStructure,
+          defaultDocumentNode,
+        }),
+        defaultConfig('lifestyle'),
+      ],
+      icon: LifestyleWorkspaceLogo,
+      studio: {
+        components: {
+          logo: LifestyleLogo,
+        },
+      },
+    },
+    {
+      name: 'reviews',
+      basePath: basePaths.reviews,
+      projectId: reviewConfig.sanity.projectId,
+      dataset: reviewConfig.sanity.dataset || 'reviews',
+      title: reviewConfig.sanity.projectTitle || 'Reviews',
+      theme,
+      plugins: [
+        deskTool({structure: reviewStructure}),
+        defaultConfig('reviews'),
+      ],
+      icon: ReviewsWorkspaceLogo,
+      studio: {
+        components: {
+          logo: ReviewsLogo,
+        },
+      },
+    },
+  ]
+}
 
 export default defineConfig(studioConfig)

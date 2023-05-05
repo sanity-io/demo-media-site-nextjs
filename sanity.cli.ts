@@ -1,7 +1,6 @@
 import {loadEnvConfig} from '@next/env'
 import {UserViteConfig} from '@sanity/cli'
 import {config} from 'lib/config'
-import {PluginOptions} from 'sanity'
 import {defineCliConfig} from 'sanity/cli'
 import {nodePolyfills} from 'vite-plugin-node-polyfills'
 
@@ -15,10 +14,11 @@ export default defineCliConfig({
   api: {projectId, dataset},
   vite: (prev: UserViteConfig) => ({
     ...prev,
-    plugins: [
-      ...(prev.plugins as PluginOptions[]),
-      nodePolyfills({util: true}),
-    ],
+    build: {
+      ...prev.build,
+      target: 'esnext',
+    },
+    plugins: [...prev.plugins, nodePolyfills({util: true})],
     define: {
       ...prev.define,
       'process.env': {},
