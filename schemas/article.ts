@@ -1,7 +1,6 @@
 import {FiFeather} from 'react-icons/fi'
 import {defineArrayMember, defineField, defineType} from 'sanity'
 
-// import {referenceBrandFilter, referenceBrandInitialValue} from './schemaUtils'
 import {referenceBrandFilter} from './schemaUtils'
 
 export default defineType({
@@ -42,7 +41,6 @@ export default defineType({
         {
           type: 'reference',
           to: [{type: 'section'}],
-          // initialValue: referenceBrandInitialValue,
           options: {
             filter: referenceBrandFilter,
           },
