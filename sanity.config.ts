@@ -20,13 +20,13 @@ import {
   TechLogo,
   TechWorkspaceLogo,
 } from './logo'
-import {mediaConfigPlugin} from './plugins/config'
-import defaultDocumentNode from './plugins/config/defaultDocumentNode'
+import {mediaConfigPlugin} from './plugins/defaultConfig'
+import defaultDocumentNode from './plugins/defaultConfig/defaultDocumentNode'
 import {
   lifestyleStructure,
   reviewStructure,
   techStructure,
-} from './plugins/config/structure'
+} from './plugins/defaultConfig/structure'
 import newsletterPlugin from './plugins/newsletter'
 import variations from './plugins/variations'
 import {schemaTemplates, schemaTypes} from './schemas'
@@ -66,8 +66,8 @@ const defaultConfig = (type: string) => {
   return definePlugin({
     name: 'default-config',
     schema: {
-      types: (prev) => schemaTypes(prev, type),
-      templates: schemaTemplates,
+      types: schemaTypes,
+      templates: (prev) => schemaTemplates(prev, type),
     },
     plugins,
   })()
