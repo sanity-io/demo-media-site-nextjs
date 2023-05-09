@@ -1,4 +1,3 @@
-// import {config} from 'lib/config'
 import {ReferenceFilterResolver} from 'sanity'
 
 export const referenceBrandFilter: ReferenceFilterResolver = ({document}) => {

@@ -1,7 +1,7 @@
 import {FiFeather} from 'react-icons/fi'
 import {defineArrayMember, defineField, defineType} from 'sanity'
 
-import {referenceBrandFilter} from './schemaUtils'
+import {referenceBrandFilter} from './utils'
 
 export default defineType({
   name: 'article',
