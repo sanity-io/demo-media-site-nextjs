@@ -1,7 +1,7 @@
 import {FiMail} from 'react-icons/fi'
 import {defineField, defineType} from 'sanity'
 
-import {getVariablePortableText} from './helpers/getVariablePortableText'
+import {getVariablePortableText} from './utils'
 
 export default defineType({
   name: 'newsletter',

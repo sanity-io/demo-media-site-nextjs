@@ -1,11 +1,12 @@
 //document types
+import {startCase} from 'lodash'
 import {SchemaTypeDefinition, Template} from 'sanity'
 
 import article from './article'
 import newsletter from './newsletter'
 import articleReference from './objects/articleReference'
 import articleReferences from './objects/articleReferences'
-import brand from './objects/brand'
+import brandSchemaType from './objects/brand'
 import contentRole from './objects/contentRole'
 import mainImage from './objects/mainImage'
 import minimalPortableText from './objects/minimalPortableText'
@@ -21,13 +22,10 @@ import review from './review'
 import section from './section'
 import siteSettings from './siteSettings'
 
-const schemaTypesToFilterBrandOn = ['articleReference', 'person', 'section']
-
 export const schemaTypes = (
-  prev: SchemaTypeDefinition[],
-  brandType: string
-): SchemaTypeDefinition[] => {
-  return [
+  prev: SchemaTypeDefinition[]
+): SchemaTypeDefinition[] =>
+  [
     ...prev,
     // Objects
     articleReference,
@@ -41,7 +39,7 @@ export const schemaTypes = (
     podcastEpisode,
     reviewReference,
     video,
-    brand,
+    brandSchemaType,
 
     // Document types
     article,
@@ -51,33 +49,30 @@ export const schemaTypes = (
     podcast,
     section,
     siteSettings,
-  ].map((def: SchemaTypeDefinition<any>) => {
-    if (schemaTypesToFilterBrandOn.includes(def?.name)) {
-      return {
-        ...def,
-        options: {
-          filter: 'brand == $brand',
-          filterParams: {brand: brandType},
-        },
-      } as SchemaTypeDefinition
-    }
+  ] as SchemaTypeDefinition[]
 
-    return def
-  })
-}
-
-export const schemaTemplates = (prev: Template[]): Template[] => {
-  return [
-    ...prev,
-    ...['article', 'review', 'newsletter', 'person', 'podcast', 'section'].map(
-      (schemaType) => ({
-        id: `${schemaType}-brand`,
-        title: `${schemaType} with Brand`,
-        type: 'initialValueTemplateItem',
-        schemaType,
-        parameters: [{name: `brand`, title: `Brand`, type: `string`}],
-        value: (initialValue: {brand: string}) => ({brand: initialValue.brand}),
-      })
-    ),
+export const schemaTemplates = (
+  prev: Template[],
+  brand: string
+): Template[] => {
+  const brandTypes = [
+    'article',
+    'review',
+    'newsletter',
+    'person',
+    'podcast',
+    'section',
   ]
+  const brandTemplates = brandTypes.map((schemaType) => ({
+    id: `${schemaType}-${brand}`,
+    title: startCase(`${brand} ${schemaType}`),
+    type: 'initialValueTemplateItem',
+    schemaType,
+    value: {brand},
+  }))
+  //remove the original, non-brand templates
+  const filteredTemplates = prev.filter(
+    (template) => !brandTypes.includes(template.schemaType)
+  )
+  return [...filteredTemplates, ...brandTemplates]
 }
