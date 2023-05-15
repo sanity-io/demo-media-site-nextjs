@@ -1,0 +1,9 @@
+{
+  "version": "v1",
+  "packages": {
+    "sanity-plugin-seo-pane": {
+      "signature": "c8c763ad8023b3e3c4fa151ec3128ea0",
+      "replaced": "^2.0.0"
+    }
+  }
+}

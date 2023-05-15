@@ -1,6 +1,6 @@
 import {StructureResolver} from 'sanity/desk'
-import review from 'schemas/review'
 
+import review from '../../../schemas/review'
 import {createSchemaItemForBrand} from './utils'
 
 export const reviewStructure: StructureResolver = (S) =>

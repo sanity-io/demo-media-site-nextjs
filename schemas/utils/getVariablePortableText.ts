@@ -1,5 +1,6 @@
 import {defineArrayMember, FieldDefinition} from 'sanity'
-import {rawPortableTextObj} from 'schemas/objects/portableText'
+
+import {rawPortableTextObj} from '../objects/portableText'
 
 //in certain contexts we may want to add blocks. this function
 //allows us to use the already-defined "default" Portable Text object

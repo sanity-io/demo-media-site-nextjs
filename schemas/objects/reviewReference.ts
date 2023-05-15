@@ -1,6 +1,7 @@
-import {config, reviewConfig} from 'lib/config'
 import {FiStar} from 'react-icons/fi'
 import {defineArrayMember, defineField, defineType} from 'sanity'
+
+import {config, reviewConfig} from '../../lib/config'
 
 export default defineType({
   name: 'reviewReference',

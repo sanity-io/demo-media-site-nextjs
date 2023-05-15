@@ -44,9 +44,8 @@ yarn-error.log*
 studio/.env.development
 
 #yalc
-.yalc/sanity-plugin-workflow/node_modules/
+.yalc
 
 #sanity
 .sanity*
-
-dist/
+dist
