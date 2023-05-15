@@ -104,32 +104,14 @@ let studioConfig: WorkspaceOptions[] = [
   },
 ]
 
-let currentUser = await client.request({
+//unfortunately, this doesn't work in Safari.
+//Safari users will be limited to the initial config
+const currentUser = await client.request({
   uri: '/users/me',
   withCredentials: true,
 })
 
-//in Safari, currentUser is undefined --
-//we have to get the token from localStorage
-if (!currentUser) {
-  //this is not real, fix later
-  const token = localStorage.getItem('sanity-auth-token')
-  if (token) {
-    const tokenClient = createClient({
-      projectId: config.sanity.projectId,
-      dataset: config.sanity.dataset,
-      apiVersion: config.sanity.apiVersion,
-      useCdn: false,
-      token,
-    })
-    currentUser = await tokenClient.request({
-      uri: '/users/me',
-      withCredentials: true,
-    })
-  }
-}
-
-if (currentUser?.role === 'administrator' || currentUser?.role === 'editor') {
+if (currentUser?.role === 'administrator' || currentUser?.role === 'write') {
   studioConfig = [
     ...studioConfig,
     {
