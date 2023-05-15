@@ -42,8 +42,6 @@ export const createSchemaItemForBrand = (
           brand: brandName,
         })
         .initialValueTemplates([
-          S.initialValueTemplateItem(`${schemaItem.name}-brand`, {
-            brand: brandName,
-          }),
+          S.initialValueTemplateItem(`${schemaItem.name}-${brandName}`),
         ])
     )

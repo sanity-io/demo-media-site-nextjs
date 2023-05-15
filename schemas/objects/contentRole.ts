@@ -1,6 +1,6 @@
 import {defineField, defineType} from 'sanity'
 
-import {referenceBrandFilter} from '../helpers/referenceBrandFilter'
+import {referenceBrandFilter} from '../utils'
 
 export default defineType({
   name: 'contentRole',
