@@ -1,5 +1,6 @@
 import {Role} from 'sanity'
 import {StructureResolver} from 'sanity/desk'
+import {TreeView} from 'sanity-plugin-taxonomy-manager'
 import article from 'schemas/article'
 import newsletter from 'schemas/newsletter'
 import person from 'schemas/person'
@@ -25,6 +26,24 @@ export const techStructure: StructureResolver = (S, context) => {
     S.divider(),
     createSchemaItemForBrand(S, person, 'tech'),
     createSchemaItemForBrand(S, section, 'tech'),
+    S.listItem()
+      .title('Concept Schemes')
+      .schemaType('skosConceptScheme')
+      .child(
+        S.documentTypeList('skosConceptScheme')
+          .title('Concept Schemes')
+          .child((id) =>
+            S.document()
+              .schemaType('skosConceptScheme')
+              .documentId(id)
+              .views([
+                S.view.component(TreeView).title('Tree View'),
+                S.view.form(),
+              ])
+          )
+      ),
+    S.documentTypeListItem('skosConcept').title('Concepts'),
+    S.divider(),
   ]
 
   const contributorItems = [

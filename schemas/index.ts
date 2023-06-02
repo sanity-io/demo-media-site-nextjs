@@ -74,5 +74,6 @@ export const schemaTemplates = (
   const filteredTemplates = prev.filter(
     (template) => !brandTypes.includes(template.schemaType)
   )
+
   return [...filteredTemplates, ...brandTemplates]
 }
