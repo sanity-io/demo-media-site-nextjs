@@ -42,13 +42,15 @@ export default defineType({
             : 'Alternative text is helpful for accessibility and SEO'
         }),
       hidden: ({parent}) => !parent?.image,
-      fieldset: 'text',
+      //there's currently a bug where "parent" is the whole document if we have a fieldset
+      //making this hidden param problematic
+      // fieldset: 'text',
     }),
     defineField({
       name: 'caption',
       type: 'string',
       hidden: ({parent}) => !parent?.image,
-      fieldset: 'text',
+      // fieldset: 'text',
     }),
   ],
   preview: {
