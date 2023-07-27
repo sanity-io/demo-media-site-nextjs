@@ -13,9 +13,15 @@ interface BuildPreviewUrlOptions {
 export const buildPreviewUrl = ({
   document,
   secret,
-  fetch = false,
 }: BuildPreviewUrlOptions): string => {
-  const url = new URL('/api/preview', location.origin)
+  let previewLoc = location.origin
+  //for running the studio independently -- can clean up later
+  if (previewLoc.includes('localhost:3333')) {
+    previewLoc = 'http://localhost:3000'
+  } else if (previewLoc.includes('sanity.studio')) {
+    previewLoc = 'https://demo-media-site-nextjs.sanity.build/'
+  }
+  const url = new URL('/api/preview', previewLoc)
   if (secret) {
     url.searchParams.set('secret', secret)
   }
@@ -28,10 +34,6 @@ export const buildPreviewUrl = ({
 
   if (brand) {
     url.searchParams.set('brand', brand)
-  }
-
-  if (fetch) {
-    url.searchParams.set('fetch', 'true')
   }
 
   return url.toString()

@@ -7,7 +7,7 @@
  * https://portabletext.org/
  *
  */
-import {PortableText} from '@portabletext/react'
+import {PortableText, PortableTextMarkComponentProps} from '@portabletext/react'
 import {config} from 'lib/config'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
@@ -108,6 +108,11 @@ const components = {
           <ReactPlayer url={url} width="100%" height="100%" />
         </div>
       )
+    },
+  },
+  marks: {
+    articleLink: ({children}: PortableTextMarkComponentProps) => {
+      return <span>{children}</span>
     },
   },
 }

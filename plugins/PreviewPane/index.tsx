@@ -1,10 +1,11 @@
 /**
  * This component is responsible for rendering previews of pages in the studio.
  */
-import {useBuildPreviewUrl} from 'plugins/productionUrl'
 import React, {memo} from 'react'
 import Iframe, {IframeOptions} from 'sanity-plugin-iframe-pane'
 import {BrandSlugDocument} from 'types'
+
+import {useBuildPreviewUrl} from '../../plugins/productionUrl'
 
 type Props = {
   document: {

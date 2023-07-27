@@ -1,10 +1,11 @@
-import {config} from 'lib/config'
 import dynamic from 'next/dynamic'
-import {PreviewPane} from 'plugins/PreviewPane'
-import {buildPreviewUrl, getSecret} from 'plugins/productionUrl'
 import React from 'react'
 import {DefaultDocumentNodeResolver} from 'sanity/desk'
 import DocumentsPane from 'sanity-plugin-documents-pane'
+
+import {config} from '../../lib/config'
+import {PreviewPane} from '../../plugins/PreviewPane'
+import {buildPreviewUrl, getSecret} from '../../plugins/productionUrl'
 const SEOPane = dynamic(
   () => import('sanity-plugin-seo-pane').then((mod) => mod.SEOPane),
   {ssr: false}
@@ -39,14 +40,13 @@ const defaultDocumentNode: DefaultDocumentNodeResolver = (
               options={{
                 keywords: `seo.keywords`,
                 synonyms: `seo.synonyms`,
-                //@ts-ignore
+                //@ts-ignore -- make note to update type to allow Promise
                 url: async () => {
                   const client = getClient({apiVersion})
                   const secret = await getSecret(client, previewSecretId)
                   const url = buildPreviewUrl({
                     document: displayed,
                     secret,
-                    fetch: true,
                   })
                   return url
                 },

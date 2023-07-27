@@ -1,12 +1,12 @@
 import {Role} from 'sanity'
 import {StructureResolver} from 'sanity/desk'
 import {TreeView} from 'sanity-plugin-taxonomy-manager'
-import article from 'schemas/article'
-import newsletter from 'schemas/newsletter'
-import person from 'schemas/person'
-import podcast from 'schemas/podcast'
-import section from 'schemas/section'
 
+import article from '../../../schemas/article'
+import newsletter from '../../../schemas/newsletter'
+import person from '../../../schemas/person'
+import podcast from '../../../schemas/podcast'
+import section from '../../../schemas/section'
 import {createSchemaItemForBrand, createSiteSettingsNodeForBrand} from './utils'
 
 export const techStructure: StructureResolver = (S, context) => {

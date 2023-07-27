@@ -10,11 +10,9 @@ export const runtimeConfig: PageConfig = {runtime: 'nodejs'}
 
 function redirectToPreview(
   res: NextApiResponse<string | void>,
-  previewData: {token?: string},
   Location: `/${string}` | `${string}/${string}/${string}`
 ): void {
   // Enable Preview Mode by setting the cookies
-  res.setPreviewData(previewData)
   // Redirect to a preview capable route
   res.writeHead(307, {Location})
   res.end()
@@ -51,6 +49,7 @@ const preview: NextApiHandler = async (req, res): Promise<void> => {
     }
 
     previewData.token = readToken
+    res.setPreviewData(previewData)
   }
 
   const slug = req.query.slug
@@ -59,7 +58,7 @@ const preview: NextApiHandler = async (req, res): Promise<void> => {
   // If no slug is provided open preview mode on the frontpage
   // add brand logic here
   if (!slug) {
-    return redirectToPreview(res, previewData, `/${brand}`)
+    return redirectToPreview(res, `/${brand}`)
   }
 
   //get document type
@@ -81,18 +80,35 @@ const preview: NextApiHandler = async (req, res): Promise<void> => {
     const host = req.headers.host
     const absoluteUrl = new URL(`${proto}${host}${pathname}`).toString()
 
+    // Create preview headers from the setPreviewData above
+    const previewHeader = res.getHeader('Set-Cookie')
+    const previewHeaderString =
+      typeof previewHeader === 'string' || typeof previewHeader === 'number'
+        ? previewHeader.toString()
+        : previewHeader?.join('; ')
+    const headers = new Headers()
+    headers.append('credentials', 'include')
+    headers.append('Cookie', previewHeaderString ?? '')
+
     const previewHtml = await fetch(absoluteUrl, {
       credentials: `include`,
-      headers: {Cookie: req.headers.cookie || ''},
+      headers,
     })
       .then((previewRes) => previewRes.text())
       .catch((err) => console.error(err))
+    const corsOrigin =
+      //eslint-disable-next-line no-process-env
+      process.env.NODE_ENV === 'development'
+        ? 'http://localhost:3333'
+        : 'https://demo-media-site-nextjs.sanity.studio'
+    res.setHeader('Access-Control-Allow-Origin', corsOrigin)
+    res.setHeader('Access-Control-Allow-Credentials', 'true')
     return res.send(previewHtml)
   }
 
   // Redirect to the path from the fetched post
   // We don't redirect to req.query.slug as that might lead to open redirect vulnerabilities
-  return redirectToPreview(res, previewData, pathname)
+  return redirectToPreview(res, pathname)
 }
 
 export default preview

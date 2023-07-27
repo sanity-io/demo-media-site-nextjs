@@ -40,13 +40,12 @@ yarn-error.log*
 *.tsbuildinfo
 
 # Env files created by scripts for working locally
-.env
+.env*
 studio/.env.development
 
 #yalc
-.yalc/sanity-plugin-workflow/node_modules/
+.yalc
 
 #sanity
 .sanity*
-
-dist/
+dist

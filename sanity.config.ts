@@ -6,13 +6,12 @@ import {createClient} from '@sanity/client'
 import {scheduledPublishing} from '@sanity/scheduled-publishing'
 import {visionTool} from '@sanity/vision'
 import {theme} from 'https://themer.sanity.build/api/hues?preset=tw-cyan&primary=b595f9'
-import {config, reviewConfig} from 'lib/config'
-import {productionUrl} from 'plugins/productionUrl'
 import {defineConfig, definePlugin, WorkspaceOptions} from 'sanity'
 import {deskTool} from 'sanity/desk'
 import {unsplashImageAsset} from 'sanity-plugin-asset-source-unsplash'
 import {taxonomyManager} from 'sanity-plugin-taxonomy-manager'
 
+import {config, reviewConfig} from './lib/config'
 import {
   LifestyleLogo,
   LifestyleWorkspaceLogo,
@@ -29,6 +28,7 @@ import {
   techStructure,
 } from './plugins/defaultConfig/structure'
 import newsletterPlugin from './plugins/newsletter'
+import {productionUrl} from './plugins/productionUrl'
 import variations from './plugins/variations'
 import {schemaTemplates, schemaTypes} from './schemas'
 
@@ -63,7 +63,7 @@ const defaultConfig = (type: string) => {
     const techPlugins = [
       scheduledPublishing(),
       newsletterPlugin(),
-      taxonomyManager(),
+      taxonomyManager({}),
     ]
     techPlugins.forEach((plugin) => plugins.push(plugin))
   }
@@ -86,35 +86,39 @@ const client = createClient({
   useCdn: false,
 })
 
-let studioConfig: WorkspaceOptions | WorkspaceOptions[] = {
-  basePath: basePaths.tech,
-  name: 'tech',
-  projectId: config.sanity.projectId,
-  dataset: config.sanity.dataset,
-  title: config.sanity.projectTitle || 'Technology',
-  plugins: [
-    deskTool({
-      structure: techStructure,
-      defaultDocumentNode,
-    }),
-    defaultConfig('tech'),
-  ],
-  icon: TechWorkspaceLogo,
-  studio: {
-    components: {
-      logo: TechLogo,
+let studioConfig: WorkspaceOptions[] = [
+  {
+    basePath: basePaths.tech,
+    name: 'tech',
+    projectId: config.sanity.projectId,
+    dataset: config.sanity.dataset,
+    title: config.sanity.projectTitle || 'Technology',
+    plugins: [
+      deskTool({
+        structure: techStructure,
+        defaultDocumentNode,
+      }),
+      defaultConfig('tech'),
+    ],
+    icon: TechWorkspaceLogo,
+    studio: {
+      components: {
+        logo: TechLogo,
+      },
     },
   },
-}
+]
 
+//unfortunately, this doesn't work in Safari.
+//Safari users will be limited to the initial config
 const currentUser = await client.request({
   uri: '/users/me',
   withCredentials: true,
 })
 
-if (currentUser?.role === 'administrator' || currentUser?.role === 'editor') {
+if (currentUser?.role === 'administrator' || currentUser?.role === 'write') {
   studioConfig = [
-    studioConfig,
+    ...studioConfig,
     {
       name: 'lifestyle',
       basePath: basePaths.lifestyle,
