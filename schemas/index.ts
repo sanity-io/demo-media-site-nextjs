@@ -15,6 +15,7 @@ import podcastReference from './objects/podcastReference'
 import portableText from './objects/portableText'
 import reviewReference from './objects/reviewReference'
 import seo from './objects/seo'
+import stockInfo from './objects/stockInfo'
 import video from './objects/video'
 import person from './person'
 import podcast from './podcast'
@@ -39,6 +40,7 @@ export const schemaTypes = (
     podcastEpisode,
     reviewReference,
     video,
+    stockInfo,
     brandSchemaType,
 
     // Document types
