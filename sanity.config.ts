@@ -9,6 +9,7 @@ import {theme} from 'https://themer.sanity.build/api/hues?preset=tw-cyan&primary
 import {defineConfig, definePlugin, WorkspaceOptions} from 'sanity'
 import {deskTool} from 'sanity/desk'
 import {unsplashImageAsset} from 'sanity-plugin-asset-source-unsplash'
+import {taxonomyManager} from 'sanity-plugin-taxonomy-manager'
 
 import {config, reviewConfig} from './lib/config'
 import {
@@ -59,7 +60,11 @@ const defaultConfig = (type: string) => {
   minimumUserPlugins.forEach((plugin) => plugins.push(plugin))
 
   if (type === 'tech') {
-    const techPlugins = [scheduledPublishing(), newsletterPlugin()]
+    const techPlugins = [
+      scheduledPublishing(),
+      newsletterPlugin(),
+      taxonomyManager({}),
+    ]
     techPlugins.forEach((plugin) => plugins.push(plugin))
   }
 
