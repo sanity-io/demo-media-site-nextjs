@@ -69,6 +69,17 @@ const defaultConfig = (type: string) => {
       types: schemaTypes,
       templates: (prev) => schemaTemplates(prev, type),
     },
+    document: {
+      unstable_comments: {
+        enabled: ({documentType}) => {
+          const allowedCommentTypes = ['siteSettings', 'article', 'newsletter']
+          if (allowedCommentTypes.includes(documentType)) {
+            return true
+          }
+          return false
+        },
+      },
+    },
     plugins,
   })()
 }
