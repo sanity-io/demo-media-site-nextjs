@@ -58,6 +58,7 @@ export const rawPortableTextObj = {
     defineArrayMember({type: 'podcastReference', title: 'Podcast'}),
     defineArrayMember({type: 'mainImage'}),
     defineArrayMember({type: 'video'}),
+    defineArrayMember({type: 'stockInfo'}),
   ],
 }
 
