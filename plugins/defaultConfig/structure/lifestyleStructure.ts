@@ -1,4 +1,4 @@
-import {StructureResolver} from 'sanity/desk'
+import {StructureResolver} from 'sanity/structure'
 
 import article from '../../../schemas/article'
 import person from '../../../schemas/person'

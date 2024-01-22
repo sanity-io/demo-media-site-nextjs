@@ -1,5 +1,5 @@
 import {Role} from 'sanity'
-import {StructureResolver} from 'sanity/desk'
+import {StructureResolver} from 'sanity/structure'
 
 import article from '../../../schemas/article'
 import newsletter from '../../../schemas/newsletter'

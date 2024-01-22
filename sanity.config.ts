@@ -7,7 +7,7 @@ import {scheduledPublishing} from '@sanity/scheduled-publishing'
 import {visionTool} from '@sanity/vision'
 import {theme} from 'https://themer.sanity.build/api/hues?preset=tw-cyan&primary=b595f9'
 import {defineConfig, definePlugin, WorkspaceOptions} from 'sanity'
-import {deskTool} from 'sanity/desk'
+import {structureTool} from 'sanity/structure'
 import {unsplashImageAsset} from 'sanity-plugin-asset-source-unsplash'
 
 import {config, reviewConfig} from './lib/config'
@@ -100,7 +100,7 @@ let studioConfig: WorkspaceOptions[] = [
     dataset: config.sanity.dataset,
     title: config.sanity.projectTitle || 'Technology',
     plugins: [
-      deskTool({
+      structureTool({
         structure: techStructure,
         defaultDocumentNode,
       }),
@@ -133,7 +133,7 @@ if (currentUser?.role === 'administrator' || currentUser?.role === 'write') {
       title: config.sanity.projectTitle || 'Lifestyle',
       theme,
       plugins: [
-        deskTool({
+        structureTool({
           structure: lifestyleStructure,
           defaultDocumentNode,
         }),
@@ -154,7 +154,7 @@ if (currentUser?.role === 'administrator' || currentUser?.role === 'write') {
       title: reviewConfig.sanity.projectTitle || 'Reviews',
       theme,
       plugins: [
-        deskTool({structure: reviewStructure}),
+        structureTool({structure: reviewStructure}),
         defaultConfig('reviews'),
       ],
       icon: ReviewsWorkspaceLogo,

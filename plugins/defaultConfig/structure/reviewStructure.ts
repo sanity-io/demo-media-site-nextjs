@@ -1,4 +1,4 @@
-import {StructureResolver} from 'sanity/desk'
+import {StructureResolver} from 'sanity/structure'
 
 import review from '../../../schemas/review'
 import {createSchemaItemForBrand} from './utils'
