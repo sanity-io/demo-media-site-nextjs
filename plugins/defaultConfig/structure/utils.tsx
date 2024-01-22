@@ -3,8 +3,8 @@ import {FiSliders} from 'react-icons/fi'
 import {DocumentDefinition} from 'sanity'
 import {StructureBuilder} from 'sanity/structure'
 
-import {PreviewPane} from '../../PreviewPane'
 import {config} from '../../../lib/config'
+import {PreviewPane} from '../../PreviewPane'
 
 export const createSiteSettingsNodeForBrand = (
   S: StructureBuilder,
