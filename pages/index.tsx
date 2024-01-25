@@ -4,7 +4,7 @@ import React from 'react'
 
 export default function Home() {
   return (
-    <section className="prose mx-auto max-w-prose p-4 font-serif text-lg leading-relaxed dark:prose-invert md:prose-lg lg:prose-xl md:p-12 md:text-xl md:leading-relaxed">
+    <section className="prose mx-auto max-w-prose p-4 font-serif text-lg leading-relaxed md:prose-lg lg:prose-xl dark:prose-invert md:p-12 md:text-xl md:leading-relaxed">
       <h1>Media brands:</h1>
       {BRANDS.map((brand) => (
         <React.Fragment key={brand.name}>
@@ -13,7 +13,7 @@ export default function Home() {
             <Link href={`/${brand.name}`}>{brand.title} Website</Link>
           </p>
           <p>
-            <Link href={`/studio/${brand.name}/desk`}>
+            <Link href={`/studio/${brand.name}/structure`}>
               {brand.title} Sanity Studio
             </Link>
           </p>

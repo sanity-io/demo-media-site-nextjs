@@ -1,8 +1,9 @@
 import React from 'react'
 import {FiSliders} from 'react-icons/fi'
 import {DocumentDefinition} from 'sanity'
-import {StructureBuilder} from 'sanity/desk'
+import {StructureBuilder} from 'sanity/structure'
 
+import {config} from '../../../lib/config'
 import {PreviewPane} from '../../PreviewPane'
 
 export const createSiteSettingsNodeForBrand = (
@@ -37,6 +38,7 @@ export const createSchemaItemForBrand = (
       S.documentTypeList(schemaItem.name)
         .title(`${schemaItem.title}`)
         .filter(`_type == $schemaType && brand == $brand`)
+        .apiVersion(config.sanity.apiVersion)
         .params({
           schemaType: schemaItem.name,
           brand: brandName,

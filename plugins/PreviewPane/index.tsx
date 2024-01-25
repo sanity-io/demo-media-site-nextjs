@@ -19,7 +19,6 @@ export const PreviewPane = memo(function PreviewPane({document, fetch}: Props) {
 
   const options: IframeOptions = {
     url,
-    /* @ts-expect-error -- revision: false does not work as expected */
     reload: {
       button: true,
       // revision: false
@@ -27,6 +26,7 @@ export const PreviewPane = memo(function PreviewPane({document, fetch}: Props) {
   }
 
   if (document.displayed._type == 'siteSettings') {
+    /* @ts-expect-error -- revision: false does not work as expected */
     options.reload.revision = true
   }
 

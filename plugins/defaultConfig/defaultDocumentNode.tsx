@@ -1,6 +1,6 @@
 import dynamic from 'next/dynamic'
 import React from 'react'
-import {DefaultDocumentNodeResolver} from 'sanity/desk'
+import {DefaultDocumentNodeResolver} from 'sanity/structure'
 import DocumentsPane from 'sanity-plugin-documents-pane'
 
 import {config} from '../../lib/config'
